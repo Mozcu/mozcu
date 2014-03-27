@@ -1,0 +1,7 @@
+/vendor
+/nbproject
+mozcu.sublime-project
+mozcu.sublime-workspace
+MyProject.komodoproject
+/app/config/parameters.yml
+/app/config/parameters_local.yml
