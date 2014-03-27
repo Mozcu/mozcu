@@ -1,0 +1,126 @@
+<style>
+.content.download {
+    color: #504e4e;
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.content.download .contentInner {
+    width: 588px;
+}
+
+.content.download .contentInner .text {
+    width: 588px;
+    text-align: center;
+}
+
+.content.download .contentInner .button {
+    background-color: #006dbf;
+    width: 450px;
+    height: 29px;
+    display: block;
+    color: #FFFFFF;
+    padding-top: 11px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content.download .contentInner .priceWrapper {
+    width: 220px;
+    height: 60px;
+    border: #adadad 1px solid;
+    margin-left: 182px;
+}
+
+.content.download .contentInner .priceWrapper .currency {
+    margin-left: 16px;
+    margin-top: 16px;
+    float: left;
+    font-size: 30px;
+}
+
+.content.download .contentInner .priceWrapper input[type=text] {
+    border: 0px;
+    float: left;
+    height: 30px;
+    width: 126px;
+    font-size: 30px;
+    color: #504e4e;
+    margin-left: 16px;
+    margin-top: 12px;
+}
+
+.content.download h1 {
+    font-size: 22px;
+}
+</style>
+
+<div class="content download">
+    <div class="contentInner">
+        <h1>La industria le pone precio a la m&uacute;sica, ac&aacute; le damos valor.</h1>
+        <div class="text">(Desde us$0 a infinito)</div>
+        
+        <br /><br />
+        
+        <div class="priceWrapper">
+            <div class="currency">US$</div>
+            <input type="text" value="0" id="price" />
+            <div class="clearBoth"></div>
+        </div>
+        
+        <br /><br />
+        
+        <div class="text">
+            Recuerda que esta transacci&oacute;n se realiza entre 2 personas: tu y el creador de la
+            obra. No existen intermediarios por lo tanto el %100 de los ingresos van a parar a
+            las manos correctas.
+        </div>
+        
+        <br /><br />
+        
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="paypal" name="myform" id="paypalForm">
+            <input type="hidden" name="cmd" value="_xclick">
+            <input type="hidden" name="business" value="{{ album.getProfile.getPaypalEmail }}">
+            <input type="hidden" name="lc" value="AR">
+            <input type="hidden" name="item_name" value="Mozcu.com: {{ album.getName }}">
+            <input type="hidden" name="item_number" value="Mozcu.com: {{ album.getId }}">
+            <input id="amount" type="hidden" name="amount" size="10" value="" />
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="button_subtype" value="services">
+            <input type="hidden" name="no_note" value="0">
+            <input type="hidden" name="cn" value="Anadir instrucciones especiales para el vendedor">
+            <input type="hidden" name="no_shipping" value="2">
+            <input type="hidden" name="rm" value="1">
+            <input type="hidden" id="checkoutUrl" name="return" value="{{ url('MozcuMozcuBundle_albumCheckout', {'id': album.getId }) }}">
+            <input type="hidden" name="cancel_return" value="{{ url('MozcuMozcuBundle_albumAlbum', {'id': album.getId }) }}">
+            <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+            <input type="hidden" name="cbt" value="Terminar con la descarga del disco">
+        </form>
+        
+        <div class="text">
+            <a class="button" id="downloadAbum" href="#">Descargar</a>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    $('#downloadAbum').click(function(e) {
+        e.preventDefault();
+        
+        var form = $('#paypalForm');
+        var amount = parseFloat($.trim($('#price').val()));
+        
+        if (amount == 0) {
+            var url = $('#checkoutUrl').val();
+            $.getJSON(url, {}, function(data) {
+                if(data.success) {
+                    $('.mainContent').html(data.html);  
+                }
+            })
+        } else {
+            $('#amount').val(amount);
+            form.submit();
+        }
+    })
+</script>

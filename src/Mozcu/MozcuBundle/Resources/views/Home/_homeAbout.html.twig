@@ -1,0 +1,97 @@
+<div class="aboutPage">
+    {{ include('MozcuMozcuBundle:Home:_homeAboutMenu.html.twig', {'selected': 'about'}) }}
+    <div class="clearBoth"></div>
+    
+    <h2>¿Qué es Mozcu?</h2>
+
+        <h3>Mozcu es la Re evolución musical</h3>
+
+        <p>Mozcu es una nueva forma de distribuir y adquirir música. En Mozcu puedes escuchar de forma libre todos los discos que quieras, nadie te prohibirá nada, podrás descargar los discos y reproducirlos donde más te guste. Todo esto con pleno consentimiento de los artistas.</p>
+
+    <h3>El precio lo pones tú</h3>
+
+    <p>Cada persona posee una cantidad de ingresos económicos diferente a la de los demás, y cada individuo valora de forma distinta una obra de arte. Basándonos en estos hechos, tu tendrás la libertad y responsabilidad de asignarle el valor que consideres adecuado a cada obra.</p>
+
+    <h3>No somos intermediarios</h3>
+
+    <p>Todos los aportes que realices al momento de descargar un álbum irán a parar <strong>directamente al bolsillo del artista.</strong> El 100% de los ingresos. Nosotros no cobramos comisión, tampoco admitimos una cuota; nuestra intención como artistas es librarnos de las corporaciones, no ser una de ellas.</p>
+
+    <h3>El proyecto te necesita</h3>
+
+    <p>Quienes hacemos Mozcu somos tanto músicos como desarrolladores web, por eso quisimos mezclar nuestras dos actividades favoritas. Nuestra motivación es pura y con eso nos alcanza. Pero para llevar a cabo nuestro proyecto necesitamos el apoyo de cada uno de ustedes, sean músicos u oyentes, todos pueden colaborar de distintas formas y utilizando su creatividad.<br> <br>
+    ¿Qué esperas? Crea ahora mismo tu cuenta de forma gratuita, descubre nuevos artistas, escucha tu música favorita, sube tu disco, descarga los discos que más te gusten, incentivando a los artistas con tu aporte, y comparte lo que quieras con tus amigos a través de las redes sociales.</p>
+
+    <h3>La música es el propósito, Mozcu es el camino.</h3> 
+
+    <p>Regístrate  y comienza a descubrir la otra cara de la música!</p>
+     
+</div>
+
+<style>
+.aboutPage {
+    margin-top: 43px;
+    margin-left: 233px;
+}
+
+.aboutPage h2 {
+    color: #000;
+    font-size: 32px;
+    margin-bottom: 20px;
+    line-height: 38px;
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+.aboutPage h3 {
+    margin: 35px 40px 20px;
+    color: #3F3E3E;
+    font-size: 31px;
+    font-weight: bold;
+    line-height: 38px;
+    text-shadow: 0 1px white;
+}
+
+.aboutPage p {
+    font-size: 16px;
+    line-height: 1.35em;
+    font-weight: 300;
+    text-shadow: 0 1px white;
+    margin-left: 40px;
+    width: 660px;
+    clear: both;
+}
+
+.aboutPage .header {
+    float: left;
+    position: relative;
+    min-width: 598px;
+    height: 30px;
+}
+
+.aboutPage .header ul.profileOptions {
+    float: left;
+    position: absolute;
+    bottom: 0;
+}
+
+.aboutPage .header ul.profileOptions li {
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.aboutPage .header ul.profileOptions li a.selected {
+    border-radius: 8px;
+    -webkit-box-shadow: inset 0px 0px 7px 0px rgba(100, 100, 100, 0.5);
+    box-shadow: 0 2px 8px 0 #191919 inset;
+    background: #5B5B5B;
+}
+
+.aboutPage .header ul.profileOptions li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 15px;
+}
+</style>

@@ -1,0 +1,19 @@
+<div class="mainMenu profileMenu account">
+    <ul>
+        <li class="first">
+            <a href="{{ path('MozcuMozcuBundle_accountConfigureProfile') }}" 
+               class="configProfileLink {% if selectedOption == 'profile' %} selected {% endif %}">
+                {% trans %}Perfil{% endtrans %}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('MozcuMozcuBundle_accountConfigureUser') }}" 
+               class="configUserLink {% if selectedOption == 'user' %} selected {% endif %}">
+                {% trans %}Cuenta{% endtrans %}
+            </a>
+        </li>
+        <!-- <li>
+            <a href="#" class="configNotifications {% if selectedOption == 'notifications' %} selected {% endif %}">{% trans %}Notificaciones{% endtrans %}</a>
+        </li> -->
+    </ul>
+</div>

@@ -1,0 +1,34 @@
+﻿<div class="pageDiscListen">
+	<div class="headerTop">
+		<div class="headerTopInner">
+			<span class="text flLeft">Escuchemos algo tipo...</span>
+			<div class="wrapperCategories">
+				{% if tag is defined %}
+					<span id="{{ tag.getId }}" class="category">{{ tag.getName }}</span>
+					<span class="plus"> + </span>
+				{% endif %}
+				<input id="searchTags" placeholder="____" type="text" />
+				<input type="hidden" id="getTagListUrl" value="{{ path('MozcuMozcuBundle_getTagsLive') }}" />
+				<input type="hidden" id="findAlbumsByTagUrl" value="{{ path('MozcuMozcuBundle_findAlbumsByTags')}}" />
+			</div>	
+		</div>
+	</div>
+	<div class="content">
+		<div class="wrapperTags">
+			{% for tag in tags %}
+				<a href="#" id="tag-{{ tag.getId }}" class="tag category">{{ tag.getName }}</a>
+			{% endfor %}
+			
+			<a href="" class="tag img"></a>
+			<a class="link" href="">más tags</a>
+		</div>
+		<div class="clearBoth"></div>
+		<div class="wrapperDiscListen">
+			{% for album in albums %}
+				{{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>

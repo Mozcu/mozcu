@@ -1,0 +1,10 @@
+    <div class="header">
+        <ul class="profileOptions">
+            <li>
+                <a {% if selected == 'about' %}class="selected"{% endif %} href="{{ path('MozcuMozcuBundle_about') }}">Acerca de Mozcu</a>
+            </li>
+            <li>
+                <a {% if selected == 'terms' %}class="selected"{% endif %} href="{{ path('MozcuMozcuBundle_terms') }}">Terminos y condiciones</a>
+            </li>
+        </ul>
+    </div>

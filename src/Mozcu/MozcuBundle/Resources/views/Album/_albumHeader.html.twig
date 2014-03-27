@@ -1,0 +1,56 @@
+<!-- BREADCRUMB -->
+<div class="breadCrumb">
+    <ul>
+        <li>
+            <a href="{{ path("MozcuMozcuBundle_albumsForProfile", {'username': album.getProfile.getUser.getUsername}) }}" class="allAlbums">
+                Todos los álbumes
+            </a>
+        </li>
+        <div class="bcSep"></div>
+    </ul>
+</div>
+<!-- /BREADCRUMB -->
+<div class="wrapperProfile breadC">
+    <div class="profileLeft">
+        <div class="imgProfile">
+            <a href="#" id="{{ album.getId }}" class="overPlay"></a>
+            {% for presentation in album.getImage.getPresentations %}
+                {% if presentation.getName == 'album_header' %}
+                    <img src="{{ presentation.url }}" alt="" />
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="optionsProfile">
+            <h2 class="title">{{ album.getName }}</h2>
+            <a class="albumProfile" href="{{ path('MozcuMozcuBundle_profile', {'username': album.getProfile.getUser.getUsername}) }}">
+                <p class="subtitle">{{ album.getProfile.getUser.getCurrentName }}</p>
+            </a>
+            <div class="iconsOptions">
+                <div class="download">
+                    <a href="{{ path('MozcuMozcuBundle_albumPreDownload', {'id': album.getId}) }}" title="Descargar">
+                        <img src="{{ asset('images/iconDownload.png') }}" alt="" />
+                    </a>
+                </div>
+                <!--<div class="share"><img src="{{ asset('images/iconShare.png') }}" height="18" width="14" alt="" /></div>
+                <div class="fav"><img src="{{ asset('images/iconFav.png') }}" alt="" /></div>-->
+            </div>
+        </div>
+        <ul class="profileOptions">
+            <li>
+                <a {% if selected == 'playlist' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'id': album.getId}) }}">Lista de temas</a>
+            </li>
+            <li>
+                <a {% if selected == 'information' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'id': album.getId}) }}">Información</a>
+            </li>
+            <!--<li>
+                <a href="#">Comentarios</a>
+            </li>
+            <li>
+                <a href="#">Reseñas</a>
+            </li>-->
+            <li>
+                <a {% if selected == 'related' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'id': album.getId}) }}">Similares</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: mozcu_dev
+    database_user: root
+    database_password: '123456'
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: es
+    secret: 7ba54572bab26c2b65175ab5589249327d548be0
+    database_path: null

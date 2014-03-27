@@ -1,0 +1,56 @@
+<div class="content profileContent">
+    <!--<div class="filtrerLeft">
+            <a href="" class="btnFil down">Favoritos de Germán</a>
+            <a href="" class="btnFil selected over">Discos de Germán</a>
+    </div>
+    <div class="filtrerRight">
+            <div class="boxSearch">
+                            <input class="search" type="" placeholder="Filtrar colección" />
+            </div>
+    </div>-->
+    <div class="clearBoth"></div>
+    <div class="contentInner discos">
+            {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
+                <!-- DISCO -->
+                <div class="disco">
+                    <div class="imgPortada">
+                        {% if album.getIsActive == false %}
+                            <img src="/uploads/images/tmp/{{ album.getImage.getTemporalFileName }}" alt="" style="width: 139px; height: 139px;"/>
+                        {% else %}
+                            {% for presentation in album.getImage.getPresentations %}
+                                {% if presentation.getName == 'list_thumbanil' %}
+                                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'id': album.getId}) }}">
+                                        <img src="{{ presentation.url }}" alt="" />
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="head">
+                        <h1 class="title">
+                            {% if album.getIsActive == false %}
+                                {{ album.getName }} (procesando...)
+                            {% else %}
+                                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'id': album.getId}) }}">
+                                    {{ album.getName }}
+                                </a>
+                            {% endif %}
+                        </h1>
+                        <span class="year">{{ album.getReleaseDate }}</span>
+                    </div>
+                    <div class="listSong">
+                        {% for song in album.getSongs %}
+                            <div class="song">
+                                    <span class="track">{{ song.getTrackNumber }}</span>
+                                    <span class="titleSong">{{ song.getName }}</span>
+                                    <span class="duration">{{ song.length }}</span>
+                            </div>
+                        {% endfor %}
+                    <div class="clearBoth"></div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="clearBoth"></div>
+            <!-- /DISCO -->
+    </div>
+</div>

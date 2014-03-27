@@ -1,0 +1,71 @@
+#parameters:
+#    mozcu_mozcu.user_service.class: Mozcu\MozcuBundle\Service\UserService
+
+services:
+  authentication_handler:
+    class: Mozcu\MozcuBundle\Handler\AuthenticationHandler
+    arguments:  
+      router : "@router"
+    tags:
+      - { name: 'monolog.logger', channel: 'security' }
+    
+  mozcu_mozcu.memcached:
+    class: Mozcu\MozcuBundle\Lib\MemcachedConnector
+    arguments:
+      container: '@service_container'
+      
+  mozcu_mozcu.google_storage:
+    class: Mozcu\MozcuBundle\Lib\GoogleStorageService
+    arguments:
+      container: '@service_container'
+      googleApi: "@mozcu_mozcu.google_api"
+      
+  mozcu_mozcu.google_api:
+    class: Mozcu\MozcuBundle\Lib\GoogleApiConnector
+    arguments:
+      container: '@service_container'
+  
+  mozcu_mozcu.user_service:
+    class: Mozcu\MozcuBundle\Service\UserService
+    arguments:
+      entityManager:   "@doctrine.orm.entity_manager"
+      encoderFactory:  "@security.encoder_factory"
+      securityContext: "@security.context"
+  
+  mozcu_mozcu.profile_service:
+    class: Mozcu\MozcuBundle\Service\ProfileService
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+      uploadService: "@mozcu_mozcu.upload_service"
+      container: '@service_container'
+      
+  mozcu_mozcu.music_service:
+    class: Mozcu\MozcuBundle\Service\MusicService
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+      uploadService: "@mozcu_mozcu.upload_service"
+      container: '@service_container'
+      
+  mozcu_mozcu.upload_service:
+    class: Mozcu\MozcuBundle\Service\UploadService
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+      container: '@service_container'
+
+  mozcu_mozcu.queue_service:
+    class: Mozcu\MozcuBundle\Service\QueueService
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+      container: '@service_container'
+  
+  mozcu_mozcu.file_service:
+    class: Mozcu\MozcuBundle\Service\FileService
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+      container: '@service_container'
+      googleStorage: '@mozcu_mozcu.google_storage'
+      
+  mozcu_mozcu.rest_service:
+    class: Mozcu\MozcuBundle\Service\RestService
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"

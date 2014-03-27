@@ -1,0 +1,51 @@
+<div class="contentHome">
+    <div class="login">
+            <h2 class="title">
+                {% trans %}Una forma de descubrir y potenciar alternativas culturales de tu localidad y el mundo entero{% endtrans %}.
+            </h2>
+            <br />
+            <form id="registerForm" action="{{ path('MozcuMozcuBundle_register')}}" method="post" {{ form_enctype(form) }}>
+                <div class="inputs">
+
+                        {{ form_widget(form.email,    {'attr': {'placeholder': 'email'}}) }}
+                        {{ form_widget(form.password, {'attr': {'placeholder': 'password'}}) }}
+                        {{ form_widget(form.username, {'attr': {'placeholder': 'username'}}) }}
+                        {{ form_row(form._token) }} 
+                </div>
+                <input type="submit" class="btnAzul" value="{% trans %}Siguiente{% endtrans %}" />
+            </form>
+            <div class="clearBoth"></div>
+            <br />
+            <div class="wrapperMore">
+                    <a href="#" id="knowMoreLink">
+                            <p>{% trans %}Conoce m&aacute;s sobre Mozcu{% endtrans %}</p>
+                            <div class="flRight">
+                                    <img src="{{ asset('images/iconConoceMas.png') }}" height="9" width="15" alt="" />
+                            </div>
+                    <div class="clearBoth"></div><br />
+                    </a>
+            </div>
+            <div class="clearBoth"></div>
+            <div class="textWelcome">
+                    <h1>
+                        {% trans %}Escucha m&uacute;sica en todas partes{% endtrans %}
+                    </h1>
+                    <br />
+                    <p>
+                        {% trans %}Escucha tus bandas favoritas en linea o simplemente descargalas a tu computadora, reproductor mp3, robot, celular o el dispositivo que prefieras{% endtrans %}.
+                    </p>
+            </div>
+            <div class="clearBoth"></div>
+            <div class="imgHomeBottom">
+
+            </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    $('#knowMoreLink').click(function(e) {
+        e.preventDefault();
+    });
+});
+</script>

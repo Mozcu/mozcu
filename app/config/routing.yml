@@ -1,0 +1,4 @@
+mozcu_mozcu:
+    resource: "@MozcuMozcuBundle/Resources/config/routing.yml"
+    prefix:   /
+

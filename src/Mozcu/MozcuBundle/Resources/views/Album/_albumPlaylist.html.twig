@@ -1,0 +1,42 @@
+<div class="content list">
+    <table class="playList">
+        <thead>
+            <tr>
+                <td width="30"></td>
+                <td>Nombre</td>
+                <td align="right">Duración</td>
+                <td>Álbum</td>
+                <td width="80">Año</td>
+                <td>Artista</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, song in album.getSongs%}
+            <tr class="{{ cycle(['even', 'odd'], key) }}">
+                <td width="30">{{ song.getTrackNumber }}</td>
+                <td>
+                    <div class="flLeft songName">
+                        <a href="#" id="{{ album.getId }}-{{ song.getTrackNumber }}">{{ song.getName }}</a> 
+                    </div>
+                    <div class="flRight">
+                        <a href="#" class="share">
+                            <img src="{{ asset('images/iconShareT.png') }}" alt="">
+                        </a>
+                    </div>
+                </td>
+                <td align="right">
+                    <div class="flLeft">
+                        <a href="#" class="addToPlaylist">
+                            <img src="{{ asset('images/listAdd.png') }}" alt="">
+                        </a>
+                    </div>
+                    <div class="flRight">{{ song.getLength}}</div>	
+                </td>
+                <td>{{ album.getName }}</td>
+                <td width="80">{{ album.getReleaseDate }}</td>
+                <td>{{ album.getUser.getCurrentName }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

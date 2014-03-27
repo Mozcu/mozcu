@@ -1,0 +1,13 @@
+{% extends 'MozcuMozcuBundle::layout.html.twig' %}
+
+{% block title %} {% trans with {'%name%': parameters.album.getProfile.getUser.getCurrentName} %}%name% en Mozcu{% endtrans %} {% endblock %}
+
+{% block mainContent %}
+
+    {{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', parameters) }}
+    
+    {{ include(template, parameters) }}
+    
+    <script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>
+
+{% endblock %}

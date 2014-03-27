@@ -1,0 +1,110 @@
+<style>
+.content.checkout {
+    color: #504e4e;
+    padding-top: 5px;
+    padding-left: 30px;
+}
+
+.content.checkout .contentInner {
+    width: 588px;
+    font-size: 14px;
+    line-height:16px;
+}
+
+.content.checkout .contentInner .socialMedia {
+    background-image: url('/images/checkout_image.png');
+    width: 588px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding-top: 230px;
+}
+
+.content.checkout .contentInner .button {
+    background-color: #006dbf;
+    width: 450px;
+    height: 29px;
+    display: block;
+    color: #FFFFFF;
+    padding-top: 11px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content.checkout .contentInner .priceWrapper {
+    width: 220px;
+    height: 60px;
+    border: #adadad 1px solid;
+    margin-left: 182px;
+}
+
+.content.checkout .contentInner .priceWrapper .currency {
+    margin-left: 16px;
+    margin-top: 16px;
+    float: left;
+    font-size: 30px;
+}
+
+.content.checkout .contentInner .priceWrapper input[type=text] {
+    border: 0px;
+    float: left;
+    height: 30px;
+    width: 126px;
+    font-size: 30px;
+    color: #504e4e;
+    margin-left: 16px;
+    margin-top: 12px;
+}
+
+.content.checkout h1 {
+    font-size: 22px;
+}
+</style>
+
+<div class="content checkout">
+    <input type="hidden" id="downloadAlbumUrl" value="{{ path('MozcuMozcuBundle_albumDownload', {'id': album.getId}) }}" />
+    <div class="contentInner">
+        <h1>La industria le pone precio a la m&uacute;sica, ac&aacute; le damos valor.</h1>
+        <br />
+        
+        <div class="socialMedia">
+            <div id="face" style="width:78px; height:30px; overflow:hidden;">
+                <iframe src="//www.facebook.com/plugins/like.php?locale=es_ES&amp;href=http%3A%2F%2Fwww.facebook.com%2Fmozcupuntocom&amp;send=false&amp;layout=standard&amp;width=300&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=tahoma&amp;height=40&amp;appId=284732278286645" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:40px;" allowTransparency="true"></iframe>
+            </div>
+            <div id="twitter">
+                <a href="https://twitter.com/mozcupuntocom" class="twitter-follow-button" data-show-count="false" data-lang="es">Sigue a Mozcu.com</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </div>
+        </div>
+        
+        <br />
+        
+        <div>
+            Si tu descarga no inicia autom&aacute;ticamente, haz click <a id="manualDownload" href="#">aqu&iacute;</a> <br />
+            Contin&uacute;a navegando en el sitio para descubrir otros artistas que puedan interesarte!
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    var url = $('#downloadAlbumUrl').val(); 
+    $.getJSON(url, {}, function(data){
+        if(data.success) {
+            var zipUrl = data.zipUrl;
+            //location.href = 'http://' + zipUrl;
+        }
+    });
+    
+    $('#manualDownload').click(function(e) {
+        e.preventDefault();
+        var url = $('#downloadAlbumUrl').val(); 
+        $.getJSON(url, {}, function(data){
+            if(data.success) {
+                var zipUrl = data.zipUrl;
+                location.href = zipUrl;
+            }
+        });
+    });    
+});
+</script>

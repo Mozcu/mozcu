@@ -1,0 +1,56 @@
+security:
+  encoders:
+    Mozcu\MozcuBundle\Entity\User:
+      algorithm:        sha1
+      encode_as_base64: false
+      iterations:       1
+    
+  role_hierarchy:
+    ROLE_ADMIN: [ ROLE_USER ]
+
+  providers:
+    user_provider:
+      entity: { class: Mozcu\MozcuBundle\Entity\User }
+
+  firewalls:
+    dev:
+      pattern:  ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    
+    #login:
+    #  pattern:  ^/login$
+    #  anonymous:  ~
+      
+    secured_area:
+      pattern:    ^/
+      anonymous: ~
+      form_login:
+        login_path:  MozcuMozcuBundle_home
+        check_path:  login_check
+        success_handler: authentication_handler
+        failure_handler: authentication_handler
+        remember_me: true
+      
+      logout:
+        path:   /logout
+        target: /
+        success_handler: authentication_handler
+      
+      remember_me:
+        key:      "%secret%"
+        lifetime: 31536000
+        path:     /
+        domain:   ~
+
+    #app:
+    #  pattern: ^/
+    #  form_login:
+    #    provider: user_provider
+    #    login_path: /login
+    #    check_path: /login_check
+        #use_forward: true
+  
+  access_control:
+      - { path: ^/home, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
+      - { path: ^/profile, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
+      - { path: ^/uploadAlbum, roles: [ROLE_ADMIN, ROLE_USER] }

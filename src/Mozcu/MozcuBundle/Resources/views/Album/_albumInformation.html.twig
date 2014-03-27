@@ -1,0 +1,51 @@
+<div class="content">
+    <div class="contentInner">
+        <p>{{ album.description }}</p>
+        <div class="clearBoth"></div>
+        <br>
+        <table>
+            <tbody><tr>
+                <td>
+                    <span class="bold">Tags </span>
+                    <span>
+                        {% set tags = [] %}
+                        {% for tag in album.getTags %}
+                            {% set tags = tags|merge([tag.getName]) %}
+                        {% endfor %}
+                        {{ tags|join(', ') }}
+                    </span>
+                </td>
+                <td align="right"><span class="bold">0</span></td>
+                <td width="25" align="right"><img src="{{ asset('images/iconInfoPlay.png') }}" height="14" width="12" alt=""></td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="bold">Licencia</span>
+                    <img src="{{ asset('images/licenses/' ~ album.getLicenseUgly ~ '.png') }}" alt="">
+                </td>
+                <td align="right"><span class="bold">0</span></td>
+                <td width="25" align="right"><img src="{{ asset('images/iconInfoLike.png') }}" height="13" width="16" alt=""></td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="bold">Denunciar esta obra</span>
+                    <img src="{{ asset('images/iconDen.png') }}" alt="">
+                </td>
+                <td align="right"><span class="bold">0</span></td>
+                <td width="25" align="right"><img src="{{ asset('images/iconInfoDownload.png') }}" height="13" width="16" alt=""></td>
+            </tr>
+        </tbody></table>
+        <br>
+        <!--<div class="wrapperImgDisc">
+            <table>
+                <tbody><tr>
+                    <td><img src="images/imgDiscInfo.jpg" alt=""></td>
+                    <td><img src="images/imgDiscInfo.jpg" alt=""></td>
+                    <td><img src="images/imgDiscInfo.jpg" alt=""></td>
+                    <td><img src="images/imgDiscInfo.jpg" alt=""></td>
+                    <td><img src="images/imgDiscInfo.jpg" alt=""></td>
+                </tr>
+            </tbody></table>
+        </div>-->
+    </div>
+</div>

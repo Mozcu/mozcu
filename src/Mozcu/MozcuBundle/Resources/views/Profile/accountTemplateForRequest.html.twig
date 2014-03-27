@@ -1,0 +1,13 @@
+{% extends 'MozcuMozcuBundle::layout.html.twig' %}
+
+{% block title %} {% trans with {'%name%': user.getCurrentName} %}%name% en Mozcu{% endtrans %} {% endblock %}
+
+{% block mainContent %}
+
+    {{ include('MozcuMozcuBundle:Profile:_accountHeader.html.twig', { 'user': user }) }}
+
+    {{ include('MozcuMozcuBundle:Profile:_accountMenu.html.twig', {'selected': selectedOption}) }}
+
+    {{ include(template, parameters) }}
+
+{% endblock %}

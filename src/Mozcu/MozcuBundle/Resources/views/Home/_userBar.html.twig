@@ -1,0 +1,63 @@
+{% if user is null %}
+    <div class="loginLinkWrapper">
+        <a href="{{ path('login_check') }}">{% trans %}Entrar{% endtrans %}</a>
+        <img class="ajaxLoader" src="{{ asset('images/ajax-loader-black.gif') }}" style="display:none;" />
+        <!-- Login Form -->
+        <div class="loginFormBubble">
+            <input type="hidden" id="login_check_url" value="{{ path('login_check') }}" />
+
+            <label for="username">{% trans %}Email{% endtrans %}:</label>
+            <input type="text" id="username" value="" placeholder="tu direccion de email" />
+
+            <label for="password">{% trans %}Contrase&ntilde;a{% endtrans %}:</label>
+            <input type="password" id="password"  />
+            
+            <br/><br/>
+            <input type="checkbox" id="remember_me" checked />
+            <label for="remember_me">{% trans %}Permanecer conectado{% endtrans %}</label>
+            
+            <br/><br/>
+            <a href="#" class="loginCheckButton">{% trans %}Entrar{% endtrans %}</a>
+        </div>
+        
+    </div>
+
+{% else %}
+    <div class="wrapperSettings">
+        <img class="ajaxLoader" src="{{ asset('images/ajax-loader-black.gif') }}" style="display:none;" />
+        <div class="topCloud">
+            <a href="{{ path('MozcuMozcuBundle_uploadAlbumIndex') }}"></a>
+        </div>
+            
+        <div class="wrapperProfile">
+            <div class="imgProfile">
+                {% if user.getCurrentProfile.getMainImage is null %}
+                    <img src="{{ asset('images/profile_25x25.jpg') }}" alt="" />
+                {% else %}
+                    {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
+                        {% if presentation.getName == 'profile_thumbnail' %}
+                            <img src="{{ presentation.url }}" alt="" />
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+                
+            <div class="nameProfile">
+                <a href="#">{{ user.getCurrentName }}</a>    
+            </div>
+                
+        </div>
+        
+        <!--<div class="notifications">5</div>-->
+        
+        <!-- User bubble -->
+        <div class="userBubble">
+            <ul>				
+                <li><a class="config" href="{{ path('MozcuMozcuBundle_configureProfile') }}">{% trans %}Configuraci&oacute;n{% endtrans %}</a></li>
+                <li><a class="logoutLink" href="{{ path('MozcuMozcuBundle_logout') }}">{% trans %}Salir{% endtrans %}</a></li>
+            </ul>
+        </div>
+        
+    </div>
+    
+{% endif %}

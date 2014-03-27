@@ -1,0 +1,14 @@
+<div class="discListen">
+    {% for presentation in album.getImage.getPresentations %}
+        {% if presentation.getName == 'list_thumbanil' %}
+            <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'id': album.getId}) }}">
+                <img src="{{ presentation.url }}" alt="" height="152" width="152" alt="" />
+            </a>
+        {% endif %}
+    {% endfor %}
+    <div class="clearBoth"></div>
+    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'id': album.getId}) }}">
+    <span class="tit">{{ album.getName }}</span></a>
+    <br />
+    <span class="song">{{ album.getProfile.getUser.getCurrentName }}</span>
+</div>

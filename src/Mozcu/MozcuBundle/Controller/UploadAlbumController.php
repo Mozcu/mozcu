@@ -1,0 +1,92 @@
+<?php
+/**
+ * Description of UploadAlbumController
+ *
+ * @author mauro
+ */
+
+namespace Mozcu\MozcuBundle\Controller;
+
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Mozcu\MozcuBundle\Entity\Album;
+use Mozcu\MozcuBundle\Form\Type\AlbumType;
+
+class UploadAlbumController extends MozcuController {
+    
+    public function indexAction() {
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $html = $this->renderView('MozcuMozcuBundle:UploadAlbum:indexAjax.html.twig',
+                                      array('username' => $this->getUser()->getUsername()));
+            $response = new Response(json_encode(array('success' => true, 'html' => $html)));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+        return $this->render('MozcuMozcuBundle:UploadAlbum:index.html.twig', 
+                             array('username' => $this->getUser()->getUsername()));
+    }
+    
+    public function uploadSongAction(Request $request) {
+        try {
+            $file = $request->files->get('Filedata');
+            $fileName = $this->getUploadService()->processTemporarySong($file);
+            $content = array('success' => true, 'file_name' => $fileName, 'original_name' => $file->getClientOriginalName());
+        } catch (\Exception $e) {
+            $content = array('success' => false, 'message' => $e->getMessage());
+        }
+        
+        return $this->getJSONResponse($content);
+    }
+    
+    public function uploadImageAction(Request $request) {
+        try {
+            $file = $request->files->get('image');
+            $fileName = $this->getUploadService()->processTemporaryImage($file[0]);
+            $content = array('success' => true, 'file_name' => $fileName);
+        } catch (\Exception $e) {
+            $content = array('success' => false, 'message' => $e->getMessage());
+        }
+        
+        return $this->getJSONResponse($content);
+    }
+    
+    public function getUploadedSongTemplateAction() {
+        $html = $this->renderView('MozcuMozcuBundle:UploadAlbum:_uploadedSong.html.twig');
+        return $this->getJSONResponse(array('success' => true, 'html' => $html));
+    }
+    
+    public function getTagsAction(Request $request) {
+        $tags = $this->getRepository('MozcuMozcuBundle:Tag')->liveSearchByName($request->get('term'));
+        
+        $result = array();
+        foreach($tags as $tag) {
+            $result[] = array('id' => $tag->getId(), 'label' => $tag->getName(), 'value' => $tag->getName());
+        }
+        return $this->getJSONResponse($result);
+    }
+    
+    public function uploadAlbumAction(Request $request) {
+        try {
+            $albumData = $request->get('album');
+            $album = $this->getMusicService()->createNewAlbum($this->getUser()->getCurrentProfile(), $albumData);
+            $content =array('success' => true,
+                            'album_id' => $album->getId(),
+                            'album_name' => $album->getName());
+        } catch (\Exception $e) {
+            $content = array('success' => false, 'message' => $e->getMessage());
+        }
+        
+        return $this->getJSONResponse($content);
+    }
+    
+    public function testGoogleAction(Request $request) {
+        $filePath = '/home/mauro/Pictures/PJLB.jpg';
+        $mimeType = 'image/jpeg';
+        $name = uniqid() . 'jpg';
+        
+        $storage = $this->get('mozcu_mozcu.google_storage1');
+        $response = $storage->upload($filePath, $name, $mimeType);
+        echo '<pre>'; var_dump($response); echo '</pre>';
+        die;
+    }
+}

@@ -1,0 +1,17 @@
+<div id="${fileID}" class="uploadify-queue-item uploadedSong">
+    <div class="cancel">
+        <a href="javascript:$('#${instanceID}').uploadify('cancel', '${fileID}')" style="background: url('{{ asset('images/uploadify-cancel.png') }}') 0 0 no-repeat;">X</a>
+    </div>
+    <span class="songName">
+        <a class="editSongName" href="#">${fileName}</a>
+        <input type="text" class="editingSongName" value="${fileName}" />
+    </span>
+    <span>(${fileSize}) </span>
+    <span class="data"></span>
+    <div class="uploadify-progress">
+        <div class="uploadify-progress-bar">
+            <!--Progress Bar-->
+        </div>					
+    </div>
+    <input type="hidden" class="realFileName" value="" />
+</div>

@@ -5,3 +5,6 @@ mozcu.sublime-workspace
 MyProject.komodoproject
 /app/config/parameters.yml
 /app/config/parameters_local.yml
+/app/logs
+/app/cache
+/web/uploads

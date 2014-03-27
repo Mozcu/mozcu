@@ -1,0 +1,5 @@
+<div class="sidebarLeft">
+    <input type="hidden" id="loadLeftBarUrl" value="{{ path('MozcuMozcuBundle_loadLeftBar') }}" />
+    {{ include('MozcuMozcuBundle:Home:_leftBarMenu.html.twig', {'user': user}) }}
+    {{ include('MozcuMozcuBundle:Home:_leftBarPlayer.html.twig') }}
+</div>

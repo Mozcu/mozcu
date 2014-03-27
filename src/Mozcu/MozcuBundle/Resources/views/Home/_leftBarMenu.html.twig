@@ -1,0 +1,30 @@
+<div class="optionsMenu" style="height: 296px;">
+    <ul>
+        {% if user is not null %}
+            <li class="profile">
+                <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}">
+                    {% trans %}Perfil{% endtrans %}
+                </a>
+            </li>
+        {% endif %}
+        <li class="discs">
+            <a href="{{ path('MozcuMozcuBundle_albums') }}">
+                {% trans %}Discos{% endtrans %}
+            </a>
+        </li>
+        <li class="about">
+            <a href="{{ path('MozcuMozcuBundle_about') }}">
+                {% trans %}Acerca de Mozcu{% endtrans %}
+            </a>
+        </li>
+        <!--<li class="playList">
+            <a>{% trans %}Playlists{% endtrans %}</a>
+        </li>
+        <li class="summary">
+            <a>{% trans %}Rese&ntilde;as{% endtrans %}</a>
+        </li>
+        <li class="events">
+            <a>{% trans %}Eventos{% endtrans %}</a>
+        </li>-->
+    </ul>
+</div>

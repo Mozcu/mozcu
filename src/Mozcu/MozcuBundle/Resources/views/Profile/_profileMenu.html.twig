@@ -1,0 +1,28 @@
+<div class="mainMenu profileMenu">
+    <ul>
+        <!--<li class="first">
+            <a href="#" class="dashboardLink {% if selectedOption == 'dashboard' %} selected {% endif %}">{% trans %}Dashboard{% endtrans %}</a>
+        </li>-->
+        <li class="first">
+            <a href="{{ path('MozcuMozcuBundle_profileBiography', {'username': user.username}) }}" 
+               class="biographyLink {% if selectedOption == 'biography' %} selected {% endif %}">
+                {% trans %}Informaci&oacute;n{% endtrans %}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('MozcuMozcuBundle_profileAlbums', {'username': user.username}) }}" 
+               class="albumsLink {% if selectedOption == 'albums' %} selected {% endif %}">{% trans %}Albumes{% endtrans %}</a>
+        </li>
+        <!-- <li>
+            <a href="{{ path('MozcuMozcuBundle_profilePlaylists', {'username': user.username}) }}" 
+               class="playistsLink {% if selectedOption == 'playlists' %} selected {% endif %}">{% trans %}Playlists{% endtrans %}</a>
+        </li>
+        <li>
+            <a href="{{ path('MozcuMozcuBundle_profileReviews', {'username': user.username}) }}" 
+               class="reviewsLink {% if selectedOption == 'reviews' %} selected {% endif %}">{% trans %}Rese&ntilde;as{% endtrans %}</a>
+        </li>
+        <li>
+            <a href="#" class="eventsLink {% if selectedOption == 'events' %} selected {% endif %}">{% trans %}Eventos{% endtrans %}</a>
+        </li> -->
+    </ul>
+</div>

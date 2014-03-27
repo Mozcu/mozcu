@@ -1,0 +1,38 @@
+<div class="profileContent config">
+    <div class="message" style="display:none;">
+        <div class="messageInner">
+            <p></p>
+        </div>
+    </div>
+    
+    <div class="clearBoth"></div>
+    <div class="content">
+            <br />
+            <div class="form">
+                <input type="hidden" id="saveUserSettingsUrl" value="{{ path('MozcuMozcuBundle_saveUserSettings') }}" />
+                
+                <h1>Cambia tu Email!</h1>
+                <label for="">Email</label> <br />
+                <input id="email" type="text" placeholder="pepe@emilio.com" value="{{ user.getEmail }}"/>
+                <div class="clearBoth"></div><br />
+                
+                <h1>Cambi tu contrase&ntilde;a!</h1>
+                <label for="">Contrase&ntilde;a actual</label> <br />
+                <input type="password" name="" id="oldPassword" />
+                <div class="clearBoth"></div><br />
+                <label for="">Contrase&ntilde;a nueva</label> <br />
+                <input type="password" name="" id="newPassword" />
+                <div class="clearBoth"></div><br />
+                <label for="">Repeti la contrase&ntilde;a nueva</label> <br />
+                <input type="password" name="" id="newPasswordConfirm" />
+                <div class="clearBoth"></div><br />
+                
+                <input id="saveUserSettings" type="button" value="Guardar" /></div>
+                
+            </div>
+            
+            <div class="clearBoth"></div><br />
+            
+            
+    </div>
+</div>

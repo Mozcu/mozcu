@@ -1,0 +1,18 @@
+<div class="wrapperProfile account">    
+        <div class="profileLeft">
+                <div class="imgProfile">
+                        {% if user.getCurrentProfile.getMainImage is null %}
+                            <img src="{{ asset('images/profile_125x125.jpg')}}" alt="" />
+                        {% else %}
+                            {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
+                                {% if presentation.getName == 'profile_header' %}
+                                    <img src="{{ presentation.url }}" alt="" />
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                </div>
+                <div class="optionsProfile">
+                        <h2 class="title">Configuraci&oacute;n de la cuenta</h2>
+                </div>
+        </div>
+</div>
