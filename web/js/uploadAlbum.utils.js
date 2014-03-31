@@ -225,9 +225,17 @@ $(function() {
         
          $('.uploadedSong').each(function(key, value){
             var me = $(value);
+            
+            if(me.find('.realFileName').val().length === 0) {
+                response.success = false;
+                response.errors.push({message: "Uno o mas temas aun estan subiendo"});
+                return false;
+            }
+            
             if(me.hasClass('uploadify-error')) {
                 response.success = false;
                 response.errors.push({message: "Uno o mas temas no fueron subidos correctamente"});
+                return false;
             }
         });
         
