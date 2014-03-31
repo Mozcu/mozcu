@@ -11,6 +11,7 @@
     
     <div class="uploadBox">
         <div class="uploadFront">
+            <div class="loader"></div>
             <div class="deleteImage">Borrar</div>
             <input type="hidden" id="imageFileName" value="" />
             <img class="preview" src="" />
@@ -230,6 +231,10 @@
     $(function(){
         $('#uploadAlbumImage').change(function(){
             var me = $(this);
+            var loader = me.parents('.uploadFront').find('.loader');
+            
+            me.parents('.text').hide();
+            loader.show();
             $.mozcuFileUpload({
                 inputId: me.attr('id'),
                 actionUrl: $('#uploadImageUrl').val(),
@@ -240,7 +245,7 @@
                         img.attr('src', "/uploads/images/tmp/" + data.file_name);
                         $("#imageFileName").val(data.file_name);
                         
-                        me.parents('.text').hide();
+                        loader.hide();
                         img.show();
                         deleteImg.show();
                     }

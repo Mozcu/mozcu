@@ -99,6 +99,15 @@ a {text-decoration: none;}
     filter: alpha(opacity=0);
 }
 
+.uploadBox .uploadFront .loader {
+    width: 167px;
+    height: 168px;
+    opacity: 0.5;
+    background: #FFFFFF url('/images/ajax-loader-small.gif') center center no-repeat;
+    position: absolute;
+    display: none;
+}
+
 /*.uploadBox .uploadFront .text input[type=file] {
     background: url("../images/uploadImageButton.jpg");
     width: 147px;
