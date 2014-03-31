@@ -29,6 +29,10 @@ $(function() {
             if(data.success) {
                 $('#' + file.id).find('.realFileName').val(data.file_name);
                 $('#' + file.id).find('.editSongName').html(data.original_name);
+            } else {
+                $('#' + file.id).addClass('uploadify-error');
+                $('#' + file.id).find('.data').html('ERROR');
+                console.log(data.message);
             }
         }
     });
@@ -101,11 +105,20 @@ $(function() {
     $('.pageUpload .uploadButton').on('click', function(e) {
         e.preventDefault()
         var url = $(this).attr('href');
+        
+        var errorMsg = $('.uploadErrorMessage');
+        errorMsg.hide();
+        errorMsg.find('.messageInner .error').remove();
+        
         var album = prepareAlbumData();
         
         validation = validateAlbumData(album);
         if (!validation.success) {
-            alert(validation.message);
+            $.each(validation.errors, function(key, value) {
+                errorMsg.find('.messageInner').append('<p class="error"> - ' + value.message + '</p>');
+            });
+            errorMsg.show();
+            $('html,body').animate({scrollTop: 0}, 800);
             return;
         }
         
@@ -173,41 +186,50 @@ $(function() {
         var response = {};
         var yre = new RegExp('^[0-9]{4}$');
         response.success = true;
+        response.errors = new Array();
         
-        if (album.name == '') {
+        if (album.name.length === 0) {
             response.success = false;
-            response.message = "El disco no posee nombre";
+            response.errors.push({message: "El disco no posee nombre"});
         }
         
-        if (album.image_file_name == '') {
+        if (album.image_file_name.length === 0) {
             response.success = false;
-            response.message = "El disco no posee una imagen";
+            response.errors.push({message: "El disco no posee una imagen"});
         }
         
         if (album.songs.length === 0) {
             response.success = false;
-            response.message = "El disco no posee canciones";
+            response.errors.push({message: "El disco no posee canciones"});
         }
         
-        if (album.relase_date == '') {
+        if (album.release_date.length === 0) {
             response.success = false;
-            response.message = "El disco no posee a&ntilde;o";
-        }
-        
-        if (!yre.test(album.release_date)) {
-            response.success = false;
-            response.message = "El A&ntilde;o es invalido";
+            response.errors.push({message: "El disco no posee a&ntilde;o"});
+        } else {
+            if (!yre.test(album.release_date)) {
+                response.success = false;
+                response.errors.push({message: "El A&ntilde;o es invalido"});
+            }
         }
         
         if (album.tags.length === 0) {
             response.success = false;
-            response.message = "El disco no posee etiquetas";
+            response.errors.push({message: "El disco no posee etiquetas"});
         }
         
-        if (album.license == '') {
+        if (album.license.length === 0) {
             response.success = false;
-            response.message = "Debe seleccionar una licencia";
+            response.errors.push({message: "Debe seleccionar una licencia"});
         }
+        
+         $('.uploadedSong').each(function(key, value){
+            var me = $(value);
+            if(me.hasClass('uploadify-error')) {
+                response.success = false;
+                response.errors.push({message: "Uno o mas temas no fueron subidos correctamente"});
+            }
+        });
         
         return response;
     }

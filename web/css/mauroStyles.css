@@ -78,12 +78,33 @@ a {text-decoration: none;}
 
 .wrapperPage .header .wrapperSettings .userBubble ul a:hover { background:#ddd;}
 
-.uploadBox .uploadFront .text input[type=file] {
+
+.uploadBox .uploadFront .fileUpload {
+    margin: auto;
+    width: 144px;
+    height: 16px;
+    padding-top: 5px;
+    border: solid 1px #868686;
+    //background: url("../images/uploadImageButton.jpg");
+}
+.uploadBox .uploadFront .fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+/*.uploadBox .uploadFront .text input[type=file] {
     background: url("../images/uploadImageButton.jpg");
     width: 147px;
     height: 23px;
     text-indent: -9000000px;
-}
+}*/
 
 .uploadBox .uploadFront .deleteImage {
     background-color: #868686;

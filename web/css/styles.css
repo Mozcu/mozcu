@@ -239,23 +239,27 @@ input {
 /* /INICIO */
 
 /* DISCO UPLOAD */
+.pageUpload {
+    margin-top: 43px;
+}
 
-.message {
-	height: 42px;	
-	background: #1fb683;
+.uploadErrorMessage {
+	background: #E9967A;
 	width: 100%;
 	padding-top: 12px;
-	/*margin-top: 43px*/;
+        padding-bottom: 12px;
 }
-	.message .messageInner {
-		margin: auto;
-		width: 600px;
+	.uploadErrorMessage .messageInner {
+            margin-left: 270px;
+            width: 600px;
 	}
-	.message .messageInner p {
+	.uploadErrorMessage .messageInner p {
 		color: #fff;
-		float: left;
-		font-size: 16px;
-		line-height: 34px;
+		font-size: 14px;
+		line-height: 18px;
+	}
+        .uploadErrorMessage .messageInner .title {
+            font-weight: bold;
 	}
 
 .uploadBox {
@@ -269,7 +273,7 @@ input {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2b2b2b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 	height: 200px;
 	width: 100%;
-	margin-top: 43px;
+	/*margin-top: 43px;*/
 }
 
 .uploadBox .uploadFront {
