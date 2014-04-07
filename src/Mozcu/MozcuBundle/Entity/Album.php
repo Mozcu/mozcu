@@ -555,4 +555,13 @@ class Album {
                 break;
         }
     }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @return boolean
+     */
+    public function belongToProfile(Profile $profile) {
+        return $this->getProfile()->sameAs($profile);
+    }
 }
