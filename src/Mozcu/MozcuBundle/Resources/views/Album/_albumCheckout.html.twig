@@ -60,9 +60,9 @@
     font-size: 22px;
 }
 </style>
-
+{% set username = album.getProfile.getUser.getUsername %}
 <div class="content checkout">
-    <input type="hidden" id="downloadAlbumUrl" value="{{ path('MozcuMozcuBundle_albumDownload', {'id': album.getId}) }}" />
+    <input type="hidden" id="downloadAlbumUrl" value="{{ path('MozcuMozcuBundle_albumDownload', {'username': username, 'id': album.getId}) }}" />
     <div class="contentInner">
         <h1>La industria le pone precio a la m&uacute;sica, ac&aacute; le damos valor.</h1>
         <br />

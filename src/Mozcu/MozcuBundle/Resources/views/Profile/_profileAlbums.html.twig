@@ -19,11 +19,23 @@
                         {% else %}
                             {% for presentation in album.getImage.getPresentations %}
                                 {% if presentation.getName == 'list_thumbanil' %}
-                                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'id': album.getId}) }}">
+                                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
                                         <img src="{{ presentation.url }}" alt="" />
                                     </a>
                                 {% endif %}
                             {% endfor %}
+                        {% endif %}
+                        
+                        {% if isAuthenticated == true and album.getIsActive  == true %}
+                            <div class="actions">
+                                <div class="action edit">
+                                    Modificar
+                                </div>
+                                <div class="action delete">
+                                    <img src="{{ asset('images/tacho.png') }}" />
+                                </div>
+                                <div class="clearBoth"></div>
+                            </div>
                         {% endif %}
                     </div>
                     <div class="head">
@@ -31,7 +43,7 @@
                             {% if album.getIsActive == false %}
                                 {{ album.getName }} (procesando...)
                             {% else %}
-                                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'id': album.getId}) }}">
+                                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername, 'id': album.getId}) }}">
                                     {{ album.getName }}
                                 </a>
                             {% endif %}
@@ -49,6 +61,8 @@
                     <div class="clearBoth"></div>
                     </div>
                 </div>
+            {% else %}
+                <div class="noAlbums">{{ user.getCurrentName }} aun no subio ningun album!</div>
             {% endfor %}
             <div class="clearBoth"></div>
             <!-- /DISCO -->

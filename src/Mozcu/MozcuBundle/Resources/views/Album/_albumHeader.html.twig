@@ -20,14 +20,15 @@
                 {% endif %}
             {% endfor %}
         </div>
+        {% set username = album.getProfile.getUser.getUsername %}
         <div class="optionsProfile">
             <h2 class="title">{{ album.getName }}</h2>
-            <a class="albumProfile" href="{{ path('MozcuMozcuBundle_profile', {'username': album.getProfile.getUser.getUsername}) }}">
+            <a class="albumProfile" href="{{ path('MozcuMozcuBundle_profile', {'username': username}) }}">
                 <p class="subtitle">{{ album.getProfile.getUser.getCurrentName }}</p>
             </a>
             <div class="iconsOptions">
                 <div class="download">
-                    <a href="{{ path('MozcuMozcuBundle_albumPreDownload', {'id': album.getId}) }}" title="Descargar">
+                    <a href="{{ path('MozcuMozcuBundle_albumPreDownload', {'username': username, 'id': album.getId}) }}" title="Descargar">
                         <img src="{{ asset('images/iconDownload.png') }}" alt="" />
                     </a>
                 </div>
@@ -37,10 +38,10 @@
         </div>
         <ul class="profileOptions">
             <li>
-                <a {% if selected == 'playlist' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'id': album.getId}) }}">Lista de temas</a>
+                <a {% if selected == 'playlist' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'username': username, 'id': album.getId}) }}">Lista de temas</a>
             </li>
             <li>
-                <a {% if selected == 'information' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'id': album.getId}) }}">Información</a>
+                <a {% if selected == 'information' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'username': username, 'id': album.getId}) }}">Información</a>
             </li>
             <!--<li>
                 <a href="#">Comentarios</a>
@@ -49,7 +50,7 @@
                 <a href="#">Reseñas</a>
             </li>-->
             <li>
-                <a {% if selected == 'related' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'id': album.getId}) }}">Similares</a>
+                <a {% if selected == 'related' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'username': username, 'id': album.getId}) }}">Similares</a>
             </li>
         </ul>
     </div>

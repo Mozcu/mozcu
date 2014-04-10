@@ -260,4 +260,13 @@ class MusicService extends BaseService{
             return null;
         }
     }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
+    public function deleteAlbum(Album $album) {
+        $this->getEntityManager()->remove($album);
+        $this->getEntityManager()->flush();
+    } 
 }

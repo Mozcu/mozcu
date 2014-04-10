@@ -52,7 +52,7 @@ MozcuMozcuBundle_terms:
     defaults: { _controller: MozcuMozcuBundle:Home:terms}
     requirements:
         _method: GET
-    
+
 ### Album Controller ###
 MozcuMozcuBundle_albums:
     pattern: /albums
@@ -63,48 +63,6 @@ MozcuMozcuBundle_albums:
 MozcuMozcuBundle_albumsTag:
     pattern: /albums/tag/{tag}
     defaults: {_controller: MozcuMozcuBundle:Album:index}
-    requirements:
-      _method: GET
-
-MozcuMozcuBundle_albumAlbum:
-    pattern: /albums/{id}
-    defaults: {_controller: MozcuMozcuBundle:Album:album}
-    requirements:
-      _method: GET
-      
-MozcuMozcuBundle_albumAlbumInformation:
-    pattern: /albums/{id}/information
-    defaults: {_controller: MozcuMozcuBundle:Album:albumInformation}
-    requirements:
-      _method: GET
-      
-MozcuMozcuBundle_albumAlbumRelated:
-    pattern: /albums/{id}/related
-    defaults: {_controller: MozcuMozcuBundle:Album:albumsRelated}
-    requirements:
-      _method: GET
-
-MozcuMozcuBundle_albumAlbumPlaylist:
-    pattern: /albums/{id}/playlist
-    defaults: {_controller: MozcuMozcuBundle:Album:albumPlaylist}
-    requirements:
-      _method: GET
-      
-MozcuMozcuBundle_albumPreDownload:
-    pattern: /albums/{id}/download
-    defaults: {_controller: MozcuMozcuBundle:Album:albumPreDownload}
-    requirements:
-      _method: GET
-      
-MozcuMozcuBundle_albumCheckout:
-    pattern: /albums/{id}/checkout
-    defaults: {_controller: MozcuMozcuBundle:Album:albumCheckout}
-    requirements:
-      _method: GET
-
-MozcuMozcuBundle_albumDownload:
-    pattern: /albums/{id}/zipDownload
-    defaults: {_controller: MozcuMozcuBundle:Album:albumDownload}
     requirements:
       _method: GET
       
@@ -131,43 +89,85 @@ MozcuMozcuBundle_getAlbumForPlayer:
   defaults: {_controller: MozcuMozcuBundle:Album:getAlbumForPlayer}
   requirements:
     _method: GET
-    
+
+MozcuMozcuBundle_deleteAlbum:
+    pattern: /albums/delete
+    defaults: {_controller: MozcuMozcuBundle:Album:deleteAlbum}
+    requirements:
+      _method: POST
+
+MozcuMozcuBundle_albumAlbum:
+    pattern: /{username}/album/{id}
+    defaults: {_controller: MozcuMozcuBundle:Album:album}
+    requirements:
+      _method: GET
+      
+MozcuMozcuBundle_albumAlbumInformation:
+    pattern: /{username}/album/{id}/information
+    defaults: {_controller: MozcuMozcuBundle:Album:albumInformation}
+    requirements:
+      _method: GET
+      
+MozcuMozcuBundle_albumAlbumRelated:
+    pattern: /{username}/album/{id}/related
+    defaults: {_controller: MozcuMozcuBundle:Album:albumsRelated}
+    requirements:
+      _method: GET
+
+MozcuMozcuBundle_albumAlbumPlaylist:
+    pattern: /{username}/album/{id}/playlist
+    defaults: {_controller: MozcuMozcuBundle:Album:albumPlaylist}
+    requirements:
+      _method: GET
+      
+MozcuMozcuBundle_albumPreDownload:
+    pattern: /{username}/album/{id}/download
+    defaults: {_controller: MozcuMozcuBundle:Album:albumPreDownload}
+    requirements:
+      _method: GET
+      
+MozcuMozcuBundle_albumCheckout:
+    pattern: /{username}/album/{id}/checkout
+    defaults: {_controller: MozcuMozcuBundle:Album:albumCheckout}
+    requirements:
+      _method: GET
+
+MozcuMozcuBundle_albumDownload:
+    pattern: /{username}/album/{id}/zipDownload
+    defaults: {_controller: MozcuMozcuBundle:Album:albumDownload}
+    requirements:
+      _method: GET
+
 ### Upload Album Controller ###
 MozcuMozcuBundle_uploadAlbumIndex:
-  pattern: /uploadAlbum
+  pattern: /albums/upload
   defaults: {_controller: MozcuMozcuBundle:UploadAlbum:index}
   requirements:
     _method: GET
 
 MozcuMozcuBundle_uploadSong:
-  pattern: /uploadAlbum/uploadSong
+  pattern: /albums/upload/uploadSong
   defaults: {_controller: MozcuMozcuBundle:UploadAlbum:uploadSong}
   requirements:
     _method: POST
     
 MozcuMozcuBundle_uploadImage:
-  pattern: /uploadAlbum/uploadImage
+  pattern: /albums/upload/uploadImage
   defaults: {_controller: MozcuMozcuBundle:UploadAlbum:uploadImage}
   requirements:
     _method: POST
     
 MozcuMozcuBundle_getUploadedSongTemplate:
-  pattern: /uploadAlbum/getUploadedSongTemplate
+  pattern: /albums/upload/getUploadedSongTemplate
   defaults: {_controller: MozcuMozcuBundle:UploadAlbum:getUploadedSongTemplate}
   requirements:
     _method: GET
     
 MozcuMozcuBundle_uploadAlbum:
-  pattern: /uploadAlbum/uploadAlbum
+  pattern: /albums/upload/uploadAlbum
   defaults: {_controller: MozcuMozcuBundle:UploadAlbum:uploadAlbum}
   requirements:
     _method: POST
-    
-MozcuMozcuBundle_testGoogle:
-  pattern: /testGoogle
-  defaults: {_controller: MozcuMozcuBundle:UploadAlbum:testGoogle}
-  requirements:
-    _method: GET
 
 ### Profile Controller ###
 MozcuMozcuBundle_accountConfigureProfile:

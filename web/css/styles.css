@@ -724,8 +724,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
 		.wrapperPage .mainContent .content .contentInner .disco .imgPortada {
 			position: absolute;
 			left: 0;
-			box-shadow: 0 0 8px 0 #C0C0C0;
-		}
+		}      
+                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada img {
+                            box-shadow: 0 0 8px 0 #C0C0C0;
+                    }
+                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .actions {
+                        margin-top: 5px;
+                    }
+                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .action {
+                        float: left;
+                        padding: 5px 15px 5px 15px;
+                        background-color: #F4F0F0;
+                        cursor: pointer;
+                    }
+                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .edit {
+                        border: 1px solid #bfbcbc;
+                    }
+                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .delete {
+                        border-top: 1px solid #bfbcbc;
+                        border-bottom: 1px solid #bfbcbc;
+                        border-right: 1px solid #bfbcbc;
+                    }
 		.wrapperPage .mainContent .content .contentInner .disco .head {
 			height: 26px;
 			margin-left: 150px;

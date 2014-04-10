@@ -91,8 +91,9 @@
             <input type="hidden" name="cn" value="Anadir instrucciones especiales para el vendedor">
             <input type="hidden" name="no_shipping" value="2">
             <input type="hidden" name="rm" value="1">
-            <input type="hidden" id="checkoutUrl" name="return" value="{{ url('MozcuMozcuBundle_albumCheckout', {'id': album.getId }) }}">
-            <input type="hidden" name="cancel_return" value="{{ url('MozcuMozcuBundle_albumAlbum', {'id': album.getId }) }}">
+            {% set username = album.getProfile.getUser.getUsername %}
+            <input type="hidden" id="checkoutUrl" name="return" value="{{ url('MozcuMozcuBundle_albumCheckout', {'username': username, 'id': album.getId }) }}">
+            <input type="hidden" name="cancel_return" value="{{ url('MozcuMozcuBundle_albumAlbum', {'username': username, 'id': album.getId }) }}">
             <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
             <input type="hidden" name="cbt" value="Terminar con la descarga del disco">
         </form>

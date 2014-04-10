@@ -53,4 +53,6 @@ security:
   access_control:
       - { path: ^/home, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
       - { path: ^/profile, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
-      - { path: ^/uploadAlbum, roles: [ROLE_ADMIN, ROLE_USER] }
+      - { path: ^/albms/upload, roles: [ROLE_ADMIN, ROLE_USER] }
+      - { path: ^/albms/edit, roles: [ROLE_ADMIN, ROLE_USER] }
+      - { path: ^/albms/delete, roles: [ROLE_ADMIN, ROLE_USER] }

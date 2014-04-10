@@ -344,4 +344,23 @@ class AlbumController extends MozcuController
             return $this->getJSONResponse(array('success' => 'false', 'message' => $e->getMessage()));   
         }
     }
+    
+    public function deleteAlbum(Request $request) {
+        try {
+            if($this->getRequest()->isXmlHttpRequest()) {
+                $id = $request->get('id');
+                $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
+                if(!is_null($album)) {
+                    $this->getMusicService()->deleteAlbum($album);
+                    return $this->getJSONResponse(array('success' => true));
+                } else {
+                    throw new AppException('The album does not exist');
+                }
+            } else {
+                throw new AppException('Invalid request');
+            }
+        } catch(\Exception $e) {
+            return $this->getJSONResponse(array('success' => 'false', 'message' => $e->getMessage()));   
+        }
+    }
 }
