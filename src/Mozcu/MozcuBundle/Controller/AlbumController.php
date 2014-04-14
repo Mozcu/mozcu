@@ -345,7 +345,7 @@ class AlbumController extends MozcuController
         }
     }
     
-    public function deleteAlbum(Request $request) {
+    public function deleteAlbumAction(Request $request) {
         try {
             if($this->getRequest()->isXmlHttpRequest()) {
                 $id = $request->get('id');

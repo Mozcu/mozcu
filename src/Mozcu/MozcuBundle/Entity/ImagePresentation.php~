@@ -48,6 +48,11 @@ class ImagePresentation {
      **/
     private $image;
     
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $static_file_name;
+    
     public function __construct() {
         $this->thumbnail = false;
     }
@@ -198,5 +203,28 @@ class ImagePresentation {
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set static_file_name
+     *
+     * @param string $staticFileName
+     * @return ImagePresentation
+     */
+    public function setStaticFileName($staticFileName)
+    {
+        $this->static_file_name = $staticFileName;
+    
+        return $this;
+    }
+
+    /**
+     * Get static_file_name
+     *
+     * @return string 
+     */
+    public function getStaticFileName()
+    {
+        return $this->static_file_name;
     }
 }

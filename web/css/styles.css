@@ -731,6 +731,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
                     .wrapperPage .mainContent .content .contentInner .disco .imgPortada .actions {
                         margin-top: 5px;
                     }
+                    
+                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .actionsLoader {
+                        margin-top: 5px;
+                        display: none;
+                        text-align: center;
+                    }
+                    
                     .wrapperPage .mainContent .content .contentInner .disco .imgPortada .action {
                         float: left;
                         padding: 5px 15px 5px 15px;

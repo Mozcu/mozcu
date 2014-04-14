@@ -40,6 +40,7 @@ class AlbumUploadQueuePending {
     public function __construct() {
         $this->createdAt = new \DateTime();
         $this->success = false;
+        $this->inProcess = false;
     }
 
     /**
@@ -119,5 +120,28 @@ class AlbumUploadQueuePending {
     public function getAlbum()
     {
         return $this->album;
+    }
+
+    /**
+     * Set inProcess
+     *
+     * @param boolean $inProcess
+     * @return AlbumUploadQueuePending
+     */
+    public function setInProcess($inProcess)
+    {
+        $this->inProcess = $inProcess;
+    
+        return $this;
+    }
+
+    /**
+     * Get inProcess
+     *
+     * @return boolean 
+     */
+    public function getInProcess()
+    {
+        return $this->inProcess;
     }
 }

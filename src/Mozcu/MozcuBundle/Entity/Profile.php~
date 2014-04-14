@@ -480,4 +480,13 @@ class Profile {
     {
         return $this->country;
     }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @return boolean
+     */
+    public function sameAs(Profile $profile) {
+        return $this->getId() == $profile->getId();
+    }
 }

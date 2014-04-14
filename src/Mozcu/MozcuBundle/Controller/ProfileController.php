@@ -68,7 +68,8 @@ class ProfileController extends MozcuController
             $parameters = array('user' => $user, 'albums' => $albums, 'selectedOption' => 'albums');
             $template = 'MozcuMozcuBundle:Profile:_profileAlbums.html.twig';
             
-            $loggedInUser = $this->getUser(); 
+            $loggedInUser = $this->getUser();
+            $parameters['isAuthenticated'] = false;
             if(!empty($loggedInUser) && $loggedInUser->getId() == $user->getId()) {
                 $parameters['isAuthenticated'] = true;
             }
@@ -125,6 +126,7 @@ class ProfileController extends MozcuController
             $parameters = array('user' => $user, 'selectedOption' => 'albums', 'albums' => $albums, 'isAuthenticated' => false);
             
             $loggedInUser = $this->getUser(); 
+            $parameters['isAuthenticated'] = false;
             if(!empty($loggedInUser) && $loggedInUser->getId() == $user->getId()) {
                 $parameters['isAuthenticated'] = true;
             }

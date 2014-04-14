@@ -266,7 +266,25 @@ class MusicService extends BaseService{
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      */
     public function deleteAlbum(Album $album) {
-        $this->getEntityManager()->remove($album);
-        $this->getEntityManager()->flush();
+        $em = $this->getEntityManager();
+        
+        $pending = $em->getRepository('MozcuMozcuBundle:AlbumUploadQueuePending')
+                    ->findOneBy(array('album' => $album->getId()));
+        
+        if(!is_null($pending)) {
+            $em->remove($pending);
+        }
+        
+        $failed = $em->getRepository('MozcuMozcuBundle:AlbumUploadQueueFailed')
+                    ->findOneBy(array('album' => $album->getId()));
+        
+        if(!is_null($failed)) {
+            $em->remove($failed);
+        }
+        
+        $this->uploadService->deleteAlbumFromStaticServer($album);
+        
+        $em->remove($album);
+        $em->flush();
     } 
 }

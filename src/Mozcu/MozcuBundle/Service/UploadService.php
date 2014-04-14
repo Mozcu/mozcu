@@ -7,6 +7,7 @@ use \Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Mozcu\MozcuBundle\Exception\AppException;
 use Mozcu\MozcuBundle\Lib\GoogleStorageService;
+use Mozcu\MozcuBundle\Entity\Album;
 
 class UploadService extends BaseService{
     
@@ -144,12 +145,41 @@ class UploadService extends BaseService{
         return $presResponse;
     }
     
+    /**
+     * 
+     * @param string $filePath
+     * @return string
+     */
     private function getMimeType($filePath) {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $filePath);
         finfo_close($finfo);
         
         return $mime;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @throws AppException
+     */
+    public function deleteAlbumFromStaticServer(Album $album) {
+        try {
+            //Songs
+            foreach($album->getSongs() as $song) {
+                $this->google_storage->delete($song->getStaticFileName());
+            }
+            //Images
+            foreach($album->getImage()->getPresentations() as $pres) {
+                $this->google_storage->delete($pres->getStaticFileName());
+            }
+            //Album
+            $this->google_storage->delete($album->getStaticZipFileName());
+            //$this->google_storage->delete($album->getStaticDirectory());
+            
+        } catch (Exception $e) {
+            throw new AppException("Error al eliminar archivos de un album: {$e->getMessage()}");
+        }
     }
     
 }

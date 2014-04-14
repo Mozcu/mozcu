@@ -15,6 +15,7 @@ $(function() {
         });
     });
     
+    /* Open Album */
     $('.mainContent').on('click', '.contentInner.discos .disco a', function(e) {
         e.preventDefault();
         var me = $(this);
@@ -25,6 +26,25 @@ $(function() {
                 $('.mainContent').html(data.html);
             }
         });
+    });
+    
+    /* Delete album */
+    $('.mainContent').on('click', '.contentInner.discos .disco .action.delete', function(e) {
+        if(!confirm('Esta seguro que desea eliminar el album?')) {
+            return;
+        }
+        
+        var me = $(this);
+        var url = $('#deleteAlbumUrl').val();
+        var album = me.parents('.disco');
+        
+        album.find('.actions').hide();
+        album.find('.actionsLoader').show();
+        $.post(url, {id: album.find('.albumId').val()}, function(data) {
+            if(data.success === 'true') {
+                album.hide('slow', function(){ album.remove(); });
+            }
+        }, 'json');
     });
     
     /***** Account Configuration *****/

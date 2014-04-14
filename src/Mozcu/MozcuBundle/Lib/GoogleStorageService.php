@@ -31,6 +31,14 @@ class GoogleStorageService {
         
     }
     
+    /**
+     * 
+     * @param string $filePath
+     * @param string $name
+     * @param string $mimeType
+     * @return array
+     * @throws GoogleStorageException
+     */
     public function upload($filePath, $name, $mimeType) {
         $objects = $this->service->objects;
         $gso = new \Google_Service_Storage_StorageObject();
@@ -43,6 +51,14 @@ class GoogleStorageService {
         } catch(Exception $e) {
             throw new GoogleStorageException($e->getMessage(), $e->getCode());
         }
+    }
+    
+    public function delete($name) {
+        try {
+            return $this->service->objects->delete($this->bucket,$name);
+        } catch(Exception $e) {
+            throw new GoogleStorageException($e->getMessage(), $e->getCode());
+        }   
     }
     
     

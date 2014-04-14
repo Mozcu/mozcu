@@ -56,6 +56,11 @@ class Song {
      */
     private $temporal_file_name;
     
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $static_file_name;
+    
     public function __construct() {
         $this->playlists = new ArrayCollection();
     }
@@ -239,5 +244,28 @@ class Song {
     public function getTemporalFileName()
     {
         return $this->temporal_file_name;
+    }
+
+    /**
+     * Set static_file_name
+     *
+     * @param string $staticFileName
+     * @return Song
+     */
+    public function setStaticFileName($staticFileName)
+    {
+        $this->static_file_name = $staticFileName;
+    
+        return $this;
+    }
+
+    /**
+     * Get static_file_name
+     *
+     * @return string 
+     */
+    public function getStaticFileName()
+    {
+        return $this->static_file_name;
     }
 }

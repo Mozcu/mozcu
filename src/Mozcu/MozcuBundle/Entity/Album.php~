@@ -45,17 +45,17 @@ class Album {
     private $profile;
     
     /**
-     * @ORM\OneToMany(targetEntity="Song", mappedBy="album", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Song", mappedBy="album", cascade={"persist", "remove"})
      **/
     private $songs;
     
     /**
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="album", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="album", cascade={"persist", "remove"})
      **/
     private $reviews;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="albums", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="albums", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="album_tag")
      *
      */
@@ -72,7 +72,7 @@ class Album {
     private $isActive;
     
     /**
-     * @ORM\OneToOne(targetEntity="AlbumImage", mappedBy="album", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="AlbumImage", mappedBy="album", cascade={"persist", "remove"})
      **/
     private $image;
     
@@ -100,6 +100,11 @@ class Album {
      * @ORM\Column(type="integer", nullable=true)
      */
     private $downloads;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $static_zip_file_name;
     
     public function __construct() {
         $this->songs = new ArrayCollection();
@@ -554,5 +559,14 @@ class Album {
             default:
                 break;
         }
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @return boolean
+     */
+    public function belongToProfile(Profile $profile) {
+        return $this->getProfile()->sameAs($profile);
     }
 }

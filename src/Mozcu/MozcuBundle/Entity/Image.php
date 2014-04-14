@@ -37,7 +37,7 @@ abstract class Image {
     protected $mimeType;
     
     /**
-     * @ORM\OneToMany(targetEntity="ImagePresentation", mappedBy="image", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ImagePresentation", mappedBy="image", cascade={"persist", "remove"})
      **/
     protected $presentations;
 
