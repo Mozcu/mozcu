@@ -85,7 +85,7 @@ class AlbumController extends MozcuController
                     $parameters['template'] = $template;
                     return $this->renderAjaxResponse('MozcuMozcuBundle:Album:albumTemplateForAjax.html.twig', $parameters);    
                 } else {
-                    return $this->getJSONResponse(array('success' => 'false'));  
+                    return $this->getJSONResponse(array('success' => false));  
                 }
             } else {
                 if($success) {
@@ -114,7 +114,7 @@ class AlbumController extends MozcuController
                 if($success) {
                     return $this->renderAjaxResponse($template, $parameters);    
                 } else {
-                    return $this->getJSONResponse(array('success' => 'false'));   
+                    return $this->getJSONResponse(array('success' => false));   
                 }
                 
             } else {
@@ -146,7 +146,7 @@ class AlbumController extends MozcuController
                 if($success) {
                     return $this->renderAjaxResponse($template, $parameters);    
                 } else {
-                    return $this->getJSONResponse(array('success' => 'false'));   
+                    return $this->getJSONResponse(array('success' => false));   
                 }
                 
             } else {
@@ -177,7 +177,7 @@ class AlbumController extends MozcuController
                 if($success) {
                     return $this->renderAjaxResponse($template, $parameters);    
                 } else {
-                    return $this->getJSONResponse(array('success' => 'false'));   
+                    return $this->getJSONResponse(array('success' => false));   
                 }
                 
             } else {
@@ -207,7 +207,7 @@ class AlbumController extends MozcuController
                 if($success) {
                     return $this->renderAjaxResponse($template, $parameters);    
                 } else {
-                    return $this->getJSONResponse(array('success' => 'false'));   
+                    return $this->getJSONResponse(array('success' => false));   
                 }
                 
             } else {
@@ -239,7 +239,7 @@ class AlbumController extends MozcuController
                     $parameters['template'] = $template;
                     return $this->renderAjaxResponse('MozcuMozcuBundle:Album:albumTemplateForAjax.html.twig', $parameters);    
                 } else {
-                    return $this->getJSONResponse(array('success' => 'false'));  
+                    return $this->getJSONResponse(array('success' => false));  
                 }
             } else {
                 if($success) {
@@ -272,7 +272,7 @@ class AlbumController extends MozcuController
                 if($success) {
                     return $this->getJSONResponse(array('success' => true, 'zipUrl' => $zipUrl));    
                 } else {
-                    return $this->getJSONResponse(array('success' => 'false'));   
+                    return $this->getJSONResponse(array('success' => false));   
                 }
             } else {
                 return $this->renderAlbumNotFound();
@@ -338,10 +338,10 @@ class AlbumController extends MozcuController
                 }
                 return $this->getJSONResponse(array('success' => true, 'album' => $albumData));
             } else {
-                return $this->getJSONResponse(array('success' => 'false', 'message' => 'El album no existe'));   
+                return $this->getJSONResponse(array('success' => false, 'message' => 'El album no existe'));   
             }
         } catch(\Exception $e) {
-            return $this->getJSONResponse(array('success' => 'false', 'message' => $e->getMessage()));   
+            return $this->getJSONResponse(array('success' => false, 'message' => $e->getMessage()));   
         }
     }
     
@@ -360,7 +360,7 @@ class AlbumController extends MozcuController
                 throw new AppException('Invalid request');
             }
         } catch(\Exception $e) {
-            return $this->getJSONResponse(array('success' => 'false', 'message' => $e->getMessage()));   
+            return $this->getJSONResponse(array('success' => false, 'message' => $e->getMessage()));   
         }
     }
 }

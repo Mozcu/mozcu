@@ -41,7 +41,7 @@ $(function() {
         album.find('.actions').hide();
         album.find('.actionsLoader').show();
         $.post(url, {id: album.find('.albumId').val()}, function(data) {
-            if(data.success === 'true') {
+            if(data.success) {
                 album.hide('slow', function(){ album.remove(); });
             }
         }, 'json');
