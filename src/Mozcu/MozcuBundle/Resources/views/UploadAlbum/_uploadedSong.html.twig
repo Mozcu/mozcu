@@ -1,15 +1,32 @@
-<div id="${fileID}" class="uploadify-queue-item uploadedSong">
+{% if song is defined %}
+    {% set fileId = 'SWFUpload_3_' ~ song.getTrackNumber %}
+    {% set instanceId = 'add_tracks' %}
+    {% set fileName = song.getName %}
+    {% set fileSize = '' %}
+{% else %}
+    {% set fileId = '${fileID}' %}
+    {% set instanceId = '${instanceID}' %}
+    {% set fileName = '${fileName}' %}
+    {% set fileSize = '(${fileSize})' %}
+{% endif %}
+
+<div id="{{ fileId }}" class="uploadify-queue-item uploadedSong">
+    {% if song is defined %}
+        <input type="hidden" class="url" value="{{ song.getUrl }}" />
+        <input type="hidden" class="length" value="{{ song.getLength }}" />
+    {% endif %}
+    
     <div class="cancel">
-        <a href="javascript:$('#${instanceID}').uploadify('cancel', '${fileID}')" style="background: url('{{ asset('images/uploadify-cancel.png') }}') 0 0 no-repeat;">X</a>
+        <a href="javascript:$('#{{ instanceId }}').uploadify('cancel', '{{ fileId }}')" style="background: url('{{ asset('images/uploadify-cancel.png') }}') 0 0 no-repeat;">X</a>
     </div>
     <span class="songName">
-        <a class="editSongName" href="#">${fileName}</a>
-        <input type="text" class="editingSongName" value="${fileName}" />
+        <a class="editSongName" href="#">{{ fileName }}</a>
+        <input type="text" class="editingSongName" value="{{ fileName }}" />
     </span>
-    <span>(${fileSize}) </span>
-    <span class="data"></span>
+    <span>{{ fileSize }}</span>
+    <span class="data"> - Complete</span>
     <div class="uploadify-progress">
-        <div class="uploadify-progress-bar">
+        <div class="uploadify-progress-bar" style="width: 100%;">
             <!--Progress Bar-->
         </div>					
     </div>

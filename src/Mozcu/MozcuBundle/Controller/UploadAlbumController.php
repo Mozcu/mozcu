@@ -78,15 +78,4 @@ class UploadAlbumController extends MozcuController {
         
         return $this->getJSONResponse($content);
     }
-    
-    public function testGoogleAction(Request $request) {
-        $filePath = '/home/mauro/Pictures/PJLB.jpg';
-        $mimeType = 'image/jpeg';
-        $name = uniqid() . 'jpg';
-        
-        $storage = $this->get('mozcu_mozcu.google_storage1');
-        $response = $storage->upload($filePath, $name, $mimeType);
-        echo '<pre>'; var_dump($response); echo '</pre>';
-        die;
-    }
 }

@@ -71,6 +71,13 @@ abstract class MozcuController extends Controller{
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+    
+    protected function debug($object) {
+        echo '<pre>';
+        var_dump($object);
+        echo '</pre>';
+        die;
+    }
 }
 
 ?>

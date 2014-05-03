@@ -14,6 +14,7 @@
         {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
             <!-- DISCO -->
             <div class="disco">
+                <input type="hidden" class="editAlbumUrl" value="{{ path('MozcuMozcuBundle_editAlbum', {'id': album.getId}) }}" />
                 <input type="hidden" class="albumId" value="{{ album.getId }}" />
                 <div class="imgPortada">
                     {% if album.getIsActive == false %}

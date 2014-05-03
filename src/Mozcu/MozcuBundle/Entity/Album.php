@@ -215,7 +215,14 @@ class Album {
      */
     public function getCoverImageUrl()
     {
-        return $this->coverImageUrl;
+        foreach($this->image->getPresentations() as $pres) {
+            if($pres->getName() == 'cover') {
+                return $pres->getUrl();
+            }
+        }
+        return null;
+        
+        //return $this->coverImageUrl;
     }
 
     /**
@@ -318,6 +325,13 @@ class Album {
     public function getSongs()
     {
         return $this->songs;
+    }
+    
+    /**
+     * Clear Songs
+     */
+    public function clearSongs() {
+        $this->songs = new ArrayCollection();
     }
 
     /**

@@ -15,7 +15,7 @@
             <div class="deleteImage">Borrar</div>
             <input type="hidden" id="imageFileName" value="" />
             <img class="preview" src="" />
-            <div class="text">
+            <div class="text" {% if album is defined  and album.getImage is not null %} style="display:none" {% endif %}>
                     <span class="imagePlaceholderText">Portada del album</span>
                     <div class="fileUpload">
                         <span>Subir desde tu computadora</span>
@@ -24,9 +24,12 @@
                     <!--<input type="file" name="image" id="uploadAlbumImage" />-->
                     <input type="hidden" id="uploadImageUrl" value="{{ path('MozcuMozcuBundle_uploadImage') }}" />
             </div>
+            {% if album is defined  and album.getImage is not null %} 
+                <input type="hidden" id="imageUrl" value="{{ album.getCoverImageUrl }}" /> 
+            {% endif %}
         </div>
         <div class="discName">
-                <input type="text" id="albumName" placeholder="Nombre de tu disco" />
+                <input type="text" id="albumName" placeholder="Nombre de tu disco" value="{% if album is defined %}{{ album.getName }}{% endif %}"/>
         </div>
     </div>
     
@@ -42,6 +45,13 @@
 
                     <div style="width: 500px;" >
                         <input type="file" multiple="true" id="add_tracks" />
+                        <div id="add_tracks-queue" class="uploadify-queue ui-sortable">
+                            {% if album is defined %}
+                                {% for song in album.getSongs %}
+                                    {{ include('MozcuMozcuBundle:UploadAlbum:_uploadedSong.html.twig', {'song': song}) }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
             </div>
 
@@ -53,16 +63,21 @@
             <br />
             <div class="form">
                     <label for="">A&ntilde;o grabación</label> <br />
-                    <input id="albumRecordingDate" pattern="[0-9]{4}" maxlength="4" placeholder="Ej: 1994"/>
+                    <input id="albumRecordingDate" pattern="[0-9]{4}" maxlength="4" placeholder="Ej: 1994" value="{% if album is defined %}{{ album.getReleaseDate }}{% endif %}"/>
                     <div class="clearBoth"></div><br />
 
                     <label for="">Descripción</label> <br />
-                    <textarea name="" id="albumDescription" cols="30" rows="10"></textarea><br />
+                    <textarea name="" id="albumDescription" cols="30" rows="10">{% if album is defined %}{{ album.getDescription }}{% endif %}</textarea><br />
                     <div class="clearBoth"></div><br />
 
                     <label for="">Etiquetas <img src="{{ asset('images/iconHelp.jpg') }}" height="14" width="14" alt="" /></label>
                     <div class="clearBoth"></div>
                     <div class="tags">
+                        {% if album is defined %}
+                            {% for tag in album.getTags %}
+                                {{ include('MozcuMozcuBundle:UploadAlbum:_albumTag.html.twig', {'tagValue': tag.name}) }}
+                            {% endfor %}
+                        {% endif %}
                         <input type="text" class="tagInput" placeholder="Escribi tus etiquetas aca"/>
                     </div>
                     <div class="clearBoth"></div><br />
@@ -71,43 +86,43 @@
                     <div class="licenses">
                         <input type="hidden" id="license" value="" />
                         <div class="license">
-                            <a href="#" class="dos" id="2"></a>
+                            <a href="#" class="dos {% if album is defined and album.getLicense == '2'%}selected{% endif %}" id="2"></a>
                             <br />
                             <span>Reconocimiento</span>
                         </div>
 
                         <div class="license">
-                            <a href="#" class="tres" id="3"></a>
+                            <a href="#" class="tres {% if album is defined and album.getLicense == '3'%}selected{% endif %}" id="3"></a>
                             <br />
                             <span>Reconocimiento - Compartir bajo la misma licencia</span>
                         </div>
 
                         <div class="license">
-                            <a href="#" class="cuatro" id="4"></a>
+                            <a href="#" class="cuatro {% if album is defined and album.getLicense == '4'%}selected{% endif %}" id="4"></a>
                             <br />
                             <span>Reconocimiento - Sin obras derivadas</span>
                         </div>
 
                         <div class="license">
-                            <a href="#" class="cinco" id="5"></a>
+                            <a href="#" class="cinco {% if album is defined and album.getLicense == '5'%}selected{% endif %}" id="5"></a>
                             <br />
                             <span>Reconocimiento - No comercial</span>
                         </div>
 
                         <div class="license">
-                            <a href="#" class="seis" id="6"></a>
+                            <a href="#" class="seis {% if album is defined and album.getLicense == '6'%}selected{% endif %}" id="6"></a>
                             <br />
                             <span>Reconocimiento - No comercial - Compartir bajo la misma licencia</span>
                         </div>
 
                         <div class="license">
-                            <a href="#" class="siete" id="7" ></a>
+                            <a href="#" class="siete {% if album is defined and album.getLicense == '7'%}selected{% endif %}" id="7" ></a>
                             <br />
                             <span>Reconocimiento - No comercial - Sin Obras Derivadas</span>
                         </div>
 
                         <div class="license">
-                            <a href="#" class="uno" id="1"></a>
+                            <a href="#" class="uno {% if album is defined and album.getLicense == '1'%}selected{% endif %}" id="1"></a>
                             <br />
                             <span>Todos los derechos reservados &copy;</span>
                         </div>
@@ -117,8 +132,13 @@
             </div>
 
             <div class="clearBoth"></div><br />
-
-            <a href="{{ path('MozcuMozcuBundle_uploadAlbum') }}" class="uploadButton"></a>
+            
+            {% if album is defined %}
+                <a href="{{ path('MozcuMozcuBundle_updateAlbum', {'id': album.getId}) }}" class="uploadButton"></a>
+            {% else %}
+                <a href="{{ path('MozcuMozcuBundle_uploadAlbum') }}" class="uploadButton"></a>
+            {% endif %}
+            
     </div>
 </div>
 
@@ -248,6 +268,10 @@
                         loader.hide();
                         img.show();
                         deleteImg.show();
+                        
+                        if($('#imageUrl').length > 0) {
+                            $('#imageUrl').remove();
+                        }
                     }
                 }
             });
@@ -273,5 +297,13 @@
             me.addClass('selected');
             $('#license').val(me.attr('id'));
         });
-    })
+        
+        // for edit
+        if($('#imageUrl').length > 0) {
+            var container = $('.uploadFront');
+            container.find('.text').hide();
+            container.find('.preview').attr('src', $('#imageUrl').val()).show();
+            container.find('.deleteImage').show();
+        }
+    });
 </script>

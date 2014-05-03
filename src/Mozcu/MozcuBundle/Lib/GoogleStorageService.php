@@ -53,12 +53,32 @@ class GoogleStorageService {
         }
     }
     
+    /**
+     * 
+     * @param string $name
+     * @return string
+     * @throws GoogleStorageException
+     */
     public function delete($name) {
         try {
             return $this->service->objects->delete($this->bucket,$name);
         } catch(Exception $e) {
             throw new GoogleStorageException($e->getMessage(), $e->getCode());
         }   
+    }
+    
+    /**
+     * 
+     * @param string $name
+     * @return mixed
+     * @throws GoogleStorageException
+     */
+    public function get($name) {
+        try {
+            return $this->service->objects->get($this->bucket,$name);
+        } catch (Exception $ex) {
+            throw new GoogleStorageException($e->getMessage(), $e->getCode());
+        }
     }
     
     

@@ -95,6 +95,18 @@ MozcuMozcuBundle_deleteAlbum:
     defaults: {_controller: MozcuMozcuBundle:Album:deleteAlbum}
     requirements:
       _method: POST
+      
+MozcuMozcuBundle_editAlbum:
+    pattern: /albums/edit/{id}
+    defaults: {_controller: MozcuMozcuBundle:Album:editAlbum}
+    requirements:
+      _method: GET
+      
+MozcuMozcuBundle_updateAlbum:
+    pattern: /albums/update/{id}
+    defaults: {_controller: MozcuMozcuBundle:Album:updateAlbum}
+    requirements:
+      _method: POST
 
 MozcuMozcuBundle_albumAlbum:
     pattern: /{username}/album/{id}

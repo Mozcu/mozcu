@@ -37,10 +37,16 @@ class AlbumUploadQueuePending {
      */
     private $inProcess;
     
+    /**
+     * @ORM\Column(name="to_update", type="boolean")
+     */
+    private $toUpdate;
+    
     public function __construct() {
         $this->createdAt = new \DateTime();
         $this->success = false;
         $this->inProcess = false;
+        $this->toUpdate = false;
     }
 
     /**
@@ -143,5 +149,28 @@ class AlbumUploadQueuePending {
     public function getInProcess()
     {
         return $this->inProcess;
+    }
+
+    /**
+     * Set toUpdate
+     *
+     * @param boolean $toUpdate
+     * @return AlbumUploadQueuePending
+     */
+    public function setToUpdate($toUpdate)
+    {
+        $this->toUpdate = $toUpdate;
+    
+        return $this;
+    }
+
+    /**
+     * Get toUpdate
+     *
+     * @return boolean 
+     */
+    public function getToUpdate()
+    {
+        return $this->toUpdate;
     }
 }

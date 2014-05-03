@@ -24,6 +24,7 @@ $(function() {
         fileSizeLimit   : '0',
         fileTypeExts    : '*.mp3',
         itemTemplate    : uploadifyTemplate,
+        queueID         : 'add_tracks-queue',
         onUploadSuccess : function(file, data, response) {
             var data = $.parseJSON(data);    
             if(data.success) {
@@ -161,6 +162,10 @@ $(function() {
         album.release_date = $.trim($('#albumRecordingDate').val());
         album.description = $.trim($('#albumDescription').val());
         album.image_file_name = $.trim($('#imageFileName').val());
+        album.validate_image = true;
+        if($('#imageUrl').length > 0) {
+            album.validate_image = false;
+        }
         album.license = $("#license").val();
         
         album.songs = new Array;
@@ -170,6 +175,15 @@ $(function() {
             song.name = $.trim(me.find('.editingSongName').val());
             song.file_name = me.find('.realFileName').val();
             song.track_number = key + 1;
+            
+            if(me.find('.url').length > 0) {
+                song.url = me.find('.url').val();
+            }
+            
+            if(me.find('.length').length > 0) {
+                song.length = me.find('.length').val();
+            }
+            
             album.songs.push(song);
         });
         
@@ -193,7 +207,7 @@ $(function() {
             response.errors.push({message: "El disco no posee nombre"});
         }
         
-        if (album.image_file_name.length === 0) {
+        if (album.validate_image && album.image_file_name.length === 0) {
             response.success = false;
             response.errors.push({message: "El disco no posee una imagen"});
         }
@@ -226,7 +240,7 @@ $(function() {
          $('.uploadedSong').each(function(key, value){
             var me = $(value);
             
-            if(me.find('.realFileName').val().length === 0) {
+            if(me.find('.url').length === 0 && me.find('.realFileName').val().length === 0) {
                 response.success = false;
                 response.errors.push({message: "Uno o mas temas aun estan subiendo"});
                 return false;

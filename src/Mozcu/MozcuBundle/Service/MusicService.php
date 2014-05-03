@@ -45,14 +45,8 @@ class MusicService extends BaseService{
         try {
             $album = new Album();
             $album->setProfile($profile);
-            $album = $this->updateAlbum($album, $data);
             
-            $this->getEntityManager()->persist($album);
-            $this->getEntityManager()->flush();
-
-            $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album);
-            
-            return $album;
+            return $this->updateAlbum($album, $data);
         } catch (\Exception $e) {
             throw new AppException($e->getMessage());
         }
@@ -65,7 +59,7 @@ class MusicService extends BaseService{
      * @return Mozcu\MozcuBundle\Entity\Album
      * @throws AppException
      */
-    public function updateAlbum(Album $album, array $data) {
+    public function updateAlbum(Album $album, array $data, $toQueue = false) {
         try {
             $album->setName($data['name']);
             $album->setLicense($data['license']);
@@ -78,9 +72,11 @@ class MusicService extends BaseService{
                 $album->setReleaseDate($data['release_date']);
             }
             
-            $image = $this->createImage($data['image_file_name']);
-            $album->setImage($image);
-            $image->setAlbum($album);
+            if(!empty($data['image_file_name'])) {
+                $image = $this->createImage($data['image_file_name']);
+                $album->setImage($image);
+                $image->setAlbum($album);
+            }
             
             $album = $this->updateSongs($album, $data['songs']);
             $album = $this->updateTags($album, $data['tags']);
@@ -88,6 +84,16 @@ class MusicService extends BaseService{
             if(!is_null($this->currentStaticDirectory)) {
                 $album->setStaticDirectory($this->currentStaticDirectory);
             }
+            
+            if($toQueue) {
+                $album->setIsActive(false);
+                $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album, true); 
+            }
+            
+            $this->getEntityManager()->persist($album);
+            $this->getEntityManager()->flush();
+            
+            
             
             //$this->addImageToAlbumFolder($data['image_file_name'], $this->currentStaticDirectory);
             
@@ -166,6 +172,7 @@ class MusicService extends BaseService{
         foreach($album->getSongs() as $song) {
             $this->getEntityManager()->remove($song);
         }
+        $album->clearSongs();
         $this->getEntityManager()->flush();
         return true;
     }
@@ -179,11 +186,18 @@ class MusicService extends BaseService{
         $song = new Song();
         $song->setName($songData['name']);
         $song->setTrackNumber($songData['track_number']);
-        $song->setLength($this->getSongTime($songData['file_name']));
-        $song->setTemporalFileName($songData['file_name']);
+        
+        if(isset($songData['file_name']) && !empty($songData['file_name'])) {
+            $song->setTemporalFileName($songData['file_name']);
+            $song->setLength($this->getSongTime($songData['file_name']));
+        }
                 
-        if(isset($songData['song_url']) && !empty($songData['song_url'])) {
-            $song->setUrl($songData['song_url']);
+        if(isset($songData['url']) && !empty($songData['url'])) {
+            $song->setUrl($songData['url']);
+        }
+        
+        if(isset($songData['length']) && !empty($songData['length'])) {
+            $song->setLength($songData['length']);
         }
         
         return $song;

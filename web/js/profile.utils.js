@@ -47,6 +47,21 @@ $(function() {
         }, 'json');
     });
     
+    /* Edit album */
+    $('.mainContent').on('click', '.contentInner.discos .disco .action.edit', function(e) {
+        var me = $(this);
+        var album = me.parents('.disco');
+        var url = album.find('.editAlbumUrl').val();
+        
+        album.find('.actions').hide();
+        album.find('.actionsLoader').show();
+        $.getJSON(url, {id: album.find('.albumId').val()}, function(data) {
+            if(data.success) {
+                $('.mainContent').html(data.html);
+            }
+        });
+    });
+    
     /***** Account Configuration *****/
     $('.mainContent').on('click', '#saveUserSettings', function(e){
         var url = $('#saveUserSettingsUrl').val();

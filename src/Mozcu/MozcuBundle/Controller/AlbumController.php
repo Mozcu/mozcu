@@ -363,4 +363,36 @@ class AlbumController extends MozcuController
             return $this->getJSONResponse(array('success' => false, 'message' => $e->getMessage()));   
         }
     }
+    
+    public function editAlbumAction($id) {
+        $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
+        if(!is_null($album)) {
+            $parameters = array('album' => $album, 'username' => $this->getUser()->getUsername());
+
+            if($this->getRequest()->isXmlHttpRequest()) {
+                $html = $this->renderView("MozcuMozcuBundle:UploadAlbum:indexAjax.html.twig", $parameters);
+                return $this->getJSONResponse(array('success' => true, 'html' => $html));
+            }
+            return $this->render("MozcuMozcuBundle:UploadAlbum:index.html.twig", $parameters);
+
+        } else {
+            return $this->getJSONResponse(array('success' => false));
+        }
+    }
+    
+    public function updateAlbumAction($id, Request $request) {
+        try {
+            $data = $request->get('album');
+            
+            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
+            $album = $this->getMusicService()->updateAlbum($album, $data, true);
+            $content =array('success' => true,
+                            'album_id' => $album->getId(),
+                            'album_name' => $album->getName());
+        } catch (\Exception $e) {
+            $content = array('success' => false, 'message' => $e->getMessage());
+        }
+        
+        return $this->getJSONResponse($content);
+    }
 }

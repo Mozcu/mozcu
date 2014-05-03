@@ -182,4 +182,12 @@ class UploadService extends BaseService{
         }
     }
     
+    public function generateZip(Album $album) {
+        foreach($album->getSongs() as $song) {
+            $file = $this->google_storage->get($song->getStaticFileName());
+            error_log(print_r($file, true));
+            file_put_contents('/var/www/caca/' . $song->getName() . '.mp3', $file);
+        }
+    }
+    
 }

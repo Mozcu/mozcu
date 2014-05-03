@@ -28,9 +28,21 @@ class QueueService extends BaseService{
         return 'QueueService';
     }
 
-    public function addAlbumToQueue(\Mozcu\MozcuBundle\Entity\Album $album) {
+    public function addAlbumToQueue(\Mozcu\MozcuBundle\Entity\Album $album, $update = false) {
         $queue = new \Mozcu\MozcuBundle\Entity\AlbumUploadQueuePending();
         $queue->setAlbum($album);
+        
+        if($update) {
+            $pending = $this->getEntityManager()->getRepository('MozcuMozcuBundle:AlbumUploadQueuePending')->findOneBy(array('album' => $album->getId()));
+            $failed = $this->getEntityManager()->getRepository('MozcuMozcuBundle:AlbumUploadQueueFailed')->findOneBy(array('album' => $album->getId()));
+            
+            $this->getEntityManager()->remove($pending);
+            if(!is_null($failed)) {
+                $this->getEntityManager()->remove($failed);
+            }
+            $this->getEntityManager()->flush();
+        }
+        $queue->setToUpdate($update);
 
         $this->getEntityManager()->persist($queue);
         $this->getEntityManager()->flush();

@@ -215,7 +215,14 @@ class Album {
      */
     public function getCoverImageUrl()
     {
-        return $this->coverImageUrl;
+        foreach($this->image->getPresentations() as $pres) {
+            if($pres->getName() == 'cover') {
+                return $pres->getUrl();
+            }
+        }
+        return null;
+        
+        //return $this->coverImageUrl;
     }
 
     /**
@@ -318,6 +325,13 @@ class Album {
     public function getSongs()
     {
         return $this->songs;
+    }
+    
+    /**
+     * Clear Songs
+     */
+    public function clearSongs() {
+        $this->songs = new ArrayCollection();
     }
 
     /**
@@ -568,5 +582,28 @@ class Album {
      */
     public function belongToProfile(Profile $profile) {
         return $this->getProfile()->sameAs($profile);
+    }
+
+    /**
+     * Set static_zip_file_name
+     *
+     * @param string $staticZipFileName
+     * @return Album
+     */
+    public function setStaticZipFileName($staticZipFileName)
+    {
+        $this->static_zip_file_name = $staticZipFileName;
+    
+        return $this;
+    }
+
+    /**
+     * Get static_zip_file_name
+     *
+     * @return string 
+     */
+    public function getStaticZipFileName()
+    {
+        return $this->static_zip_file_name;
     }
 }
