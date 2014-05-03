@@ -84,7 +84,7 @@
 
                     <label>Licencia </label>
                     <div class="licenses">
-                        <input type="hidden" id="license" value="" />
+                        <input type="hidden" id="license" value="{% if album is defined %} {{ album.getLicense }} {% endif %}" />
                         <div class="license">
                             <a href="#" class="dos {% if album is defined and album.getLicense == '2'%}selected{% endif %}" id="2"></a>
                             <br />

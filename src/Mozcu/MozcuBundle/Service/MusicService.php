@@ -86,8 +86,12 @@ class MusicService extends BaseService{
             }
             
             if($toQueue) {
-                $album->setIsActive(false);
-                $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album, true); 
+                if(!$this->compareSongs($album, $data)) {
+                    $album->setIsActive(false);
+                    $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album, true); 
+                }
+            } else {
+                $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album); 
             }
             
             $this->getEntityManager()->persist($album);
@@ -273,6 +277,29 @@ class MusicService extends BaseService{
         } else {
             return null;
         }
+    }
+    
+    /**
+     * Compara si el album posee las mismas canciones que la data ingresante
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @param array $data
+     * @return boolean
+     */
+    private function compareSongs(Album $album, $data) {
+        foreach($album->getSongs() as $song) {
+            $same = false;
+            foreach($data['songs'] as $songData) {
+                if(isset($songData['url']) && $song->getUrl() == $songData['url']) {
+                    $same = true;
+                    break 1;
+                } 
+            }
+            if(!$same) {
+               return false; 
+            }
+        }
+        return true;
     }
     
     /**
