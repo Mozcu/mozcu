@@ -48,6 +48,7 @@ class MusicService extends BaseService{
             
             return $this->updateAlbum($album, $data);
         } catch (\Exception $e) {
+            //die('new: ' . $e->getMessage());
             throw new AppException($e->getMessage());
         }
     }
@@ -85,6 +86,9 @@ class MusicService extends BaseService{
                 $album->setStaticDirectory($this->currentStaticDirectory);
             }
             
+            $this->getEntityManager()->persist($album);
+            $this->getEntityManager()->flush();
+            
             if($toQueue) {
                 if(!$this->compareSongs($album, $data)) {
                     $album->setIsActive(false);
@@ -94,16 +98,12 @@ class MusicService extends BaseService{
                 $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album); 
             }
             
-            $this->getEntityManager()->persist($album);
-            $this->getEntityManager()->flush();
-            
-            
-            
             //$this->addImageToAlbumFolder($data['image_file_name'], $this->currentStaticDirectory);
             
             return $album;
             
         } catch (\Exception $e) {
+            //die('update: ' . $e->getMessage());
             throw new AppException($e->getMessage());
         }
     }
@@ -159,6 +159,7 @@ class MusicService extends BaseService{
             }
             return $album;
         } catch (\Exception $e) {
+            //die('song: ' . $e->getMessage());
             throw new AppException($e->getMessage());
         }
     }
@@ -228,6 +229,7 @@ class MusicService extends BaseService{
             }
             return $album;
         } catch (\Exception $e) {
+            //die('tags: ' . $e->getMessage());
             throw new AppException($e->getMessage());
         }
     }

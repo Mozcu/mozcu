@@ -17,16 +17,12 @@
                 <input type="hidden" class="editAlbumUrl" value="{{ path('MozcuMozcuBundle_editAlbum', {'id': album.getId}) }}" />
                 <input type="hidden" class="albumId" value="{{ album.getId }}" />
                 <div class="imgPortada">
-                    {% if album.getIsActive == false %}
+                    {% if album.getIsActive == false  and album.getListThumbnailUrl is null %}
                         <img src="/uploads/images/tmp/{{ album.getImage.getTemporalFileName }}" alt="" style="width: 139px; height: 139px;"/>
                     {% else %}
-                        {% for presentation in album.getImage.getPresentations %}
-                            {% if presentation.getName == 'list_thumbanil' %}
-                                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
-                                    <img src="{{ presentation.url }}" alt="" />
-                                </a>
-                            {% endif %}
-                        {% endfor %}
+                        <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
+                            <img src="{{ album.getListThumbnailUrl }}" alt="" />
+                        </a>
                     {% endif %}
 
                     {% if isAuthenticated == true and album.getIsActive  == true %}

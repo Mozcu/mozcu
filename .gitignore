@@ -8,3 +8,5 @@ MyProject.komodoproject
 /app/logs
 /app/cache
 /web/uploads
+/bin/clean_db.sql
+/bin/cleandb.sh

@@ -113,7 +113,7 @@ $(function() {
         
         var album = prepareAlbumData();
         
-        validation = validateAlbumData(album);
+        var validation = validateAlbumData(album);
         if (!validation.success) {
             $.each(validation.errors, function(key, value) {
                 errorMsg.find('.messageInner').append('<p class="error"> - ' + value.message + '</p>');
@@ -153,7 +153,7 @@ $(function() {
         tag.append(hidden);
         
         return tag;
-    }
+    };
     
     var prepareAlbumData = function() {
         var album = {};
@@ -194,7 +194,7 @@ $(function() {
         });
         
         return album;
-    }
+    };
     
     var validateAlbumData = function(album) {
         var response = {};
@@ -254,6 +254,6 @@ $(function() {
         });
         
         return response;
-    }
+    };
     
 });

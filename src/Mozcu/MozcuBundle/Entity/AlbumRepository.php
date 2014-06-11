@@ -26,12 +26,15 @@ class AlbumRepository extends EntityRepository {
     
     public function findByTags(array $tags) {
         $in = "(" . implode(',', $tags) . ")";
+        $cant = count($tags);
         
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
         $queryBuilder->select("a");
         $queryBuilder->from('MozcuMozcuBundle:Album', 'a');
         $queryBuilder->innerJoin('a.tags', 't');
         $queryBuilder->where("t.id IN {$in} AND a.isActive = 1");
+        $queryBuilder->groupBy("a.name");
+        $queryBuilder->having("COUNT(t.id) = {$cant}");
         $queryBuilder->orderBy('a.id', 'DESC');
 
         return $queryBuilder->getQuery()->getResult();

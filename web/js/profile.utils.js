@@ -58,6 +58,7 @@ $(function() {
         $.getJSON(url, {id: album.find('.albumId').val()}, function(data) {
             if(data.success) {
                 $('.mainContent').html(data.html);
+                $('html,body').animate({scrollTop: 0}, 800);
             }
         });
     });
