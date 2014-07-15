@@ -87,5 +87,3 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface,
     }
 
 }
-
-?>

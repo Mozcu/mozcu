@@ -60,6 +60,15 @@ class User implements UserInterface, \Serializable {
      **/
     private $profiles;
     
+    /**
+     * @ORM\Column(name="old_password", type="string", length=255, nullable=true)
+     */
+    private $oldPassword;
+    
+    /**
+     * @ORM\Column(name="old_login", type="boolean")
+     */
+    private $oldLogin;
     
     public function __construct()
     {
@@ -68,6 +77,7 @@ class User implements UserInterface, \Serializable {
         $this->groups = new ArrayCollection();
         $this->profiles = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->oldLogin = false;
     }
 
     /**
@@ -328,5 +338,51 @@ class User implements UserInterface, \Serializable {
         } else {
             return $this->getCurrentProfile()->getName();
         }
+    }
+
+    /**
+     * Set oldPassword
+     *
+     * @param string $oldPassword
+     * @return User
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
+    
+        return $this;
+    }
+
+    /**
+     * Get oldPassword
+     *
+     * @return string 
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * Set oldLogin
+     *
+     * @param boolean $oldLogin
+     * @return User
+     */
+    public function setOldLogin($oldLogin)
+    {
+        $this->oldLogin = $oldLogin;
+    
+        return $this;
+    }
+
+    /**
+     * Get oldLogin
+     *
+     * @return boolean 
+     */
+    public function getOldLogin()
+    {
+        return $this->oldLogin;
     }
 }

@@ -224,6 +224,23 @@ class Album {
         
         //return $this->coverImageUrl;
     }
+    
+    /**
+     * Get list thumbnail image url
+     *
+     * @return string 
+     */
+    public function getListThumbnailUrl()
+    {
+        foreach($this->image->getPresentations() as $pres) {
+            if($pres->getName() == 'list_thumbanil') {
+                return $pres->getUrl();
+            }
+        }
+        return null;
+        
+        //return $this->coverImageUrl;
+    }
 
     /**
      * Set createdAt

@@ -150,7 +150,7 @@ class MusicService extends BaseService{
      */
     private function updateSongs(Album $album, array $songsData) {
         try {
-            $this->removeSongsFromAlbum($album);
+            $this->removeSongsFromAlbum($album, $songsData);
             
             foreach($songsData as $songData) {
                 $song = $this->createSong($songData);
@@ -169,13 +169,21 @@ class MusicService extends BaseService{
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      * @return boolean
      */
-    private function removeSongsFromAlbum(Album $album) {
+    private function removeSongsFromAlbum(Album $album, array $songsData) {
         if($album->getSongs()->isEmpty()) {
             return true;
         }
         
         foreach($album->getSongs() as $song) {
-            $this->getEntityManager()->remove($song);
+            $delete = true;
+            foreach($songsData as $songData) {
+                if($songData['id'] == $song->getId()) {
+                    $delete = false;
+                }
+            }
+            if($delete) {
+                $this->getEntityManager()->remove($song);
+            }
         }
         $album->clearSongs();
         $this->getEntityManager()->flush();

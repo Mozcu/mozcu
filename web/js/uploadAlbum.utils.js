@@ -176,12 +176,8 @@ $(function() {
             song.file_name = me.find('.realFileName').val();
             song.track_number = key + 1;
             
-            if(me.find('.url').length > 0) {
-                song.url = me.find('.url').val();
-            }
-            
-            if(me.find('.length').length > 0) {
-                song.length = me.find('.length').val();
+            if(me.find('.id').length > 0) {
+                song.id = me.find('.id').val();
             }
             
             album.songs.push(song);

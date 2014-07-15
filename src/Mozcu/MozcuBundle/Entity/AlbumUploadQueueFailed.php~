@@ -179,4 +179,27 @@ class AlbumUploadQueueFailed {
     {
         return $this->inProcess;
     }
+
+    /**
+     * Set toUpdate
+     *
+     * @param boolean $toUpdate
+     * @return AlbumUploadQueueFailed
+     */
+    public function setToUpdate($toUpdate)
+    {
+        $this->toUpdate = $toUpdate;
+    
+        return $this;
+    }
+
+    /**
+     * Get toUpdate
+     *
+     * @return boolean 
+     */
+    public function getToUpdate()
+    {
+        return $this->toUpdate;
+    }
 }

@@ -12,8 +12,7 @@
 
 <div id="{{ fileId }}" class="uploadify-queue-item uploadedSong">
     {% if song is defined %}
-        <input type="hidden" class="url" value="{{ song.getUrl }}" />
-        <input type="hidden" class="length" value="{{ song.getLength }}" />
+        <input type="hidden" class="id" value="{{ song.getId }}" />
     {% endif %}
     
     <div class="cancel">
