@@ -10,3 +10,5 @@ MyProject.komodoproject
 /web/uploads
 /bin/clean_db.sql
 /bin/cleandb.sh
+composer.lock
+composer.phar
