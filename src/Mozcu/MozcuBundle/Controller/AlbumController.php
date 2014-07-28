@@ -53,7 +53,7 @@ class AlbumController extends MozcuController
                 $albums = new \Doctrine\Common\Collections\ArrayCollection();    
             }
         } else {
-            $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated(1, 18);    
+            $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated(0, 18);    
         }
         $tags = $this->getRepository('MozcuMozcuBundle:Tag')->getTagsPaginated(1, 10);
         

@@ -15,6 +15,10 @@ class AlbumRepository extends EntityRepository {
     public function findAllPaginated($page, $cant) {
         $dql  = "SELECT a FROM MozcuMozcuBundle:Album a WHERE a.isActive = 1 ORDER BY a.id DESC";
         $query = $this->getEntityManager()->createQuery($dql);
+        
+        $query->setFirstResult($page * $cant)
+            ->setMaxResults($cant);
+        
         return $query->getResult();
     }
     

@@ -106,6 +106,11 @@ class Album {
      */
     private $static_zip_file_name;
     
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $artist_name;
+    
     public function __construct() {
         $this->songs = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -622,5 +627,28 @@ class Album {
     public function getStaticZipFileName()
     {
         return $this->static_zip_file_name;
+    }
+
+    /**
+     * Set artist_name
+     *
+     * @param string $artistName
+     * @return Album
+     */
+    public function setArtistName($artistName)
+    {
+        $this->artist_name = $artistName;
+    
+        return $this;
+    }
+
+    /**
+     * Get artist_name
+     *
+     * @return string 
+     */
+    public function getArtistName()
+    {
+        return $this->artist_name;
     }
 }

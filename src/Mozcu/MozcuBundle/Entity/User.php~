@@ -339,4 +339,50 @@ class User implements UserInterface, \Serializable {
             return $this->getCurrentProfile()->getName();
         }
     }
+
+    /**
+     * Set oldPassword
+     *
+     * @param string $oldPassword
+     * @return User
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
+    
+        return $this;
+    }
+
+    /**
+     * Get oldPassword
+     *
+     * @return string 
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * Set oldLogin
+     *
+     * @param boolean $oldLogin
+     * @return User
+     */
+    public function setOldLogin($oldLogin)
+    {
+        $this->oldLogin = $oldLogin;
+    
+        return $this;
+    }
+
+    /**
+     * Get oldLogin
+     *
+     * @return boolean 
+     */
+    public function getOldLogin()
+    {
+        return $this->oldLogin;
+    }
 }
