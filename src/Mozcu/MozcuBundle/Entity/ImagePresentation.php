@@ -2,6 +2,8 @@
 
 namespace Mozcu\MozcuBundle\Entity;
 
+use Mozcu\MozcuBundle\Entity\AlbumImage;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -179,6 +181,11 @@ class ImagePresentation {
      */
     public function getUrl()
     {
+        if(empty($this->url) && $this->getImage() instanceof AlbumImage) {
+            $albumId = $this->getImage()->getAlbum()->getId();
+            $imageName = $this->getImage()->getTemporalFileName();
+            $this->url = " https://storage.googleapis.com/static-mozcu/$albumId/$imageName";
+        }
         return $this->url;
     }
 
