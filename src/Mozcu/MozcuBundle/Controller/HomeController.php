@@ -171,7 +171,8 @@ class HomeController extends MozcuController
             $data['type'] = "Album";
             $data['type_id'] = '2';
             $data['extra'] = $album->getProfile()->getName();
-            $data['url'] = $this->get('router')->generate("MozcuMozcuBundle_albumAlbum", array('id' => $album->getId()));
+            $data['url'] = $this->get('router')->generate("MozcuMozcuBundle_albumAlbum", array('id' => $album->getId(), 
+                                                          'username' => $album->getProfile()->getUser()->getUsername()));
             $result[] = $data;
         }
         
