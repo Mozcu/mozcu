@@ -16,7 +16,7 @@
             <a href="#" id="{{ album.getId }}" class="overPlay"></a>
             {% for presentation in album.getImage.getPresentations %}
                 {% if presentation.getName == 'album_header' %}
-                    <img src="{{ presentation.url }}" alt="" />
+                    <img style="width: 129px; height: 129px;" src="{{ presentation.url }}" alt="" />
                 {% endif %}
             {% endfor %}
         </div>
