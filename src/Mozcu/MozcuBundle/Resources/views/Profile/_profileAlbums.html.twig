@@ -21,7 +21,7 @@
                         <img src="/uploads/images/tmp/{{ album.getImage.getTemporalFileName }}" alt="" style="width: 139px; height: 139px;"/>
                     {% else %}
                         <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
-                            <img src="{{ album.getListThumbnailUrl }}" alt="" />
+                            <img style="width: 139px; height: 139px;" src="{{ album.getListThumbnailUrl }}" alt="" />
                         </a>
                     {% endif %}
 
