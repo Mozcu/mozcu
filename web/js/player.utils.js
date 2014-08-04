@@ -1,6 +1,6 @@
 $(function() {
     
-	currentPlayList = null;
+    currentPlayList = null;
 	
     var getAlbumForPlaylist = function(id) {
         var url = $('#urlAlbumForPlayer').val();
@@ -19,9 +19,9 @@ $(function() {
     var getSongsForPlaylist = function(id) {
         var album = getAlbumForPlaylist(id);
         return album.songs
-    }
+    };
 	
-	$('.mainContent').on('click', '.wrapperProfile .overPlay', function(e) {
+    $('.mainContent').on('click', '.wrapperProfile .overPlay', function(e) {
         e.preventDefault();
         var me = $(this);
         var songs = getSongsForPlaylist(me.attr('id'));
@@ -29,7 +29,7 @@ $(function() {
         mozcuPlaylist.setPlaylist(songs);
     });
 	
-	$('.mainContent').on('click', '.playList .songName a', function(e) {
+    $('.mainContent').on('click', '.playList .songName a', function(e) {
         e.preventDefault();
         var me = $(this);
 		var data = me.attr('id').split('-');
@@ -42,19 +42,20 @@ $(function() {
     });
     
     mozcuPlaylist = new jPlayerPlaylist({
-		jPlayer: "#jquery_jplayer_1",
-		cssSelectorAncestor: "#jp_container_1"
-	}, [],
+            jPlayer: "#jquery_jplayer_1",
+            cssSelectorAncestor: "#jp_container_1"
+    }, [],
     {
         playlistOptions: {
             autoPlay: true,
         },
-		swfPath: "js",
-		supplied: "oga, mp3",
+        swfPath: "js/jplayer/Jplayer.swf",
+        supplied: "oga, mp3",
         smoothPlayBar: true,
-		wmode: "window",
-		keyEnabled: true,
-        audioFullScreen: false
-	});
+        wmode: "window",
+        keyEnabled: true,
+        audioFullScreen: false,
+        solution: "flash, html"
+    });
     
 });
