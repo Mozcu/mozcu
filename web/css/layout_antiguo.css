@@ -1,0 +1,61 @@
+.wrapperPage {
+	width:100%;
+	margin:auto;
+	background:#fff;
+	position:relative;
+	min-width:1000px;
+}
+
+
+	.wrapperPage .header {
+		background:#000;
+		position:fixed;
+		top:0;
+		width:100%;
+		box-shadow:0 0 5px #333;
+		height:43px;
+		z-index:100;
+		min-width:1000px;
+	}
+	
+		.wrapperPage .header .logo {
+			margin:13px 10px 7px 15px;
+			width:213px;
+			float:left;
+		}
+		
+		.wrapperPage .header .search {
+			float:left;
+		}
+			.wrapperPage .header .search input {
+				background:#000;
+				border:none;
+				color:#fff;
+				font-size:12px;
+				width:315px;
+				height:35px;
+				margin-top:3px;
+				background:url(../images/bgSearch.png) no-repeat 270px 5px;
+			}
+		.wrapperPage .header .wrapperSettings {
+			float:right;
+			margin-right:39px;
+			margin-top:5px;
+		}
+			.wrapperPage .header .wrapperSettings .topCloud {
+				float:left;
+                
+			}
+				
+
+.wrapperPage .sidebarLeft {
+	width:231px;
+	border-left:1px solid #cbcbcb;
+	border-right:1px solid #cbcbcb;
+	min-height:388px;
+	position:fixed;
+	left:0;
+	background:#ebebeb;
+	z-index:90;
+	top:43px;
+}

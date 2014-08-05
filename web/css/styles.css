@@ -1,4 +1,4 @@
-/* RESSET */
+ /* RESSET */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -105,6 +105,7 @@ input {
 		}
 		.wrapperPage .sidebarLeft .optionsMenu ul li a:hover {
 			border:1px solid #dadada;
+            text-decoration: none !important;
 		}
 		
 	.wrapperPage .sidebarLeft .optionsMenu ul li.profile {
@@ -122,17 +123,11 @@ input {
 	.wrapperPage .sidebarLeft .optionsMenu ul li.events {
 		background:url(../images/spriteMenuIcons.png) no-repeat 4px -211px;
 	}
-	.wrapperPage .sidebarLeft .optionsMenu ul li.about {
-		background:url(../images/spriteMenuIcons.png) no-repeat 4px -263px;
-	}
 		
 .wrapperPage .sidebarLeft .player {
 	width:231px;
 	height:275px;
-	/*background:url(../images/player.jpg);*/
-	font-size: 10px;
-	position: absolute;
-	bottom: 36px;
+	background:url(../images/player.jpg);
 }
 
 /* INICIO */
@@ -171,7 +166,7 @@ input {
 }
 .pageHome .textWelcome {
 	background: #fff;
-	/*width: 100%;*/
+	width: 100%;
 	padding: 50px 42px;
 	height: 140px;
 }
@@ -239,51 +234,49 @@ input {
 /* /INICIO */
 
 /* DISCO UPLOAD */
-.pageUpload {
-    margin-top: 43px;
-}
 
-.uploadErrorMessage {
-	background: #E9967A;
+.message {
+	height: 42px;	
+	background: #1fb683;
 	width: 100%;
 	padding-top: 12px;
-        padding-bottom: 12px;
+	margin-top: 43px;
 }
-	.uploadErrorMessage .messageInner {
-            margin-left: 270px;
-            width: 600px;
+	.message .messageInner {
+		margin: auto;
+		width: 600px;
 	}
-	.uploadErrorMessage .messageInner p {
+	.message .messageInner p {
 		color: #fff;
-		font-size: 14px;
-		line-height: 18px;
-	}
-        .uploadErrorMessage .messageInner .title {
-            font-weight: bold;
+		float: left;
+		font-size: 16px;
+		line-height: 34px;
 	}
 
 .uploadBox {
 	background: rgb(43,43,43); /* Old browsers */
-	background: -moz-linear-gradient(top,  rgba(43,43,43,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(43,43,43,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2b2b2b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+background: -moz-linear-gradient(top,  rgba(43,43,43,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(43,43,43,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(43,43,43,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2b2b2b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 	height: 200px;
 	width: 100%;
-	/*margin-top: 43px;*/
 }
 
 .uploadBox .uploadFront {
-	background: url(../images/imgBoxUploader.jpg) no-repeat;
+	background: url(../images/imgBoxUploader.png) no-repeat;
 	width: 167px;
 	height: 168px;
 	float: left;
 	margin-left: 268px;
 	margin-top: 20px;
+    margin-bottom: 10px;
 	position: relative;
+    border:dashed 2px #555555;
+    
 }
 	.uploadBox .uploadFront .text {
 		position: absolute;
@@ -296,16 +289,18 @@ input {
 
 	.uploadBox .discName {
 		float: left;
-
-		border:dashed 2px #555555;
+        border:dashed 2px #555555;
 		padding: 5px;
-		margin: 20px 10px;
+		margin: 20px 10px 0px 10px;
+        
 	}
 		.uploadBox .discName input {
 			font-size: 16px;
 			color: #727374;
 			background: transparent;
+            width: 400px;;
 		}
+    
 
 	.uploadBox .uploadFront .text p {
 		border-radius:6px;
@@ -377,9 +372,9 @@ input {
 		width: 100%;
 		margin-left: 20px;
 		width:657px;
-		min-height: 50px;
+		min-height: 300px;
 	}
-		.pageUpload .content .plugin .addTracks {
+		.pageUpload .content .plugin a.addTracks {
 			background: rgb(237,237,237); /* Old browsers */
 			background: -moz-linear-gradient(top,  rgba(237,237,237,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
 			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(237,237,237,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
@@ -395,7 +390,7 @@ input {
 			border:1px solid #d6d4d5;
 			text-decoration: none;
 			padding: 5px 15px;
-			/*margin-left: 246px*/;
+			margin-left: 246px;
 		}
 			.pageUpload .content .plugin a.addTracks:hover {
 				background: #f6f6f6;
@@ -420,7 +415,7 @@ a.btnPublic {
 /* CUANDO EXISTE EL BREADCRUMB SE LE ASIGNA LA CLASE breadC AL MAINCONTENT */
 
 /* BREADCRUMB */
-.wrapperPage .mainContent .breadCrumb {
+.wrapperPage .mainContent.breadC .breadCrumb {
 	height: 23px;
 	margin-top: 43px;
 background: rgba(240,240,240,1);
@@ -432,12 +427,12 @@ background: -ms-linear-gradient(top, rgba(240,240,240,1) 0%, rgba(240,240,240,1)
 background: linear-gradient(to bottom, rgba(240,240,240,1) 0%, rgba(240,240,240,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#fefefe', GradientType=0 );
 }
-	.wrapperPage .mainContent .breadCrumb ul {
+	.wrapperPage .mainContent.breadC .breadCrumb ul {
 		margin-left: 233px;
 		margin-top: 6px;
 		float: left;
 	}	
-		.wrapperPage .mainContent .breadCrumb ul .bcSep {
+		.wrapperPage .mainContent.breadC .breadCrumb ul .bcSep {
 			float: left;
 			height: 23px;
 			width: 1px;
@@ -446,29 +441,30 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
 			margin-top: -6px;
 			box-shadow: 0 0 1px #fff;
 		}
-		.wrapperPage .mainContent .breadCrumb ul li {
+		.wrapperPage .mainContent.breadC .breadCrumb ul li {
 			margin-left: 8px;
 			display:inline;
 			float: left;
 		}
-		.wrapperPage .mainContent .breadCrumb ul li a {
+		.wrapperPage .mainContent.breadC .breadCrumb ul li a {
 			color: #333;
 			font-size: 12px;
 			font-weight: bold;
 			text-decoration: none;
 		}
-		.wrapperPage .mainContent .breadCrumb ul li a.allAlbums {
+		.wrapperPage .mainContent.breadC .breadCrumb ul li a.allAlbums {
 			padding-left: 17px;
 			background: url(../images/iconBack.png) no-repeat 0 2px;
 		}
 	/* LE SACO EL MARGIN-TOP CUANDO HAY BREADCRUMB */
-	.wrapperPage .mainContent .wrapperProfile.breadC {
+	.wrapperPage .mainContent.breadC .wrapperProfile {
 		margin-top: 0;
 	}
 
 
 	.wrapperPage .mainContent {
-		min-height: 579px;
+		min-height:1000px;
+        
 	}
 		.wrapperPage .mainContent .mainMenu {
 			height:28px;
@@ -640,7 +636,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
 		margin-left:250px;
 		margin-top:13px;
 		position: relative;
-		min-width: 598px;
+		min-width: 594px;
 	}
 		.wrapperPage .mainContent .wrapperProfile .profileLeft .imgProfile a.overPlay {
 			background: url(../images/btnPlay.png) no-repeat 50% 50%;
@@ -724,34 +720,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
 		.wrapperPage .mainContent .content .contentInner .disco .imgPortada {
 			position: absolute;
 			left: 0;
-		}      
-                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada img {
-                            box-shadow: 0 0 8px 0 #C0C0C0;
-                    }
-                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .actions {
-                        margin-top: 5px;
-                    }
-                    
-                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .actionsLoader {
-                        margin-top: 5px;
-                        display: none;
-                        text-align: center;
-                    }
-                    
-                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .action {
-                        float: left;
-                        padding: 5px 15px 5px 15px;
-                        background-color: #F4F0F0;
-                        cursor: pointer;
-                    }
-                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .edit {
-                        border: 1px solid #bfbcbc;
-                    }
-                    .wrapperPage .mainContent .content .contentInner .disco .imgPortada .delete {
-                        border-top: 1px solid #bfbcbc;
-                        border-bottom: 1px solid #bfbcbc;
-                        border-right: 1px solid #bfbcbc;
-                    }
+			box-shadow: 0 0 8px 0 #C0C0C0;
+		}
 		.wrapperPage .mainContent .content .contentInner .disco .head {
 			height: 26px;
 			margin-left: 150px;
@@ -807,85 +777,43 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
 /* /DISCOS */
 
 /* LISTEN DISC */
+.container-fluid{
+    margin-top: 65px !important;
+    padding-left: 270px !important;
+}
 
-.wrapperPage .pageDiscListen .headerTop {
-	background: #e1e2e5;
-	height: 50px;
-	margin-top: 43px;
+    .container-fluid .headerTop {
+        margin-bottom: 30px;
+            
+	
 }
-	.wrapperPage .pageDiscListen .headerTop .headerTopInner {
-		margin-left: 250px;
-		float: left;
-		margin-top: 16px;
-	}
-.wrapperPage .pageDiscListen .headerTop .headerTopInner span.text {
-	font-weight: bold;
-	color: #666;
-	font-size: 12px;
-	margin-top: 4px;
-}
-.wrapperPage .pageDiscListen .headerTop .headerTopInner .wrapperCategories {
-	float: left;
-	margin-left: 5px;
-}
-	.wrapperPage .pageDiscListen .headerTop .headerTopInner .wrapperCategories span {
-		font-weight: bold;
-		color: #666;
-		font-size: 16px;
-		margin-top: 4px;
-	}
-	.wrapperPage .pageDiscListen .headerTop .headerTopInner .wrapperCategories input {
-		background: #E1E2E5;
-	}
+	  .btn-group {
+        
+          margin-right: 20px;
+          
+          
+            
+            }
+             
 
-.wrapperTags {
-	margin: 10px;
-}
-.wrapperTags a.link {
-	text-decoration: none;
-	color: #0187cf;
-	font-size: 12px;
-	font-weight: bold;
-	display: block;
-	float: left;
-	margin-top: 10px;
-}
-a.tag {
-	background: #0187c5;
-	padding: 10px;
-	color: #fff;
-	font-weight: bold;
-	font-size: 12px;
-	float: left;
-	display: block;
-	text-decoration: none;
-	border-radius:2px;
-	margin-right: 5px;
-	opacity: 0.9;
-	margin-bottom: 10px;
-}
-	a.tag:hover {
-		opacity: 1;
-	}
 
-a.tag.img {
-	background: url(../images/imgTag.png) no-repeat 50% 50% #0187C5;
-	height: 12px;
-	width: 12px;
-}
+
 .wrapperDiscListen {
 	margin: 10px;
+    margin-left: 30px;
+    
+    
 }
 .discListen {
 	border-radius:2px;
 	float: left;
-	margin-right: 10px;
-	margin-bottom: 10px;
+	margin-right: 40px;
+	margin-bottom: 20px;
 	text-align: center;
 }
 .discListen img {
 	box-shadow:0 1px 3px rgb(124, 124, 124);
-	margin-bottom: 5px;
+	margin-bottom: 8px;
 }
 .discListen span.tit {
 	font-weight: bold;
@@ -1209,34 +1137,34 @@ a.btnUserFollowing {
 
 /* INFO DISCOS */
 
-.wrapperPage .mainContent .content .contentInner {
+.pageDiscInfo.wrapperPage .mainContent .content .contentInner {
 	margin: 20px 0 0 20px;
 	width: 730px;
 }
-	.wrapperPage .mainContent .content .contentInner p {
+	.pageDiscInfo.wrapperPage .mainContent .content .contentInner p {
 		line-height: 16px;
 	}
-	.wrapperPage .mainContent .content .contentInner span {
+	.pageDiscInfo.wrapperPage .mainContent .content .contentInner span {
 		color: #504e4e;
 	}
 
-.wrapperPage .mainContent .content .contentInner table {
+.pageDiscInfo.wrapperPage .mainContent .content .contentInner table {
 	width: 100%;
 }
-.wrapperPage .mainContent .content .contentInner table tr td {
+.pageDiscInfo.wrapperPage .mainContent .content .contentInner table tr td {
 	padding-bottom: 10px;
 }
-.wrapperPage .mainContent .content .contentInner table tr td > span {
+.pageDiscInfo.wrapperPage .mainContent .content .contentInner table tr td > span {
 	margin-right: 10px;
 }
-.wrapperPage .mainContent .content .contentInner .wrapperImgDisc {
+.pageDiscInfo.wrapperPage .mainContent .content .contentInner .wrapperImgDisc {
 	width: 730px;
 	height: 314px;
 	overflow-y: hidden;
 	overflow-x:scroll;
 
 }
-.wrapperPage .mainContent .content .contentInner .wrapperImgDisc img {
+.pageDiscInfo.wrapperPage .mainContent .content .contentInner .wrapperImgDisc img {
 	display: inline;
 }
 

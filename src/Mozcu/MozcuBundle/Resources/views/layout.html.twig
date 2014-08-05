@@ -1,1 +1,107 @@
-{% extends '::base_mozcu.html.twig' %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="La Re-evolución musical">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <title>{% block title %}Mozcu{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('css/entypo.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/mozcu.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/player.css') }}" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700italic,700,400italic,300italic,100italic|Roboto+Slab:400,300,100,700' rel='stylesheet' type='text/css'>
+    
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui/jquery-ui-1.10.3.custom.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/uploadify/uploadify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/jplayer/mozcu/jplayer.mozcu.css') }}" />
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head> 
+<body>
+
+<!-- +++++++++++++++++HEADER FIJO+++++++++++++++++++++++++++++ 
+===========================================================-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header col-xs-2 col-sm-2 col-md-2 col-lg-2">   
+        <a class="logomin pull-left visible-xs" href="{{ path('MozcuMozcuBundle_home') }}"><img src="images/logominB.jpg" alt="Mozcu"></a>  
+        <a class="navbar-brand pull-left" href="{{ path('MozcuMozcuBundle_home') }}"><img src="images/logo.png" alt="Mozcu">  </a>  
+    </div> 
+
+    <div class="col-xs-9 col-sm-9 col-md-6 col-lg-6 buscador">
+        <form class="navbar-form navbar-left navbarBuscador" role="search">
+            <div class="input-group">
+                <input type="text" class="form-control inputBuscador" placeholder="Busca artistas, amigos, álbums, canciones, etc. ">
+                <span class="input-group-btn"><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button></span>
+            </div>
+        </form> 
+    </div> 
+
+    <div class="visible-lg visible-md">  
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Ingresar</a></li>
+            <li><button class="btn btn-primary">Crear una cuenta</button></li>
+        </ul>
+    </div>
+</nav>
+    
+<!--FIN DEL HEADER-->
+    
+
+<div class="container-fluid">    
+    <!--+++++++++++++++++++++SIDEBAR++++++++++++++++++++++++++++++
+    ===========================================================-->    
+        {{ render(controller('MozcuMozcuBundle:Home:loadLeftBar')) }}    
+    <!--FIN DEL SIDEBAR-->
+    
+    <!--+++++++++++++++++++++COMIENZO DE LA HOMEPAGE+++++++++++++++++++
+    ===================================================================-->
+   <div class="homePage mainContent">
+       {% block mainContent %}{% endblock %}       
+    </div> <!-- FIN DE HOMEPAGE-->              
+               
+</div> <!-- FIN CONTAINER FLUID -->
+        
+            
+    
+
+
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.3.custom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/docs.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/mozcu.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/uploadify/jquery.uploadify.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fileUploader/ajaxfileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fileUploader/mozcuFileUploader.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/jplayer/jquery.jplayer.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jplayer/jplayer.playlist.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/player.utils.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/layout.utils.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/profile.utils.js') }}"></script>        
+
+    {% block javascript %}{% endblock %}
+
+</body>
+</html>

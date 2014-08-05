@@ -37,7 +37,7 @@ div.jp-audio-stream {
 	width:182px;
 }
 div.jp-video-270p {
-	width:230px;
+	width:225px;
 }
 div.jp-video-360p {
 	width:640px;
@@ -102,7 +102,7 @@ div.jp-video div.jp-interface {
 
 div.jp-controls-holder {
 	clear: both;
-	width:230px;
+	width:223px;
 	margin:0 auto;
 	position: relative;
 	overflow:hidden;

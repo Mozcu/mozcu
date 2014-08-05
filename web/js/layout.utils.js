@@ -2,7 +2,8 @@ $(function() {
    
    var urls = new Array();
    
-   $('.wrapperPage').on('click', '.header .homeLink', function(e){
+   // Click en el logo superior izquirdo
+   $('.navbar').on('click', '.navbar-header a', function(e){
         e.preventDefault();
         
         var me = $(this);
@@ -11,6 +12,7 @@ $(function() {
         changeMainContent(url);
     });
    
+   // TODO: Pestañas de pagina about
    $('.wrapperPage').on('click', '.aboutPage .header a', function(e){
         e.preventDefault();
         
@@ -19,8 +21,10 @@ $(function() {
         
         changeMainContent(url);
     });
-    
-   $('#liveSearchInput').autocomplete({
+   
+   
+   // TODO: Livesearch
+   /*$('#liveSearchInput').autocomplete({
         source: $('#liveSearchUrl').val(),
         minLength: 2,
         select: function( event, ui ) {
@@ -58,8 +62,9 @@ $(function() {
             .data( "item.autocomplete", item )
             .append($("<a>").append(divContainer))
             .appendTo(ul);
-    });
+    });*/
     
+    // TODO
     $('.userBarWrapper').on('click', '.loginLinkWrapper a', function(e) {
         e.preventDefault();
         
@@ -68,6 +73,7 @@ $(function() {
         
     });
     
+    // TODO
     $('.userBarWrapper').on('click', '.wrapperSettings .nameProfile a', function(e){
         e.preventDefault();
         
@@ -75,6 +81,7 @@ $(function() {
         me.parents('.wrapperSettings').find('.userBubble').toggle('fast');
     });
     
+    // TODO
     $('.userBarWrapper').on('click', '.loginCheckButton', function(e){
         e.preventDefault();
 
@@ -92,6 +99,7 @@ $(function() {
         }
     });
     
+    // TODO
     $('.userBarWrapper').on('click', '.userBubble .logoutLink', function(e){
         e.preventDefault();
         
@@ -112,7 +120,7 @@ $(function() {
         });
     });
     
-    /* Config User and Config Profile links */
+    // TODO: Config User and Config Profile links
     $('.userBarWrapper').on('click', '.userBubble .config', function(e){
         e.preventDefault();
         
@@ -127,6 +135,7 @@ $(function() {
         });
     });
     
+    // TODO: Upload
     $('.userBarWrapper').on('click', '.topCloud a', function(e) {
         e.preventDefault();
         
@@ -141,7 +150,8 @@ $(function() {
         
     });
     
-    $('.wrapperPage').on('click', '.sidebarLeft .optionsMenu a', function(e){
+    // Opciones del sidebar
+    $('.container-fluid').on('click', '.sidebar .nav-sidebar a', function(e){
         e.preventDefault();
         
         var me = $(this);
@@ -196,7 +206,7 @@ $(function() {
         $.getJSON(url, function(data) {
             if(data.success) {
                 if(data.success) {
-                    $('.sidebarLeft .optionsMenu').replaceWith(data.html);
+                    $('.sidebar nav-sidebar').replaceWith(data.html);
                 }
             }
         });

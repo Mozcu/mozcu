@@ -1,30 +1,17 @@
-<div class="optionsMenu" style="height: 296px;">
-    <ul>
-        {% if user is not null %}
-            <li class="profile">
-                <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}">
-                    {% trans %}Perfil{% endtrans %}
-                </a>
-            </li>
-        {% endif %}
-        <li class="discs">
-            <a href="{{ path('MozcuMozcuBundle_albums') }}">
-                {% trans %}Discos{% endtrans %}
+<ul class="nav nav-pills nav-pills-stacked nav-sidebar">
+    {% if user is not null %}
+        <li>
+            <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}">
+                <i class="glyphicon glyphicon-user"></i>Perfil
             </a>
         </li>
-        <li class="about">
-            <a href="{{ path('MozcuMozcuBundle_about') }}">
-                {% trans %}Acerca de Mozcu{% endtrans %}
-            </a>
-        </li>
-        <!--<li class="playList">
-            <a>{% trans %}Playlists{% endtrans %}</a>
-        </li>
-        <li class="summary">
-            <a>{% trans %}Rese&ntilde;as{% endtrans %}</a>
-        </li>
-        <li class="events">
-            <a>{% trans %}Eventos{% endtrans %}</a>
-        </li>-->
-    </ul>
-</div>
+    {% else %}
+        <li><a href="#"><i class="glyphicon glyphicon-user"></i>Ingresar</a></li>
+    {% endif %}
+    
+    <li><a href="{{ path('MozcuMozcuBundle_albums') }}"><i class="glyphicon glyphicon-headphones"></i>Discos</a></li>
+    <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>Compilados</a></li>
+    <li><a href="#"><i class="glyphicon glyphicon-pencil"></i>Reseñas</a></li>
+    <li><a href="{{ path('MozcuMozcuBundle_about') }}"><i class="glyphicon glyphicon-thumbs-up"></i>Acerca de Mozcu</a></li>
+    <li><a href="#"><i class="glyphicon glyphicon-th-large"></i>Más aplicaciones</a></li>
+</ul>

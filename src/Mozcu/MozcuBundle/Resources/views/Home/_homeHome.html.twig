@@ -1,51 +1,62 @@
-<div class="contentHome">
-    <div class="login">
-            <h2 class="title">
-                {% trans %}Una forma de descubrir y potenciar alternativas culturales de tu localidad y el mundo entero{% endtrans %}.
-            </h2>
-            <br />
-            <form id="registerForm" action="{{ path('MozcuMozcuBundle_register')}}" method="post" {{ form_enctype(form) }}>
-                <div class="inputs">
-
-                        {{ form_widget(form.email,    {'attr': {'placeholder': 'email'}}) }}
-                        {{ form_widget(form.password, {'attr': {'placeholder': 'password'}}) }}
-                        {{ form_widget(form.username, {'attr': {'placeholder': 'username'}}) }}
-                        {{ form_row(form._token) }} 
-                </div>
-                <input type="submit" class="btnAzul" value="{% trans %}Siguiente{% endtrans %}" />
-            </form>
-            <div class="clearBoth"></div>
-            <br />
-            <div class="wrapperMore">
-                    <a href="#" id="knowMoreLink">
-                            <p>{% trans %}Conoce m&aacute;s sobre Mozcu{% endtrans %}</p>
-                            <div class="flRight">
-                                    <img src="{{ asset('images/iconConoceMas.png') }}" height="9" width="15" alt="" />
-                            </div>
-                    <div class="clearBoth"></div><br />
-                    </a>
-            </div>
-            <div class="clearBoth"></div>
-            <div class="textWelcome">
-                    <h1>
-                        {% trans %}Escucha m&uacute;sica en todas partes{% endtrans %}
-                    </h1>
-                    <br />
-                    <p>
-                        {% trans %}Escucha tus bandas favoritas en linea o simplemente descargalas a tu computadora, reproductor mp3, robot, celular o el dispositivo que prefieras{% endtrans %}.
-                    </p>
-            </div>
-            <div class="clearBoth"></div>
-            <div class="imgHomeBottom">
-
-            </div>
-    </div>
+<div class="contenido col-xs-12 col-sm-12 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+           
+        <div class="row diapo center-block">
+            
+           <div class="textoDiapo center-block">
+               <h3 class="text-center">Una forma de descubrir y potenciar alternativas culturales de tu localidad y el mundo entero.</h3>
+                <button class="btn btn-primary btn-lg center-block btnIngresar">Ingresar</button>
+               <a href="#" class="crearRegistro"><p class="text-center">¿No estás registrado?</p></a>
+            </div>   
+            
+           
+        </div>
+           <div class="row center-block caract-titl">
+               
+                    <h3 class="text-center">Infinitas razones para usar Mozcu</h3>
+                  
+           </div>
+              
+  <!-- bloques de caracteristicas -->
+      <div class="row">
+          
+        <div class="col-lg-6 caract-model">
+          <img class="img-circle img-caract center-block" src="{{ asset('images/fede2_200px.jpg') }}" alt="fede">
+          <h4>Mantener la web libre y respetar tus derechos es nuestra prioridad</h4>
+          <p>Creemos que podemos mejorar la experiencia digital de todos. Más importante aún, creemos en la remuneración equitativa por las obras de los artistas sin oprimir a los oyentes, manteniendo un ecosistema sano en la Internet.
+</p>
+        
+        </div><!-- /.col-lg-6 -->
+          
+        <div class="col-lg-6 caract-model">
+          <img class="img-circle img-caract center-block" src="{{ asset('images/fede1_200px.jpg') }}" alt="fede">
+          <h4>No más intermediarios</h4>
+          <p>Así es, en Mozcu el 100% es tuyo. Cada vez que un oyente quiera recompensar económicamente tu obra, el 100% de ese monto irá a parar directamente a tu cuenta de paypal.  </p>
+    
+        </div><!-- /.col-lg-6 -->  
+        
+      </div><!-- /.row -->
+           
+      <div class="row">
+          
+        <div class="col-lg-6 caract-model">
+          <img class="img-circle img-caract center-block" src="{{ asset('images/fede3_200px.jpg') }}" alt="fede">
+          <h4>Cambia el futuro</h4>
+          <p>Nuestro objetivo es marcar la diferencia, no obtener beneficios. Cuando eliges Mozcu, estás contribuyendo en la construcción de un futuro mejor para Internet y sus usuarios en todo el mundo.</p>
+        
+        </div><!-- /.col-lg-6 -->
+          
+        <div class="col-lg-6 caract-model">
+          <img class="img-circle img-caract center-block" src="{{ asset('images/fede4_200px.jpg') }}" alt="fede">
+          <h4>Distribución digital a otro nivel</h4>
+          <p>Mozcu no solo es una excelente forma para que puedas subir tus discos a la Internet y distribuirlos sin intermediarios, sino que también ofrece herramientas para que los oyentes organizar, compilen y difundan tu música dentro de sus perfiles, haciéndolos formar parte de la cadena de distribución. </p>
+    
+        </div><!-- /.col-lg-6 -->  
+        
+      </div><!-- /.row -->       
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right text-muted">Hecho con <i class="glyphicon glyphicon-heart"></i> en Bs.As.</p>
+        <p> <i class="entypo cc"></i>Mozcu 2014, algunos derechos reservados &middot; <a href="#">Acerca de Mozcu</a> &middot; <a href="#">Terminos y condiciones</a></p>
+      </footer>         
+               
 </div>
-
-<script type="text/javascript">
-$(function(){
-    $('#knowMoreLink').click(function(e) {
-        e.preventDefault();
-    });
-});
-</script>

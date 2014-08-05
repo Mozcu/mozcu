@@ -1,0 +1,8 @@
+.sidebar .player {
+	width:231px;
+	height:275px;
+	font-size: 10px;
+	position: absolute;
+	bottom: 36px;
+        margin-left: -15px;
+}
