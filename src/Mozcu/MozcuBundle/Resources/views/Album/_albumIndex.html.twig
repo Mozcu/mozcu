@@ -1,34 +1,72 @@
-﻿<div class="pageDiscListen">
-	<div class="headerTop">
-		<div class="headerTopInner">
-			<span class="text flLeft">Escuchemos algo tipo...</span>
-			<div class="wrapperCategories">
-				{% if tag is defined %}
-					<span id="{{ tag.getId }}" class="category">{{ tag.getName }}</span>
-					<span class="plus"> + </span>
-				{% endif %}
-				<input id="searchTags" placeholder="____" type="text" />
-				<input type="hidden" id="getTagListUrl" value="{{ path('MozcuMozcuBundle_getTagsLive') }}" />
-				<input type="hidden" id="findAlbumsByTagUrl" value="{{ path('MozcuMozcuBundle_findAlbumsByTags')}}" />
-			</div>	
-		</div>
-	</div>
-	<div class="content">
-		<div class="wrapperTags">
-			{% for tag in tags %}
-				<a href="#" id="tag-{{ tag.getId }}" class="tag category">{{ tag.getName }}</a>
-			{% endfor %}
-			
-			<a href="" class="tag img"></a>
-			<a class="link" href="">más tags</a>
-		</div>
-		<div class="clearBoth"></div>
-		<div class="wrapperDiscListen">
-			{% for album in albums %}
-				{{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
-			{% endfor %}
-		</div>
-	</div>
-</div>
+<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+<!--INICIO DE CONTENIDO-->
+    <div class="row center-block perfilContenido">
+        <div class="headerExplorer col-lg-12">
+            <div class="btn-group btnTag">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Todos los tags <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu dropdownTag" role="menu">
+                    <li><input type="search" placeholder="Busca un tag" class="form-control"></li>
+                    {% for tag in tags %}
+                        <li><a id="tag-{{ tag.getId }}" href="#" class="tag">{{ tag.getName }}</a></li>
+                    {% endfor %}  
+                </ul>
+            </div>
+            <div class="btn-group btnUbicacion">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Todos los países<span class="caret"></span>
+                </button>
+
+
+                <ul class="dropdown-menu dropdownTag" role="menu">
+                    <li><input type="search" placeholder="Busca un país" class="form-control"></li>
+                    <li><a href="#">Argentina</a></li>
+                    <li><a href="#">Bolivia</a></li>
+                    <li><a href="#">Brasil</a></li>
+                    <li><a href="#">Chile</a></li>
+                    <li><a href="#">Colombia</a></li>
+                    <li><a href="#">Uruguay</a></li>
+                    <li><a href="#">Venezuela</a></li>
+                    <li><a href="#">Zimbague</a></li>
+                    <li><a href="#">Argentina</a></li>
+                    <li><a href="#">Bolivia</a></li>
+                    <li><a href="#">Brasil</a></li>
+                    <li><a href="#">Chile</a></li>
+                    <li><a href="#">Colombia</a></li>
+                    <li><a href="#">Uruguay</a></li>
+                    <li><a href="#">Venezuela</a></li>
+                    <li><a href="#">Zimbague</a></li>   
+                </ul>
+            </div>
+            
+            <div class="btn-group btnFilter">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Ordenar por <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Relevancia</a></li>
+                    <li><a href="#">Fecha de subida</a></li>
+                    <li><a href="#">Reproducciones</a></li>
+                </ul>
+            </div> 
+
+        </div>
+        
+        <!--INICIO DE ALBUMES               -->
+        {% for album in albums %}
+            {{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
+        {% endfor %}
+        <!--FIN DE ALBUMES-->               
+
+    </div>
+
+</div><!--FIN DE CONTENIDO-->
+
+<script type="text/javascript">
+    $('.dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
+</script>
 
 <script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>

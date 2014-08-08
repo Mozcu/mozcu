@@ -23,6 +23,12 @@ MozcuMozcuBundle_register:
   requirements:
         _method:  POST
         
+MozcuMozcuBundle_login:
+  pattern: /login
+  defaults: { _controller: MozcuMozcuBundle:Home:login}
+  requirements:
+        _method:  GET
+        
 MozcuMozcuBundle_loadUserBar:
   pattern: /loadUserBar
   defaults: { _controller: MozcuMozcuBundle:Home:loadUserBar}

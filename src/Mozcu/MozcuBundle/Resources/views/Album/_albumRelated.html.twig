@@ -1,7 +1,5 @@
-<div class="content related">
-    <div class="wrapperDiscListen">
-        {% for album in albums %}
-            {{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
-        {% endfor %}
-    </div>
+<div class="row center-block perfilContenido albumContent related">
+    {% for album in albums %}
+        {{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
+    {% endfor %}
 </div>

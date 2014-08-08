@@ -1,57 +1,81 @@
-<!-- BREADCRUMB -->
-<div class="breadCrumb">
-    <ul>
-        <li>
-            <a href="{{ path("MozcuMozcuBundle_albumsForProfile", {'username': album.getProfile.getUser.getUsername}) }}" class="allAlbums">
-                Todos los álbumes
+<div class="row headerDisco">
+               
+    <!-- BREADCRUM SOLO PARA MOBILES-->
+    <div class="row visible-xs visible-sm">
+        <div class="breadcrumDisco col-xs-12 col-sm-12">
+            <a href="#" class="col-xs-10 col-sm-10 breadVolver">
+                <i class="glyphicon glyphicon-chevron-left pull-left"></i>{{ album.getProfile.getUser.getCurrentName }}
             </a>
-        </li>
-        <div class="bcSep"></div>
-    </ul>
-</div>
-<!-- /BREADCRUMB -->
-<div class="wrapperProfile breadC">
-    <div class="profileLeft">
-        <div class="imgProfile">
-            <a href="#" id="{{ album.getId }}" class="overPlay"></a>
-            {% for presentation in album.getImage.getPresentations %}
-                {% if presentation.getName == 'album_header' %}
-                    <img style="width: 129px; height: 129px;" src="{{ presentation.url }}" alt="" />
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% set username = album.getProfile.getUser.getUsername %}
-        <div class="optionsProfile">
-            <h2 class="title">{{ album.getName }}</h2>
-            <a class="albumProfile" href="{{ path('MozcuMozcuBundle_profile', {'username': username}) }}">
-                <p class="subtitle">{{ album.getProfile.getUser.getCurrentName }}</p>
+            <a href="#" class="col-xs-2 col-sm-2 visible-xs visible-sm">
+                <p class="text-right"><i class="btnMasMobile ion-android-more "></i></p>
             </a>
-            <div class="iconsOptions">
-                <div class="download">
-                    <a href="{{ path('MozcuMozcuBundle_albumPreDownload', {'username': username, 'id': album.getId}) }}" title="Descargar">
-                        <img src="{{ asset('images/iconDownload.png') }}" alt="" />
-                    </a>
-                </div>
-                <!--<div class="share"><img src="{{ asset('images/iconShare.png') }}" height="18" width="14" alt="" /></div>
-                <div class="fav"><img src="{{ asset('images/iconFav.png') }}" alt="" /></div>-->
-            </div>
         </div>
-        <ul class="profileOptions">
-            <li>
-                <a {% if selected == 'playlist' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'username': username, 'id': album.getId}) }}">Lista de temas</a>
+    </div>  
+    <!--    FIN DE BREADCRUM SOLO PARA MOBILES-->
+    
+    {% set username = album.getProfile.getUser.getUsername %}
+    <div class="col-sm-3 col-md-2 col-lg-2">
+        <a href="#" id="{{ album.getId}}" class="overPlay text-center" style="position: absolute; width: 153px; height: 153px;">
+            <i class="glyphicon glyphicon-play" style="font-size: 30px; color: #fff;"></i>
+        </a>
+        {% for presentation in album.getImage.getPresentations %}
+            {% if presentation.getName == 'album_header' %}
+                <img src="{{ presentation.url }}" alt="perfil" class="imgDisco center-block">
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 titlDisco">
+        <h3 class="nombreDisco"><a href="#">{{ album.getName }}</a></h3>
+        <h4 class="nombreBanda"><a href="#">{{ album.getProfile.getUser.getCurrentName }}</a></h4>   
+    </div>
+
+    <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs hidden-sm">
+        <button type="button" class="btn btn-primary btn-block btnDescarga"><i class="glyphicon glyphicon-cloud-download"></i>Descargar</button>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs hidden-sm">
+        <div class="btn-group btn-group-justified btngroupCompartir">
+            <a href="#" class="btn btn-default btnCompartir"><i class="glyphicon glyphicon-heart-empty"></i></a>
+            <a href="#" class="btn btn-default btnCompartir"><i class="glyphicon glyphicon-share"></i></a>
+        </div>
+    </div>
+
+    <!-- INICIO MENU DE DISCO-->
+    <div class="visible-sm visible-md visible-lg">
+        <ul class="nav nav-pills navDisco col-sm-12 col-md-12 col-lg-12">
+            <li {% if selected == 'playlist' %} class="discoActive" {% endif %}>
+                <a href="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'username': username, 'id': album.getId}) }}">Lista de temas</a>
             </li>
-            <li>
-                <a {% if selected == 'information' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'username': username, 'id': album.getId}) }}">Información</a>
+            <li {% if selected == 'information' %} class="discoActive" {% endif %}>
+                <a href="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'username': username, 'id': album.getId}) }}">Información</a>
             </li>
-            <!--<li>
+            <li {% if selected == 'comments' %} class="discoActive" {% endif %}>
                 <a href="#">Comentarios</a>
             </li>
-            <li>
-                <a href="#">Reseñas</a>
-            </li>-->
-            <li>
-                <a {% if selected == 'related' %} class="selected" {% endif %} href="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'username': username, 'id': album.getId}) }}">Similares</a>
+            <li {% if selected == 'related' %} class="discoActive" {% endif %}>
+                <a href="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'username': username, 'id': album.getId}) }}">Similares</a>
             </li>
         </ul>
     </div>
+    <!-- FIN MENU DISCO -->
+
+    <!-- INICIO MENU DISCO SOLO PARA MOBILES-->
+    <div class="visible-xs">
+        <div class="btn-group btn-group-justified navDiscoMobile">
+            <a href="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'username': username, 'id': album.getId}) }}" class="btn btn-default {% if selected == 'playlist' %} navDiscoMobileActive {% endif %}">
+                <i class="center-block glyphicon glyphicon-list"></i>Lista de temas
+            </a>
+            <a href="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'username': username, 'id': album.getId}) }}" class="btn btn-default {% if selected == 'information' %} navDiscoMobileActive {% endif %}">
+                <i class="center-block glyphicon glyphicon-book"></i>Información
+            </a>
+            <a href="#" class="btn btn-default {% if selected == 'comments' %} navDiscoMobileActive {% endif %}">
+                <i class="center-block glyphicon glyphicon-comment"></i>Comentarios
+            </a>
+            <a href="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'username': username, 'id': album.getId}) }}" class="btn btn-default {% if selected == 'related' %} navDiscoMobileActive {% endif %}">
+                <i class="center-block glyphicon glyphicon-th"></i>Similares
+            </a>
+        </div>
+    </div>
+    <!-- FIN MENU DISCO SOLO PARA MOBILES-->
+
 </div>

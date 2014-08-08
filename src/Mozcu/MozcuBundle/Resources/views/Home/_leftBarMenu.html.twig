@@ -6,7 +6,7 @@
             </a>
         </li>
     {% else %}
-        <li><a href="#"><i class="glyphicon glyphicon-user"></i>Ingresar</a></li>
+        <li><a href="{{ path('MozcuMozcuBundle_login') }}"><i class="glyphicon glyphicon-user"></i>Ingresar</a></li>
     {% endif %}
     
     <li><a href="{{ path('MozcuMozcuBundle_albums') }}"><i class="glyphicon glyphicon-headphones"></i>Discos</a></li>

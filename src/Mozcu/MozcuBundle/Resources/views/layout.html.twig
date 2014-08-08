@@ -11,7 +11,7 @@
     <title>{% block title %}Mozcu{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/entypo.css') }}" rel="stylesheet">
@@ -23,6 +23,24 @@
     <link rel="stylesheet" href="{{ asset('css/jquery-ui/jquery-ui-1.10.3.custom.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/uploadify/uploadify.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/jplayer/mozcu/jplayer.mozcu.css') }}" />
+    
+    <script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.3.custom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/docs.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/mozcu.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/uploadify/jquery.uploadify.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fileUploader/ajaxfileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fileUploader/mozcuFileUploader.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/jplayer/jquery.jplayer.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jplayer/jplayer.playlist.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/player.utils.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/layout.utils.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/profile.utils.js') }}"></script>        
+
+    {% block javascript %}{% endblock %}
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -40,8 +58,8 @@
 ===========================================================-->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header col-xs-2 col-sm-2 col-md-2 col-lg-2">   
-        <a class="logomin pull-left visible-xs" href="{{ path('MozcuMozcuBundle_home') }}"><img src="images/logominB.jpg" alt="Mozcu"></a>  
-        <a class="navbar-brand pull-left" href="{{ path('MozcuMozcuBundle_home') }}"><img src="images/logo.png" alt="Mozcu">  </a>  
+        <a class="logomin pull-left visible-xs" href="{{ path('MozcuMozcuBundle_home') }}"><img src="{{ asset('images/logominB.jpg') }}" alt="Mozcu"></a>  
+        <a class="navbar-brand pull-left" href="{{ path('MozcuMozcuBundle_home') }}"><img src="{{ asset('images/logo.png') }}" alt="Mozcu">  </a>  
     </div> 
 
     <div class="col-xs-9 col-sm-9 col-md-6 col-lg-6 buscador">
@@ -53,12 +71,8 @@
         </form> 
     </div> 
 
-    <div class="visible-lg visible-md">  
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Ingresar</a></li>
-            <li><button class="btn btn-primary">Crear una cuenta</button></li>
-        </ul>
-    </div>
+    <input type="hidden" id="loadUserBarUrl" value="{{ path('MozcuMozcuBundle_loadUserBar') }}" /> 
+    {{ render(controller('MozcuMozcuBundle:Home:loadUserBar')) }}
 </nav>
     
 <!--FIN DEL HEADER-->
@@ -77,31 +91,7 @@
     </div> <!-- FIN DE HOMEPAGE-->              
                
 </div> <!-- FIN CONTAINER FLUID -->
-        
-            
     
-
-
-     <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.3.custom.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/docs.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/mozcu.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/uploadify/jquery.uploadify.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/fileUploader/ajaxfileupload.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/fileUploader/mozcuFileUploader.js') }}"></script>
-
-    <script type="text/javascript" src="{{ asset('js/jplayer/jquery.jplayer.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jplayer/jplayer.playlist.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/player.utils.js') }}"></script>
-
-    <script type="text/javascript" src="{{ asset('js/layout.utils.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/profile.utils.js') }}"></script>        
-
-    {% block javascript %}{% endblock %}
 
 </body>
 </html>

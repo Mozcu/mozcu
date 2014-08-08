@@ -50,20 +50,25 @@ $(function() {
         searchAlbums();
     });
     
-    $('.mainContent').on('click', '.wrapperProfile.breadC .profileOptions a', function(e) {
+    // pestañas del album (lista de temas, informacion, comentarios, similares)
+    $('.mainContent').on('click', '.headerDisco .navDisco a', function(e) {
       e.preventDefault();
       var me = $(this);
       
       var url = me.attr('href');
+      if(url == '#') {
+          return;
+      }
       $.getJSON(url, {}, function(data){
         if (data.success) {
-          me.parents('.profileOptions').find('.selected').removeClass('selected');
-          me.addClass('selected');
-          $('.mainContent .content').replaceWith(data.html);
+          me.parents('.navDisco').find('.discoActive').removeClass('discoActive');
+          me.parent().addClass('discoActive');
+          $('.mainContent .albumContent').replaceWith(data.html);
         }
       });
     });
     
+    // DEPRECADO: ver todos los discos
     $('.mainContent').on('click', '.breadCrumb .allAlbums', function(e) {
       e.preventDefault();
       var me = $(this);
@@ -103,7 +108,8 @@ $(function() {
       });
     });
     
-    $('.mainContent').on('click', '.pageDiscListen .discListen a', function(e) {
+    // Ir al disco
+    $('.mainContent').on('click', '.album .albumLink', function(e) {
       e.preventDefault();
       var me = $(this);
       
@@ -114,8 +120,8 @@ $(function() {
       });
     });
     
-    /* To Disc Page from Related Page */
-    $('.mainContent').on('click', '.related .discListen a', function(e) {
+    // Ir al perfil del usuario
+    $('.mainContent').on('click', '.album .profileLink', function(e) {
       e.preventDefault();
       var me = $(this);
       

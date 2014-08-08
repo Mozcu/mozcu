@@ -1,5 +1,7 @@
-{{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', {'album': album}) }}
+<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+    {{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', {'album': album}) }}
 
-{{ include(template, parameters) }}
+    {{ include(template, parameters) }}
+</div>
 
-<script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>
+{% block javascript %}<script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>{% endblock %}

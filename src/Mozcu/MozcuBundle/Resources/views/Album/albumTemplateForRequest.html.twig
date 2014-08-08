@@ -3,11 +3,12 @@
 {% block title %} {% trans with {'%name%': parameters.album.getProfile.getUser.getCurrentName} %}%name% en Mozcu{% endtrans %} {% endblock %}
 
 {% block mainContent %}
+    <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+        {{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', parameters) }}
 
-    {{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', parameters) }}
+        {{ include(template, parameters) }}
+    </div>
     
-    {{ include(template, parameters) }}
-    
-    <script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>
+    {% block javascript %}<script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>{% endblock %}
 
 {% endblock %}

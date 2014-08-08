@@ -3,13 +3,51 @@ $(function() {
    var urls = new Array();
    
    // Click en el logo superior izquirdo
-   $('.navbar').on('click', '.navbar-header a', function(e){
+   $('.navbar.navbar-fixed-top').on('click', '.navbar-header a', function(e){
         e.preventDefault();
         
         var me = $(this);
         var url = me.attr('href');
         
         changeMainContent(url);
+    });
+    
+    // Link login
+    $('.navbar.navbar-fixed-top').on('click', '.userBar .loginLink', function(e) {
+        e.preventDefault();
+        
+        var me = $(this);
+        var url = me.attr('href');
+        
+        changeMainContent(url);
+    });
+    
+    // Link login home
+    $('.mainContent').on('click', '.btnIngresar', function(e) {
+        e.preventDefault();
+        
+        var me = $(this);
+        var url = me.data('url');
+        
+        changeMainContent(url);
+    });
+    
+    // Check login
+    $('.mainContent').on('click', '.loginCheckButton', function(e){
+        e.preventDefault();
+
+        var me = $(this);
+        var username = me.parent().find('#username').val();
+        var password = me.parent().find('#password').val();
+        var rememberMe = me.parent().find('#remember_me');
+        //var loader = me.parents('.loginLinkWrapper').find('.ajaxLoader');
+        
+        //loader.show();
+        if(rememberMe.is(':checked')) {
+            loginCheck(username, password, true);
+        } else {
+            loginCheck(username, password);
+        }
     });
    
    // TODO: Pestañas de pagina about
@@ -82,24 +120,6 @@ $(function() {
     });
     
     // TODO
-    $('.userBarWrapper').on('click', '.loginCheckButton', function(e){
-        e.preventDefault();
-
-        var me = $(this);
-        var username = me.parent().find('#username').val();
-        var password = me.parent().find('#password').val();
-        var rememberMe = me.parent().find('#remember_me');
-        var loader = me.parents('.loginLinkWrapper').find('.ajaxLoader');
-        
-        loader.show();
-        if(rememberMe.is(':checked')) {
-            loginCheck(username, password, true);
-        } else {
-            loginCheck(username, password);
-        }
-    });
-    
-    // TODO
     $('.userBarWrapper').on('click', '.userBubble .logoutLink', function(e){
         e.preventDefault();
         
@@ -135,8 +155,9 @@ $(function() {
         });
     });
     
-    // TODO: Upload
-    $('.userBarWrapper').on('click', '.topCloud a', function(e) {
+    
+    // Link login
+    $('.navbar.navbar-fixed-top').on('click', '.userBar .uploadLink', function(e) {
         e.preventDefault();
         
         var me = $(this);
@@ -147,7 +168,6 @@ $(function() {
                 $('.mainContent').html(data.html);
             } 
         });
-        
     });
     
     // Opciones del sidebar
@@ -160,14 +180,16 @@ $(function() {
         changeMainContent(url);
     });
     
+    // Modifica el contenido principal
     var changeMainContent = function(url) {
          $.getJSON(url, function(data) {
             if(data.success) {
                 $('.mainContent').html(data.html);
             }
         });
-    }
+    };
     
+    // Ejecuta el login 
     var loginCheck = function(username, password, rememberMe) {
         var url = $('#login_check_url').val();
         var postData = {_username: username, _password: password};
@@ -186,27 +208,28 @@ $(function() {
                     }
                 });
             }
-            $('.loginLinkWrapper .loginFormBubble').toggle('fast');
         });
     };
     
+    // Recarga la barra superior derecha
     var reloadUserBar = function() {
         var url = $('#loadUserBarUrl').val();
         $.getJSON(url, function(data) {
             if(data.success) {
                 if(data.success) {
-                    $('.header .userBarWrapper').html(data.html);
+                    $('.navbar.navbar-fixed-top .userBar').replaceWith(data.html);
                 }
             }
         });
     };
     
+    // Recarga el menu izquierdo
     var reloadLeftBar = function() {
         var url = $('#loadLeftBarUrl').val();
         $.getJSON(url, function(data) {
             if(data.success) {
                 if(data.success) {
-                    $('.sidebar nav-sidebar').replaceWith(data.html);
+                    $('.sidebar .nav-sidebar').replaceWith(data.html);
                 }
             }
         });

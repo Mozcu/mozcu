@@ -1,42 +1,24 @@
-<div class="content list">
-    <table class="playList">
+<div class="row albumContent playList">
+     <table class="table table-striped table-condensed">
         <thead>
             <tr>
-                <td width="30"></td>
-                <td>Nombre</td>
-                <td align="right">Duración</td>
-                <td>Álbum</td>
-                <td width="80">Año</td>
-                <td>Artista</td>
+                <td class="text-center">#</td>
+                <td class="nombreTabla">Nombre</td>
+                <td class="shareTable text-right">Agregar</td>
+                <td class="text-right">Duración</td>
+                <td class="shareTable text-center">Compartir</td>
             </tr>
         </thead>
         <tbody>
             {% for key, song in album.getSongs%}
-            <tr class="{{ cycle(['even', 'odd'], key) }}">
-                <td width="30">{{ song.getTrackNumber }}</td>
-                <td>
-                    <div class="flLeft songName">
-                        <a href="#" id="{{ album.getId }}-{{ song.getTrackNumber }}">{{ song.getName }}</a> 
-                    </div>
-                    <div class="flRight">
-                        <a href="#" class="share">
-                            <img src="{{ asset('images/iconShareT.png') }}" alt="">
-                        </a>
-                    </div>
-                </td>
-                <td align="right">
-                    <div class="flLeft">
-                        <a href="#" class="addToPlaylist">
-                            <img src="{{ asset('images/listAdd.png') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="flRight">{{ song.getLength}}</div>	
-                </td>
-                <td>{{ album.getName }}</td>
-                <td width="80">{{ album.getReleaseDate }}</td>
-                <td>{{ album.getUser.getCurrentName }}</td>
-            </tr>
+                <tr>
+                    <td class="text-center">{{ song.getTrackNumber }}</td>
+                    <td class="nombreTabla songName"><a href="#" id="{{ album.getId }}-{{ song.getTrackNumber }}">{{ song.getName }}</a></td>
+                    <td class="compiTable text-right"><a href="#"><i class="glyphicon glyphicon-plus-sign"></i></a></td>
+                    <td class="text-right">{{ song.getLength}}</td>
+                    <td class="shareTable text-center"><a href="#"><i class="glyphicon glyphicon-share"></i></a></td>                    
+                </tr>
             {% endfor %}
-        </tbody>
+        </tbody>      
     </table>
 </div>

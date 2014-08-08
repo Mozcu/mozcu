@@ -21,7 +21,7 @@ $(function() {
         return album.songs
     };
 	
-    $('.mainContent').on('click', '.wrapperProfile .overPlay', function(e) {
+    $('.mainContent').on('click', '.headerDisco .overPlay', function(e) {
         e.preventDefault();
         var me = $(this);
         var songs = getSongsForPlaylist(me.attr('id'));
@@ -49,7 +49,7 @@ $(function() {
         playlistOptions: {
             autoPlay: true,
         },
-        swfPath: "js/jplayer/Jplayer.swf",
+        swfPath: "/js/jplayer/Jplayer.swf",
         supplied: "oga, mp3",
         smoothPlayBar: true,
         wmode: "window",

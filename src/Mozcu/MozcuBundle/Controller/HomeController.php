@@ -26,6 +26,24 @@ class HomeController extends MozcuController
         return $this->render( 'MozcuMozcuBundle:Home:index.html.twig', array('form' => $form->createView()));
     }
     
+    public function loginAction() {
+        $user = $this->getUser();
+        if(!is_null($user)) {
+            return $this->redirect($this->generateUrl('MozcuMozcuBundle_profile', array('username' => $user->getUsername())));
+        }
+        
+        $template = 'MozcuMozcuBundle:Home:_homeLogin.html.twig';
+        $parameters = array();
+        if($this->getRequest()->isXmlHttpRequest($template)) {
+            $html = $this->renderView($template);
+            $response = new Response(json_encode(array('success' => true, 'html' => $html)));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } else {
+            return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => $parameters, 'template' => $template));
+        }
+    }
+    
     public function ajaxGetHomeAction() {
         $form = $this->createForm(new UserType(), new User());
         
