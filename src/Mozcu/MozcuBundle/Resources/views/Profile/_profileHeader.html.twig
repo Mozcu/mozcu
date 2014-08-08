@@ -1,37 +1,51 @@
-<div class="wrapperProfile">    
-        <div class="profileLeft">
-                <div class="imgProfile">
-                        {% if user.getCurrentProfile.getMainImage is null %}
-                            <img src="{{ asset('images/profile_125x125.jpg')}}" alt="" />
-                        {% else %}
-                            {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
-                                {% if presentation.getName == 'profile_header' %}
-                                    <img src="{{ presentation.url }}" alt="" />
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                </div>
-                <div class="optionsProfile">
-                        <h2 class="title">{{ user.getCurrentName }}</h2>
-                        <p class="subtitle">{{ user.getCurrentProfile.slogan }}</p>
-                        <p class="ubication">
-                            {% if user.getCurrentProfile.getCountry is not null %}
-                                {% if user.getCurrentProfile.getCity is not null %}
-                                    {{ user.getCurrentProfile.getCity }},
-                                {% endif %}
-                                {{ user.getCurrentProfile.getCountry.getName }}
-                            {% endif %}
-                        </p>
-                        <!--<a href="#" class="btnFollow">
-                                <span class="iconFollow">+</span> Seguir
-                        </a>-->
-                </div>
+<div class="row headerDisco headerPerfil">
+               
+    <!-- BREADCRUM SOLO PARA MOBILES-->
+    <div class="row visible-xs">
+        <div class="breadcrumDisco col-xs-12">
+            <a href="#" class="col-xs-10 col-sm-10 breadVolver"><i class="glyphicon glyphicon-chevron-left pull-left"></i>Artistas</a>
+            <a href="#" class="col-xs-2 col-sm-2 visible-xs visible-sm"><p class="text-right"><i class="btnMasMobile ion-android-more "></i></p></a>
         </div>
-        <div class="profileRight">
-                <!--<span class="text">Seguidores</span> <br />
-                <span class="numbers">6.345</span> <br />
-                <div class="sepLine"></div>
-                <span class="text">Siguiendo</span> <br />
-                <span class="numbers">23</span>-->
+    </div>  
+    <!-- FIN DE BREADCRUM SOLO PARA MOBILES-->
+               
+    <div class="col-sm-3 col-md-3 col-lg-2">
+        {% if user.getCurrentProfile.getMainImage is null %}
+            <img src="{{ asset('images/profile_125x125.jpg')}}" alt="perfil" class="img-circle img-perfil center-block">
+        {% else %}
+            {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
+                {% if presentation.getName == 'profile_header' %}
+                    <img src="{{ presentation.url }}" alt="perfil" class="img-circle img-perfil center-block">
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+               
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 titlPerfil">
+        <h3 class="nombreUser"><a href="#">{{ user.getCurrentName }}</a></h3>
+        <p class="subtituloPerfil"><a href="{{ user.getCurrentProfile.getWebSiteUrl }}">{{ user.getCurrentProfile.getWebSiteUrl }}</a></p>
+        <p class="ubicacionPerfil"><a href="#"><i class="glyphicon glyphicon-map-marker"></i>
+            {% if user.getCurrentProfile.getCountry is not null %}
+                {% if user.getCurrentProfile.getCity is not null %}
+                    {{ user.getCurrentProfile.getCity }} - 
+                {% endif %}
+                {{ user.getCurrentProfile.getCountry.getName }}
+            {% endif %}
+        </a></p>
+        <button type="button" class="btn btn-success btnSeguir"><i class="ion-person-add"></i>Seguir</button>
+    </div>
+               
+    <div class="followersPerfil col-xs-12 col-sm-2 col-md-2 col-lg-2 center-block">
+        <div class="followersFollow col-xs-6 col-md-12 col-sm-12 col-lg-12">
+            <p class="numFollow">1,7k</p>
+            <p class="nomFollow">Seguidores</p>   
         </div>
+        <div class="col-xs-6 col-md-12 col-sm-12 col-lg-12">
+            <p class="numFollow">100k</p>
+            <p class="nomFollow">Visitas</p>   
+        </div>
+    </div>
+    
+    {{ include('MozcuMozcuBundle:Profile:_profileMenu.html.twig', {'user': user,'selected': selectedOption}) }}
+                       
 </div>

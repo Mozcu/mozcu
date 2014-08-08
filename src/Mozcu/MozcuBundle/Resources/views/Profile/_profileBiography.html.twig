@@ -1,25 +1,26 @@
-<div class="content profileContent">
-    {% if user.getCurrentProfile.getImages.count > 1 %}
-        <div class="wrapperImagesProfile">
-            <div class="left">
-                    <img src="{{ asset('images/img1.jpg')}}" alt="" />
-            </div>
-            <div class="right">
-                    <img class="first" src="{{ asset('images/img2.jpg')}}" alt="" /><br />
-                    <img src="{{ asset('images/img3.jpg')}}" alt="" />
-            </div>
-        </div>
-    {% endif %}
-    
-    <div class="dataProfile">
+<div class="row center-block profileContent">
+    <div class="infoDisco col-lg-8">
+        <h3>Información</h3>
         {% if user.getCurrentProfile.description is not empty %}
             <p>{{ user.getCurrentProfile.description }}</p>
         {% else %}
             <p>
                 {% trans with {'%name%': user.getCurrentName} %}El usuario %name% a&uacute;n no posee una biograf&iacute;a{% endtrans %}
-                {{ user.getCurrentProfile.description }}
             </p>
         {% endif %}
-
+    </div>
+    <div class="statDisco infoDisco col-lg-3">
+        <h3>Vínculos</h3>
+        <table class="table">
+            <tr>
+                <td class="tdText"><a href="#" target="_blank"><h5>Facebook</h5></a></td>
+            </tr>
+            <tr>
+                <td class="tdText"><a href="#" target="_blank"><h5>Twitter</h5></a></td>
+            </tr>
+            <tr>
+                <td class="tdText"><a href="#" target="_blank"><h5>Tumblr</h5></a></td>  
+            </tr>
+        </table>
     </div>
 </div>

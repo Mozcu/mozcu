@@ -1,72 +1,45 @@
-<div class="content profileContent">
-    <!--<div class="filtrerLeft">
-            <a href="" class="btnFil down">Favoritos de Germán</a>
-            <a href="" class="btnFil selected over">Discos de Germán</a>
+<div class="row center-block perfilContenido profileContent">
+    <div class="headerAlbumes col-lg-12 text-center">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btnPerfilActive">Álbumes de {{ user.getCurrentName}}</button>
+            <button type="button" class="btn btn-default">Favoritos de {{ user.getCurrentName}}</button>
+        </div>
+        <div class="col-lg-2 pull-right hidden">
+            <input type="search" class="form-control" placeholder="Buscar">
+        </div>
     </div>
-    <div class="filtrerRight">
-            <div class="boxSearch">
-                            <input class="search" type="" placeholder="Filtrar colección" />
-            </div>
-    </div>-->
-    <div class="clearBoth"></div>
-    <div class="contentInner discos">
-        <input type="hidden" id="deleteAlbumUrl" value="{{ path('MozcuMozcuBundle_deleteAlbum') }}" />
-        {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
-            <!-- DISCO -->
-            <div class="disco">
-                <input type="hidden" class="editAlbumUrl" value="{{ path('MozcuMozcuBundle_editAlbum', {'id': album.getId}) }}" />
-                <input type="hidden" class="albumId" value="{{ album.getId }}" />
-                <div class="imgPortada">
-                    {% if album.getIsActive == false  and album.getListThumbnailUrl is null %}
-                        <img src="/uploads/images/tmp/{{ album.getImage.getTemporalFileName }}" alt="" style="width: 139px; height: 139px;"/>
-                    {% else %}
-                        <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
-                            <img style="width: 139px; height: 139px;" src="{{ album.getListThumbnailUrl }}" alt="" />
-                        </a>
-                    {% endif %}
 
-                    {% if isAuthenticated == true and album.getIsActive  == true %}
-                        <div class="actions">
-                            <div class="action edit">
-                                Modificar
-                            </div>
-                            <div class="action delete">
-                                <img src="{{ asset('images/tacho.png') }}" />
-                            </div>
-                            <div class="clearBoth"></div>
-                        </div>
-                        <div class="actionsLoader">
-                            <img src="{{ asset('images/ajax-loader-small.gif') }}" />
-                        </div>
-                    {% endif %}
+    <!--INICIO DE ALBUMES-->
+    {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
+        <div class="album col-xs-6 col-sm-4 col-md-3 col-lg-3">
+            <input type="hidden" class="albumId" value="{{ album.getId }}" />
+            
+            {% if album.getIsActive == false  and album.getListThumbnailUrl is null %}
+                <img src="/uploads/images/tmp/{{ album.getImage.getTemporalFileName }}" alt="{{ album.getName }}" class="imgAlbum"/>
+            {% else %}
+                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
+                    <img src="{{ album.getListThumbnailUrl }}" alt="{{ album.getName }}" class="imgAlbum">
+                </a>
+            {% endif %}
+            
+            {% if isAuthenticated == true and album.getIsActive  == true %}
+                <div class="actions" style="text-align: right;">
+                    <a href="{{ path('MozcuMozcuBundle_editAlbum', {'id': album.getId}) }}" style="padding-top: 3px;">
+                        <i class="glyphicon glyphicon-edit" style="font-size: 16px; color: #000;"></i>
+                    </a>
+                    <img src="{{ asset('images/ajax-loader-small.gif') }}" style="display: none; padding-left: 20px;"/>
+                    <a href="{{ path('MozcuMozcuBundle_deleteAlbum') }}" style="padding-left: 20px; padding-top: 3px;">
+                        <i class="glyphicon glyphicon-trash" style="font-size: 16px; color: #000;"></i>
+                    </a>
                 </div>
-                <div class="head">
-                    <h1 class="title">
-                        {% if album.getIsActive == false %}
-                            {{ album.getName }} (procesando...)
-                        {% else %}
-                            <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername, 'id': album.getId}) }}">
-                                {{ album.getName }}
-                            </a>
-                        {% endif %}
-                    </h1>
-                    <span class="year">{{ album.getReleaseDate }}</span>
-                </div>
-                <div class="listSong">
-                    {% for song in album.getSongs %}
-                        <div class="song">
-                                <span class="track">{{ song.getTrackNumber }}</span>
-                                <span class="titleSong">{{ song.getName }}</span>
-                                <span class="duration">{{ song.length }}</span>
-                        </div>
-                    {% endfor %}
-                <div class="clearBoth"></div>
-                </div>
-            </div>
-        {% else %}
-            <div class="noAlbums">{{ user.getCurrentName }} aun no subio ningun album!</div>
-        {% endfor %}
-        <div class="clearBoth"></div>
-        <!-- /DISCO -->
-    </div>
+            {% endif %}
+            
+            <h5>{{ album.getName }} {% if album.getIsActive == false %}(procesando...){% endif %}</h5>
+            
+            <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}"><p>{{ user.getCurrentName }}</p></a>
+        </div>
+    {% else %}
+        <div class="noAlbums">{{ user.getCurrentName }} aun no subio ningun album!</div>
+    {% endfor %}
+    <!--FIN DE ALBUMES-->                          
 </div>

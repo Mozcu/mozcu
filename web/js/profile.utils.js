@@ -1,6 +1,7 @@
 $(function() {
     
-    $('.mainContent').on('click', '.profileMenu a', function(e){
+    // Menu del perfil
+    $('.mainContent').on('click', '.headerPerfil .navDisco a', function(e){
         e.preventDefault();
         
         var me = $(this);
@@ -8,8 +9,13 @@ $(function() {
         
         $.getJSON(url, function(data) {
             if(data.success) {
-                $('.profileMenu').find('.selected').removeClass('selected');
-                me.addClass('selected');
+                $('.headerPerfil .navDisco').find('.discoActive').removeClass('discoActive');
+                $('.headerPerfil .navPerfilMobile').find('.navDiscoMobileActive').removeClass('navDiscoMobileActive');
+                
+                me.parent().addClass('discoActive');
+                var idx = me.parent().prevAll().length;
+                var mobileOption = $('.headerPerfil .navPerfilMobile a').get(idx);
+                $(mobileOption).addClass('navDiscoMobileActive');
                 $('.profileContent').replaceWith(data.html);
             }
         });
