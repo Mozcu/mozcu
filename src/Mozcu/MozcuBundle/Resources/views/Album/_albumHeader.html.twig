@@ -15,9 +15,11 @@
     
     {% set username = album.getProfile.getUser.getUsername %}
     <div class="col-sm-3 col-md-2 col-lg-2">
-        <a href="#" id="{{ album.getId}}" class="overPlay text-center" style="position: absolute; width: 153px; height: 153px;">
-            <i class="glyphicon glyphicon-play" style="font-size: 30px; color: #fff;"></i>
-        </a>
+        <a href="#" id="{{ album.getId}}" class="playPause text-center">   
+            <i class="botonPLay glyphicon glyphicon-play"></i>
+            <i class="glyphicon glyphicon-pause hidden"></i>
+        </a> 
+        
         {% for presentation in album.getImage.getPresentations %}
             {% if presentation.getName == 'album_header' %}
                 <img src="{{ presentation.url }}" alt="perfil" class="imgDisco center-block">
@@ -26,12 +28,20 @@
     </div>
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 titlDisco">
-        <h3 class="nombreDisco"><a href="#">{{ album.getName }}</a></h3>
-        <h4 class="nombreBanda"><a href="#">{{ album.getProfile.getUser.getCurrentName }}</a></h4>   
+        <h3 class="nombreDisco">{{ album.getName }}</h3>
+        <h4 class="nombreBanda">{{ album.getProfile.getCurrentName }}</h4>   
+        <h5 class="nombreAlbumUser">
+            Por
+            <a href="{{ path('MozcuMozcuBundle_profile', {'username': album.getProfile.getUser.username}) }}">
+                {{ album.getArtistName }}
+            </a>
+        </h5>
     </div>
 
     <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs hidden-sm">
-        <button type="button" class="btn btn-primary btn-block btnDescarga"><i class="glyphicon glyphicon-cloud-download"></i>Descargar</button>
+        <button type="button" data-url="{{ path("MozcuMozcuBundle_albumDownloadModal", {id: album.getId}) }}" class="btn btn-primary btn-block btnDescarga">
+            <i class="glyphicon glyphicon-cloud-download"></i>Descargar
+        </button>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs hidden-sm">
         <div class="btn-group btn-group-justified btngroupCompartir">

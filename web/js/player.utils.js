@@ -21,7 +21,7 @@ $(function() {
         return album.songs
     };
 	
-    $('.mainContent').on('click', '.headerDisco .overPlay', function(e) {
+    $('.mainContent').on('click', '.headerDisco .playPause', function(e) {
         e.preventDefault();
         var me = $(this);
         var songs = getSongsForPlaylist(me.attr('id'));
@@ -35,10 +35,10 @@ $(function() {
 		var data = me.attr('id').split('-');
         var songs = getSongsForPlaylist(data[0]);
         if (currentPlayList != data[0]) {
-			mozcuPlaylist.setPlaylist(songs);
-			currentPlayList = data[0];
-		}
-		mozcuPlaylist.play(data[1] - 1);
+            mozcuPlaylist.setPlaylist(songs);
+            currentPlayList = data[0];
+        }
+        mozcuPlaylist.play(data[1] - 1);
     });
     
     mozcuPlaylist = new jPlayerPlaylist({

@@ -1,0 +1,20 @@
+<div class="modal fade mozcu-modal-lg modal-report-album" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Denuncia esta obra</h4>
+            </div>
+            <div class="modal-body">
+              <input class="form-control" type="text" placeholder="Causa">
+          <textarea class="form-control" rows="5" placeholder="Escribe tu denuncia"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-success" data-url="{{ path('MozcuMozcuBundle_albumSubmitReport', {id: album.getId()}) }}">
+                  Enviar
+              </button>
+            </div>
+      </div>
+    </div>
+</div>

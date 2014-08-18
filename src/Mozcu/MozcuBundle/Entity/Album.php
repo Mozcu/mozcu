@@ -649,6 +649,9 @@ class Album {
      */
     public function getArtistName()
     {
+        if(is_null($this->artist_name)) {
+            return $this->getProfile()->getCurrentName();
+        }
         return $this->artist_name;
     }
 }

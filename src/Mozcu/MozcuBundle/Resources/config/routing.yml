@@ -96,6 +96,30 @@ MozcuMozcuBundle_getAlbumForPlayer:
   requirements:
     _method: GET
 
+MozcuMozcuBundle_albumReportModal:
+    pattern: /album/{id}/report
+    defaults: {_controller: MozcuMozcuBundle:Album:albumReportModal}
+    requirements:
+      _method: GET
+      
+MozcuMozcuBundle_albumSubmitReport:
+    pattern: /album/{id}/report
+    defaults: {_controller: MozcuMozcuBundle:Album:albumSubmitReport}
+    requirements:
+      _method: POST
+    
+MozcuMozcuBundle_albumDownloadModal:
+    pattern: /album/{id}/download
+    defaults: {_controller: MozcuMozcuBundle:Album:albumDownloadModal}
+    requirements:
+      _method: GET
+
+MozcuMozcuBundle_albumCheckout:
+    pattern: /album/{id}/checkout
+    defaults: {_controller: MozcuMozcuBundle:Album:albumCheckout}
+    requirements:
+      _method: GET
+
 MozcuMozcuBundle_deleteAlbum:
     pattern: /albums/delete
     defaults: {_controller: MozcuMozcuBundle:Album:deleteAlbum}
@@ -135,24 +159,6 @@ MozcuMozcuBundle_albumAlbumRelated:
 MozcuMozcuBundle_albumAlbumPlaylist:
     pattern: /{username}/album/{id}/playlist
     defaults: {_controller: MozcuMozcuBundle:Album:albumPlaylist}
-    requirements:
-      _method: GET
-      
-MozcuMozcuBundle_albumPreDownload:
-    pattern: /{username}/album/{id}/download
-    defaults: {_controller: MozcuMozcuBundle:Album:albumPreDownload}
-    requirements:
-      _method: GET
-      
-MozcuMozcuBundle_albumCheckout:
-    pattern: /{username}/album/{id}/checkout
-    defaults: {_controller: MozcuMozcuBundle:Album:albumCheckout}
-    requirements:
-      _method: GET
-
-MozcuMozcuBundle_albumDownload:
-    pattern: /{username}/album/{id}/zipDownload
-    defaults: {_controller: MozcuMozcuBundle:Album:albumDownload}
     requirements:
       _method: GET
 

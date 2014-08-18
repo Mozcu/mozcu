@@ -1,0 +1,45 @@
+<div class="modal fade mozcu-descarga-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title text-center">Descarga "{{ album.getName }}"</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center"> La cultura no tiene precio, tiene valor. Ahora tienes que demostrar el valor que tiene este álbum para ti.</p>
+                <div class="row rowPagos">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5"><label for="valor" class="control-label input-lg pull-right">US$</label></div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 "><input type="text" class="form-control input-lg" id="valor"
+                       placeholder="Ej: 10"></div>
+                </div>
+                <small class="center-block text-center">*Recuerda que esta transacción se realiza libre de intermediarios, por lo tanto el 100% de lo que ingreses va a la cuenta del artista.</small>  
+            </div>
+            
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="paypal" name="myform" id="paypalForm">
+                <input type="hidden" name="cmd" value="_xclick">
+                <input type="hidden" name="business" value="{{ album.getProfile.getPaypalEmail }}">
+                <input type="hidden" name="lc" value="AR">
+                <input type="hidden" name="item_name" value="Mozcu.com: {{ album.getName }}">
+                <input type="hidden" name="item_number" value="Mozcu.com: {{ album.getId }}">
+                <input id="amount" type="hidden" name="amount" size="10" value="" />
+                <input type="hidden" name="currency_code" value="USD">
+                <input type="hidden" name="button_subtype" value="services">
+                <input type="hidden" name="no_note" value="0">
+                <input type="hidden" name="cn" value="Anadir instrucciones especiales para el vendedor">
+                <input type="hidden" name="no_shipping" value="2">
+                <input type="hidden" name="rm" value="1">
+                {% set username = album.getProfile.getUser.getUsername %}
+                <input type="hidden" id="checkoutUrl" name="return" value="">
+                <input type="hidden" name="cancel_return" value="{{ url('MozcuMozcuBundle_albumAlbum', {'username': username, 'id': album.getId }) }}">
+                <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+                <input type="hidden" name="cbt" value="Terminar con la descarga del disco">
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-url="{{ path("MozcuMozcuBundle_albumCheckout", {id: album.getId})}}">Descargar</button>
+                <img src="{{ asset("images/ajax-loader-small.gif")}}" class="hidden ajaxLoader" />
+            </div>
+        </div>
+    </div>
+</div>

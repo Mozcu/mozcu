@@ -1,45 +1,5 @@
 $(function() {
     
-    var uploadifyTemplate;
-    
-    if($('#uploadify_template_url').length > 0) {
-        $.ajaxSetup({async: false});
-        var url = $('#uploadify_template_url').val();
-        $.getJSON(url, function(data) {
-            if(data.success) {
-                uploadifyTemplate = data.html;
-            }
-        });
-        $.ajaxSetup({async: true});
-    }
-    
-    $('#add_tracks').uploadify({
-        swf             : $('#uploadify_swf').val(),
-        uploader        : $('#upload_url').val(),
-        buttonText      : '+ Add tracks',
-        buttonClass     : 'addTracks',
-        multi           : true,
-        auto            : true,
-        removeCompleted : false,
-        fileSizeLimit   : '0',
-        fileTypeExts    : '*.mp3',
-        itemTemplate    : uploadifyTemplate,
-        queueID         : 'add_tracks-queue',
-        onUploadSuccess : function(file, data, response) {
-            var data = $.parseJSON(data);    
-            if(data.success) {
-                $('#' + file.id).find('.realFileName').val(data.file_name);
-                $('#' + file.id).find('.editSongName').html(data.original_name);
-            } else {
-                $('#' + file.id).addClass('uploadify-error');
-                $('#' + file.id).find('.data').html('ERROR');
-                console.log(data.message);
-            }
-        }
-    });
-    
-    $('.uploadify-queue').sortable();
-    
     $('.pageUpload').on('click', '.uploadedSong .editSongName', function(e){
         e.preventDefault();
         

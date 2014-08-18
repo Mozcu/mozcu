@@ -10,10 +10,13 @@
 
     <title>{% block title %}Mozcu{% endblock %}</title>
 
+    <link rel="stylesheet" href="{{ asset('css/uploadify/uploadify.css') }}" />
+    
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
+    
     <link href="{{ asset('css/entypo.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mozcu.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
@@ -21,7 +24,6 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700italic,700,400italic,300italic,100italic|Roboto+Slab:400,300,100,700' rel='stylesheet' type='text/css'>
     
     <link rel="stylesheet" href="{{ asset('css/jquery-ui/jquery-ui-1.10.3.custom.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/uploadify/uploadify.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/jplayer/mozcu/jplayer.mozcu.css') }}" />
     
     <script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
@@ -38,7 +40,9 @@
     <script type="text/javascript" src="{{ asset('js/player.utils.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('js/layout.utils.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/profile.utils.js') }}"></script>        
+    <script type="text/javascript" src="{{ asset('js/profile.utils.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/uploadAlbum.utils.js') }}"></script>
 
     {% block javascript %}{% endblock %}
 

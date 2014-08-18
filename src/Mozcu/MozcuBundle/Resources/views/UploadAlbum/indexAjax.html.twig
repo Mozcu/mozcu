@@ -1,277 +1,237 @@
-<div class="pageUpload">
-    <input type="hidden" id="albumsForProfileLink" value="{{ path('MozcuMozcuBundle_albumsForProfile', {'username': username})}}" />
-    
-    <div class="uploadErrorMessage" style="display:none;">
-        <div class="messageInner">
-            <p class="title">Por favor verifique los siguientes errores:</p>
-        </div>
-    </div>
-    
-    <div class="clearBoth"></div>
-    
-    <div class="uploadBox">
-        <div class="uploadFront">
-            <div class="loader"></div>
-            <div class="deleteImage">Borrar</div>
-            <input type="hidden" id="imageFileName" value="" />
-            <img class="preview" src="" />
-            <div class="text" {% if album is defined  and album.getImage is not null %} style="display:none" {% endif %}>
-                    <span class="imagePlaceholderText">Portada del album</span>
-                    <div class="fileUpload">
-                        <span>Subir desde tu computadora</span>
-                        <input type="file" class="upload" name="image" id="uploadAlbumImage" />
-                    </div>
-                    <!--<input type="file" name="image" id="uploadAlbumImage" />-->
-                    <input type="hidden" id="uploadImageUrl" value="{{ path('MozcuMozcuBundle_uploadImage') }}" />
-            </div>
-            {% if album is defined  and album.getImage is not null %} 
-                <input type="hidden" id="imageUrl" value="{{ album.getCoverImageUrl }}" /> 
-            {% endif %}
-        </div>
-        <div class="discName">
-                <input type="text" id="albumName" placeholder="Nombre de tu disco" value="{% if album is defined %}{{ album.getName }}{% endif %}"/>
-        </div>
-    </div>
-    
-    <div class="clearBoth"></div>
-    
-    <div class="content">
-            <h1>Agrega los temas de tu disco</h1>
-            <div class="plugin">
-                    <div class="clearBoth"></div>
-                    <input type="hidden" value="{{ path('MozcuMozcuBundle_uploadSong') }}" id="upload_url" />
-                    <input type="hidden" value="{{ path('MozcuMozcuBundle_getUploadedSongTemplate') }}" id="uploadify_template_url" />
-                    <input type="hidden" value="{{ asset('js/uploadify/uploadify.swf') }}" id="uploadify_swf" />
-
-                    <div style="width: 500px;" >
-                        <input type="file" multiple="true" id="add_tracks" />
-                        <div id="add_tracks-queue" class="uploadify-queue ui-sortable">
-                            {% if album is defined %}
-                                {% for song in album.getSongs %}
-                                    {{ include('MozcuMozcuBundle:UploadAlbum:_uploadedSong.html.twig', {'song': song}) }}
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-            </div>
-
-            <div style="margin-top:13px;">
-
-            </div>
-
-            <h1>Añade información sobre tu disco</h1>
-            <br />
-            <div class="form">
-                    <label for="">A&ntilde;o grabación</label> <br />
-                    <input id="albumRecordingDate" pattern="[0-9]{4}" maxlength="4" placeholder="Ej: 1994" value="{% if album is defined %}{{ album.getReleaseDate }}{% endif %}"/>
-                    <div class="clearBoth"></div><br />
-
-                    <label for="">Descripción</label> <br />
-                    <textarea name="" id="albumDescription" cols="30" rows="10">{% if album is defined %}{{ album.getDescription }}{% endif %}</textarea><br />
-                    <div class="clearBoth"></div><br />
-
-                    <label for="">Etiquetas <img src="{{ asset('images/iconHelp.jpg') }}" height="14" width="14" alt="" /></label>
-                    <div class="clearBoth"></div>
-                    <div class="tags">
+<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+    <div class="row center-block">
+        <h1>Sube tu álbum</h1>
+        
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+             <h3 class="subtituloUpload">Agrega los tracks del álbum</h3>
+            <div class="uploadTemas center-block text-center">
+                 <i class="glyphicon glyphicon-cloud-upload"></i>
+                 
+                <input type="hidden" value="{{ path('MozcuMozcuBundle_uploadSong') }}" id="upload_url" />
+                <input type="hidden" value="{{ path('MozcuMozcuBundle_getUploadedSongTemplate') }}" id="uploadify_template_url" />
+                <input type="hidden" value="{{ asset('js/uploadify/uploadify.swf') }}" id="uploadify_swf" />
+                
+                <div class="upload-plugin center-block" >
+                    <input type="file" multiple="true" id="add_tracks"/>
+                    <div id="add_tracks-queue" class="uploadify-queue ui-sortable">
                         {% if album is defined %}
-                            {% for tag in album.getTags %}
-                                {{ include('MozcuMozcuBundle:UploadAlbum:_albumTag.html.twig', {'tagValue': tag.name}) }}
+                            {% for song in album.getSongs %}
+                                {{ include('MozcuMozcuBundle:UploadAlbum:_uploadedSong.html.twig', {'song': song}) }}
                             {% endfor %}
                         {% endif %}
-                        <input type="text" class="tagInput" placeholder="Escribi tus etiquetas aca"/>
                     </div>
-                    <div class="clearBoth"></div><br />
+                </div>
+             </div>   
+        </div>
+        
+        <div class="plugin">
+                <div class="clearBoth"></div>
+                
 
-                    <label>Licencia </label>
-                    <div class="licenses">
-                        <input type="hidden" id="license" value="{% if album is defined %} {{ album.getLicense }} {% endif %}" />
-                        <div class="license">
-                            <a href="#" class="dos {% if album is defined and album.getLicense == '2'%}selected{% endif %}" id="2"></a>
-                            <br />
-                            <span>Reconocimiento</span>
-                        </div>
+                
+        </div>
+        
+        <div class="uploadInfo col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3 class="subtituloUpload">Añade la información del álbum </h3>
+            
+            <div class="imgUpload col-md-2 col-lg-3">
+                <input type="hidden" id="imageFileName" value="" />
+                {% if album is defined  and album.getImage is not null %} 
+                    <input type="hidden" id="imageUrl" value="{{ album.getCoverImageUrl }}" /> 
+                {% endif %}
+                
+                <div class="placeholder">
+                    <i class="center-block text-center glyphicon glyphicon-picture"></i>
+                    <span class="text-center center-block">Arrastra la portada acá</span>
+                    <span class="text-center center-block">-o bien-</span>
+                </div>
+                
+                <div class="imgArchivoBtn">
+                    <span class="text-center center-block">Selecciona una imagen</span>
+                    <input data-url="{{ path('MozcuMozcuBundle_uploadImage') }}" type="file" class="imgArchivo" id="uploadAlbumImage" name="image">
+                </div>
+                
+                <img class="preview" style="display:none; width: 100%; height: auto;" src="" />
+                
+                <img src="{{ asset("images/ajax-loader-small.gif")}}" class="ajaxLoader center-block" style="display:none; margin-top: 94px;"/>
+             </div>
 
-                        <div class="license">
-                            <a href="#" class="tres {% if album is defined and album.getLicense == '3'%}selected{% endif %}" id="3"></a>
-                            <br />
-                            <span>Reconocimiento - Compartir bajo la misma licencia</span>
-                        </div>
+        <div class="col-md-8 col-lg-9 titlDisco">
+            <input class="form-control " type="text" placeholder="Título del álbum">
+            <input class="form-control " type="text" placeholder="Nombre del artista o banda del álbum">
+            <input placeholder="Año de publicación, ej: 2014" type="datetime" class="form-control">
+            <textarea class="form-control" rows="8" placeholder="Información del álbum"></textarea>
+            <input class="form-control" type="text" placeholder="Tags (separa los tags por una coma Ej:rock, pop, rap...)">
+        </div>
 
-                        <div class="license">
-                            <a href="#" class="cuatro {% if album is defined and album.getLicense == '4'%}selected{% endif %}" id="4"></a>
-                            <br />
-                            <span>Reconocimiento - Sin obras derivadas</span>
-                        </div>
 
-                        <div class="license">
-                            <a href="#" class="cinco {% if album is defined and album.getLicense == '5'%}selected{% endif %}" id="5"></a>
-                            <br />
-                            <span>Reconocimiento - No comercial</span>
-                        </div>
+         </div>
+        <div class="uploadLicencias col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3>Selecciona una licencia</h3>
+            <p>Creative Commons expresa la idea de "Algunos derechos reservados", quien la elija cree en algo distinto a los extremos de "todo" o "nada". Por medio de una licencia Creative Commons los creadores de contenido permiten a otros usuarios utilizar su trabajo y seguir produciendo música libre. <small class="text-primary">El material subido al Sitio se marcará con las iniciales CC, que no implica renuncia a la protección de la propiedad intelectual mediante Copyright, sino que se conceden ciertas libertades.</small> </p>
+<!--                   INICIO LICENCIA-->
+            <div class="licencia col-lg-5">
+            <h4>Atribución (by)</h4>
+            <div class="ccLicencia">
+                <i class="entypo cc"></i>
+                <i class="entypo cc-by"></i>
 
-                        <div class="license">
-                            <a href="#" class="seis {% if album is defined and album.getLicense == '6'%}selected{% endif %}" id="6"></a>
-                            <br />
-                            <span>Reconocimiento - No comercial - Compartir bajo la misma licencia</span>
-                        </div>
-
-                        <div class="license">
-                            <a href="#" class="siete {% if album is defined and album.getLicense == '7'%}selected{% endif %}" id="7" ></a>
-                            <br />
-                            <span>Reconocimiento - No comercial - Sin Obras Derivadas</span>
-                        </div>
-
-                        <div class="license">
-                            <a href="#" class="uno {% if album is defined and album.getLicense == '1'%}selected{% endif %}" id="1"></a>
-                            <br />
-                            <span>Todos los derechos reservados &copy;</span>
-                        </div>
-
-                        <div class="clearBoth"></div>
-                    </div>
+             </div>
+            <p>Se permite cualquier explotación de la obra, incluyendo la explotación con fines comerciales y la creación de obras derivadas, la distribución de las cuales también está permitida sin ninguna restricción. <a href="http://creativecommons.org.ar/faq#p3-01" target="_blank">Esta licencia es una licencia libre según la Freedom Defined.</a></p>
             </div>
+<!--                   FIN LICENCIA--> 
+<!--                   INICIO LICENCIA-->
+            <div class="licencia col-lg-5 licenciaSelect">
+                <a href="#"><h4>Reconocimiento – Compartir Igual (by-sa)</h4></a>
+                <div class="ccLicencia">
+                    <i class="entypo cc"></i>
+                    <i class="entypo cc-by"></i>
+                    <i class="entypo cc-sa"></i>
 
-            <div class="clearBoth"></div><br />
-            
-            {% if album is defined %}
-                <a href="{{ path('MozcuMozcuBundle_updateAlbum', {'id': album.getId}) }}" class="uploadButton"></a>
-            {% else %}
-                <a href="{{ path('MozcuMozcuBundle_uploadAlbum') }}" class="uploadButton"></a>
-            {% endif %}
-            
+                 </div>
+                <p>Se permite el uso comercial de la obra y de las posibles obras derivadas, la distribución de las cuales se debe hacer con una licencia igual a la que regula la obra original.<a href="http://creativecommons.org.ar/faq#p3-01" target="_blank"> Esta licencia es una licencia libre según la Freedom Defined.</a></p>
+            </div>
+<!--                   FIN LICENCIA-->
+<!--                   INICIO LICENCIA-->
+            <div class="licencia col-lg-5">
+                <a href="#"><h4>Atribución – No Comercial (by-nc)</h4></a>
+                <div class="ccLicencia">
+                    <i class="entypo cc"></i>
+                    <i class="entypo cc-by"></i>
+                    <i class="entypo cc-nc"></i>
+
+                 </div>
+                <p>Se permite la generación de obras derivadas siempre que no se haga con fines comerciales. Tampoco se puede utilizar la obra original con fines comerciales. Esta licencia no es una licencia libre.</p>
+            </div>
+<!--                   FIN LICENCIA--> 
+
+<!--                   INICIO LICENCIA-->
+            <div class="licencia col-lg-5">
+                <a href="#"><h4>Atribución – No Comercial – Compartir Igual (by-nc-sa)</h4></a>
+                <div class="ccLicencia">
+                    <i class="entypo cc"></i>
+                    <i class="entypo cc-by"></i>
+                    <i class="entypo cc-nc"></i>
+                    <i class="entypo cc-sa"></i>
+
+                 </div>
+                <p>No se permite un uso comercial de la obra original ni de las posibles obras derivadas, la distribución de las cuales se debe hacer con una licencia igual a la que regula la obra original. Esta licencia no es una licencia libre.</p>
+            </div>
+<!--                   FIN LICENCIA-->
+<!--                   INICIO LICENCIA-->
+            <div class="licencia col-lg-5">
+                <a href="#"><h4>Atribución – Sin Obra Derivada (by-nd)</h4></a>
+                <div class="ccLicencia">
+                    <i class="entypo cc"></i>
+                    <i class="entypo cc-by"></i>
+                    <i class="entypo cc-nd"></i>
+
+                 </div>
+                <p> Se permite el uso comercial de la obra pero no la generación de obras derivadas. Esta licencia no es una licencia libre.</p>
+            </div>
+<!--                   FIN LICENCIA-->
+<!--                   INICIO LICENCIA-->
+            <div class="licencia col-lg-5">
+                <a href="#"><h4>Atribución – No Comercial – Sin Obra Derivada (by-nc-nd)</h4></a>
+                <div class="ccLicencia">
+                    <i class="entypo cc"></i>
+                    <i class="entypo cc-by"></i>
+                    <i class="entypo cc-nc"></i>
+                    <i class="entypo cc-nd"></i>
+
+                 </div>
+                <p> No se permite un uso comercial de la obra original ni la generación de obras derivadas. Esta licencia no es una licencia libre, y es la más cercana al derecho de autor tradicional.</p>
+            </div>
+<!--                   FIN LICENCIA-->
+
+
+         </div>
+        <footer class="col-lg-10 publicarFooter">
+            <button type="button" class="btn btn-success pull-right">Publicar</button>
+             <button type="button" class="btn btn-default pull-right">Cancelar</button>   
+
+        </footer>
+
+
     </div>
-</div>
-
-<style>
-
-.licenses {
-    margin-top: 10px;
-}
-
-.licenses .license {
-    float: left;
-    margin-right: 10px;
-    width: 110px;
-    color: #575858;
-    font-size: 12px;
-}
-
-.licenses .license a {
-    height: 22px;
-    text-decoration: none;
-    display: block;
-}
-
-.licenses .license .uno {
-    background-image: url("/images/licenses/uno.png");
-    width: 22px;
-}
-
-.licenses .license .uno.selected,
-.licenses .license .uno:hover {
-    background-image: url("/images/licenses/uno-t.png");
-}
-
-.licenses .license .dos {
-    background-image: url("/images/licenses/dos.png");
-    width: 44px;
-}
-
-.licenses .license .dos.selected,
-.licenses .license .dos:hover {
-    background-image: url("/images/licenses/dos-t.png");
-}
-
-.licenses .license .tres {
-    background-image: url("/images/licenses/tres.png");
-    width: 66px;
-}
-
-.licenses .license .tres.selected,
-.licenses .license .tres:hover {
-    background-image: url("/images/licenses/tres-t.png");
-}
-
-.licenses .license .cuatro {
-    background-image: url("/images/licenses/cuatro.png");
-    width: 66px;
-}
-
-.licenses .license .cuatro.selected,
-.licenses .license .cuatro:hover {
-    background-image: url("/images/licenses/cuatro-t.png");
-}
-
-.licenses .license .cinco {
-    background-image: url("/images/licenses/cinco.png");
-    width: 66px;
-}
-
-.licenses .license .cinco.selected,
-.licenses .license .cinco:hover {
-    background-image: url("/images/licenses/cinco-t.png");
-}
-
-.licenses .license .seis {
-    background-image: url("/images/licenses/seis.png");
-    width: 88px;
-}
-
-.licenses .license .seis.selected,
-.licenses .license .seis:hover {
-    background-image: url("/images/licenses/seis-t.png");
-}
-
-.licenses .license .siete {
-    background-image: url("/images/licenses/siete.png");
-    width: 88px;
-}
-
-.licenses .license .siete.selected,
-.licenses .license .siete:hover {
-    background-image: url("/images/licenses/siete-t.png");
-}
-    
-.uploadify {
-    height: 30px;
-    width: 120px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.uploadify-queue {
-    margin-left: auto;
-    margin-right: auto;
-}
-</style>
-
-<script type="text/javascript" src="{{ asset('js/uploadAlbum.utils.js') }}"></script>
-
+ </div>
+                    
 <script type="text/javascript">
-    $(function(){
+    $(function() {
+        var uploadifyTemplate;
+    
+        if($('#uploadify_template_url').length > 0) {
+            $.ajaxSetup({async: false});
+            var url = $('#uploadify_template_url').val();
+            $.getJSON(url, function(data) {
+                if(data.success) {
+                    uploadifyTemplate = data.html;
+                }
+            });
+            $.ajaxSetup({async: true});
+        }
+        
+        $('#add_tracks').uploadify({
+            swf             : $('#uploadify_swf').val(),
+            uploader        : $('#upload_url').val(),
+            buttonText      : '+ Agregar tracks',
+            buttonClass     : 'btnUpload btn btn-default btn-lg center-block',
+            multi           : true,
+            auto            : true,
+            removeCompleted : false,
+            fileSizeLimit   : '0',
+            fileTypeExts    : '*.mp3',
+            itemTemplate    : uploadifyTemplate,
+            queueID         : 'add_tracks-queue',
+            width           : 200,
+            onUploadSuccess : function(file, data, response) {
+                var data = $.parseJSON(data);    
+                if(data.success) {
+                    $('#' + file.id).find('.realFileName').val(data.file_name);
+                    $('#' + file.id).find('.editSongName').html(data.original_name);
+                } else {
+                    $('#' + file.id).addClass('uploadify-error');
+                    $('#' + file.id).find('.data').html('ERROR');
+                    console.log(data.message);
+                }
+            },
+            onInit : function(instance) {
+                $('.upload-plugin .uploadify').attr('style', '');
+            }
+        });
+        
+        $('.uploadify-queue').sortable();
+        
         $('#uploadAlbumImage').change(function(){
             var me = $(this);
-            var loader = me.parents('.uploadFront').find('.loader');
+            var container = $(".imgUpload");
+            var loader = container.find('.ajaxLoader');
             
-            me.parents('.text').hide();
+            container.find('.placeholder').hide();
+            container.find('.imgArchivoBtn').hide();
             loader.show();
+            
             $.mozcuFileUpload({
                 inputId: me.attr('id'),
-                actionUrl: $('#uploadImageUrl').val(),
+                actionUrl: me.data('url'),
                 success: function(data) {
                     if(data.success) {
-                        var img = me.parents('.uploadFront').find('.preview');
-                        var deleteImg = me.parents('.uploadFront').find('.deleteImage');
+                        var img = container.find('.preview');
+                        //var deleteImg = me.parents('.uploadFront').find('.deleteImage');
                         img.attr('src', "/uploads/images/tmp/" + data.file_name);
                         $("#imageFileName").val(data.file_name);
                         
                         loader.hide();
                         img.show();
-                        deleteImg.show();
+                        //deleteImg.show();
                         
                         if($('#imageUrl').length > 0) {
                             $('#imageUrl').remove();
                         }
+                    } else {
+                        container.find('.placeholder').show();
+                        container.find('.imgArchivoBtn').show();
+                        loader.hide(); 
                     }
                 }
             });
@@ -288,22 +248,5 @@
             img.hide();
             text.show();
         });
-        
-        $('.licenses .license a').click(function(e){
-            e.preventDefault();
-            var me = $(this);
-            
-            me.parents('.licenses').find('.selected').removeClass('selected');
-            me.addClass('selected');
-            $('#license').val(me.attr('id'));
-        });
-        
-        // for edit
-        if($('#imageUrl').length > 0) {
-            var container = $('.uploadFront');
-            container.find('.text').hide();
-            container.find('.preview').attr('src', $('#imageUrl').val()).show();
-            container.find('.deleteImage').show();
-        }
     });
 </script>

@@ -50,7 +50,7 @@ $(function() {
         searchAlbums();
     });
     
-    // pestañas del album (lista de temas, informacion, comentarios, similares)
+    // Pestañas del album (lista de temas, informacion, comentarios, similares)
     $('.mainContent').on('click', '.headerDisco .navDisco a', function(e) {
       e.preventDefault();
       var me = $(this);
@@ -68,31 +68,76 @@ $(function() {
       });
     });
     
-    // DEPRECADO: ver todos los discos
-    $('.mainContent').on('click', '.breadCrumb .allAlbums', function(e) {
-      e.preventDefault();
-      var me = $(this);
-      
-      var url = me.attr('href');
-      $.getJSON(url, {}, function(data){
-        if (data.success) {
-          $('.mainContent').html(data.html);
-        }
-      });
+    // Download album modal
+    $('.mainContent').on('click', '.headerDisco .btnDescarga', function(e) {
+        e.preventDefault();
+        var me = $(this);
+
+        var url = me.data('url');
+        $.getJSON(url, {}, function(data){
+            if (data.success) {
+                var content = $(data.html);
+                content.modal();
+            }
+        });
     });
     
-    /* Download option */
-    $('.mainContent').on('click', '.wrapperProfile.breadC .download a', function(e) {
-      e.preventDefault();
-      var me = $(this);
-      
-      var url = me.attr('href');
-      $.getJSON(url, {}, function(data){
-        if (data.success) {
-          me.parents('.profileLeft').find('.profileOptions .selected').removeClass('selected');
-          $('.mainContent .content').replaceWith(data.html);
-        }
-      });
+    // On modal close
+    $('body').on('hidden.bs.modal', '.modal.fade', function (e) {
+        $(this).remove();
+    });
+    
+    // Checkout album
+    $('body').on('click', '.mozcu-descarga-modal .btn-success', function(e) {
+        e.preventDefault();
+        var me = $(this);
+        var loader = me.next('.ajaxLoader');
+        
+        me.addClass('hidden');
+        loader.removeClass('hidden');
+        
+        var url = me.data('url');
+        $.getJSON(url, {}, function(data){
+            if(data.success) {
+                var zipUrl = data.zipUrl;
+                var amount = parseFloat($.trim($('#valor').val()));
+                
+                if(isNaN(amount)) {
+                    amount = 0;
+                }
+                
+                if (amount == 0) {
+                    location.href = zipUrl;
+                    $('.mozcu-descarga-modal').modal('hide');
+                } else {
+                    $('#amount').val(amount);
+                    $('#checkoutUrl').val(zipUrl);
+                    $('#paypalForm').submit();
+                }
+            }
+        });
+    });
+    
+    // Modal denunciar obra
+    $('.mainContent').on('click', '#reportAlbum', function(e) {
+        e.preventDefault();
+        var me = $(this);
+
+        var url = me.attr('href');
+        $.getJSON(url, {}, function(data){
+            $(data.html).modal();
+        });
+    });
+    
+    // Enviar formulario de denuncia
+    $('body').on('click', '.modal-report-album .btn-success', function(e) {
+        e.preventDefault();
+        var me = $(this);
+
+        var url = me.data('url');
+        $.post(url, {}, function(data) {
+            // TODO
+        });
     });
     
     /* Go to Profile option */

@@ -127,6 +127,17 @@ class Profile {
     {
         return $this->name;
     }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getCurrentName() {
+        if(is_null($this->name)) {
+            return $this->user->getUsername();
+        } 
+        return $this->name;
+    }
 
     /**
      * Set slogan

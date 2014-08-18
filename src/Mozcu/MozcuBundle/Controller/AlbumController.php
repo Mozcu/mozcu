@@ -5,6 +5,7 @@ namespace Mozcu\MozcuBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Mozcu\MozcuBundle\Exception\AppException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
 class AlbumController extends MozcuController
@@ -192,93 +193,86 @@ class AlbumController extends MozcuController
         }
     }
     
-    public function albumPreDownloadAction($id) {
-        try {
-            $success = true;
+    /**
+     * 
+     * @param integer $id
+     * @return string
+     * @throws BadRequestHttpException
+     */
+    public function albumReportModalAction($id) {
+        if($this->getRequest()->isXmlHttpRequest()) {
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
             if(!is_null($album)) {
-                $template = "MozcuMozcuBundle:Album:_albumDownload.html.twig";
-                $parameters = array('album' => $album, 'selected' => 'download');
+                $template = "MozcuMozcuBundle:Album:_albumReportModal.html.twig";
+                $parameters = array('album' => $album);
+                return $this->renderAjaxResponse($template, $parameters);
             } else {
-                $success = false;
+                return $this->getJSONResponse(array('success' => false));
             }
-            
-            if($this->getRequest()->isXmlHttpRequest()) {
-                if($success) {
-                    return $this->renderAjaxResponse($template, $parameters);    
-                } else {
-                    return $this->getJSONResponse(array('success' => false));   
-                }
-                
+        } else {
+            throw new BadRequestHttpException();
+        }  
+    }
+    
+    /**
+     * TODO: definir funcionalidad
+     * 
+     * @param integer $id
+     * @return string
+     * @throws BadRequestHttpException
+     */
+    public function albumSubmitReportAction($id) {
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
+            if(!is_null($album)) {
+                return $this->getJSONResponse(array('success' => true));
             } else {
-                if($success) {
-                    return $this->renderAlbumForRequest($template, $parameters);
-                } else {
-                    return $this->renderAlbumNotFound();
-                }
-            }  
-        } catch(\Exception $e) {
-            throw $e;
+                return $this->getJSONResponse(array('success' => false));
+            }
+        } else {
+            throw new BadRequestHttpException();
         }
     }
     
+    /**
+     * Retorna la informacion del modal de descarga de album
+     * 
+     * @param integer $id
+     * @return string
+     * @throws BadRequestHttpException
+     */
+    public function albumDownloadModalAction($id) {
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
+            if(!is_null($album)) {
+                $template = "MozcuMozcuBundle:Album:_albumDownloadModal.html.twig";
+                $parameters = array('album' => $album);
+                return $this->renderAjaxResponse($template, $parameters);
+            } else {
+                return $this->getJSONResponse(array('success' => false));
+            }
+        } else {
+            throw new BadRequestHttpException();
+        }  
+    }
+    
+    /**
+     * Devuelve la url de descarga del disco
+     * 
+     * @param integer $id
+     * @return string
+     * @throws BadRequestHttpException
+     */
     public function albumCheckoutAction($id) {
-        try {
-            $success = true;
+        if($this->getRequest()->isXmlHttpRequest()) {
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
-            if(!is_null($album)) {
-                $template = "MozcuMozcuBundle:Album:_albumCheckout.html.twig";
-                $parameters = array('album' => $album, 'selected' => 'download');
+            if(!is_null($album) && !is_null($album->getZipUrl())) {
+                return $this->getJSONResponse(array('success' => true, 'zipUrl' => $album->getZipUrl()));    
             } else {
-                $success = false;   
+                return $this->getJSONResponse(array('success' => false));
             }
-            
-            if($this->getRequest()->isXmlHttpRequest()) {
-                if($success) {
-                    $parameters['parameters'] = $parameters;
-                    $parameters['template'] = $template;
-                    return $this->renderAjaxResponse('MozcuMozcuBundle:Album:albumTemplateForAjax.html.twig', $parameters);    
-                } else {
-                    return $this->getJSONResponse(array('success' => false));  
-                }
-            } else {
-                if($success) {
-                    return $this->renderAlbumForRequest($template, $parameters);   
-                } else {
-                    return $this->renderAlbumNotFound();
-                }
-            }  
-        } catch(\Exception $e) {
-            throw $e;
-        }
-    }
-    
-    public function albumDownloadAction($id) {
-        try {
-            $success = true;
-            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
-            if(!is_null($album)) {
-                if(is_null($album->getZipUrl())) {
-                    $zipUrl = $this->getMusicService()->createAlbumZip($album);
-                } else {
-                    $zipUrl = $album->getZipUrl();
-                }
-               
-            } else {
-                $success = false;
-            }
-            
-            if($this->getRequest()->isXmlHttpRequest()) {
-                if($success) {
-                    return $this->getJSONResponse(array('success' => true, 'zipUrl' => $zipUrl));    
-                } else {
-                    return $this->getJSONResponse(array('success' => false));   
-                }
-            } else {
-                return $this->renderAlbumNotFound();
-            }
-        } catch(\Exception $e) {
-            throw $e;
+        } else {
+            throw new BadRequestHttpException();
         }
     }
     
