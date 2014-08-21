@@ -1,82 +1,90 @@
 $(function() {
     
-    $('.pageUpload').on('click', '.uploadedSong .editSongName', function(e){
+    /** Edicion del nombre del track **/
+    
+    $('.mainContent').on('click', '.uploadedSong .editSongName', function(e){
         e.preventDefault();
         
         var me = $(this);
-        me.hide();
-        me.next('.editingSongName').val(me.html()).show();
+        var parent = me.parent();
+        
+        parent.find('.editSongName').hide();
+        parent.find('.editingSongName').val(parent.find('.filename').html()).show().focus();
+        parent.find('.confirm').show();
     });
     
-    $('.pageUpload').on('keypress', '.uploadedSong .editingSongName', function(e){
+    $('.mainContent').on('keypress', '.uploadedSong .editingSongName', function(e){
         var me = $(this);
-        var link = me.prev('.editSongName');
+        var parent = me.parent();
         
         if(e.which == 13) {
             e.preventDefault();
             
             me.hide();
-            link.html(me.val()).show();
+            parent.find('.confirm').hide();
+            parent.find('.filename').html(me.val()).show();
+            parent.find('.editSongName').show();
         }
         
         if(e.which == 27) { // esc
             e.preventDefault();
             
-            me.val(link.html()).hide();
-            link.show();
+            me.val(parent.find('.filename').html()).hide();
+            parent.find('.confirm').hide();
+            parent.find('.editSongName').show();
         }
     });
     
-    $('.pageUpload').on('focusout', '.uploadedSong .editingSongName', function(e){
-        var me = $(this);
-        var link = me.prev('.editSongName');
-        
-        me.val(link.html()).hide();
-        link.show();
-    });
-    
-    /*$( ".pageUpload .content .tags .tagInput" ).autocomplete({
-      source: $('#getTagListUrl').val(),
-      minLength: 2,
-      select: function( event, ui ) {
-        var tag = createTag(ui.item.value, ui.item.id);
-        $( ".pageUpload .content .tags").prepend(tag);
-        $( ".pageUpload .content .tags .tagInput" ).val('');
-        event.preventDefault();
-      }
-    });*/
-    
-    $( ".pageUpload .content .tags .tagInput" ).on('keypress', function(e){
-        var me = $(this);
-        
-        if(e.keyCode == 44 || e.keyCode == 13) {
-            e.preventDefault();
-            var tag = createTag(me.val());
-            $( ".pageUpload .content .tags").prepend(tag);
-            $( ".pageUpload .content .tags .tagInput" ).val('');
-        }
-    });
-    
-    
-    $( ".pageUpload .content .tags").on('click', '.removeTag', function(e){
+    $('.mainContent').on('click', '.uploadedSong .confirm', function(e){
         e.preventDefault();
-        $(this).parent().remove();
+        
+        var me = $(this);
+        var parent = me.parent();
+        
+        
+        me.hide();
+        parent.find('.editingSongName').hide();
+        parent.find('.filename').html(parent.find('.editingSongName').val()).show();
+        parent.find('.editSongName').show();
+        
     });
     
-    $('.pageUpload .uploadButton').on('click', function(e) {
-        e.preventDefault()
-        var url = $(this).attr('href');
+    $('.mainContent').on('focusout', '.uploadedSong .editingSongName', function(e){
+        var me = $(this);
+        var parent = me.parent();
         
-        var errorMsg = $('.uploadErrorMessage');
+        me.val(parent.find('.filename').html()).hide();
+        parent.find('.confirm').hide();
+        parent.find('.editSongName').show();
+    });
+    
+    /** Licencias **/
+    $('.mainContent').on('click', '.licencia .select', function(e) {
+       e.preventDefault();
+       
+       var me = $(this);
+       $('.pageUpload').find('.licenciaSelect').removeClass('licenciaSelect');
+       me.parents('.licencia').addClass('licenciaSelect');
+       $('#license').val(me.parents('.licencia').data('id'));
+    });
+    
+    
+    /** Click en el boton de subir **/
+    $('.mainContent').on('click', '.publicarFooter .btn-success', function(e) {
+        e.preventDefault()
+        var url = $(this).data('url');
+        
+        var errorMsg = $('.alert-danger');
         errorMsg.hide();
-        errorMsg.find('.messageInner .error').remove();
+        errorMsg.find('.error').remove();
         
         var album = prepareAlbumData();
+        console.log(album);
         
         var validation = validateAlbumData(album);
         if (!validation.success) {
             $.each(validation.errors, function(key, value) {
-                errorMsg.find('.messageInner').append('<p class="error"> - ' + value.message + '</p>');
+                errorMsg.append('<p class="error"> - ' + value.message + '</p>');
             });
             errorMsg.show();
             $('html,body').animate({scrollTop: 0}, 800);
@@ -96,31 +104,13 @@ $(function() {
         }, 'json');
     });
     
-    var createTag = function(tagValue, tagId) {
-        var tag = $("<div>", {class: 'tag'});
-        var remove = $("<a>", {class: 'removeTag', href: '#'});
-        var hidden = $('<input>', {type: 'hidden', class: 'tagValue'});
-        
-        if (tagId) {
-            var hiddenId = $('<input>', {type: 'hidden', class: 'tagId'});
-            hiddenId.val(tagId);
-            tag.append(hiddenId);
-        }
-        
-        hidden.val(tagValue);        
-        tag.append(tagValue);
-        tag.append(remove);
-        tag.append(hidden);
-        
-        return tag;
-    };
-    
     var prepareAlbumData = function() {
         var album = {};
         
-        album.name = $.trim($('#albumName').val());
-        album.release_date = $.trim($('#albumRecordingDate').val());
-        album.description = $.trim($('#albumDescription').val());
+        album.name = $.trim($('#title').val());
+        album.artist = $.trim($('#artist').val());
+        album.release_date = $.trim($('#date').val());
+        album.description = $.trim($('#description').val());
         album.image_file_name = $.trim($('#imageFileName').val());
         album.validate_image = true;
         if($('#imageUrl').length > 0) {
@@ -132,7 +122,7 @@ $(function() {
         $('.uploadedSong').each(function(key, value){
             var me = $(value);
             var song = {};
-            song.name = $.trim(me.find('.editingSongName').val());
+            song.name = $.trim(me.find('.filename').html());
             song.file_name = me.find('.realFileName').val();
             song.track_number = key + 1;
             
@@ -144,8 +134,8 @@ $(function() {
         });
         
         album.tags = new Array;
-        $('.tag').each(function(key, value) {
-            var tag = {name: $.trim($(value).find('.tagValue').val())};
+        $('.tagit-choice').each(function(key, value) {
+            var tag = {name: $.trim($(value).find('.tagit-label').html())};
             album.tags.push(tag);
         });
         
@@ -160,7 +150,12 @@ $(function() {
         
         if (album.name.length === 0) {
             response.success = false;
-            response.errors.push({message: "El disco no posee nombre"});
+            response.errors.push({message: "El disco no posee titulo"});
+        }
+        
+        if (album.artist.length === 0) {
+            response.success = false;
+            response.errors.push({message: "El disco no posee nombre de artista"});
         }
         
         if (album.validate_image && album.image_file_name.length === 0) {

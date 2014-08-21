@@ -1,37 +1,35 @@
 {% if song is defined %}
-    {% set fileId = 'SWFUpload_3_' ~ song.getTrackNumber %}
-    {% set instanceId = 'add_tracks' %}
+    {% set fileId = 'uploadifive-add_tracks-file-' ~ song.getTrackNumber %}
     {% set fileName = song.getName %}
-    {% set fileSize = '' %}
 {% else %}
-    {% set fileId = '${fileID}' %}
-    {% set instanceId = '${instanceID}' %}
-    {% set fileName = '${fileName}' %}
-    {% set fileSize = '(${fileSize})' %}
+    {% set fileId = '' %}
+    {% set fileName = '' %}
 {% endif %}
     
-<div id="{{ fileId }}" class="temaSubido text-left uploadedSong">
+<div id="{{ fileId }}" class="temaSubido text-left uploadedSong uploadifive-queue-item">
     {% if song is defined %}
         <input type="hidden" class="id" value="{{ song.getId }}" />
     {% endif %}
     
     <i class="glyphicon glyphicon-move"></i>
-    <a href="#" >{{ fileName }}</a>
-    <a href="#" ><i class="glyphicon glyphicon-pencil"></i></a>
-    <a href="#"><i class="glyphicon glyphicon-ok"></i></a>
     
-    <span>{{ fileSize }}</span>
-    <span class="data"> - Complete</span>
+    <a href="#" class="filename editSongName">{{ fileName }}</a>
+    <input type="text" class="editingSongName" style="display:none;" value="{{ fileName }}" />
     
-    <a href="javascript:$('#{{ instanceId }}').uploadify('cancel', '{{ fileId }}')">
+    <a href="#" class="editSongName"><i class="glyphicon glyphicon-pencil"></i></a>
+    <a href="#" class="confirm" style="display:none;"><i class="glyphicon glyphicon-ok"></i></a>
+    
+    <span class="fileinfo"></span>
+    
+    <a href="#" class="close">
         <i class="glyphicon glyphicon-remove pull-right"></i>
     </a>
     
-    <div class="uploadify-progress">
-        <div class="uploadify-progress-bar" style="width: 100%;">
+    <div class="progress">
+        <div class="progress-bar" style="width: 100%;">
             <!--Progress Bar-->
         </div>					
     </div>
     <input type="hidden" class="realFileName" value="" />
      
-</div>
+</div>        

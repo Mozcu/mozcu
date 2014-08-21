@@ -238,8 +238,9 @@ class Album {
     public function getListThumbnailUrl()
     {
         foreach($this->image->getPresentations() as $pres) {
-            if($pres->getName() == 'list_thumbanil') {
-                return $pres->getUrl();
+            $url = $pres->getUrl();
+            if($pres->getName() == 'list_thumbanil' && !empty($url)) {
+                return $url;
             }
         }
         return null;

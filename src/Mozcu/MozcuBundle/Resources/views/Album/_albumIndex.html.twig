@@ -1,4 +1,4 @@
-<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 albumsPage">
 <!--INICIO DE CONTENIDO-->
     <div class="row center-block perfilContenido">
         <div class="headerExplorer col-lg-12">
@@ -60,11 +60,32 @@
             {{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
         {% endfor %}
         <!--FIN DE ALBUMES-->               
-
+        
+        <a href="{{ path('MozcuMozcuBundle_albumsNextPage', {page: 1}) }}" class="albumsNextPage" style="display:none;">mas</a>
+        
     </div>
 
 </div><!--FIN DE CONTENIDO-->
 
 <script type="text/javascript">
-    $('.dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
+    $(function(){
+        $('.dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
+    
+        function scroller() {
+            $('.mainContent').jscroll({
+                loadingHtml: '<span>Loading...</span>',
+                padding: 50,
+                autoTrigger: false,
+                nextSelector: 'a.albumsNextPage:last',
+                contentSelector: '.albumsPage',
+                callback: function(algo) {
+                    console.log('lala');
+                    console.log(algo);
+                }
+            });
+        }
+        
+        scroller();
+    });
+    
 </script>

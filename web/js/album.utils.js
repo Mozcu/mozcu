@@ -1,6 +1,5 @@
 $(function() {
 
-
     $( ".pageDiscListen #searchTags" ).autocomplete({
       source: $('#getTagListUrl').val(),
       minLength: 2,

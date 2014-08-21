@@ -66,6 +66,12 @@ MozcuMozcuBundle_albums:
     requirements:
       _method: GET
       
+MozcuMozcuBundle_albumsNextPage:
+    pattern: /albums/page/{page}
+    defaults: {_controller: MozcuMozcuBundle:Album:nextPage}
+    requirements:
+      _method: GET
+      
 MozcuMozcuBundle_albumsTag:
     pattern: /albums/tag/{tag}
     defaults: {_controller: MozcuMozcuBundle:Album:index}
