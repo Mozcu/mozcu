@@ -29,11 +29,11 @@
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 titlDisco">
         <h3 class="nombreDisco">{{ album.getName }}</h3>
-        <h4 class="nombreBanda">{{ album.getProfile.getCurrentName }}</h4>   
+        <h4 class="nombreBanda">{{ album.getArtistName }}</h4>   
         <h5 class="nombreAlbumUser">
-            Por
+            Subido por
             <a href="{{ path('MozcuMozcuBundle_profile', {'username': album.getProfile.getUser.username}) }}">
-                {{ album.getArtistName }}
+                {{ album.getProfile.getCurrentName }}
             </a>
         </h5>
     </div>

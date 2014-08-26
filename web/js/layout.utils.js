@@ -61,14 +61,14 @@ $(function() {
     });
    
    
-   // TODO: Livesearch
-   /*$('#liveSearchInput').autocomplete({
-        source: $('#liveSearchUrl').val(),
+   // Livesearch
+   $('#liveSearchInput').autocomplete({
+        source: $('#liveSearchInput').data('url'),
         minLength: 2,
         select: function( event, ui ) {
             changeMainContent(ui.item.url);
             
-          //event.preventDefault();
+            //event.preventDefault();
         }
     }).data("ui-autocomplete")._renderItem = (function (ul, item) {
         
@@ -82,7 +82,7 @@ $(function() {
         if ('image' in item) {
             divLabel.append($('<img>', {src: item.image}));
         }
-        divData = $('<div>', {class: 'data'});
+        var divData = $('<div>', {class: 'data'});
         divData.append(item.label);
         if ('extra' in item) {
             divData.append('<br />');
@@ -100,7 +100,7 @@ $(function() {
             .data( "item.autocomplete", item )
             .append($("<a>").append(divContainer))
             .appendTo(ul);
-    });*/
+    });
     
     // TODO
     $('.userBarWrapper').on('click', '.loginLinkWrapper a', function(e) {

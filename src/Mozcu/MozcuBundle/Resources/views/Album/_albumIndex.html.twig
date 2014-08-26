@@ -61,31 +61,40 @@
         {% endfor %}
         <!--FIN DE ALBUMES-->               
         
-        <a href="{{ path('MozcuMozcuBundle_albumsNextPage', {page: 1}) }}" class="albumsNextPage" style="display:none;">mas</a>
+        <input type="hidden" id="albumsNextPage" value="{{ path('MozcuMozcuBundle_albumsNextPage', {page: 1}) }}" />
         
     </div>
 
 </div><!--FIN DE CONTENIDO-->
 
 <script type="text/javascript">
-    $(function(){
-        $('.dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
-    
-        function scroller() {
-            $('.mainContent').jscroll({
-                loadingHtml: '<span>Loading...</span>',
-                padding: 50,
-                autoTrigger: false,
-                nextSelector: 'a.albumsNextPage:last',
-                contentSelector: '.albumsPage',
-                callback: function(algo) {
-                    console.log('lala');
-                    console.log(algo);
-                }
-            });
+$(function(){
+    $('.dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
+
+    var loading = false;
+
+    $(window).off('scroll');
+    $(window).scroll(function() {
+        var currentScroll = $(window).scrollTop() + $(window).height();
+        var offset = $('.albumsPage').offset();
+        var totalScroll = offset.top + $('.albumsPage').outerHeight(true);
+        if(currentScroll + 30 > totalScroll && !loading) {
+            loading = true;
+            loadMore();
         }
-        
-        scroller();
     });
+    
+    var loadMore = function() {
+        var url = $('#albumsNextPage').val();
+        $.getJSON(url, function(data) {
+            if(data.success) {
+                $('#albumsNextPage').remove();
+                $('.album').last().after(data.html);
+                loading = false;
+            }
+        });
+    };
+
+});
     
 </script>

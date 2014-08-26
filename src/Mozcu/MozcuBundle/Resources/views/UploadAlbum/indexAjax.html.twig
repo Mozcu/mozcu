@@ -1,4 +1,7 @@
+{% set edit = album is defined %}
 <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 pageUpload">
+    <input type="hidden" id="albumsForProfileLink" value="{{ path('MozcuMozcuBundle_albumsForProfile', {'username': username})}}" />
+    
     <div class="row center-block">
         <div class="alert alert-danger alert-dismissible" style="display:none;" role="alert">
             <button type="button" class="close" data-dismiss="alert">
@@ -7,7 +10,7 @@
             <strong>Por favor verifique los siguientes errores:</strong>
         </div>
         
-        <h1>Sube tu álbum</h1>
+        {% if edit %}<h1>Editando tu álbum</h1>{% else %}<h1>Sube tu álbum</h1>{% endif %}
         
         <!-- Tracks -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -21,7 +24,7 @@
                 <div class="upload-plugin center-block" >
                     <input type="file" multiple="true" id="add_tracks"/>
                     <div id="add_tracks-queue" class="uploadify-queue ui-sortable">
-                        {% if album is defined %}
+                        {% if edit %}
                             {% for song in album.getSongs %}
                                 {{ include('MozcuMozcuBundle:UploadAlbum:_uploadedSong.html.twig', {'song': song}) }}
                             {% endfor %}
@@ -38,7 +41,7 @@
             <!-- Imagen -->
             <div class="imgUpload col-md-2 col-lg-3">
                 <input type="hidden" id="imageFileName" value="" />
-                {% if album is defined  and album.getImage is not null %} 
+                {% if edit and album.getImage is not null %} 
                     <input type="hidden" id="imageUrl" value="{{ album.getCoverImageUrl }}" /> 
                 {% endif %}
                 
@@ -62,11 +65,11 @@
 
             <!-- Datos -->
             <div class="col-md-8 col-lg-9 titlDisco">
-                <input id="title" class="form-control " type="text" placeholder="Título del álbum">
-                <input id="artist" class="form-control " type="text" placeholder="Nombre del artista o banda del álbum">
-                <input id="date" placeholder="Año de publicación, ej: 2014" type="datetime" class="form-control">
-                <textarea id="description" class="form-control" rows="8" placeholder="Información del álbum"></textarea>
-                <input id="tags" class="form-control" type="text" placeholder="Tags (separa los tags por una coma Ej:rock, pop, rap...)">
+                <input id="title" class="form-control " type="text" placeholder="Título del álbum" value="{% if edit %}{{ album.getName }}{% endif %}">
+                <input id="artist" class="form-control " type="text" placeholder="Nombre del artista o banda del álbum" value="{% if edit %}{{ album.getArtistName }}{% endif %}">
+                <input id="date" placeholder="Año de publicación, ej: 2014" type="datetime" class="form-control" value="{% if edit %}{{ album.getReleaseDate }}{% endif %}">
+                <textarea id="description" class="form-control" rows="8" placeholder="Información del álbum">{% if edit %}{{ album.getDescription }}{% endif %}</textarea>
+                <input id="tags" class="form-control" type="text" placeholder="Tags (separa los tags por una coma Ej:rock, pop, rap...)" data-tags="{% if edit %}{{ album.getTagsCommaSeparated }}{% endif %}">
             </div>
         </div>
         
@@ -77,7 +80,7 @@
 
             <input type="hidden" id="license" value="{% if album is defined %} {{ album.getLicense }} {% endif %}" />
             
-            <div class="licencia col-lg-5" data-id="2">
+            <div class="licencia col-lg-5 {% if edit and album.license == 2 %}licenciaSelect{% endif %}" data-id="2">
                 <a href="#" class="select"><h4>Atribución (by)</h4></a>
                 <div class="ccLicencia">
                     <i class="entypo cc"></i>
@@ -87,7 +90,7 @@
                 <p>Se permite cualquier explotación de la obra, incluyendo la explotación con fines comerciales y la creación de obras derivadas, la distribución de las cuales también está permitida sin ninguna restricción. <a href="http://creativecommons.org.ar/faq#p3-01" target="_blank">Esta licencia es una licencia libre según la Freedom Defined.</a></p>
             </div>
 
-            <div class="licencia col-lg-5" data-id="3">
+            <div class="licencia col-lg-5 {% if edit and album.license == 3 %}licenciaSelect{% endif %}" data-id="3">
                 <a href="#" class="select"><h4>Reconocimiento – Compartir Igual (by-sa)</h4></a>
                 <div class="ccLicencia">
                     <i class="entypo cc"></i>
@@ -98,7 +101,7 @@
                 <p>Se permite el uso comercial de la obra y de las posibles obras derivadas, la distribución de las cuales se debe hacer con una licencia igual a la que regula la obra original.<a href="http://creativecommons.org.ar/faq#p3-01" target="_blank"> Esta licencia es una licencia libre según la Freedom Defined.</a></p>
             </div>
 
-            <div class="licencia col-lg-5" data-id="5">
+            <div class="licencia col-lg-5 {% if edit and album.license == 5 %}licenciaSelect{% endif %}" data-id="5">
                 <a href="#" class="select"><h4>Atribución – No Comercial (by-nc)</h4></a>
                 <div class="ccLicencia">
                     <i class="entypo cc"></i>
@@ -109,7 +112,7 @@
                 <p>Se permite la generación de obras derivadas siempre que no se haga con fines comerciales. Tampoco se puede utilizar la obra original con fines comerciales. Esta licencia no es una licencia libre.</p>
             </div>
 
-            <div class="licencia col-lg-5" data-id="6">
+            <div class="licencia col-lg-5 {% if edit and album.license == 6 %}licenciaSelect{% endif %}" data-id="6">
                 <a href="#" class="select"><h4>Atribución – No Comercial – Compartir Igual (by-nc-sa)</h4></a>
                 <div class="ccLicencia">
                     <i class="entypo cc"></i>
@@ -121,7 +124,7 @@
                 <p>No se permite un uso comercial de la obra original ni de las posibles obras derivadas, la distribución de las cuales se debe hacer con una licencia igual a la que regula la obra original. Esta licencia no es una licencia libre.</p>
             </div>
 
-            <div class="licencia col-lg-5" data-id="4">
+            <div class="licencia col-lg-5 {% if edit and album.license == 4 %}licenciaSelect{% endif %}" data-id="4">
                 <a href="#" class="select"><h4>Atribución – Sin Obra Derivada (by-nd)</h4></a>
                 <div class="ccLicencia">
                     <i class="entypo cc"></i>
@@ -132,7 +135,7 @@
                 <p> Se permite el uso comercial de la obra pero no la generación de obras derivadas. Esta licencia no es una licencia libre.</p>
             </div>
 
-            <div class="licencia col-lg-5" data-id="7">
+            <div class="licencia col-lg-5 {% if edit and album.license == 7 %}licenciaSelect{% endif %}" data-id="7">
                 <a href="#" class="select"><h4>Atribución – No Comercial – Sin Obra Derivada (by-nc-nd)</h4></a>
                 <div class="ccLicencia">
                     <i class="entypo cc"></i>
@@ -146,7 +149,7 @@
         </div>
         
         <footer class="col-lg-10 publicarFooter">
-            {% if album is defined %}
+            {% if edit %}
                 <button type="button" data-url="{{ path('MozcuMozcuBundle_updateAlbum', {'id': album.getId}) }}" class="btn btn-success pull-right">Publicar</button>
             {% else %}
                 <button type="button" data-url="{{ path('MozcuMozcuBundle_uploadAlbum') }}" class="btn btn-success pull-right">Publicar</button>
@@ -247,12 +250,35 @@
             $('#uploadAlbumImage').val('');
             $("#imageFileName").val("");
             
+            if($('#imageUrl').length > 0) {
+                $('#imageUrl').remove();
+            }
+            
             me.hide();
             container.find('.preview').attr('src', '').hide();
             container.find('.placeholder').show();
             container.find('.imgArchivoBtn').show();
         });
         
+        // for edit
+        if($('#imageUrl').length > 0) {
+            var container = $('.imgUpload');
+            
+            container.find('.placeholder').hide();
+            container.find('.imgArchivoBtn').hide();
+            container.find('.preview').attr('src', $('#imageUrl').val()).show();
+            container.find('.removeImg').show();
+        }
+        
         $('#tags').tagit();
+        
+        //for edit
+        if($('#tags').attr('data-tags')) {
+            var input = $('#tags');
+            var tcs = input.data('tags').split(',');
+            for(var key in tcs) {
+                input.tagit("createTag", tcs[key]);
+            }
+        }
     });
 </script>

@@ -65,6 +65,10 @@ class MusicService extends BaseService{
             $album->setName($data['name']);
             $album->setLicense($data['license']);
             
+            if(isset($data['artist']) && !empty($data['artist'])) {
+                $album->setArtistName($data['artist']);
+            }
+            
             if(isset($data['description']) && !empty($data['description'])) {
                 $album->setDescription($data['description']);
             }
@@ -153,6 +157,9 @@ class MusicService extends BaseService{
             $this->removeSongsFromAlbum($album, $songsData);
             
             foreach($songsData as $songData) {
+                if(array_key_exists('id', $songData)) {
+                    continue;
+                }
                 $song = $this->createSong($songData);
                 $song->setAlbum($album);
                 $album->addSong($song);
@@ -177,8 +184,9 @@ class MusicService extends BaseService{
         foreach($album->getSongs() as $song) {
             $delete = true;
             foreach($songsData as $songData) {
-                if($songData['id'] == $song->getId()) {
+                if(array_key_exists('id', $songData) && $songData['id'] == $song->getId()) {
                     $delete = false;
+                    break;
                 }
             }
             if($delete) {
@@ -300,7 +308,7 @@ class MusicService extends BaseService{
         foreach($album->getSongs() as $song) {
             $same = false;
             foreach($data['songs'] as $songData) {
-                if(isset($songData['url']) && $song->getUrl() == $songData['url']) {
+                if(isset($songData['id']) && $song->getId() == $songData['id']) {
                     $same = true;
                     break 1;
                 } 

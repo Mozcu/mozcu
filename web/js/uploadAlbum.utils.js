@@ -191,7 +191,7 @@ $(function() {
          $('.uploadedSong').each(function(key, value){
             var me = $(value);
             
-            if(me.find('.url').length === 0 && me.find('.realFileName').val().length === 0) {
+            if(me.find('.id').length === 0 && me.find('.realFileName').val().length === 0) {
                 response.success = false;
                 response.errors.push({message: "Uno o mas temas aun estan subiendo"});
                 return false;

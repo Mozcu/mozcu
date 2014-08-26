@@ -73,7 +73,7 @@ class AlbumController extends MozcuController
         if($this->getRequest()->isXmlHttpRequest()) {
             $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated($page, 18);
             $template = 'MozcuMozcuBundle:Album:_albumsNextPage.html.twig';
-            return $this->render($template, array('albums' => $albums, 'page' => ($page + 1)));
+            return $this->renderAjaxResponse($template, array('albums' => $albums, 'page' => ($page + 1)));
         } else {
             throw new BadRequestHttpException();
         }

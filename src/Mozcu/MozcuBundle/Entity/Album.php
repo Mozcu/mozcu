@@ -422,6 +422,18 @@ class Album {
     {
         return $this->tags;
     }
+    
+    public function getTagsCommaSeparated() {
+        if($this->tags->isEmpty()) {
+            return '';
+        }
+        
+        $tagArray = array();
+        foreach($this->tags as $tag) {
+            $tagArray[] = $tag->getName();
+        }
+        return implode(',',$tagArray);
+    }
 
     /**
      * Set image

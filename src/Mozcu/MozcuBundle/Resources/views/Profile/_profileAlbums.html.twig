@@ -9,37 +9,41 @@
         </div>
     </div>
 
-    <!--INICIO DE ALBUMES-->
-    {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
-        <div class="album col-xs-6 col-sm-4 col-md-3 col-lg-3">
-            <input type="hidden" class="albumId" value="{{ album.getId }}" />
-            
-            {% if album.getIsActive == false  and album.getListThumbnailUrl is null %}
-                <img src="/uploads/images/tmp/{{ album.getImage.getTemporalFileName }}" alt="{{ album.getName }}" class="imgAlbum"/>
-            {% else %}
-                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
-                    <img src="{{ album.getListThumbnailUrl }}" alt="{{ album.getName }}" class="imgAlbum">
-                </a>
-            {% endif %}
-            
-            {% if isAuthenticated == true and album.getIsActive  == true %}
-                <div class="actions" style="text-align: right;">
-                    <a href="{{ path('MozcuMozcuBundle_editAlbum', {'id': album.getId}) }}" style="padding-top: 3px;">
-                        <i class="glyphicon glyphicon-edit" style="font-size: 16px; color: #000;"></i>
+    <div class="row center-block rowContenido">
+        <!--INICIO DE ALBUMES-->
+        {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
+            <div class="album albumManager col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id="{{ album.getId }}">
+                <input type="hidden" class="albumId" value="{{ album.getId }}" />
+                
+                {% if album.getIsActive == false  and album.getListThumbnailUrl is null %}
+                    <img src="/uploads/images/tmp/{{ album.getImage.getTemporalFileName }}" alt="{{ album.getName }}" class="imgAlbum"/>
+                {% else %}
+                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
+                        <img src="{{ album.getListThumbnailUrl }}" alt="{{ album.getName }}" class="imgAlbumManager col-xs-4 col-sm-3 col-md-2 col-lg-2">
                     </a>
-                    <img src="{{ asset('images/ajax-loader-small.gif') }}" style="display: none; padding-left: 20px;"/>
-                    <a href="{{ path('MozcuMozcuBundle_deleteAlbum') }}" style="padding-left: 20px; padding-top: 3px;">
-                        <i class="glyphicon glyphicon-trash" style="font-size: 16px; color: #000;"></i>
-                    </a>
-                </div>
-            {% endif %}
-            
-            <h5>{{ album.getName }} {% if album.getIsActive == false %}(procesando...){% endif %}</h5>
-            
-            <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}"><p>{{ user.getCurrentName }}</p></a>
-        </div>
-    {% else %}
-        <div class="noAlbums">{{ user.getCurrentName }} aun no subio ningun album!</div>
-    {% endfor %}
+                {% endif %}
+                
+                <p class="pull-right visible-sm visible-md visible-lg text-muted">Publicado hace al rededor de un mes</p>
+                <h5>{{ album.getName }} {% if album.getIsActive == false %}(procesando...){% endif %}</h5>
+                <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}"><p>{{ album.getArtistName }}</p></a>
+                <p>{{ album.getReleaseDate }}</p>
+                
+                {% if isAuthenticated == true and album.getIsActive  == true %}
+                    <div class="btn-group btngroupAlbumManager">
+                        <button type="button" class="edit btn btn-default btnAlbumManager" data-url="{{ path('MozcuMozcuBundle_editAlbum', {'id': album.getId}) }}">
+                            <i class="glyphicon glyphicon-pencil"></i>Modificar
+                        </button>
+                        <img class="loader" src="{{ asset('images/ajax-loader-small.gif') }}" style="display: none;"/>
+                        <button type="button" class="delete btn btn-default btnAlbumManager" data-url="{{ path('MozcuMozcuBundle_deleteAlbum') }}">
+                            <i class="glyphicon glyphicon-trash"></i>Eliminar
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="noAlbums">{{ user.getCurrentName }} aun no subio ningun album!</div>
+        {% endfor %}
+    </div>
+    
     <!--FIN DE ALBUMES-->                          
 </div>

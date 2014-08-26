@@ -21,46 +21,33 @@ $(function() {
         });
     });
     
-    /* Open Album */
-    $('.mainContent').on('click', '.contentInner.discos .disco a', function(e) {
-        e.preventDefault();
-        var me = $(this);
-        var url = me.attr('href');
-        
-        $.getJSON(url, function(data) {
-            if(data.success) {
-                $('.mainContent').html(data.html);
-            }
-        });
-    });
-    
-    /* Delete album */
-    $('.mainContent').on('click', '.contentInner.discos .disco .action.delete', function(e) {
+    // Eliminar album
+    $('.mainContent').on('click', '.profileContent .album .delete', function(e) {
         if(!confirm('Esta seguro que desea eliminar el album?')) {
             return;
         }
         
         var me = $(this);
-        var url = $('#deleteAlbumUrl').val();
-        var album = me.parents('.disco');
+        var url = me.data('url');
+        var album = me.parents('.album');
         
-        album.find('.actions').hide();
-        album.find('.actionsLoader').show();
-        $.post(url, {id: album.find('.albumId').val()}, function(data) {
+        album.find('.btnAlbumManager').hide();
+        album.find('.loader').show();
+        $.post(url, {id: album.data('id')}, function(data) {
             if(data.success) {
                 album.hide('slow', function(){ album.remove(); });
             }
         }, 'json');
     });
     
-    /* Edit album */
-    $('.mainContent').on('click', '.contentInner.discos .disco .action.edit', function(e) {
+    // Editar album
+    $('.mainContent').on('click', '.profileContent .album .edit', function(e) {
         var me = $(this);
-        var album = me.parents('.disco');
-        var url = album.find('.editAlbumUrl').val();
+        var url = me.data('url');
+        var album = me.parents('.album');
         
-        album.find('.actions').hide();
-        album.find('.actionsLoader').show();
+        album.find('.btnAlbumManager').hide();
+        album.find('.loader').show();
         $.getJSON(url, {id: album.find('.albumId').val()}, function(data) {
             if(data.success) {
                 $('.mainContent').html(data.html);

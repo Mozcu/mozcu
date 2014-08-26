@@ -2,4 +2,4 @@
     {{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
 {% endfor %}
 
-<a href="{{ path('MozcuMozcuBundle_albumsNextPage', {page: page}) }}" class="albumNextPage" style="display:none;">mas</a>
+<input type="hidden" id="albumsNextPage" value="{{ path('MozcuMozcuBundle_albumsNextPage', {page: page}) }}" />
