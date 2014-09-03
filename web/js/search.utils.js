@@ -41,7 +41,19 @@ $(function() {
                 removeLiveSearchResult();
                 changeMainContent(url);
                 me.blur();
+            } else {
+                var url = $('.navbarBuscador').find('.autoVerResult a').attr('href');
+                removeLiveSearchResult();
+                changeMainContent(url);
+                me.blur();
             }
+            return;
+        }
+        
+        if(e.keyCode == 27) {
+            e.preventDefault();
+            removeLiveSearchResult();
+            me.blur();
             return;
         }
         
@@ -50,7 +62,7 @@ $(function() {
     
     $('#liveSearchInput').on('click', function(e){
         var me = $(this);
-        if(me.val().length > 3) {
+        if(me.val().length >= 3) {
             me.select();
             executeSearch(me);
         }
