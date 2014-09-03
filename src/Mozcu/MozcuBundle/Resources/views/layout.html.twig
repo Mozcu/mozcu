@@ -73,12 +73,12 @@
     </div> 
 
     <div class="col-xs-9 col-sm-9 col-md-6 col-lg-6 buscador">
-        <form class="navbar-form navbar-left navbarBuscador" role="search">
+        <div class="navbar-form navbar-left navbarBuscador">
             <div class="input-group">
                 <input type="text" id="liveSearchInput" data-url="{{ path('MozcuMozcuBundle_ajaxLiveSearch') }}" class="form-control inputBuscador" placeholder="Busca artistas, amigos, álbums, canciones, etc. " autocomplete="off">
                 <span class="input-group-btn"><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button></span>
             </div>
-        </form> 
+        </div> 
     </div> 
 
     <input type="hidden" id="loadUserBarUrl" value="{{ path('MozcuMozcuBundle_loadUserBar') }}" /> 
