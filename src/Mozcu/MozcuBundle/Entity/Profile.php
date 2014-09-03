@@ -500,4 +500,18 @@ class Profile {
     public function sameAs(Profile $profile) {
         return $this->getId() == $profile->getId();
     }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getArtists() {
+        $artists = array();
+        foreach($this->albums as $album) {
+            if($album->getIsActive() && !in_array($album->getArtistName(), $artists)) {
+                $artists[] = $album->getArtistName();
+            }
+        }
+        return $artists;
+    }
 }

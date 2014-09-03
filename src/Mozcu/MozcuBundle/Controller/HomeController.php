@@ -6,9 +6,24 @@ use Mozcu\MozcuBundle\Form\Type\UserType;
 use Mozcu\MozcuBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class HomeController extends MozcuController
 {
+    
+    /**
+     * 
+     * @param string $template
+     * @param arrray $parameters
+     * @param array $parametersForTemplate
+     * @return Response
+     */
+    private function renderTemplateForRequest($template, array $parameters) {
+        $params['template'] = $template;
+        $params['parameters'] = $parameters;
+        return $this->render('MozcuMozcuBundle:Home:templateForRequest.html.twig', $params);
+    }
+    
     /**
      * 
      * @return Response
@@ -132,80 +147,41 @@ class HomeController extends MozcuController
         return $this->render('MozcuMozcuBundle:Home:_leftBar.html.twig', array('user' => $user));
     }
     
-    public function ajaxLiveSearchAction(Request $request) {
-        $term = $request->get('term');
-        
-        $profiles = $this->getRepository('MozcuMozcuBundle:Profile')->liveSearchByName($term);
-        $albums = $this->getRepository('MozcuMozcuBundle:Album')->liveSearchByName($term);
-        $tags = $this->getRepository('MozcuMozcuBundle:Tag')->liveSearchByName($term);
-        
-        $result = $this->prepareLiveSearchData($profiles, $albums, $tags);
-        return $this->getJSONResponse($result);
+    public function ajaxLiveSearchAction() {
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $query = $this->getRequest()->get('query');
+            $parameters['profiles'] = $this->getRepository('MozcuMozcuBundle:Profile')->liveSearch($query);
+            $parameters['albums'] = $this->getRepository('MozcuMozcuBundle:Album')->liveSearch($query);
+            $parameters['songs'] = $this->getRepository('MozcuMozcuBundle:Song')->liveSearch($query);
+            $parameters['query'] = $query;
+            
+            $template = "MozcuMozcuBundle:Home:_liveSearchResult.html.twig";
+            
+            return $this->renderAjaxResponse($template, $parameters);
+        } else {
+            throw new BadRequestHttpException();
+        }
     }
     
-    private function prepareLiveSearchData($profiles, $albums, $tags) {
-        $result = array();
-        
-        /* Profiles */
-        foreach($profiles as $profile) {
-            $data = array();
-            $image = $profile->getMainImage();
-            if(!is_null($image)) {
-                foreach($image->getPresentations() as $presentation) {
-                    if($presentation->getName() == 'livesearch') {
-                        $data['image'] = $presentation->getUrl();
-                    }
-                }
-            } else {
-                $image = $this->container->getParameter('default_profile_image_live');
-                $data['image'] = $this->container->get('templating.helper.assets')->getUrl($image);
-            }
-            $data['id'] = $profile->getUser()->getUsername();
-            $data['label'] = $profile->getUser()->getCurrentName();
-            $data['value'] = $profile->getUser()->getCurrentName();
-            $data['type'] = "Artista";
-            $data['type_id'] = '1';
-            $data['url'] = $this->get('router')->generate("MozcuMozcuBundle_profile", array('username' => $profile->getUser()->getUsername()));
-            $result[] = $data;
+    public function searchAction($query) {
+        if(is_null($query)) {
+            throw new BadRequestHttpException();
         }
+        $parameters['profiles'] = $this->getRepository('MozcuMozcuBundle:Profile')->liveSearch($query, 6);
+        $parameters['totalProfiles'] = $this->getRepository('MozcuMozcuBundle:Profile')->searchTotalCount($query);
+        $parameters['albums'] = $this->getRepository('MozcuMozcuBundle:Album')->liveSearch($query, 6);
+        $parameters['totalAlbums'] = $this->getRepository('MozcuMozcuBundle:Album')->searchTotalCount($query);
+        $parameters['songs'] = $this->getRepository('MozcuMozcuBundle:Song')->liveSearch($query, 15);
+        $parameters['totalSongs'] = $this->getRepository('MozcuMozcuBundle:Song')->searchTotalCount($query);
+        $parameters['query'] = $query;
         
-        /* Albums */
-        foreach($albums as $album) {
-            $data = array();
-            $image = $album->getImage();
-            if(!is_null($image)) {
-                foreach($image->getPresentations() as $presentation) {
-                    if($presentation->getName() == 'livesearch') {
-                        $data['image'] = $presentation->getUrl();
-                    }
-                }
-            } else {
-                $image = $this->container->getParameter('default_profile_image_live');
-                $data['image'] = $this->container->get('templating.helper.assets')->getUrl($image);
-            }
-            $data['id'] = $album->getId();
-            $data['label'] = $album->getName();
-            $data['value'] = $album->getName();
-            $data['type'] = "Album";
-            $data['type_id'] = '2';
-            $data['extra'] = $album->getProfile()->getName();
-            $data['url'] = $this->get('router')->generate("MozcuMozcuBundle_albumAlbum", array('id' => $album->getId(), 
-                                                          'username' => $album->getProfile()->getUser()->getUsername()));
-            $result[] = $data;
+        $template = "MozcuMozcuBundle:Home:_searchResult.html.twig";
+        
+        if($this->getRequest()->isXmlHttpRequest()) {
+            return $this->renderAjaxResponse($template, $parameters);
+        } else {
+            return $this->renderTemplateForRequest($template, $parameters);
         }
-        
-        /* Tags */
-        foreach($tags as $tag) {
-            $data['id'] = $tag->getId();
-            $data['label'] = $tag->getName();
-            $data['value'] = $tag->getName();
-            $data['type'] = "Etiqueta";
-            $data['type_id'] = '3';
-            $data['url'] = $this->get('router')->generate("MozcuMozcuBundle_albumsTag", array('tag' => $tag->getName()));
-            $result[] = $data;
-        }
-        
-        return $result;
     }
     
     public function aboutAction() {

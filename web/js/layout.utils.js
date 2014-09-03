@@ -1,7 +1,5 @@
 $(function() {
    
-   var urls = new Array();
-   
    // Click en el logo superior izquirdo
    $('.navbar.navbar-fixed-top').on('click', '.navbar-header a', function(e){
         e.preventDefault();
@@ -58,48 +56,6 @@ $(function() {
         var url = me.attr('href');
         
         changeMainContent(url);
-    });
-   
-   
-   // Livesearch
-   $('#liveSearchInput').autocomplete({
-        source: $('#liveSearchInput').data('url'),
-        minLength: 2,
-        select: function( event, ui ) {
-            changeMainContent(ui.item.url);
-            
-            //event.preventDefault();
-        }
-    }).data("ui-autocomplete")._renderItem = (function (ul, item) {
-        
-        var divContainer = $('<div>');
-        var divType = $('<div>', {class: 'type'});
-        var divLabel = $('<div>', {class: 'result'});
-        var divClear = $('<div>', {class: 'clearBoth'});
-        
-        divType.html(item.type);
-        
-        if ('image' in item) {
-            divLabel.append($('<img>', {src: item.image}));
-        }
-        var divData = $('<div>', {class: 'data'});
-        divData.append(item.label);
-        if ('extra' in item) {
-            divData.append('<br />');
-            divData.append($('<span>').html(item.extra));    
-        }
-        
-        divLabel.append(divData)
-        divLabel.append(divClear);
-        
-        divContainer.append(divType);
-        divContainer.append(divLabel);
-        divContainer.append(divClear);
-        
-        return $("<li>", {class: 'liveSearchItem'})
-            .data( "item.autocomplete", item )
-            .append($("<a>").append(divContainer))
-            .appendTo(ul);
     });
     
     // TODO

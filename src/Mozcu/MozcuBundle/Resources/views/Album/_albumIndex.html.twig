@@ -75,6 +75,9 @@ $(function(){
 
     $(window).off('scroll');
     $(window).scroll(function() {
+        if($('.albumsPage').length == 0 ) {
+            return;
+        }
         var currentScroll = $(window).scrollTop() + $(window).height();
         var offset = $('.albumsPage').offset();
         var totalScroll = offset.top + $('.albumsPage').outerHeight(true);

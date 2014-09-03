@@ -1,0 +1,108 @@
+<div class="searchResults col-xs-12 col-sm-12 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="row headerResultados">
+                <h3>Resultados para "{{ query }}"</h3>
+            </div>
+            
+            <!--INICIO RESULTADOS ALBUMES -->                   
+            {% if albums|length > 0 %}
+                <div class="row resultados">
+                    <h4>Álbumes</h4>
+
+                    {% for album in albums %}
+                        <div class="result resultadoDisco album col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                            {% for presentation in album.getImage.getPresentations %}
+                                {% if presentation.getName == 'list_thumbanil' %}
+                                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {id: album.getId, 
+                                                username: album.getProfile.getUser.getUsername }) }}">
+                                        <img src="{{ presentation.url }}" alt="album" class="imgAlbum">
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                            <h5 class="resultNameAlbum">{{ album.getName }}</h5>
+                            <a class="resultNameArtist" href="{{ path('MozcuMozcuBundle_profile', {username: album.getProfile.getUser.getUsername }) }}">
+                                <p>{{ album.getArtistName }}</p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    
+                    {% if totalAlbums > 6 %}
+                        <a href="#" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">Ver más resultados</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <!--FIN RESULTADOS ALBUMES--> 
+            
+            <!--INICIO RESULTADOS USUARIOS --> 
+            {% if profiles|length > 0 %}
+                <div class="row resultados">
+                    <h4>Usuarios</h4>
+
+                    {% for profile in profiles %}
+                        <div class="result col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                            <a href="{{ path('MozcuMozcuBundle_profile', {username: profile.getUser.getUsername }) }}">
+                            {% if profile.getMainImage is null %}
+                                <img src="{{ asset('images/profile_125x125.jpg')}}" alt="perfil" class="img-circle resultadoUserImg">
+                            {% else %}
+                                {% for presentation in profile.getMainImage.getPresentations %}
+                                    {% if presentation.getName == 'profile_header' %}
+                                        <img src="{{ presentation.url }}" alt="perfil" class="img-circle resultadoUserImg"">
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            </a>
+                            <h5 class="resultNameAlbum text-center">{{ profile.getCurrentName }}</h5>
+                        </div>
+                    {% endfor %}
+                    
+                    {% if totalProfiles > 6 %}
+                        <a href="#" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">Ver más resultados</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <!--FIN RESULTADOS USUARIOS--> 
+
+            <!--INICIO RESULTADOS USUARIOS               -->   
+            {% if songs|length > 0 %}
+                <div class="row resultados resultadosTabla">
+                    <h4>Tracks</h4>
+
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <td class="text-center">#</td>
+                                <td class="nombreTabla">Nombre</td>
+                                <td class="shareTable text-right">Agregar</td>
+                                <td class="text-right">Duración</td>
+                                <td class="shareTable text-center">Compartir</td>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for key, song in songs %}
+                                <tr class="result">
+                                    <td class="text-center">{{ key + 1}}</td>
+                                    <td class="nombreTabla">
+                                        <a href="{{ path('MozcuMozcuBundle_albumAlbum', {id: song.getAlbum.getId, 
+                                                    username: song.getAlbum.getProfile.getUser.getUsername }) }}">{{ song.getName}}</a>
+                                    </td>
+                                    <td class="compiTable text-right"><a href="#"><i class="glyphicon glyphicon-plus-sign"></i></a></td>
+                                    <td class="text-right">{{ song.getLength }}</td>
+                                    <td class="shareTable text-center"><a href="#"><i class="glyphicon glyphicon-share"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if totalSongs > 15 %}
+                        <a href="#" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">Ver más resultados</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <!--FIN RESULTADOS USUARIOS-->
+
+        </div>
+    </div>
+ </div>

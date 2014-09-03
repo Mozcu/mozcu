@@ -25,6 +25,29 @@ body{
     padding-bottom: 30px;
 } 
 
+.pageLoader{
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:22% auto;
+    position: fixed;
+    color: #ccc;
+    z-index: 5000;
+    background-color: #111;
+    border-radius: 6px;
+    height: 100px;
+    width: 100px;
+    
+    
+}
+
+.pageLoaderIcon{
+    font-size: 60px;
+    margin: 0px;
+    padding: 20px; 
+}
+
 /*++++++++++++++++++++++INCIO ALBUMES++++++++++++++++++++++++++
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
@@ -207,7 +230,7 @@ body{
     user-select: none vertical-align:middle;
     white-space: normal;
     word-wrap: normal;
-    padding: 6px 5px;
+    padding: 7px 5px;
 }
 
 .btnCompartir:hover{
@@ -347,6 +370,10 @@ body{
     line-height: 1.7;
 }
 
+.infoDiscoParrafo {
+    min-height: 166px;
+}
+
 /*QUERY PARA PANTALLAS GRANDES*/
 
 @media (min-width: 960px){
@@ -454,10 +481,116 @@ body{
     
 }
 
+.compiladoModal .modal-title{
+    margin-left: 10px;
+}
+
+.crearCompi>input{
+    width: 80%;
+}
+
+.crearCompi>button{
+    margin-left: 5px;
+}
+
+.listCompi{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    margin-top: 45px;
+    margin-bottom: 0px;
+    background-color: #fafafa;
+    
+}
+
+.listCompi>li{
+    margin: 2px;
+    
+}
+
+.listCompi>li>a{
+    padding: 6px;
+    padding-left: 15px;
+    padding-right: 15px; 
+    font-weight: 800;
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-image: none;
+}
+.listCompi>li>a:hover{
+    background-color: #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+}
 
 
 
 /*FIN PLAYLIST*/
+
+/*+++++++++++++++++++++++++++++++++album comentarios++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.comentarios{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+.contenedorComentario{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.headerComent{
+    padding-left: 0px;
+}
+
+.tiempoComent{
+    width: 140px;
+    float: left;
+    padding-left: 10px;
+    font-size: 12px;
+    padding-top: 3px;
+}
+
+.userComent{
+    float: left;
+    font-size: 14px;
+    padding-left: 0px;
+    
+}
+
+.marcarSpam{
+    color: #ccc;
+}
+
+.marcarSpam:hover{
+    color: #e84e40;
+}
+
+.textComentario{
+    display: block;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #555;
+      background-color: #fafafa;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+              transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.comentarioTexto{
+    padding-left: 0px;
+}
+
+/*+++++++++++++++++++++++++++++++++FIN comentarios de album++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 /*INICIO DE ALBUMES*/
 
@@ -830,7 +963,8 @@ body{
 
 .albumManager{
     border-top: 1px solid #eee;
-    padding: 15px;
+    padding: 15px!important;
+    max-height: 190px;
 }
 
 .imgAlbumManager{
@@ -1546,6 +1680,9 @@ footer .entypo{
 }
 /*+++++++++++++++++++++++++++++++++FIN UPLOADER++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+/*+++++++++++++++++++++++++++++++++inicio resultados busqueda+++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 .resultados{
     margin-top: 20px;
     padding-left: 0px;
@@ -1585,4 +1722,28 @@ footer .entypo{
 .resultadosTabla{
     margin-bottom: 20px;
 }
+
+
+
+/*+++++++++++++++++++++++++++++++++fin autocomplete++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+/*+++++++++++++++++++++++++++++++++inicio compilado++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+.compiTable{
+    vertical-align: middle;
+    
+}
+.tdImg{
+    vertical-align: middle;
+}
+.imgCompiTabla{
+    width: 50px;
+    height: auto;
+}
+
+/*+++++++++++++++++++++++++++++++++fin compilado++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 

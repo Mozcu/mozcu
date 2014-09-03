@@ -44,11 +44,25 @@ class AlbumRepository extends EntityRepository {
         return $queryBuilder->getQuery()->getResult();
     }
     
-    public function liveSearchByName($name) {
-        $dql = "SELECT a from MozcuMozcuBundle:Album a JOIN a.profile p
-                WHERE (a.name LIKE '%$name%' OR p.name LIKE '%$name%') AND a.isActive = 1";
-        $query = $this->getEntityManager()->createQuery($dql);
+    public function liveSearch($name, $limit = 4) {
+        $dql = "FROM MozcuMozcuBundle:Album a
+                WHERE (a.name LIKE '%$name%' OR a.artist_name LIKE '%$name%') AND a.isActive = 1";
+        
+        if($limit > 0) {
+            $dql = "SELECT a " . $dql;
+            $query = $this->getEntityManager()->createQuery($dql);
+            $query->setFirstResult(0)->setMaxResults($limit);
+        } else {
+            $dql = "SELECT COUNT(a.id) " . $dql;
+            $query = $this->getEntityManager()->createQuery($dql);
+            return $query->getSingleScalarResult();
+        }
+        
         return $query->getResult();
+    }
+    
+    public function searchTotalCount($query) {
+        return $this->liveSearch($query, 0);
     }
     
     public function findRelated(Album $album) {

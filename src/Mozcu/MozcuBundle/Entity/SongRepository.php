@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class SongRepository extends EntityRepository
 {
+    public function liveSearch($name, $limit = 4) {
+        $dql = "FROM MozcuMozcuBundle:Song s JOIN s.album a
+                WHERE (s.name LIKE '%$name%' OR a.artist_name LIKE '%$name%') AND a.isActive = 1";
+        
+        if($limit > 0) {
+            $dql = "SELECT s " . $dql;
+            $query = $this->getEntityManager()->createQuery($dql);
+            $query->setFirstResult(0)->setMaxResults($limit);
+        } else {
+            $dql = "SELECT COUNT(s.id) " . $dql;
+            $query = $this->getEntityManager()->createQuery($dql);
+            return $query->getSingleScalarResult();
+        }
+        
+        return $query->getResult();
+    }
+    
+    public function searchTotalCount($query) {
+        return $this->liveSearch($query, 0);
+    }
 }

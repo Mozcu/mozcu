@@ -1,6 +1,6 @@
 $(function() {
     
-    currentPlayList = null;
+    var currentPlayList = null;
 	
     var getAlbumForPlaylist = function(id) {
         var url = $('#urlAlbumForPlayer').val();
@@ -41,7 +41,7 @@ $(function() {
         mozcuPlaylist.play(data[1] - 1);
     });
     
-    mozcuPlaylist = new jPlayerPlaylist({
+    var mozcuPlaylist = new jPlayerPlaylist({
             jPlayer: "#jquery_jplayer_1",
             cssSelectorAncestor: "#jp_container_1"
     }, [],
@@ -49,12 +49,11 @@ $(function() {
         playlistOptions: {
             autoPlay: true,
         },
-        swfPath: "/js/jplayer/Jplayer.swf",
-        supplied: "oga, mp3",
+        swfPath: "/js/jplayer",
+        supplied: "mp3",
         smoothPlayBar: true,
         wmode: "window",
         keyEnabled: true,
-        audioFullScreen: false,
         solution: "flash, html"
     });
     

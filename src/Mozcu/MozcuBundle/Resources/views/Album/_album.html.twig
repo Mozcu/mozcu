@@ -9,6 +9,6 @@
     {% endfor %}
     <h5>{{ album.getName }}</h5>
     <a href="{{ path('MozcuMozcuBundle_profile', {'username': username}) }}" class="profileLink">
-        <p>{{ album.getProfile.getUser.getCurrentName }}</p>
+        <p>{{ album.getArtistName }}</p>
     </a>
  </div>

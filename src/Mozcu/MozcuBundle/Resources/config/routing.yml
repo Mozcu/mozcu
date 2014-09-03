@@ -47,6 +47,12 @@ MozcuMozcuBundle_ajaxLiveSearch:
     requirements:
         _method: GET
         
+MozcuMozcuBundle_searchResult:
+    pattern: /search?query={query};
+    defaults: { _controller: MozcuMozcuBundle:Home:search}
+    requirements:
+        _method: GET
+        
 MozcuMozcuBundle_about:
     pattern: /about
     defaults: { _controller: MozcuMozcuBundle:Home:about}
