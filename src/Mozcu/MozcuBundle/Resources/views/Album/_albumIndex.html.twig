@@ -2,7 +2,7 @@
 <!--INICIO DE CONTENIDO-->
     <div class="row center-block perfilContenido">
         <div class="headerExplorer col-lg-12">
-            <div class="btn-group btnTag">
+            <!--<div class="btn-group btnTag">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     Todos los tags <span class="caret"></span>
                 </button>
@@ -51,9 +51,15 @@
                     <li><a href="#">Fecha de subida</a></li>
                     <li><a href="#">Reproducciones</a></li>
                 </ul>
-            </div> 
+            </div> -->
 
         </div>
+                
+        {% if tag is defined %}
+            <div data-tag="{{ tag.getName }}" class="row headerResultados tagResult">
+                <h3>Resultados para "#{{ tag.getName }}"</h3>
+            </div>
+        {% endif %}
         
         <!--INICIO DE ALBUMES               -->
         {% for album in albums %}
@@ -69,6 +75,8 @@
 
 <script type="text/javascript">
 $(function(){
+    window.scrollTo(0,0);
+    
     $('.dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
 
     var loading = false;
@@ -89,7 +97,13 @@ $(function(){
     
     var loadMore = function() {
         var url = $('#albumsNextPage').val();
-        $.getJSON(url, function(data) {
+        
+        var params = {};
+        if($('.tagResult').length > 0) {
+            params.tag = $('.tagResult').data('tag');
+        }
+        
+        $.getJSON(url, params, function(data) {
             if(data.success) {
                 $('#albumsNextPage').remove();
                 $('.album').last().after(data.html);

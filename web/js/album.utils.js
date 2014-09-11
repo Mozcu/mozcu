@@ -139,19 +139,6 @@ $(function() {
         });
     });
     
-    /* Go to Profile option */
-    $('.mainContent').on('click', '.wrapperProfile.breadC .albumProfile', function(e) {
-      e.preventDefault();
-      var me = $(this);
-      
-      var url = me.attr('href');
-      $.getJSON(url, {}, function(data){
-        if (data.success) {
-          $('.mainContent').html(data.html);
-        }
-      });
-    });
-    
     // Ir al disco
     $('.mainContent').on('click', '.album .albumLink', function(e) {
       e.preventDefault();
@@ -170,6 +157,18 @@ $(function() {
       var me = $(this);
       
       $.getJSON(me.attr('href'), {}, function(data) {
+        if(data.success) {
+          $('.mainContent').html(data.html);
+        }
+      });
+    });
+    
+    // click en tags de informacion
+    $('.mainContent').on('click', '.infoDisco .tag', function(e) {
+      e.preventDefault();
+      var url = $(this).attr('href');
+      
+      $.getJSON(url, {}, function(data) {
         if(data.success) {
           $('.mainContent').html(data.html);
         }

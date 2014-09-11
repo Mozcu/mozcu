@@ -3,9 +3,10 @@
 {% block title %} {% trans with {'%name%': parameters.album.getProfile.getUser.getCurrentName} %}%name% en Mozcu{% endtrans %} {% endblock %}
 
 {% block mainContent %}
-    <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+    <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 albumPage">
         {{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', parameters) }}
 
         {{ include(template, parameters) }}
+        
     </div>
 {% endblock %}

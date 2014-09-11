@@ -48,13 +48,13 @@ class AlbumController extends MozcuController
         if($request->get('tag')) {
             $tag = $this->getRepository('MozcuMozcuBundle:Tag')->findOneByName($request->get('tag'));
             if($tag) {
-                $albums = $this->getRepository('MozcuMozcuBundle:Album')->findByTags(array($tag->getId()));
+                $albums = $this->getRepository('MozcuMozcuBundle:Album')->findByTags(array($tag->getId()), 0, 16);
                 $parameters['tag'] = $tag;
             } else {
                 $albums = new \Doctrine\Common\Collections\ArrayCollection();    
             }
         } else {
-            $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated(0, 18);    
+            $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated(0, 16);    
         }
         $tags = $this->getRepository('MozcuMozcuBundle:Tag')->getTagsPaginated(1, 10);
         
@@ -71,9 +71,19 @@ class AlbumController extends MozcuController
     
     public function nextPageAction($page) {
         if($this->getRequest()->isXmlHttpRequest()) {
-            $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated($page, 18);
+            $parameters = array();
+            if($this->getRequest()->get('tag')) {
+                $tag = $this->getRepository('MozcuMozcuBundle:Tag')->findOneByName($this->getRequest()->get('tag'));
+                $albums = $this->getRepository('MozcuMozcuBundle:Album')->findByTags(array($tag->getId()), $page, 16);
+                $parameters['tag'] = $tag;
+            } else {
+                $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated($page, 18);    
+            }
+            $parameters['albums'] = $albums;
+            $parameters['page']   = $page + 1;
+            
             $template = 'MozcuMozcuBundle:Album:_albumsNextPage.html.twig';
-            return $this->renderAjaxResponse($template, array('albums' => $albums, 'page' => ($page + 1)));
+            return $this->renderAjaxResponse($template, $parameters);
         } else {
             throw new BadRequestHttpException();
         }
@@ -87,7 +97,7 @@ class AlbumController extends MozcuController
                 $template = "MozcuMozcuBundle:Album:_albumPlaylist.html.twig";
                 $parameters = array('album' => $album, 'selected' => 'playlist');
             } else {
-                $success = false;   
+                $success = false;
             }
             
             if($this->getRequest()->isXmlHttpRequest()) {

@@ -28,20 +28,24 @@ class AlbumRepository extends EntityRepository {
         return $query->getResult();
     }
     
-    public function findByTags(array $tags) {
+    public function findByTags(array $tags, $page = 0, $cant = 16) {
         $in = "(" . implode(',', $tags) . ")";
-        $cant = count($tags);
+        //$cant = count($tags);
         
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
         $queryBuilder->select("a");
         $queryBuilder->from('MozcuMozcuBundle:Album', 'a');
         $queryBuilder->innerJoin('a.tags', 't');
         $queryBuilder->where("t.id IN {$in} AND a.isActive = 1");
-        $queryBuilder->groupBy("a.name");
-        $queryBuilder->having("COUNT(t.id) = {$cant}");
+        //$queryBuilder->groupBy("a.name");
+        //$queryBuilder->having("COUNT(t.id) = {$cant}");
         $queryBuilder->orderBy('a.id', 'DESC');
 
-        return $queryBuilder->getQuery()->getResult();
+        $query = $queryBuilder->getQuery();
+        $query->setFirstResult($page * $cant)
+              ->setMaxResults($cant);
+        
+        return $query->getResult();
     }
     
     public function liveSearch($name, $limit = 4) {

@@ -1,5 +1,12 @@
-<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 albumPage">
     {{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', {'album': album}) }}
 
     {{ include(template, parameters) }}
+    
+    <script type="text/javascript">
+        $(function() {
+            window.scrollTo(0,0);
+        });
+    </script>
+    
 </div>

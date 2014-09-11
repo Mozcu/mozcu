@@ -57,12 +57,11 @@ body{
     padding-top: 0px;
     padding-right: 5px;
     padding-left: 0px;
-    padding-bottom: 15px;
+    margin-bottom: 15px;
     border: none;
     background: transparent;
     color: #FFF;
     font-size: 15px;
-    font-weight: bold;
     
 }
 
@@ -596,16 +595,11 @@ body{
 
 .perfilContenido{
     margin-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 0px;
     margin-left: -15px;
     margin-right: -15px;
 }
 
-.album{
-    padding: 5px 20px;
-    margin-bottom: 10px;
-    
-}
 
 .album:hover{
     opacity: 0.8;
@@ -780,11 +774,6 @@ body{
 
 /*FIN DE HEADER*/
 
-.perfilContenido{
-    margin-bottom: 20px;
-    margin-left: -15px;
-    margin-right: -15px;
-}
 .img-perfil{
     margin-bottom: 25px;
     margin-top: 5px;
@@ -860,7 +849,7 @@ body{
 .followersPerfil{
     margin-top: 5px;
     margin-bottom: 20px;
-    color: #555;
+    color: #ccc;
 }
 
 .numFollow{
@@ -906,10 +895,36 @@ body{
     
 }
 
+@media (max-width: 480px){
+    .album{
+        height: 200px;
+    }
+}
+
+@media (max-width: 760px){
+    .album{
+        height: 380px;
+    }
+}
+
 @media (min-width: 960px){
     .album{
         height: 300px;
     }
+}
+
+@media (min-width: 1300px){
+    .album{
+        height: 330px;
+    }
+    
+}
+
+@media (min-width: 1400px){
+    .album{
+        height: 400px;
+    }
+    
 }
 
 .album:hover{
@@ -953,6 +968,33 @@ body{
 }
 
 /*FIN DE ALBUMES*/
+
+/*INICIO DE FOLLOWERS-FOLLOWING PERFIL SEGUIDORES*/
+.follow{
+    margin-top: 30px;
+}
+.followBox{
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 4px;
+    border: 1px solid #eeeeee;
+    height: 260px;
+}
+.imgFollow{
+    margin-bottom: 0px;
+}
+.btnSeguirFollow{
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.btnSeguirFollow > i{
+    margin-right: 8px;
+}
+.titlFollower{
+    color: #333;
+    font-weight: bold;
+}
+/*FIN SEGUIDORES FOLLOWERS*/
 
 /*INCIO ALBUM MANAGER*/
 
@@ -1257,10 +1299,11 @@ body{
     text-decoration: none;
 }
 /*++++++++++++++++CARACTERISTICAS++++++++++++++++++++++++*/
-    
-.caracter{
- margin-top: 15px;
-margin-bottom: 30px;}  
+.rowCaract{
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: 40px;
+}     
 
 .caract-titl{
     margin-bottom:30px;
@@ -1268,17 +1311,42 @@ margin-bottom: 30px;}
 }
 
 .caract-model{
-    padding: 30px;
+    padding: 15px;
+}
+.caract-model>p{
+    padding-left: 35px;
+    padding-right: 25px;
+}
+.caract-model>h4{
+     padding-left: 35px;
+    padding-right: 25px;
 }
 
 .img-caract{
-    border: 6px solid #fff;
+    border: 4px solid #fff;
     box-shadow: 5px 5px 8px #999;
-   -webkit-box-shadow: 0px 0px 10px #999;
-   -moz-box-shadow: 5px 5px 8px #999;
-    width: 182px;
-    height: 182px;
-    margin-bottom: 30px;
+   -webkit-box-shadow: 0px 0px 8px #999;
+   -moz-box-shadow: 0px 0px 8px #999;
+    margin-bottom: 10px;
+    padding: 0px;
+    
+}
+
+@media (max-width: 768px) {
+    .img-caract{
+         margin-top: 35px;
+        
+    }
+    .caract-model{
+    padding: 0px;
+}
+    .caract-model>p{
+        padding: 0px;
+    }
+    .caract-model>h4{
+        padding: 0px;
+    }
+    
 }
 
 
@@ -1365,10 +1433,6 @@ margin-bottom: 30px;}
 /*+++++++++++++++++++++++++++++++++INICIO EXPLORER++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-.perfilContenido{
-    margin-left: -15px;
-    margin-right: -15px;
-}
 
 .headerExplorer{
     margin-bottom: 20px;

@@ -6,7 +6,7 @@
         <div class="infoTags">
             <strong>Tags</strong>
             {% for tag in album.getTags%}
-                <a href="#" class="tag">#{{ tag.getName }}</a>
+                <a href="{{ path('MozcuMozcuBundle_tagSearchResult', {tag: tag.getName}) }}" class="tag">#{{ tag.getName }}</a>
             {% endfor %}
         </div>
     </div>

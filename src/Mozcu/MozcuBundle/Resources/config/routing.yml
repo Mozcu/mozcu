@@ -66,6 +66,12 @@ MozcuMozcuBundle_terms:
         _method: GET
 
 ### Album Controller ###
+MozcuMozcuBundle_tagSearchResult:
+    pattern: /search?tag={tag}
+    defaults: { _controller: MozcuMozcuBundle:Album:index}
+    requirements:
+        _method: GET
+
 MozcuMozcuBundle_albums:
     pattern: /albums
     defaults: {_controller: MozcuMozcuBundle:Album:index}
