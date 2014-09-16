@@ -1,8 +1,15 @@
 ### Authentication ###
 login_check:
     pattern:   /login_check
+
 MozcuMozcuBundle_logout:
     pattern:   /logout
+
+MozcuMozcuBundle_oldLoginCheck:
+  pattern: /oldLoginCheck
+  defaults: { _controller: MozcuMozcuBundle:Home:oldLoginCheck}
+  requirements:
+        _method:  POST
 
 ### Home Controller ###
 MozcuMozcuBundle_home:

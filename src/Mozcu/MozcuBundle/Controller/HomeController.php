@@ -59,6 +59,35 @@ class HomeController extends MozcuController
         }
     }
     
+    public function oldLoginCheckAction(Request $request) {
+        if(!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException;
+        }
+        
+        $email = $request->get('_username');
+        $password = $request->get('_password');
+        
+        if(empty($email) || empty($password)) {
+            throw new BadRequestHttpException;
+        }
+        
+        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('email' => $email));
+        if(is_null($user)) {
+            $response = array('success' => false, 'message' => "User doesn't exists");
+        } else {
+            $response = array(
+                'success' => true,
+                'login_check' => $this->getUserService()->oldLoginCheck($user, $password)
+            );
+
+            if($response['login_check']) {
+                $response['callback_url'] = $this->generateUrl('MozcuMozcuBundle_profile', array('username' => $user->getUsername()));
+            }
+        }
+        
+        return $this->getJSONResponse($response);
+    }
+    
     public function ajaxGetHomeAction() {
         $form = $this->createForm(new UserType(), new User());
         

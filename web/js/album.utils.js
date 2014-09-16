@@ -163,6 +163,18 @@ $(function() {
       });
     });
     
+    // Subido por
+    $('.mainContent').on('click', '.headerDisco .nombreAlbumUser a', function(e) {
+      e.preventDefault();
+      var url = $(this).attr('href');
+      
+      $.getJSON(url, {}, function(data) {
+        if(data.success) {
+          $('.mainContent').html(data.html);
+        }
+      });
+    });
+    
     // click en tags de informacion
     $('.mainContent').on('click', '.infoDisco .tag', function(e) {
       e.preventDefault();

@@ -114,5 +114,20 @@ class UserService extends BaseService{
         $token = new UsernamePasswordToken($user, null, 'secured_area', $user->getRoles());
         $this->securityContext->setToken($token);
     }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\User $user
+     * @param string $password
+     * @return boolean
+     */
+    public function oldLoginCheck(User $user, $password) {
+        $storedPass = $user->getOldPassword();
+        if(empty($storedPass) || $storedPass != (md5($password))) {
+            return false;
+        }
+        $this->logUser($user);
+        return true;
+    }
 
 }

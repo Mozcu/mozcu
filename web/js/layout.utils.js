@@ -1,5 +1,11 @@
 $(function() {
    
+    // Abandonar pagina
+    function closePageWarning(){
+        return 'Si te vas no vas a poder escuchar mas musica. Estas seguro?';
+    }
+    window.onbeforeunload = closePageWarning;
+   
    // Click en el logo superior izquirdo
    $('.navbar.navbar-fixed-top').on('click', '.navbar-header a', function(e){
         e.preventDefault();
@@ -147,7 +153,7 @@ $(function() {
     
     // Ejecuta el login 
     var loginCheck = function(username, password, rememberMe) {
-        var url = $('#login_check_url').val();
+        var url = $('#old_login_check_url').val();
         var postData = {_username: username, _password: password};
         
         if(rememberMe) {
@@ -156,13 +162,35 @@ $(function() {
         
         $.post(url, postData, function(data) {
             if(data.success) {
-                reloadUserBar();
-                reloadLeftBar();
-                $.getJSON(data.callback_url, function(data) {
-                    if(data.success) {
-                        $('.mainContent').html(data.html);
-                    }
-                });
+                if(data.login_check) {
+                    validLogin(data.callback_url);
+                } else {
+                    currentLogin(postData);
+                }
+            } else {
+                throw data.message;
+            }
+        }, 'json');
+    };
+    
+    var currentLogin = function(postData) {
+        var url = $('#login_check_url').val();
+        
+        $.post(url, postData, function(data) {
+            if(data.success) {
+                validLogin(data.callback_url);
+            } else {
+                throw data.message;
+            }
+        }, 'json');
+    };
+    
+    var validLogin = function(callbackUrl) {
+        reloadUserBar();
+        reloadLeftBar();
+        $.getJSON(callbackUrl, function(data) {
+            if(data.success) {
+                $('.mainContent').html(data.html);
             }
         });
     };

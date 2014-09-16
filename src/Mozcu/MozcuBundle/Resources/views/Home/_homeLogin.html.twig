@@ -6,6 +6,7 @@
             <h3 class="form-signin-heading siginsubTitl text-center">Accede a tu cuenta </h3>
             
             <input type="hidden" id="login_check_url" value="{{ path('login_check') }}" />
+            <input type="hidden" id="old_login_check_url" value="{{ path('MozcuMozcuBundle_oldLoginCheck') }}" />
             
             <input type="text" id="username" value="" class="form-control" placeholder="Correo electrónico" required autofocus />
             <input type="password" id="password"  class="form-control" placeholder="Contraseña" required />

@@ -21,15 +21,27 @@ $(function() {
         });
     });
     
+    // Ir al album
+    $('.mainContent').on('click', '.profileContent .albumManager a', function(e) {
+        e.preventDefault();
+        var me = $(this);
+        
+        $.getJSON(me.attr('href'), {}, function(data) {
+            if(data.success) {
+                $('.mainContent').html(data.html);
+            }
+      });
+    });
+    
     // Eliminar album
-    $('.mainContent').on('click', '.profileContent .album .delete', function(e) {
+    $('.mainContent').on('click', '.profileContent .albumManager .delete', function(e) {
         if(!confirm('Esta seguro que desea eliminar el album?')) {
             return;
         }
         
         var me = $(this);
         var url = me.data('url');
-        var album = me.parents('.album');
+        var album = me.parents('.albumManager');
         
         album.find('.btnAlbumManager').hide();
         album.find('.loader').show();
@@ -41,10 +53,10 @@ $(function() {
     });
     
     // Editar album
-    $('.mainContent').on('click', '.profileContent .album .edit', function(e) {
+    $('.mainContent').on('click', '.profileContent .albumManager .edit', function(e) {
         var me = $(this);
         var url = me.data('url');
-        var album = me.parents('.album');
+        var album = me.parents('.albumManager');
         
         album.find('.btnAlbumManager').hide();
         album.find('.loader').show();

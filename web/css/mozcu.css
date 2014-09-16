@@ -48,6 +48,16 @@ body{
     padding: 20px; 
 }
 
+/*modal global*/
+
+.modal-content{
+    border-radius: 0px;
+}
+
+.modal-header{
+    padding-left: 20px;
+}
+
 /*++++++++++++++++++++++INCIO ALBUMES++++++++++++++++++++++++++
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
@@ -595,7 +605,7 @@ body{
 
 .perfilContenido{
     margin-bottom: 20px;
-    margin-top: 0px;
+    margin-top: 20px;
     margin-left: -15px;
     margin-right: -15px;
 }
@@ -884,7 +894,7 @@ body{
 
 .headerAlbumes{
     margin-bottom: 25px;
-    margin-top: 20px;
+    margin-top: 0px;
     margin-left: 0px;
     padding-left: 0px;
 }
@@ -1006,7 +1016,6 @@ body{
 .albumManager{
     border-top: 1px solid #eee;
     padding: 15px!important;
-    max-height: 190px;
 }
 
 .imgAlbumManager{
@@ -1306,35 +1315,31 @@ body{
 }     
 
 .caract-titl{
-    margin-bottom:30px;
+    margin-bottom:20px;
     margin-top: 15px;
 }
 
 .caract-model{
+    margin-bottom: 20px;
     padding: 15px;
 }
 .caract-model>p{
-    padding-left: 35px;
+    padding-left: 45px;
     padding-right: 25px;
 }
 .caract-model>h4{
-     padding-left: 35px;
+     padding-left: 45px;
     padding-right: 25px;
 }
 
 .img-caract{
-    border: 4px solid #fff;
-    box-shadow: 5px 5px 8px #999;
-   -webkit-box-shadow: 0px 0px 8px #999;
-   -moz-box-shadow: 0px 0px 8px #999;
     margin-bottom: 10px;
-    padding: 0px;
     
 }
 
 @media (max-width: 768px) {
     .img-caract{
-         margin-top: 35px;
+         margin-top: 45px;
         
     }
     .caract-model{
