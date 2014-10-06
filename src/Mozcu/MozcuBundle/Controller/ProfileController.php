@@ -27,19 +27,6 @@ class ProfileController extends MozcuController
     
     /**
      * 
-     * @param string $template
-     * @param arrray $parameters
-     * @param array $parametersForTemplate
-     * @return Response
-     */
-    private function renderAccountForRequest($template, array $parameters, array $parametersForTemplate = array()) {
-        $parameters['template'] = $template;
-        $parameters['parameters'] = $parametersForTemplate;
-        return $this->render('MozcuMozcuBundle:Profile:accountTemplateForRequest.html.twig', $parameters);
-    }
-    
-    /**
-     * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($username) {
@@ -211,128 +198,37 @@ class ProfileController extends MozcuController
         }
     }
     
-    public function configUserAction() {
-        $user = $this->getUser();
-        if(!is_null($user)) {
-            $parameters = array('user' => $user, 'selectedOption' => 'user');
-            $template = 'MozcuMozcuBundle:Profile:_accountConfigUser.html.twig';
-            if($this->getRequest()->isXmlHttpRequest()) {
-                $parameters['parameters'] = $parameters;
-                $parameters['template'] = $template;
-                return $this->renderAjaxResponse('MozcuMozcuBundle:Profile:accountTemplateForAjax.html.twig', $parameters);
-            }
-            return $this->renderAccountForRequest($template, $parameters);
-            
-        } else {
-            return new Response("Pagina no encontrada", 404);
-        }
+    public function accountAction() {
+        $user = $this->getUser(); 
+        return $this->render('MozcuMozcuBundle:Profile:account.html.twig', array('user' => $user));
     }
     
-    public function configProfileAction() {
-        $user = $this->getUser();
-        if(!is_null($user)) {
-            $countries = $this->getRepository('MozcuMozcuBundle:Country')->findAll();
-            $parameters = array('user' => $user, 'selectedOption' => 'profile', 'countries' => $countries);
-            $template = 'MozcuMozcuBundle:Profile:_accountConfigProfile.html.twig';
-            if($this->getRequest()->isXmlHttpRequest()) {
-                $parameters['parameters'] = $parameters;
-                $parameters['template'] = $template;
-                return $this->renderAjaxResponse('MozcuMozcuBundle:Profile:accountTemplateForAjax.html.twig', $parameters);
-            }
-            return $this->renderAccountForRequest($template, $parameters);
-            
-        } else {
-            return new Response("Pagina no encontrada", 404);
-        }
-    }
-    
-    public function accountConfigUserAction() {
-        $user = $this->getUser();
-        if(!is_null($user)) {
-            $parameters = array('user' => $user, 'selectedOption' => 'user');
-            $template = 'MozcuMozcuBundle:Profile:_accountConfigUser.html.twig';
-            if($this->getRequest()->isXmlHttpRequest()) {
-                return $this->renderAjaxResponse($template, $parameters);
-            }
-            return $this->renderAccountForRequest($template, $parameters);
-            
-        } else {
-            return new Response("Pagina no encontrada", 404);
-        }
-    }
-    
-    public function accountConfigProfileAction() {
-        $user = $this->getUser();
-        if(!is_null($user)) {
-            $countries = $this->getRepository('MozcuMozcuBundle:Country')->findAll();
-            $parameters = array('user' => $user, 'selectedOption' => 'profile', 'countries' => $countries);
-            $template = 'MozcuMozcuBundle:Profile:_accountConfigProfile.html.twig';
-            if($this->getRequest()->isXmlHttpRequest()) {
-                return $this->renderAjaxResponse($template, $parameters);
-            }
-            return $this->renderAccountForRequest($template, $parameters);
-            
-        } else {
-            return new Response("Pagina no encontrada", 404);
-        }
-    }
-    
-    public function saveUserSettingsAction(Request $request) {
-        $user = $this->getUser();
-        if(!is_null($user)) {
-            $data = $request->get('userData');
-            
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($user);
-            $oldEncoded = $encoder->encodePassword($data['oldPassword'], $user->getSalt());
-            if($user->getPassword() != $oldEncoded) {
-                return $this->getJSONResponse(array('success' => false, 'message' => 'La contrase&ntilde;a actual es incorrecta', 'fields' => array('oldPassword')));
-            }
-            if($data['newPassword'] != $data['newPasswordConfirm']) {
-                return $this->getJSONResponse(array('success' => false, 'message' => 'La nueva contrase&ntilde;a no coincide', 'fields' => array('newPasswordConfirm')));
-            }
-            if(!$this->validateEmail($data['email'])) {
-                return $this->getJSONResponse(array('success' => false, 'message' => 'Email invalido', 'fields' => array('email')));
-            }
-            
-            $this->getUserService()->updateUser($user, $data['email'], $data['newPassword']);
-            return $this->getJSONResponse(array('success' => true, 'message' => 'La cuenta se actualizo correctamente'));
+    public function saveAccountAction(Request $request) {
         
-        } else {
-            return new Response("Pagina no encontrada", 404);
-        }
     }
     
-    public function saveProfileSettingsAction(Request $request) {
-        $user = $this->getUser();
-        if(!is_null($user)) {
-            $data = $request->get('profileData');
-            
-            if(empty($data['name']) || empty($data['country']) || empty($data['city']) || empty($data['paypalEmail'])) {
-                return $this->getJSONResponse(array('success' => false, 'message' => 'Campos obligatorios incompletos', 'fields' => array('name', 'country', 'city', 'paypalEmail')));
-            }
-            if(!$this->validateEmail($data['paypalEmail'])) {
-                return $this->getJSONResponse(array('success' => false, 'message' => 'Email invalido', 'fields' => array('paypalEmail')));
-            }
-            
-            $country = $this->getRepository('MozcuMozcuBundle:Country')->find($data['country']);
-            if(is_null($country)) {
-                return $this->getJSONResponse(array('success' => false, 'message' => 'Pais invalido', 'fields' => array('country')));
-            }
-            $data['country'] = $country;
-            
-            $profile = $this->getProfileService()->updateProfile($user->getCurrentProfile(), $data);
-            
-            $response = array('success' => true, 'message' => 'El perfil se actualizo correctamente');
-            if(isset($data['imageFileName'])) {
-                $response['image'] = $profile->getProfileImageUrlForHeader();
-            }
-            
-            return $this->getJSONResponse($response);
-            
-        } else {
-            return new Response("Pagina no encontrada", 404);
+    public function getCountriesAction(Request $request) {
+        $name = $request->get('term');
+        $countries = $this->getRepository('MozcuMozcuBundle:Country')->findByLikeName($name);
+        
+        $export = [];
+        foreach($countries as $c) {
+            $export[] = array('id' => $c->getId(), 'label' => $c->getName(), 'value' => $c->getName());
         }
+        
+        return $this->getJSONResponse($export);
+    }
+    
+    public function getCitiesAction(Request $request) {
+        $term = $request->get('term');
+        $cities = $this->getRepository('MozcuMozcuBundle:Profile')->findCitiesByLike($term);
+        
+        $export = [];
+        foreach($cities as $c) {
+            $export[] = array('id' => $c['city'], 'label' => $c['city'], 'value' => $c['city']);
+        }
+        
+        return $this->getJSONResponse($export);
     }
     
     private function validateEmail($email) {

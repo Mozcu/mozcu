@@ -87,6 +87,11 @@ class Profile {
      **/
     private $country;
     
+    /**
+     * @ORM\OneToMany(targetEntity="ProfileLink", mappedBy="profile", cascade={"persist"})
+     **/
+    private $links;
+    
     public function __construct() {
         $this->albums = new ArrayCollection();
         $this->reviews = new ArrayCollection();
@@ -125,6 +130,17 @@ class Profile {
      */
     public function getName()
     {
+        return $this->name;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getCurrentName() {
+        if(is_null($this->name)) {
+            return $this->user->getUsername();
+        } 
         return $this->name;
     }
 
@@ -488,5 +504,19 @@ class Profile {
      */
     public function sameAs(Profile $profile) {
         return $this->getId() == $profile->getId();
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getArtists() {
+        $artists = array();
+        foreach($this->albums as $album) {
+            if($album->getIsActive() && !in_array($album->getArtistName(), $artists)) {
+                $artists[] = $album->getArtistName();
+            }
+        }
+        return $artists;
     }
 }

@@ -87,6 +87,11 @@ class Profile {
      **/
     private $country;
     
+    /**
+     * @ORM\OneToMany(targetEntity="ProfileLink", mappedBy="profile", cascade={"persist"})
+     **/
+    private $links;
+    
     public function __construct() {
         $this->albums = new ArrayCollection();
         $this->reviews = new ArrayCollection();
@@ -513,5 +518,38 @@ class Profile {
             }
         }
         return $artists;
+    }
+
+    /**
+     * Add links
+     *
+     * @param \Mozcu\MozcuBundle\Entity\ProfileLink $links
+     * @return Profile
+     */
+    public function addLink(\Mozcu\MozcuBundle\Entity\ProfileLink $links)
+    {
+        $this->links[] = $links;
+    
+        return $this;
+    }
+
+    /**
+     * Remove links
+     *
+     * @param \Mozcu\MozcuBundle\Entity\ProfileLink $links
+     */
+    public function removeLink(\Mozcu\MozcuBundle\Entity\ProfileLink $links)
+    {
+        $this->links->removeElement($links);
+    }
+
+    /**
+     * Get links
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLinks()
+    {
+        return $this->links;
     }
 }

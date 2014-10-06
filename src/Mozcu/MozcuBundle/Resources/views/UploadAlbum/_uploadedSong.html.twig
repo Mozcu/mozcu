@@ -1,12 +1,12 @@
 {% if song is defined %}
-    {% set fileId = 'uploadifive-add_tracks-file-' ~ song.getTrackNumber %}
+    {% set fileId = '' %}
     {% set fileName = song.getName %}
 {% else %}
     {% set fileId = '' %}
     {% set fileName = '' %}
 {% endif %}
     
-<div id="{{ fileId }}" class="temaSubido text-left uploadedSong uploadifive-queue-item">
+<div id="{{ fileId }}" class="temaSubido text-left uploadedSong {% if song is not defined %}uploadifive-queue-item{% endif %}">
     {% if song is defined %}
         <input type="hidden" class="id" value="{{ song.getId }}" />
     {% endif %}
@@ -25,11 +25,14 @@
         <i class="glyphicon glyphicon-remove pull-right"></i>
     </a>
     
-    <div class="progress">
-        <div class="progress-bar" style="width: 100%;">
-            <!--Progress Bar-->
-        </div>					
-    </div>
+    {% if song is not defined %}
+        <div class="progress">
+            <div class="progress-bar" style="width: 100%;">
+                <!--Progress Bar-->
+            </div>					
+        </div>
+    {% endif %}
+    
     <input type="hidden" class="realFileName" value="" />
      
 </div>        

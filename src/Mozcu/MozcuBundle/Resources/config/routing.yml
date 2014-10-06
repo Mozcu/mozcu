@@ -219,41 +219,29 @@ MozcuMozcuBundle_uploadAlbum:
     _method: POST
 
 ### Profile Controller ###
-MozcuMozcuBundle_accountConfigureProfile:
-  pattern: /user/account/accountProfile
-  defaults: {_controller: MozcuMozcuBundle:Profile:accountConfigProfile}
+MozcuMozcuBundle_account:
+  pattern: /account
+  defaults: {_controller: MozcuMozcuBundle:Profile:account}
   requirements:
     _method: GET
     
-MozcuMozcuBundle_accountConfigureUser:
-  pattern: /user/account/accountUser
-  defaults: {_controller: MozcuMozcuBundle:Profile:accountConfigUser}
-  requirements:
-    _method: GET
-
-MozcuMozcuBundle_configureProfile:
-  pattern: /user/account/profile
-  defaults: {_controller: MozcuMozcuBundle:Profile:configProfile}
-  requirements:
-    _method: GET
-    
-MozcuMozcuBundle_configureUser:
-  pattern: /user/account/user
-  defaults: {_controller: MozcuMozcuBundle:Profile:configUser}
-  requirements:
-    _method: GET
-    
-MozcuMozcuBundle_saveUserSettings:
-  pattern: /user/account/saveUserSettings
-  defaults: {_controller: MozcuMozcuBundle:Profile:saveUserSettings}
+MozcuMozcuBundle_saveAccount:
+  pattern: /account
+  defaults: {_controller: MozcuMozcuBundle:Profile:saveAccount}
   requirements:
     _method: POST
     
-MozcuMozcuBundle_saveProfileSettings:
-  pattern: /user/account/saveProfileSettings
-  defaults: {_controller: MozcuMozcuBundle:Profile:saveProfileSettings}
+MozcuMozcuBundle_getCountries:
+  pattern: /countries
+  defaults: {_controller: MozcuMozcuBundle:Profile:getCountries}
   requirements:
-    _method: POST
+    _method: GET
+    
+MozcuMozcuBundle_getCities:
+  pattern: /cities
+  defaults: {_controller: MozcuMozcuBundle:Profile:getCities}
+  requirements:
+    _method: GET
 
 MozcuMozcuBundle_profile:
   pattern: /{username}

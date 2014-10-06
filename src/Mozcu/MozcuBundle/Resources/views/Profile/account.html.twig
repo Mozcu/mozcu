@@ -1,0 +1,7 @@
+{% extends 'MozcuMozcuBundle::layout.html.twig' %}
+
+{% block title %} {% trans with {'%name%': user.getCurrentName} %}%name% en Mozcu{% endtrans %} {% endblock %}
+
+{% block mainContent %}
+    {{ include('MozcuMozcuBundle:Profile:accountAjax.html.twig', {'user': user }) }}
+{% endblock %}

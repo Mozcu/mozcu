@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class CountryRepository extends EntityRepository
 {
+    /**
+     * 
+     * @param string $name
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findByLikeName($name) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('c')
+                ->from("MozcuMozcuBundle:Country", "c")
+                ->where("c.name LIKE :name")
+                ->orderBy('c.name', 'ASC')
+                ->setParameter('name', '%' . $name . '%');
+        
+        $query = $qb->getQuery()
+                ->setFirstResult(0)
+                ->setMaxResults(10);
+        
+        return $query->getResult();
+    }
 }

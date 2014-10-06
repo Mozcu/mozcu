@@ -31,4 +31,24 @@ class ProfileRepository extends EntityRepository
     public function searchTotalCount($query) {
         return $this->liveSearch($query, 0);
     }
+    
+    /**
+     * 
+     * @param string $city
+     * @return array
+     */
+    public function findCitiesByLike($city) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('DISTINCT p.city')
+                ->from("MozcuMozcuBundle:profile", "p")
+                ->where("p.city LIKE :city")
+                ->orderBy('p.city', 'ASC')
+                ->setParameter('city', '%' . $city . '%');
+        
+        $query = $qb->getQuery()
+                ->setFirstResult(0)
+                ->setMaxResults(10);
+        
+        return $query->getArrayResult();
+    }
 }

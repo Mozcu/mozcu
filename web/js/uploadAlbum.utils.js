@@ -79,7 +79,6 @@ $(function() {
         errorMsg.find('.error').remove();
         
         var album = prepareAlbumData();
-        console.log(album);
         
         var validation = validateAlbumData(album);
         if (!validation.success) {

@@ -238,8 +238,9 @@ class Album {
     public function getListThumbnailUrl()
     {
         foreach($this->image->getPresentations() as $pres) {
-            if($pres->getName() == 'list_thumbanil') {
-                return $pres->getUrl();
+            $url = $pres->getUrl();
+            if($pres->getName() == 'list_thumbanil' && !empty($url)) {
+                return $url;
             }
         }
         return null;
@@ -420,6 +421,18 @@ class Album {
     public function getTags()
     {
         return $this->tags;
+    }
+    
+    public function getTagsCommaSeparated() {
+        if($this->tags->isEmpty()) {
+            return '';
+        }
+        
+        $tagArray = array();
+        foreach($this->tags as $tag) {
+            $tagArray[] = $tag->getName();
+        }
+        return implode(',',$tagArray);
     }
 
     /**
@@ -627,5 +640,31 @@ class Album {
     public function getStaticZipFileName()
     {
         return $this->static_zip_file_name;
+    }
+
+    /**
+     * Set artist_name
+     *
+     * @param string $artistName
+     * @return Album
+     */
+    public function setArtistName($artistName)
+    {
+        $this->artist_name = $artistName;
+    
+        return $this;
+    }
+
+    /**
+     * Get artist_name
+     *
+     * @return string 
+     */
+    public function getArtistName()
+    {
+        if(is_null($this->artist_name)) {
+            return $this->getProfile()->getCurrentName();
+        }
+        return $this->artist_name;
     }
 }

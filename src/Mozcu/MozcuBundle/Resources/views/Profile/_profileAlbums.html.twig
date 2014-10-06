@@ -12,7 +12,7 @@
     <div class="row center-block rowContenido">
         <!--INICIO DE ALBUMES-->
         {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
-            <div class="album albumManager col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id="{{ album.getId }}">
+            <div class="albumManager col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id="{{ album.getId }}">
                 <input type="hidden" class="albumId" value="{{ album.getId }}" />
                 
                 {% if album.getIsActive == false  and album.getListThumbnailUrl is null %}

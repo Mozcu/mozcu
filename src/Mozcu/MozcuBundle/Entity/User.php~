@@ -385,4 +385,12 @@ class User implements UserInterface, \Serializable {
     {
         return $this->oldLogin;
     }
+    
+    /**
+     * 
+     * @return Profile
+     */
+    public function getProfile() {
+        return $this->profiles->first();
+    }
 }

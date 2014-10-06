@@ -1,0 +1,183 @@
+<div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+    <div class="alert alert-danger alert-dismissible" style="display:none;" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+        </button>
+        <strong>Por favor verifique los siguientes errores:</strong>
+    </div>
+    
+    <h3 class="titlAlbumManager">Ajustes de cuenta</h3>
+           
+    <div class="row center-block headerCuenta">
+        
+        <h4 class="infoPublica">Información pública</h4>  
+        
+        <div class="colImagenPerfil col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            {% if user.getCurrentProfile.getMainImage is null %}
+                <img class="img-circle imgPerfil center-block" src="{{ asset('images/profile_125x125.jpg')}}" alt="perfil">
+            {% else %}
+                {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
+                    {% if presentation.getName == 'profile_header' %}
+                        <img class="img-circle imgPerfil center-block" src="{{ presentation.url }}" alt="perfil">
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <input type="hidden" id="imageFileName" value="" />
+            <!--<input type="file" id="changeImage" class="btn btn-default center-block" data-url="{{ path('MozcuMozcuBundle_uploadImage') }}" value="Cambiar imagen">-->
+            
+            <div class="imgArchivoBtn" style="display: block; margin-left: 35px;">
+                <span class="text-center center-block">Selecciona una imagen</span>
+                <input data-url="{{ path('MozcuMozcuBundle_uploadImage') }}" type="file" class="imgArchivo" id="changeImage" name="image">
+            </div>
+        </div>
+        
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+            <div class="form-group col-lg-12">
+                <label for="username">Nombre de usuario</label>
+                <input type="text" class="form-control" id="name"
+                       value="{{ user.getCurrentName }}" placeholder="{{ user.getCurrentName }}">
+            </div> 
+            
+            <div class="form-group col-lg-12">
+                <label for="descripcioncorta">Descripción corta</label>
+                <input type="text" class="form-control" id="slogan" value="{{ user.getProfile.getSlogan }}"
+                       placeholder="El fantasma de las navidades pasadas.">
+            </div> 
+            
+            <div class="form-group col-lg-12">
+                <label for="permalink">Permalink</label>
+                <p class="form-control" id="slug" type="text">
+                    www.mozcu.com/<input type="text" style="outline: 0; border: 0;" value="{{ user.getUsername }}" >
+                </p>
+            </div>
+            
+            <div class="form-group col-lg-6">
+                <label for="ciudad">Ciudad</label>
+                <input type="text" class="form-control" id="city" value="{{ user.getProfile.getCity }}" placeholder="Honolulu"
+                       data-url="{{ path('MozcuMozcuBundle_getCities') }}">
+            </div>
+            
+            <div class="form-group col-lg-6">
+                <label for="Pais">País</label>
+                <input type="text" class="form-control" id="country" value="{{ user.getProfile.getCountry.getName }}" placeholder="Argentina"
+                       data-id="{{ user.getProfile.getCountry.getId }}" data-url="{{ path('MozcuMozcuBundle_getCountries') }}">
+            </div>
+
+            <div class="form-group col-lg-12">
+                <label for="infoperfil">Información de Perfil</label>
+                <textarea class="form-control" rows="7" id="description">{{ user.getProfile.getDescription }}</textarea>
+            </div>
+            
+            <div class="vinculos">
+                <label for="vinculos">Vínculos</label>
+                <div class="form-group col-lg-12 ">
+                    <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                        <input type="text" class="form-control input-sm link-url"
+                           placeholder="http://">
+                    </div>    
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
+                    <input type="text" class="form-control input-sm link-name"
+                           placeholder="Título">
+                    </div> 
+
+                </div>
+                <div class="form-group col-lg-12">
+                    <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                        <input type="text" class="form-control input-sm link-url"
+                           placeholder="http://">
+                    </div>    
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
+                    <input type="text" class="form-control input-sm link-name"
+                           placeholder="Título">
+                    </div> 
+
+                  </div>
+                <div class="form-group col-lg-12">
+                    <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                        <input type="text" class="form-control input-sm link-url"
+                           placeholder="http://">
+                    </div>    
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
+                    <input type="text" class="form-control input-sm link-name"
+                           placeholder="Título">
+                    </div>
+                </div>    
+            </div>
+
+
+        </div>   
+              
+               
+    </div>
+                  
+    <div class="row center-block bodyCuenta">
+         <h4 class="infoPrivada">Información personal</h4>
+
+         <div class="form-group col-lg-6">
+             <label for="email">Email</label>
+             <input type="email" class="form-control" id="email" value="{{ user.getEmail }}"
+                    placeholder="joey@ramones.com">
+         </div>
+
+         <div class="form-group col-lg-6">
+             <label for="email">Email asociado a Paypal (recepción de pagos)</label>
+             <input type="email" class="form-control" id="paypalEmail" value="{{ user.getProfile.getPaypalEmail }}"
+                    placeholder="tony@blacksabbath.com">
+         </div>
+
+         <div class="form-group col-lg-6">
+             <label for="newPassword">Nueva contraseña</label>
+             <input type="password" class="form-control" id="password"
+                    placeholder="">
+         </div>
+
+         <div class="form-group col-lg-6">
+             <label for="newPasswordRepeat">Repetir nueva contraseña</label>
+             <input type="password" class="form-control" id="passwordRepeat"
+                    placeholder="">
+         </div>
+
+
+         <div class="botonesPerfil col-md-12 col-lg-12 ">
+             <button class="btn btn-success pull-right" data-url="{{ path('MozcuMozcuBundle_saveAccount') }}">Guardar</button>
+             <button class="btn btn-default pull-right" data-url="{{ path('MozcuMozcuBundle_profile', {username: user.getUsername}) }}">Cancelar</button>
+
+         </div>
+     </div>
+</div>
+                    
+<script type="text/javascript">
+$(function() {
+    
+    $('#changeImage').change(function(){
+        var me = $(this);
+        $.mozcuFileUpload({
+            inputId: me.attr('id'),
+            actionUrl: me.data('url'),
+            success: function(data) {
+                if(data.success) {
+                    var img = $('.imgPerfil');
+                    img.attr('src', "/uploads/images/tmp/" + data.file_name);
+                    $("#imageFileName").val(data.file_name);
+                }
+            }
+        });
+    });
+    
+    $( "#country" ).autocomplete({
+            source: $('#country').data('url'),
+            minLength: 3,
+            select: function( event, ui ) {
+                if(ui.item) {
+                    $('#country').data('id', ui.item.id);
+                }
+            }
+    });
+    
+     $( "#city" ).autocomplete({
+            source: $('#city').data('url'),
+            minLength: 3
+    });
+    
+});
+</script>

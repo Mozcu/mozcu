@@ -200,8 +200,14 @@
                 }
             },
             onInit : function(instance) {
+                console.log(instance);
                 $('.upload-plugin .uploadify').attr('style', '');
             }
+        });
+        
+        $('.uploadify-queue').on('click', '.close', function(e) {
+            var song = $(this).parent();
+            song.remove();
         });
         
         $('.uploadify-queue').sortable();
