@@ -9,18 +9,17 @@
             </p>
         {% endif %}
     </div>
-    <div class="statDisco infoDisco col-lg-3">
-        <h3>Vínculos</h3>
-        <table class="table">
-            <tr>
-                <td class="tdText"><a href="#" target="_blank"><h5>Facebook</h5></a></td>
-            </tr>
-            <tr>
-                <td class="tdText"><a href="#" target="_blank"><h5>Twitter</h5></a></td>
-            </tr>
-            <tr>
-                <td class="tdText"><a href="#" target="_blank"><h5>Tumblr</h5></a></td>  
-            </tr>
-        </table>
-    </div>
+    
+    {% if user.getProfile.getLinks | length > 0 %}
+        <div class="statDisco infoDisco col-lg-3">
+            <h3>Vínculos</h3>
+            <table class="table">
+                {% for link in user.getProfile.getLinks %}
+                    <tr>
+                        <td class="tdText"><a href="{{ link.getUrl }}" target="_blank"><h5>{{ link.getName }}</h5></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
 </div>

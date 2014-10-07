@@ -30,7 +30,7 @@ $(function() {
             if(data.success) {
                 $('.mainContent').html(data.html);
             }
-      });
+        });
     });
     
     // Eliminar album
@@ -88,8 +88,21 @@ $(function() {
             return;
         }
         
-        $.post(url, {acount: account}, function(data) {
-            
+        $(this).prop('disabled', true);
+        $.post(url, {account: account}, function(data) {
+            if(data.success) {
+                $.getJSON(data.callback_url, {}, function(data) {
+                    if(data.success) {
+                        $('.mainContent').html(data.html);
+                        $('html,body').animate({scrollTop: 0}, 800);
+                    }
+                });
+            } else {
+                errorMsg.append('<p class="error"> - ' + data.message + '</p>');
+                errorMsg.show();
+                $('html,body').animate({scrollTop: 0}, 800);
+                $(this).prop('disabled', false);
+            }
         }, 'json');
     });
     

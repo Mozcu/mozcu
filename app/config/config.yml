@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: parameters_local.yml }
+    - { resource: static_parameters.yml }
     - { resource: security.yml }
     - { resource: "@MozcuMozcuBundle/Resources/config/services.yml" }
 

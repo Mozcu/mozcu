@@ -68,41 +68,55 @@ class UserService extends BaseService{
         return $user;
     }
     
-    public function updateUser(User $user, $email, $password) {
+    public function updateUser(User $user, $username, $email, $password = null, $flush = true) {
         $factory = $this->encoder_factory;
         
         $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword($password, $user->getSalt());
         
+        $user->setUsername($username);
         $user->setEmail($email);
-        $user->setPassword($password);
+        
+        if(!is_null($password)) {
+            $this->changePassword($user, $password, false);
+        }
         
         $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
         
         return $user;
     }
     
     /**
      * 
-     * @param string $user
-     * @param string $email
-     * @return array
+     * @param string $username
+     * @return boolean
      */
-    public function checkUserDisponibility($username, $email) {
+    public function checkUsernameDisponibility($username) {
         $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:User');
         
         $user = $repo->findOneBy(array('username' => $username));
         if($user) {
-            return array('available' => false, 'message' => "Nombre de usuario $username en uso");
+            return false;
         }
+        return true;
+    }
+    
+    /**
+     * 
+     * @param string $email
+     * @return boolean
+     */
+    public function checkEmailDisponibility($email) {
+        $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:User');
         
         $user = $repo->findOneBy(array('email' => $email));
         if($user) {
-            return array('available' => false, 'message' => "Email $email en uso");
+            return false;
         }
-        
-        return array('available' => true);
+        return true;
     }
     
     /**
@@ -128,6 +142,31 @@ class UserService extends BaseService{
         }
         $this->logUser($user);
         return true;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\User $user
+     * @param string $password
+     * @param boolean $flush
+     * @return \Mozcu\MozcuBundle\Entity\User
+     */
+    public function changePassword(User $user, $password, $flush = true) {
+        $factory = $this->encoder_factory;
+        $encoder = $factory->getEncoder($user);
+        $password = $encoder->encodePassword($password, $user->getSalt());
+        
+        $user->setPassword($password);
+        if($user->getOldLogin()) {
+            $user->setOldLogin(false);
+        }
+        
+        $this->getEntityManager()->persist($user);
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+        
+        return $user;
     }
 
 }

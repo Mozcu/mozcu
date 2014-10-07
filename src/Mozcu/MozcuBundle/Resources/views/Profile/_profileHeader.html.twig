@@ -10,10 +10,10 @@
     <!-- FIN DE BREADCRUM SOLO PARA MOBILES-->
                
     <div class="col-sm-3 col-md-3 col-lg-2">
-        {% if user.getCurrentProfile.getMainImage is null %}
+        {% if user.getProfile.getMainImage is null %}
             <img src="{{ asset('images/profile_125x125.jpg')}}" alt="perfil" class="img-circle img-perfil center-block">
         {% else %}
-            {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
+            {% for presentation in user.getProfile.getMainImage.getPresentations %}
                 {% if presentation.getName == 'profile_header' %}
                     <img src="{{ presentation.url }}" alt="perfil" class="img-circle img-perfil center-block">
                 {% endif %}
@@ -23,13 +23,13 @@
                
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 titlPerfil">
         <h3 class="nombreUser"><a href="#">{{ user.getCurrentName }}</a></h3>
-        <p class="subtituloPerfil"><a href="{{ user.getCurrentProfile.getWebSiteUrl }}">{{ user.getCurrentProfile.getWebSiteUrl }}</a></p>
+        <p class="subtituloPerfil">{{ user.getProfile.getSlogan }}</p>
         <p class="ubicacionPerfil"><a href="#"><i class="glyphicon glyphicon-map-marker"></i>
-            {% if user.getCurrentProfile.getCountry is not null %}
-                {% if user.getCurrentProfile.getCity is not null %}
-                    {{ user.getCurrentProfile.getCity }} - 
+            {% if user.getProfile.getCountry is not null %}
+                {% if user.getProfile.getCity is not null %}
+                    {{ user.getProfile.getCity }} - 
                 {% endif %}
-                {{ user.getCurrentProfile.getCountry.getName }}
+                {{ user.getProfile.getCountry.getName }}
             {% endif %}
         </a></p>
         <button type="button" class="btn btn-success btnSeguir"><i class="ion-person-add"></i>Seguir</button>

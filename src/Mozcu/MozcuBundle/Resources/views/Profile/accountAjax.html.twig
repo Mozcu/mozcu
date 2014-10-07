@@ -1,3 +1,4 @@
+{% set profile = user.getProfile %}
 <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
     <div class="alert alert-danger alert-dismissible" style="display:none;" role="alert">
         <button type="button" class="close" data-dismiss="alert">
@@ -13,10 +14,10 @@
         <h4 class="infoPublica">Información pública</h4>  
         
         <div class="colImagenPerfil col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            {% if user.getCurrentProfile.getMainImage is null %}
+            {% if profile.getMainImage is null %}
                 <img class="img-circle imgPerfil center-block" src="{{ asset('images/profile_125x125.jpg')}}" alt="perfil">
             {% else %}
-                {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
+                {% for presentation in profile.getMainImage.getPresentations %}
                     {% if presentation.getName == 'profile_header' %}
                         <img class="img-circle imgPerfil center-block" src="{{ presentation.url }}" alt="perfil">
                     {% endif %}
@@ -40,7 +41,7 @@
             
             <div class="form-group col-lg-12">
                 <label for="descripcioncorta">Descripción corta</label>
-                <input type="text" class="form-control" id="slogan" value="{{ user.getProfile.getSlogan }}"
+                <input type="text" class="form-control" id="slogan" value="{{ profile.getSlogan }}"
                        placeholder="El fantasma de las navidades pasadas.">
             </div> 
             
@@ -53,55 +54,55 @@
             
             <div class="form-group col-lg-6">
                 <label for="ciudad">Ciudad</label>
-                <input type="text" class="form-control" id="city" value="{{ user.getProfile.getCity }}" placeholder="Honolulu"
+                <input type="text" class="form-control" id="city" value="{{ profile.getCity }}" placeholder="Honolulu"
                        data-url="{{ path('MozcuMozcuBundle_getCities') }}">
             </div>
             
             <div class="form-group col-lg-6">
                 <label for="Pais">País</label>
-                <input type="text" class="form-control" id="country" value="{{ user.getProfile.getCountry.getName }}" placeholder="Argentina"
-                       data-id="{{ user.getProfile.getCountry.getId }}" data-url="{{ path('MozcuMozcuBundle_getCountries') }}">
+                <input type="text" class="form-control" id="country" value="{{ profile.getCountry.getName }}" placeholder="Argentina"
+                       data-id="{{ profile.getCountry.getId }}" data-url="{{ path('MozcuMozcuBundle_getCountries') }}">
             </div>
 
             <div class="form-group col-lg-12">
                 <label for="infoperfil">Información de Perfil</label>
-                <textarea class="form-control" rows="7" id="description">{{ user.getProfile.getDescription }}</textarea>
+                <textarea class="form-control" rows="7" id="description">{{ profile.getDescription }}</textarea>
             </div>
             
             <div class="vinculos">
                 <label for="vinculos">Vínculos</label>
-                <div class="form-group col-lg-12 ">
-                    <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                        <input type="text" class="form-control input-sm link-url"
-                           placeholder="http://">
-                    </div>    
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
-                    <input type="text" class="form-control input-sm link-name"
-                           placeholder="Título">
-                    </div> 
+                {% set linksLength = profile.getLinks | length %}
+                {% if linksLength > 0 %}
+                    {% for link in profile.getLinks %}
+                        <div class="form-group col-lg-12 ">
+                            <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                <input type="text" class="form-control input-sm link-url" value="{{ link.getUrl }}"
+                                   placeholder="http://">
+                            </div>    
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
+                            <input type="text" class="form-control input-sm link-name" value="{{ link.getName }}"
+                                   placeholder="Título">
+                            </div> 
+                        </div>  
+                    {% endfor %}
+                {% endif %}
+                
+                {% if linksLength < 3 %} 
+                    {% set max = 3 - linksLength %}
+                    {% for i in 1..max %}
+                        <div class="form-group col-lg-12 ">
+                            <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                <input type="text" class="form-control input-sm link-url"
+                                   placeholder="http://">
+                            </div>    
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
+                            <input type="text" class="form-control input-sm link-name"
+                                   placeholder="Título">
+                            </div> 
 
-                </div>
-                <div class="form-group col-lg-12">
-                    <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                        <input type="text" class="form-control input-sm link-url"
-                           placeholder="http://">
-                    </div>    
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
-                    <input type="text" class="form-control input-sm link-name"
-                           placeholder="Título">
-                    </div> 
-
-                  </div>
-                <div class="form-group col-lg-12">
-                    <div class="vinculosGroup col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                        <input type="text" class="form-control input-sm link-url"
-                           placeholder="http://">
-                    </div>    
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">    
-                    <input type="text" class="form-control input-sm link-name"
-                           placeholder="Título">
-                    </div>
-                </div>    
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
 
 
@@ -121,7 +122,7 @@
 
          <div class="form-group col-lg-6">
              <label for="email">Email asociado a Paypal (recepción de pagos)</label>
-             <input type="email" class="form-control" id="paypalEmail" value="{{ user.getProfile.getPaypalEmail }}"
+             <input type="email" class="form-control" id="paypalEmail" value="{{ profile.getPaypalEmail }}"
                     placeholder="tony@blacksabbath.com">
          </div>
 

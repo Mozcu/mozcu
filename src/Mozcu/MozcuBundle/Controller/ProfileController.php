@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Entities\User;
 use Mozcu\MozcuBundle\Entity\Profile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
 class ProfileController extends MozcuController
@@ -204,7 +204,24 @@ class ProfileController extends MozcuController
     }
     
     public function saveAccountAction(Request $request) {
-        
+        if($request->isXmlHttpRequest()) {
+            $profile = $this->getUser()->getProfile();
+            $accountData = $request->get('account');
+            
+            try {
+                $validation = $this->getProfileService()->validateAccountData($profile, $accountData);
+                if($validation['success']) {
+                    $this->getProfileService()->updateProfile($profile, $accountData);
+                    $validation['callback_url'] = $this->generateUrl('MozcuMozcuBundle_profile', 
+                                                                      array('username' => $this->getUser()->getUsername()));
+                }
+                return $this->getJSONResponse($validation);
+            } catch(\Exception $e) {
+                return $this->getJSONResponse(array('success' => false, 'message' => $e->getMessage()));
+            }
+        } else {
+            throw new BadRequestHttpException();
+        }
     }
     
     public function getCountriesAction(Request $request) {
@@ -229,18 +246,5 @@ class ProfileController extends MozcuController
         }
         
         return $this->getJSONResponse($export);
-    }
-    
-    private function validateEmail($email) {
-        $emailConstraint = new EmailConstraint();
-        $errors = $this->get('validator')->validateValue(
-            $email,
-            $emailConstraint 
-        );
-        
-        if (count($errors) > 0) {
-            return false;    
-        }
-        return true;
     }
 }
