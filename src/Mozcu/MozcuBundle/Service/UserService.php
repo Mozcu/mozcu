@@ -69,11 +69,6 @@ class UserService extends BaseService{
     }
     
     public function updateUser(User $user, $username, $email, $password = null, $flush = true) {
-        $factory = $this->encoder_factory;
-        
-        $encoder = $factory->getEncoder($user);
-        $password = $encoder->encodePassword($password, $user->getSalt());
-        
         $user->setUsername($username);
         $user->setEmail($email);
         
@@ -137,7 +132,7 @@ class UserService extends BaseService{
      */
     public function oldLoginCheck(User $user, $password) {
         $storedPass = $user->getOldPassword();
-        if(empty($storedPass) || $storedPass != (md5($password))) {
+        if(!$user->getOldLogin() || empty($storedPass) || $storedPass != (md5($password))) {
             return false;
         }
         $this->logUser($user);
