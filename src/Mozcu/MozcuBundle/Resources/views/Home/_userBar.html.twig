@@ -6,23 +6,40 @@
         </ul>
     </div>
 {% else %}
-    <div class="visible-lg visible-md userBar">
-        <div class="navbar-right perfilLoggeado">
-            <a href="{{ path('MozcuMozcuBundle_uploadAlbumIndex') }}" class="uploadLink" style="padding-right: 20px;" alt="Subir album">
-                <i class="glyphicon glyphicon-cloud-upload" style="font-size: 20px;"></i>
-            </a>
-                
+    <div class="navbar-right visible-lg visible-md userBar">
+        <div class="dropdown ">
+            <button class="btn btnPerfil dropdown-toggle" type="button"
+              id="dropdownPerfil" data-toggle="dropdown" aria-labelledby="dLabel">
             {% if user.getCurrentProfile.getMainImage is null %}
-                <img src="{{ asset('images/profile_25x25.jpg') }}" class="img-circle imgPerfilMenu" alt="" />
+                <img src="{{ asset('images/profile_25x25.jpg') }}" class="img-circle imgPerfilLoggeado" alt="" />
             {% else %}
                 {% for presentation in user.getCurrentProfile.getMainImage.getPresentations %}
                     {% if presentation.getName == 'profile_thumbnail' %}
-                        <img src="{{ presentation.url }}" class="img-circle imgPerfilMenu" alt="" />
+                        <img src="{{ presentation.url }}" class="img-circle imgPerfilLoggeado" alt="" />
                     {% endif %}
                 {% endfor %}
             {% endif %}
-            
-            <a href="#">{{ user.getCurrentName }}<i class="glyphicon glyphicon-chevron-down"></i></a>
-        </div>    
+            {{ user.getCurrentName }}<i class="glyphicon glyphicon-chevron-down"></i></button>
+            <ul class="dropdown-menu dropdownPerfil" role="menu" aria-labelledby="dropdownPerfil">
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="{{ path('MozcuMozcuBundle_account') }}" class="accountLink">
+                      <i class="glyphicon glyphicon-cog"></i>Ajustes de cuenta
+                  </a>
+                </li>
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="{{ path('MozcuMozcuBundle_uploadAlbumIndex') }}" class="uploadLink">
+                      <i class="glyphicon glyphicon-cloud-upload"></i>Subir disco
+                  </a>
+                </li>
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="#"><i class="glyphicon glyphicon-thumbs-up"></i>Escribir una sugerencia</a>
+                </li>
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="{{ path('MozcuMozcuBundle_logout') }}" class="logoutLink">
+                      <i class="glyphicon glyphicon-log-out"></i>Cerrar sesión
+                  </a>
+                </li>
+            </ul>
+        </div>
     </div>
 {% endif %}

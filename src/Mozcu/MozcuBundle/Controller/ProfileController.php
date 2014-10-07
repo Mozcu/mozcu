@@ -200,6 +200,9 @@ class ProfileController extends MozcuController
     
     public function accountAction() {
         $user = $this->getUser(); 
+        if($this->getRequest()->isXmlHttpRequest()) {
+            return $this->renderAjaxResponse('MozcuMozcuBundle:Profile:accountAjax.html.twig', array('user' => $user));
+        }
         return $this->render('MozcuMozcuBundle:Profile:account.html.twig', array('user' => $user));
     }
     

@@ -54,72 +54,8 @@ $(function() {
         }
     });
    
-   // TODO: Pestañas de pagina about
-   $('.wrapperPage').on('click', '.aboutPage .header a', function(e){
-        e.preventDefault();
-        
-        var me = $(this);
-        var url = me.attr('href');
-        
-        changeMainContent(url);
-    });
-    
-    // TODO
-    $('.userBarWrapper').on('click', '.loginLinkWrapper a', function(e) {
-        e.preventDefault();
-        
-        var me = $(this);
-        me.parent().find('.loginFormBubble').toggle('fast');
-        
-    });
-    
-    // TODO
-    $('.userBarWrapper').on('click', '.wrapperSettings .nameProfile a', function(e){
-        e.preventDefault();
-        
-        var me = $(this);
-        me.parents('.wrapperSettings').find('.userBubble').toggle('fast');
-    });
-    
-    // TODO
-    $('.userBarWrapper').on('click', '.userBubble .logoutLink', function(e){
-        e.preventDefault();
-        
-        var me = $(this);
-        var url = me.attr('href');
-        
-        $.getJSON(url, function(data) {
-            if(data.success) {
-                reloadUserBar();
-                reloadLeftBar();
-                
-                $.getJSON(data.callback_url, function(data) {
-                    if(data.success) {
-                        $('.mainContent').html(data.html);
-                    }
-                });
-            }
-        });
-    });
-    
-    // TODO: Config User and Config Profile links
-    $('.userBarWrapper').on('click', '.userBubble .config', function(e){
-        e.preventDefault();
-        
-        var me = $(this);
-        var url = me.attr('href');
-        
-        $.getJSON(url, function(data) {
-            if(data.success) {
-                me.parents('.userBubble').toggle('fast');
-                $('.mainContent').html(data.html);
-            }
-        });
-    });
-    
-    
-    // Link login
-    $('.navbar.navbar-fixed-top').on('click', '.userBar .uploadLink', function(e) {
+    // Links del menu de usuario
+    $('.navbar.navbar-fixed-top').on('click', '.userBar .dropdown-menu a', function(e) {
         e.preventDefault();
         
         var me = $(this);
@@ -127,7 +63,18 @@ $(function() {
         
         $.getJSON(url, function(data){
             if(data.success) {
-                $('.mainContent').html(data.html);
+                if(me.hasClass('logoutLink')) {
+                    reloadUserBar();
+                    reloadLeftBar();
+                    $.getJSON(data.callback_url, function(data) {
+                        if(data.success) {
+                            $('.mainContent').html(data.html);
+                        }
+                    });
+                } else {
+                    $('.mainContent').html(data.html);
+                    $('html,body').animate({scrollTop: 0}, 800);
+                }
             } 
         });
     });

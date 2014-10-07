@@ -94,6 +94,8 @@ $(function() {
                 $.getJSON(data.callback_url, {}, function(data) {
                     if(data.success) {
                         $('.mainContent').html(data.html);
+                        reloadUserBar();
+                        reloadLeftBar();
                         $('html,body').animate({scrollTop: 0}, 800);
                     }
                 });
@@ -212,6 +214,30 @@ $(function() {
         var re = /^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/;
         return re.test(url);
     }
+    
+    // Recarga la barra superior derecha
+    var reloadUserBar = function() {
+        var url = $('#loadUserBarUrl').val();
+        $.getJSON(url, function(data) {
+            if(data.success) {
+                if(data.success) {
+                    $('.navbar.navbar-fixed-top .userBar').replaceWith(data.html);
+                }
+            }
+        });
+    };
+    
+    // Recarga el menu izquierdo
+    var reloadLeftBar = function() {
+        var url = $('#loadLeftBarUrl').val();
+        $.getJSON(url, function(data) {
+            if(data.success) {
+                if(data.success) {
+                    $('.sidebar .nav-sidebar').replaceWith(data.html);
+                }
+            }
+        });
+    };
     
 });
 
