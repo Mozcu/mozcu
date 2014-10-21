@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\AlbumRepository")
  * @ORM\Table(name="album")
+ * @ORM\EntityListeners({ "Mozcu\MozcuBundle\Listener\AlbumListener" })
  */
 class Album {
     

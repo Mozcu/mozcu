@@ -2,17 +2,21 @@
 
 namespace Mozcu\MozcuBundle\Service;
 
-use \Doctrine\ORM\EntityManager;
-use Mozcu\MozcuBundle\Entity\Album;
-use Mozcu\MozcuBundle\Entity\Song;
-use Mozcu\MozcuBundle\Entity\Tag;
-use Mozcu\MozcuBundle\Entity\Profile;
-use \Mozcu\MozcuBundle\Exception\AppException;
+use Mozcu\MozcuBundle\Entity\Album,
+    Mozcu\MozcuBundle\Entity\Song,
+    Mozcu\MozcuBundle\Entity\Tag,
+    Mozcu\MozcuBundle\Entity\Profile,
+    Mozcu\MozcuBundle\Entity\AlbumImage,
+    Mozcu\MozcuBundle\Entity\ImagePresentation;
+
+use Mozcu\MozcuBundle\Exception\AppException;
+use Mozcu\MozcuBundle\Exception\ServiceException;
 use Mozcu\MozcuBundle\Service\UploadService;
-use Mozcu\MozcuBundle\Entity\AlbumImage;
-use \Mozcu\MozcuBundle\Entity\ImagePresentation;
+use Mozcu\MozcuBundle\Factory\AlbumFactory;
+
+use \Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use \GetId3\GetId3Core as GetId3;
+use GetId3\GetId3Core as GetId3;
 
 class MusicService extends BaseService{
     
@@ -41,15 +45,27 @@ class MusicService extends BaseService{
         return 'MusicService';
     }
     
-    public function createNewAlbum(Profile $profile, array $data) {
+    public function createAlbum(Profile $profile, array $data) {
         try {
-            $album = new Album();
-            $album->setProfile($profile);
+            $factory = new AlbumFactory($this->container);
+            $factory->setName($data['name'])
+                    ->setArtistName($data['artist'])
+                    ->setLicense($data['license'])
+                    ->setDescription($data['description'])
+                    ->setImageFileName($data['image_file_name'])
+                    ->setProfile($profile)
+                    ->setReleaseDate($data['release_date'])
+                    ->setSongs($data['songs'])
+                    ->setTags($data['tags']);
+            $album = $factory->create();
             
-            return $this->updateAlbum($album, $data);
+            $this->getEntityManager()->persist($album);
+            $this->getEntityManager()->flush();
+            
+            return $album;
+            
         } catch (\Exception $e) {
-            //die('new: ' . $e->getMessage());
-            throw new AppException($e->getMessage());
+            throw new ServiceException($e->getMessage());
         }
     }
     
@@ -96,10 +112,10 @@ class MusicService extends BaseService{
             if($toQueue) {
                 if(!$this->compareSongs($album, $data)) {
                     $album->setIsActive(false);
-                    $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album, true); 
+                    $this->container->get('mozcu_mozcu.queue_service')->addUpdateAlbum($album); 
                 }
             } else {
-                $this->container->get('mozcu_mozcu.queue_service')->addAlbumToQueue($album); 
+                $this->container->get('mozcu_mozcu.queue_service')->addNewAlbum($album); 
             }
             
             //$this->addImageToAlbumFolder($data['image_file_name'], $this->currentStaticDirectory);

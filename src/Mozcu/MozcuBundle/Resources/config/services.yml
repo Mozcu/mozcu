@@ -69,3 +69,19 @@ services:
     class: Mozcu\MozcuBundle\Service\RestService
     arguments:
       entityManager: "@doctrine.orm.entity_manager"
+      
+  mozcu_mozcu.image_service:
+    class: Mozcu\MozcuBundle\Service\ImageService
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+      container: '@service_container'
+      
+  mozcu_mozcu.doctrine.entity_listener_resolver:
+    class: Mozcu\MozcuBundle\Doctrine\EntityListenerResolver
+    arguments: [ "@service_container" ]
+    
+  mozcu_mozcu.entity_listener.user:
+    class: Mozcu\MozcuBundle\Listener\AlbumListener
+    arguments: [ "@mozcu_mozcu.queue_service" ]
+    tags:
+      -  { name: doctrine.entity_listener }
