@@ -37,10 +37,6 @@ class AlbumListener
         }, $album->getSongs()->toArray());
         sort($newSongIds, SORT_NUMERIC);
         
-        var_dump($newSongIds);
-        var_dump($oldSongIds);
-        
-        
         if($oldSongIds != $newSongIds) {
             $album->setIsActive(false);
             $this->addToUpdateQueue = true;
