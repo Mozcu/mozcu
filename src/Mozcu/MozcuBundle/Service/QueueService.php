@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Mozcu\MozcuBundle\Entity\Album;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Mozcu\MozcuBundle\Exception\AppException;
+use Mozcu\MozcuBundle\Entity\AlbumUploadQueuePending;
 
 class QueueService extends BaseService{
     
@@ -39,13 +40,16 @@ class QueueService extends BaseService{
     }
     
     public function addUpdateAlbum(Album $album) {
-        $queue = new \Mozcu\MozcuBundle\Entity\AlbumUploadQueuePending();
+        $queue = new AlbumUploadQueuePending();
         $queue->setAlbum($album);
         $queue->setToUpdate(true);
         
         $pending = $this->getEntityManager()->getRepository('MozcuMozcuBundle:AlbumUploadQueuePending')->findOneBy(array('album' => $album->getId()));
         $failed = $this->getEntityManager()->getRepository('MozcuMozcuBundle:AlbumUploadQueueFailed')->findOneBy(array('album' => $album->getId()));
-        $this->getEntityManager()->remove($pending);
+        
+        if(!is_null($pending)) {
+            $this->getEntityManager()->remove($pending);
+        }
         
         if(!is_null($failed)) {
             $this->getEntityManager()->remove($failed);

@@ -27,7 +27,7 @@ class AlbumUploadQueuePending {
     private $success;
     
     /**
-     * @ORM\OneToOne(targetEntity="Album")
+     * @ORM\ManyToOne(targetEntity="Album")
      * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
      */
     private $album;

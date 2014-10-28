@@ -43,7 +43,6 @@ services:
     class: Mozcu\MozcuBundle\Service\MusicService
     arguments:
       entityManager: "@doctrine.orm.entity_manager"
-      uploadService: "@mozcu_mozcu.upload_service"
       container: '@service_container'
       
   mozcu_mozcu.upload_service:
@@ -82,6 +81,6 @@ services:
     
   mozcu_mozcu.entity_listener.user:
     class: Mozcu\MozcuBundle\Listener\AlbumListener
-    arguments: [ "@mozcu_mozcu.queue_service" ]
+    arguments: [ "@doctrine.orm.entity_manager", "@mozcu_mozcu.queue_service" ]
     tags:
       -  { name: doctrine.entity_listener }

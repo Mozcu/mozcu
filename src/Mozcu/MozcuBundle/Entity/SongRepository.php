@@ -4,6 +4,8 @@ namespace Mozcu\MozcuBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use Mozcu\MozcuBundle\Entity\Album;
+
 /**
  * SongRepository
  *
@@ -31,5 +33,24 @@ class SongRepository extends EntityRepository
     
     public function searchTotalCount($query) {
         return $this->liveSearch($query, 0);
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @return array
+     */
+    public function getSongIdsFromAlbum(Album $album) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s.id')
+            ->from('MozcuMozcuBundle:Song', 's')
+            ->where('s.album = :albumId')
+            ->orderBy('s.id', 'ASC')
+            ->setParameter('albumId', $album->getId());
+        $ids = $qb->getQuery()->getArrayResult();
+        
+        return array_map(function($row) {
+            return $row['id'];
+        }, $ids);
     }
 }
