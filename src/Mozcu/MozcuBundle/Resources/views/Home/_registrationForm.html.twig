@@ -1,0 +1,40 @@
+<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+    <div class="alert alert-danger alert-dismissible" style="display:none;" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+        </button>
+        <strong>Por favor verifique los siguientes errores:</strong>
+    </div>
+    
+    <div class="container col-md-12 col-lg-12">
+        <h3 class="siginsubTitl text-center">Crear una nueva cuenta</h3>
+        
+        <label>Nombre de usuario</label>
+        <input type="text" class="form-control" placeholder="Nombre de usuario" id="username">
+
+        <label>Email</label>  
+        <input type="email" class="form-control" placeholder="ejemplo@mozcu.com" id="email">
+
+        <label>Contraseña</label>    
+        <input type="password" class="form-control" placeholder="********" id="password">
+
+        <label>Repetir contraseña</label>  
+        <input type="password" class="form-control" placeholder="********" id="repeat_password">
+
+        <label>Ciudad</label>
+        <input type="text" class="form-control" placeholder="Buenos Aires" id="city">
+
+        <label>País</label>  
+        <select class="form-control" id="country">
+            {% for country in countries %}
+                <option value="{{ country.getId }}">{{ country.getName }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="checkbox">
+            <input type="checkbox" id="terms"> Acepto los <a href="{{ path('MozcuMozcuBundle_terms') }}" target="_blank">Terminos y condiciones</a>
+        </label>
+
+        <button class="btn btn-success btn-block btnRegCont" type="button">Continuar</button>
+    </div>
+</div>

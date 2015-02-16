@@ -2,7 +2,7 @@
     <div class="visible-lg visible-md userBar">  
         <ul class="nav navbar-nav navbar-right navBarIn">
             <li><a href="{{ path('MozcuMozcuBundle_login') }}" class="loginLink">Ingresar</a></li>
-            <li><button class="btn btn-primary">Crear una cuenta</button></li>
+            <li><button class="btn btn-primary registration" data-url="{{ path('MozcuMozcuBundle_getRegistration') }}">Crear una cuenta</button></li>
         </ul>
     </div>
 {% else %}

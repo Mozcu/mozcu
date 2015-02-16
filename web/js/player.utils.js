@@ -14,19 +14,22 @@ $(function() {
         $.ajaxSetup({async: true});
         
         return album;
-    }
+    };
     
     var getSongsForPlaylist = function(id) {
         var album = getAlbumForPlaylist(id);
-        return album.songs
+        return album.songs;
     };
 	
     $('.mainContent').on('click', '.headerDisco .playPause', function(e) {
         e.preventDefault();
         var me = $(this);
-        var songs = getSongsForPlaylist(me.attr('id'));
-		currentPlayList = me.attr('id');
+        var album = getAlbumForPlaylist(me.attr('id'));
+        var songs = album.songs;
+        var image = album.image;
+        currentPlayList = me.attr('id');
         mozcuPlaylist.setPlaylist(songs);
+        $('.jp-playlist').css('background-image', 'url('+ image +')');
     });
 	
     $('.mainContent').on('click', '.playList .songName a', function(e) {

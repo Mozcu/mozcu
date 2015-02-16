@@ -2,7 +2,6 @@
 
 namespace Mozcu\MozcuBundle\Controller;
 
-use Mozcu\MozcuBundle\Form\Type\UserType;
 use Mozcu\MozcuBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,8 +36,7 @@ class HomeController extends MozcuController
             return $this->redirect($this->generateUrl('MozcuMozcuBundle_ajaxGetHome'));
         }
         
-        $form = $this->createForm(new UserType(), new User());
-        return $this->render( 'MozcuMozcuBundle:Home:index.html.twig', array('form' => $form->createView()));
+        return $this->render( 'MozcuMozcuBundle:Home:index.html.twig');
     }
     
     public function loginAction() {
@@ -89,10 +87,8 @@ class HomeController extends MozcuController
     }
     
     public function ajaxGetHomeAction() {
-        $form = $this->createForm(new UserType(), new User());
-        
         if($this->getRequest()->isXmlHttpRequest()) {
-            $html = $this->renderView('MozcuMozcuBundle:Home:_homeHome.html.twig', array('form' => $form->createView()));
+            $html = $this->renderView('MozcuMozcuBundle:Home:_homeHome.html.twig');
             $response = new Response(json_encode(array('success' => true, 'html' => $html)));
             $response->headers->set('Content-Type', 'application/json');
             return $response;
@@ -101,45 +97,19 @@ class HomeController extends MozcuController
         }
     }
     
-    /**
-     * 
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return Response
-     */
-    public function registerAction(Request $request) {
-        $form = $this->createForm(new UserType(), new User());
-        $form->handleRequest($request);
+    public function getRegistrationAction(Request $request) {
+        $template = 'MozcuMozcuBundle:Home:_registrationForm.html.twig';
+        $countries = $this->getRepository('MozcuMozcuBundle:Country')->findAll();
         
-        if ($form->isValid()) {
-            $user = $form->getData();
-            $response = $this->getUserService()->checkUserDisponibility($user->getUsername(), $user->getEmail());
-            if($response['available']) {
-                try {
-                    $user = $this->getUserService()->createUser($user->getUsername(), $user->getPassword(), $user->getEmail());
-                    $this->getUserService()->logUser($user);
-                    $url = $this->generateUrl('MozcuMozcuBundle_profile');
-                    return $this->redirect($url);
-                } catch (\Exception $e) {
-                    $this->get('session')->getFlashBag()->add(
-                        'error',
-                        $e->getMessage()
-                    );
-                }
-            } else {
-                $this->get('session')->getFlashBag()->add(
-                    'error',
-                    $response['message']
-                );
-            }
-        } else {
-            $this->get('session')->getFlashBag()->add(
-                'error',
-                'Verifique por favor los datos ingresados'
-            );
+        if($request->isXmlHttpRequest()) {
+            $html = $this->renderView($template, ['countries' => $countries]);
+            return $this->getJSONResponse(['success' => true, 'html' => $html]);
         }
+        return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => ['countries' => $countries], 'template' => $template));
+    }
+    
+    public function postRegistrationAction(Request $request) {
         
-        $url = $this->generateUrl('MozcuMozcuBundle_home');
-        return $this->redirect($url);
     }
     
     /**

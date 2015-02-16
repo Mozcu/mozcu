@@ -53,6 +53,16 @@ $(function() {
             loginCheck(username, password);
         }
     });
+    
+    // Link Registrarse
+    $('.navbar.navbar-fixed-top').on('click', '.userBar .registration', function(e) {
+        e.preventDefault();
+        
+        var me = $(this);
+        var url = me.data('url');
+        
+        changeMainContent(url);
+    });
    
     // Links del menu de usuario
     $('.navbar.navbar-fixed-top').on('click', '.userBar .dropdown-menu a', function(e) {

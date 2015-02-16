@@ -6,7 +6,7 @@ MozcuMozcuBundle_logout:
     pattern:   /logout
 
 MozcuMozcuBundle_oldLoginCheck:
-  pattern: /oldLoginCheck
+  pattern: /ajax/oldLoginCheck
   defaults: { _controller: MozcuMozcuBundle:Home:oldLoginCheck}
   requirements:
         _method:  POST
@@ -19,16 +19,22 @@ MozcuMozcuBundle_home:
         _method:  GET
         
 MozcuMozcuBundle_ajaxGetHome:
-  pattern: /ajaxGetHome
+  pattern: /ajax/home
   defaults: { _controller: MozcuMozcuBundle:Home:ajaxGetHome}
   requirements:
         _method:  GET
 
-MozcuMozcuBundle_register:
-  pattern: /home/register
-  defaults: { _controller: MozcuMozcuBundle:Home:register}
+MozcuMozcuBundle_getRegistration:
+  pattern: /registration
+  defaults: { _controller: MozcuMozcuBundle:Home:getRegistration}
   requirements:
-        _method:  POST
+      _method: GET
+        
+MozcuMozcuBundle_postRegistration:
+  pattern: /registration
+  defaults: { _controller: MozcuMozcuBundle:Home:postRegistration}
+  requirements:
+    _method:  POST
         
 MozcuMozcuBundle_login:
   pattern: /login
@@ -37,19 +43,19 @@ MozcuMozcuBundle_login:
         _method:  GET
         
 MozcuMozcuBundle_loadUserBar:
-  pattern: /loadUserBar
+  pattern: /ajax/loadUserBar
   defaults: { _controller: MozcuMozcuBundle:Home:loadUserBar}
   requirements:
         _method:  GET
         
 MozcuMozcuBundle_loadLeftBar:
-  pattern: /loadLeftBar
+  pattern: /ajax/loadLeftBar
   defaults: { _controller: MozcuMozcuBundle:Home:loadLeftBar}
   requirements:
         _method:  GET
         
 MozcuMozcuBundle_ajaxLiveSearch:
-    pattern: /liveSearch
+    pattern: /ajax/liveSearch
     defaults: { _controller: MozcuMozcuBundle:Home:ajaxLiveSearch}
     requirements:
         _method: GET
@@ -60,15 +66,15 @@ MozcuMozcuBundle_searchResult:
     requirements:
         _method: GET
         
-MozcuMozcuBundle_about:
-    pattern: /about
-    defaults: { _controller: MozcuMozcuBundle:Home:about}
-    requirements:
-        _method: GET
-        
 MozcuMozcuBundle_terms:
     pattern: /terms
     defaults: { _controller: MozcuMozcuBundle:Home:terms}
+    requirements:
+        _method: GET
+
+MozcuMozcuBundle_about:
+    pattern: /about
+    defaults: { _controller: MozcuMozcuBundle:Home:about}
     requirements:
         _method: GET
 
@@ -232,13 +238,13 @@ MozcuMozcuBundle_saveAccount:
     _method: POST
     
 MozcuMozcuBundle_getCountries:
-  pattern: /countries
+  pattern: /ajax/countries
   defaults: {_controller: MozcuMozcuBundle:Profile:getCountries}
   requirements:
     _method: GET
     
 MozcuMozcuBundle_getCities:
-  pattern: /cities
+  pattern: /ajax/cities
   defaults: {_controller: MozcuMozcuBundle:Profile:getCities}
   requirements:
     _method: GET

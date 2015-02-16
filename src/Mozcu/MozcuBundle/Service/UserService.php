@@ -8,6 +8,7 @@ use Mozcu\MozcuBundle\Entity\User;
 use Mozcu\MozcuBundle\Entity\Profile;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\DependencyInjection\Container;
 
 class UserService extends BaseService{
     
@@ -23,9 +24,16 @@ class UserService extends BaseService{
      */
     protected $securityContext;
     
-    public function __construct(EntityManager $entityManager, EncoderFactory $encoderFactory, SecurityContext $securityContext) {
+    /**
+     *
+     * @var Container
+     */
+    private $container;
+    
+    public function __construct(EntityManager $entityManager, EncoderFactory $encoderFactory, SecurityContext $securityContext, Container $container) {
         $this->encoder_factory = $encoderFactory;
         $this->securityContext = $securityContext;
+        $this->container = $container;
         parent::__construct($entityManager);
     }
     
@@ -90,10 +98,11 @@ class UserService extends BaseService{
      * @return boolean
      */
     public function checkUsernameDisponibility($username) {
+        $invalidUsernames = $this->container->get('parameters.invalid_usernames');
         $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:User');
         
         $user = $repo->findOneBy(array('username' => $username));
-        if($user) {
+        if($user || in_array($username, $invalidUsernames)) {
             return false;
         }
         return true;

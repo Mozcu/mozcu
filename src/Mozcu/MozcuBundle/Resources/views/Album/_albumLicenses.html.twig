@@ -1,0 +1,46 @@
+<div class="licDisco infoDisco col-md-7 col-lg-8">
+    <h3>Licencia</h3>
+    
+    {% if license == 2 %}
+        
+    {% elseif license == 3 %}
+    {% elseif license == 4 %}
+    {% elseif license == 5 %}
+        <p class="licTitl">Atribución – No Comercial – Compartir Igual (by-nc-sa)
+            <i class="entypo cc"></i>
+            <i class="entypo cc-by"></i>
+            <i class="entypo cc-nc"></i>
+            <i class="entypo cc-sa"></i>
+            <i class="entypo cc-nd"></i>
+        </p>
+
+        <p>Puedes copiar, distribuir, promocionar y tocar este álbum siempre y cuando tú:</p>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-by"></i></h4></td>
+                    <td class="licText"><h5>Menciones el nombre del artista.</h5></td>
+                </tr>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-nc"></i></h4></td>
+                    <td class="licText"><h5>No utilices este álbum con fines comerciales.</h5></td>
+                </tr>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-sa"></i></h4></td>
+                    <td class="licText"><h5>Distribuyas todas las obras derivadas de este álbum bajo la misma licencia CC.</h5></td>
+                </tr>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-nd"></i></h4></td>
+                    <td class="licText"><h5>No alteres, transformes o crees obras derivadas, basados en este álbum.</h5></td>
+                </tr>
+            </tbody>
+        </table>
+    {% elseif license == 6 %}
+    {% elseif license == 7 %}
+    {% endif %}
+    
+    <a href="/app_dev.php/album/2277/report" class="pull-right" id="reportAlbum">
+        Denunciar esta obra <i class="glyphicon glyphicon-warning-sign"></i>
+    </a>
+</div>

@@ -342,6 +342,7 @@ class AlbumController extends MozcuController
             if(!is_null($album)) {
                 $albumData['id'] = $album->getId();
                 $albumData['name'] = $album->getName();
+                $albumData['image'] = $album->getCoverImageUrl();
                 $artist = $album->getArtistName();
                 $albumData['songs'] = array();
                 foreach($album->getSongs() as $song) {

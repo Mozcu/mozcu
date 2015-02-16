@@ -85,7 +85,7 @@ class MusicService extends BaseService{
                 $imageToDelete = $album->getImage();
                 $this->getEntityManager()->remove($imageToDelete);
                 
-                $image = $this->container->get('mozcu_mozcu.image_service')->createAlbumImage($this->imageFileName);
+                $image = $this->container->get('mozcu_mozcu.image_service')->createAlbumImage($data['image_file_name']);
                 $album->setImage($image);
                 $image->setAlbum($album);
             }

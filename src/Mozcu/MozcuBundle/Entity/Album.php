@@ -47,6 +47,7 @@ class Album {
     
     /**
      * @ORM\OneToMany(targetEntity="Song", mappedBy="album", cascade={"persist", "remove"})
+     * @@ORM\OrderBy({"trackNumber" = "ASC"})
      **/
     private $songs;
     

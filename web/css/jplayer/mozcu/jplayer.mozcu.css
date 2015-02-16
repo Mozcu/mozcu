@@ -398,6 +398,8 @@ div.jp-playlist {
 	border-top:1px solid #ccc;
 	height: 203px;
 	overflow-y: auto;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
 }
 div.jp-playlist::-webkit-scrollbar {
     /*background-color: #FFFFFF;*/
@@ -422,6 +424,8 @@ div.jp-title li {
 div.jp-playlist li {
 	padding:5px 0 4px 10px;
 	border-bottom:1px solid #eee;
+        background-color: #FFFFFF;
+        opacity: 0.5;
 }
 
 div.jp-playlist li div {

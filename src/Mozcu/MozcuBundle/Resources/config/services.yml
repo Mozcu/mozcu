@@ -31,6 +31,7 @@ services:
       entityManager:   "@doctrine.orm.entity_manager"
       encoderFactory:  "@security.encoder_factory"
       securityContext: "@security.context"
+      container: '@service_container'
   
   mozcu_mozcu.profile_service:
     class: Mozcu\MozcuBundle\Service\ProfileService

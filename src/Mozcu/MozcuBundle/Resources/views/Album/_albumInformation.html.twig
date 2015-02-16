@@ -31,40 +31,6 @@
         </table>       
     </div>
     
-    <div class="licDisco infoDisco col-md-7 col-lg-8">
-                   <h3>Licencia</h3>
-                       <p class="licTitl">Atribución – No Comercial – Compartir Igual (by-nc-sa)
-                           <i class="entypo cc"></i>
-                       <i class="entypo cc-by"></i>
-                       <i class="entypo cc-nc"></i>
-                       <i class="entypo cc-sa"></i>
-                       <i class="entypo cc-nd"></i></p>
-                       
-                   
-                   <p>Puedes copiar, distribuir, promocionar y tocar este álbum siempre y cuando tú:</p>
-                   <table class="table">
-                        <tr>
-                            <td class="licIcon"><h4><i class="entypo cc-by"></i></h4></td>
-                            <td class="licText"><h5>Menciones el nombre del artista.</h5></td>
-                        </tr>
-                       <tr>
-                            <td class="licIcon"><h4><i class="entypo cc-nc"></i></h4></td>
-                            <td class="licText"><h5>No utilices este álbum con fines comerciales.</h5></td>
-                        </tr>
-                       <tr>
-                            <td class="licIcon"><h4><i class="entypo cc-sa"></i></h4></td>
-                            <td class="licText"><h5>Distribuyas todas las obras derivadas de este álbum bajo la misma licencia CC.</h5></td>
-                        </tr>
-                        <tr>
-                            <td class="licIcon"><h4><i class="entypo cc-nd"></i></h4></td>
-                            <td class="licText"><h5>No alteres, transformes o crees obras derivadas, basados en este álbum.</h5></td>
-                        </tr>
-                       
-                       
-                       
-                   </table>
-                   <a href="{{ path('MozcuMozcuBundle_albumReportModal', {id: album.getId})}}" class="pull-right" id="reportAlbum">
-                       Denunciar esta obra <i class="glyphicon glyphicon-warning-sign"></i>
-                   </a>
-               </div>
+    {{ include('MozcuMozcuBundle:Album:_albumLicenses.html.twig', { 'license': album.license }) }}
+    
 </div>

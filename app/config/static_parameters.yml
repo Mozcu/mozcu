@@ -31,3 +31,5 @@ parameters:
     
     uploads.valid_song_types: ['audio/mpeg', 'audio/mpeg3', 'audio/x-mpeg-3', 'video/mpeg', 'video/x-mpeg', 'application/octet-stream']
     uploads.valid_image_types: ['image/jpeg', 'image/pjpeg', 'image/png']
+    
+    invalid_usernames: ['account', 'album', 'albums', 'ajax', 'login', 'login_check', 'logout', 'registration', 'search', 'terms']
