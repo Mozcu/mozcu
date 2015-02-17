@@ -30,7 +30,8 @@ class UploadAlbumController extends MozcuController {
         try {
             $file = $request->files->get('Filedata');
             $fileName = $this->getUploadService()->processTemporarySong($file);
-            $content = array('success' => true, 'file_name' => $fileName, 'original_name' => $file->getClientOriginalName());
+            $originalName = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName());
+            $content = array('success' => true, 'file_name' => $fileName, 'original_name' => $originalName);
         } catch (\Exception $e) {
             $content = array('success' => false, 'message' => $e->getMessage());
         }

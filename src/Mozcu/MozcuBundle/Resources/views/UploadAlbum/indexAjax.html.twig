@@ -194,6 +194,7 @@
                 var data = $.parseJSON(data);    
                 if(data.success) {
                     file.queueItem.find('.realFileName').val(data.file_name);
+                    // Titulo
                     file.queueItem.find('.filename').html(data.original_name);
                 } else {
                     file.queueItem.find('.fileinfo').html('ERROR');
@@ -227,7 +228,8 @@
                 success: function(data) {
                     if(data.success) {
                         var img = container.find('.preview');
-                        img.attr('src', "/uploads/images/tmp/" + data.file_name);
+                        //TODO: sacar esta ruta hardcodeada de aca
+                        img.attr('src', "/uploads/tmp/images/" + data.file_name);
                         $("#imageFileName").val(data.file_name);
                         
                         loader.hide();
