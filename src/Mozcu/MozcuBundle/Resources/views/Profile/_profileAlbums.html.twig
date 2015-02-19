@@ -17,7 +17,7 @@
                 
                 {% if album.getListThumbnailUrl is null %}
                     {# TODO: sacar esta ruta hardcodeada de aca #}
-                    {% set albumImageUrl = "/uploads/tmp/images/{{ album.getImage.getTemporalFileName }}" %}
+                    {% set albumImageUrl = '/uploads/tmp/images/' ~  album.getImage.getTemporalFileName  %}
                 {% else %}
                     {% set albumImageUrl = album.getListThumbnailUrl %}
                 {% endif %}
