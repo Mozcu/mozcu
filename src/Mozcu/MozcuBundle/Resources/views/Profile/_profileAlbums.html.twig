@@ -15,12 +15,18 @@
             <div class="albumManager col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id="{{ album.getId }}">
                 <input type="hidden" class="albumId" value="{{ album.getId }}" />
                 
-                {% if album.getIsActive == false  and album.getListThumbnailUrl is null %}
-                    <!-- TODO: sacar esta ruta hardcodeada de aca -->
-                    <img src="/uploads/tmp/images/{{ album.getImage.getTemporalFileName }}" alt="{{ album.getName }}" class="imgAlbumManager col-xs-4 col-sm-3 col-md-2 col-lg-2"/>
+                {% if album.getListThumbnailUrl is null %}
+                    {# TODO: sacar esta ruta hardcodeada de aca #}
+                    {% set albumImageUrl = "/uploads/tmp/images/{{ album.getImage.getTemporalFileName }}" %}
+                {% else %}
+                    {% set albumImageUrl = album.getListThumbnailUrl %}
+                {% endif %}
+                
+                {% if album.getIsActive == false %}
+                    <img src={{ albumImageUrl }} alt="{{ album.getName }}" class="imgAlbumManager col-xs-4 col-sm-3 col-md-2 col-lg-2"/>
                 {% else %}
                     <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
-                        <img src="{{ album.getListThumbnailUrl }}" alt="{{ album.getName }}" class="imgAlbumManager col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                        <img src="{{ albumImageUrl }}" alt="{{ album.getName }}" class="imgAlbumManager col-xs-4 col-sm-3 col-md-2 col-lg-2">
                     </a>
                 {% endif %}
                 

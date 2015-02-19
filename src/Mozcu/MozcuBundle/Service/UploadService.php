@@ -173,11 +173,12 @@ class UploadService extends BaseService{
             foreach($album->getImage()->getPresentations() as $pres) {
                 $this->google_storage->delete($pres->getStaticFileName());
             }
-            //Album
-            $this->google_storage->delete($album->getStaticZipFileName());
+            //Zip
+            if(!is_null($album->getStaticZipFileName())) {
+                $this->google_storage->delete($album->getStaticZipFileName());
+            }
             //$this->google_storage->delete($album->getStaticDirectory());
-            
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new AppException("Error al eliminar archivos de un album: {$e->getMessage()}");
         }
     }
