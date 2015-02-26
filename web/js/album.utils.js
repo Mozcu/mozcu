@@ -90,9 +90,14 @@ $(function() {
     $('body').on('click', '.mozcu-descarga-modal .btn-success', function(e) {
         e.preventDefault();
         var me = $(this);
-        var loader = me.next('.ajaxLoader');
+        var div = me.parent();
+        var loader = div.find('.ajaxLoader');
+        var cancel = div.find('.btn-default');
+        var inProcess = div.find('.in-process');
+        var ready = div.find('.ready');
         
         me.addClass('hidden');
+        inProcess.removeClass('hidden');
         loader.removeClass('hidden');
         
         var url = me.data('url');
@@ -106,8 +111,12 @@ $(function() {
                 }
                 
                 if (amount == 0) {
-                    location.href = zipUrl;
-                    $('.mozcu-descarga-modal').modal('hide');
+                    inProcess.addClass('hidden');
+                    ready.removeClass('hidden');
+                    initDownlaod(zipUrl);
+                    setTimeout(function() {
+                        $('.mozcu-descarga-modal').modal('hide');
+                    }, 3000);
                 } else {
                     $('#amount').val(amount);
                     $('#checkoutUrl').val(zipUrl);
@@ -116,6 +125,12 @@ $(function() {
             }
         });
     });
+    
+    var initDownlaod = function(url) {
+        var iframe = $('<iframe>', {width:'1', height:'1', frameborder:'0', src:url, id:'downloadAlbumIframe'});
+        $('#downloadAlbumIframe').remove();
+        $('.row.headerDisco').append(iframe);
+    };
     
     // Modal denunciar obra
     $('.mainContent').on('click', '#reportAlbum', function(e) {

@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use \Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Mozcu\MozcuBundle\Exception\AppException;
+use Mozcu\MozcuBundle\Exception\ServiceException;
 use Mozcu\MozcuBundle\Lib\GoogleStorageService;
 use Mozcu\MozcuBundle\Entity\Album;
 
@@ -183,12 +184,90 @@ class UploadService extends BaseService{
         }
     }
     
+    /**
+     * TODO: optimizar bajando y agregando al zip directamente
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @return array
+     * @throws ServiceException
+     */
     public function generateZip(Album $album) {
-        foreach($album->getSongs() as $song) {
-            $file = $this->google_storage->get($song->getStaticFileName());
-            error_log(print_r($file, true));
-            file_put_contents('/var/www/caca/' . $song->getName() . '.mp3', $file);
+        $tmpDir = $this->container->getParameter('uploads.tmp_zip_dir');
+        $baseDir = $tmpDir . '/' . $album->getId();
+        $filesDir = $baseDir . '/files';
+        
+        // creando los directorios temporales del album
+        mkdir($baseDir);
+        mkdir($filesDir);
+        
+        $files = $this->downloadAlbumFilesForZip($album, $filesDir);
+        
+        $zip = new \ZipArchive();
+        $zipName = $album->getReleaseDate() . ' - ' . $this->sanitizeString($album->getName());
+        $zipPath = $baseDir . '/' .$zipName . '.zip';
+        if ($zip->open($zipPath, \ZipArchive::CREATE) !== TRUE) {
+            throw new ServiceException('Error al crear el archivo Zip');
         }
+        
+        foreach ($files as $file) {
+            $zip->addFile($file['path'], $file['name']);
+        }
+        $zip->close();
+
+        foreach ($files as $file) {
+            unlink($file['path']);
+        }
+        rmdir($filesDir);
+        $response = $this->google_storage->upload($zipPath, $zipName, $this->getMimeType($zipPath));
+        unlink($zipPath);
+        rmdir($baseDir);
+        
+        return $response;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @param string $filesDir
+     * @return array
+     */
+    private function downloadAlbumFilesForZip(Album $album, $filesDir) {
+        $staticDir = $album->getStaticDirectory();
+        $response = array();
+        
+        foreach($album->getSongs() as $song) {
+            $fileObject = $this->google_storage->get($song->getStaticFileName());
+            $file = file_get_contents($fileObject->getMediaLink());
+            $trackNumber = sprintf("%02s", $song->getTrackNumber());
+            $fileName = $trackNumber . ' - ' . str_replace($staticDir .'/', '', $fileObject->getName());
+            $filePath = $filesDir . '/' . $fileName;
+            file_put_contents($filePath, $file);
+            $response[] = array('path' => $filePath, 'name' => $fileName);
+        }
+        
+        $fileObject = $this->google_storage->get($album->getCoverImagePresentation()->getStaticFileName());
+        $file = file_get_contents($fileObject->getMediaLink());
+        $coverImageName = str_replace($staticDir .'/', '', $fileObject->getName());
+        $filePath = $filesDir . '/' . $coverImageName;
+        file_put_contents($filePath, $file);
+        $response[] = array('path' => $filePath, 'name' => $coverImageName);
+        
+        return $response;
+    }
+    
+    /**
+     * 
+     * @param string $string
+     * @return string
+     */
+    protected function sanitizeString($string) {
+        // Remove anything which isn't a word, whitespace, number
+        // or any of the following caracters -_~,;:[]().
+        $string = preg_replace("([^\w\s\d\-_~,;:\[\]\(\).])", '', $string);
+        // Remove any runs of periods
+        $string = preg_replace("([\.]{2,})", '', $string);
+        
+        return $string;
     }
     
 }

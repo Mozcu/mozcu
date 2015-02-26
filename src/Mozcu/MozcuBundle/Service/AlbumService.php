@@ -18,7 +18,7 @@ use \Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use GetId3\GetId3Core as GetId3;
 
-class MusicService extends BaseService{
+class AlbumService extends BaseService{
     
     /**
      *
@@ -240,5 +240,13 @@ class MusicService extends BaseService{
         
         $em->remove($album);
         $em->flush();
-    } 
+    }
+    
+    public function prepareZip(Album $album) {
+        $response = $this->uploadService->generateZip($album);
+        $album->setZipUrl($response['mediaLink']);
+        $album->setStaticZipFileName($response['name']);
+        $this->getEntityManager()->persist($album);
+        $this->getEntityManager()->flush();
+    }
 }

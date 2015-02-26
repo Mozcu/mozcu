@@ -233,6 +233,19 @@ class Album {
     }
     
     /**
+     * 
+     * @return ImagePresentation
+     */
+    public function getCoverImagePresentation() {
+        foreach($this->image->getPresentations() as $pres) {
+            if($pres->getName() == 'cover') {
+                return $pres;
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Get list thumbnail image url
      *
      * @return string 

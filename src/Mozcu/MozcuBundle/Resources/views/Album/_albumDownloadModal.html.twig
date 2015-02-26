@@ -38,6 +38,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success" data-url="{{ path("MozcuMozcuBundle_albumCheckout", {id: album.getId})}}">Descargar</button>
+                <span class="in-process hidden">Preparando tu descarga, aguarda un instante.</span>
+                <span class="ready hidden">Listo! tu descarga comenzara en instantes!</span>
                 <img src="{{ asset("images/ajax-loader-small.gif")}}" class="hidden ajaxLoader" />
             </div>
         </div>

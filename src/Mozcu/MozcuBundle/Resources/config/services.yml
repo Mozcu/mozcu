@@ -40,8 +40,8 @@ services:
       uploadService: "@mozcu_mozcu.upload_service"
       container: '@service_container'
       
-  mozcu_mozcu.music_service:
-    class: Mozcu\MozcuBundle\Service\MusicService
+  mozcu_mozcu.album_service:
+    class: Mozcu\MozcuBundle\Service\AlbumService
     arguments:
       entityManager: "@doctrine.orm.entity_manager"
       container: '@service_container'

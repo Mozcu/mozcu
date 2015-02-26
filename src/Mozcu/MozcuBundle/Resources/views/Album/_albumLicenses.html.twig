@@ -40,7 +40,7 @@
     {% elseif license == 7 %}
     {% endif %}
     
-    <a href="/app_dev.php/album/2277/report" class="pull-right" id="reportAlbum">
+    <a href="{{ path('MozcuMozcuBundle_albumReportModal', {id: album.getId}) }}" class="pull-right" id="reportAlbum">
         Denunciar esta obra <i class="glyphicon glyphicon-warning-sign"></i>
     </a>
 </div>

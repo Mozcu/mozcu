@@ -126,7 +126,7 @@ class AlbumController extends MozcuController
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
             if(!is_null($album)) {
                 $template = "MozcuMozcuBundle:Album:_albumPlaylist.html.twig";
-                $parameters = array('album' => $album, 'selected' => 'information');
+                $parameters = array('album' => $album, 'selected' => 'playlist');
             } else {
                 $success = false;
             }
@@ -286,11 +286,15 @@ class AlbumController extends MozcuController
     public function albumCheckoutAction($id) {
         if($this->getRequest()->isXmlHttpRequest()) {
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
-            if(!is_null($album) && !is_null($album->getZipUrl())) {
-                return $this->getJSONResponse(array('success' => true, 'zipUrl' => $album->getZipUrl()));    
-            } else {
+            if(is_null($album)) {
                 return $this->getJSONResponse(array('success' => false));
             }
+            
+            if(is_null($album->getZipUrl())) {
+                $this->getAlbumService()->prepareZip($album);
+            }
+            
+            return $this->getJSONResponse(array('success' => true, 'zipUrl' => $album->getZipUrl()));    
         } else {
             throw new BadRequestHttpException();
         }
@@ -366,7 +370,7 @@ class AlbumController extends MozcuController
                 $id = $request->get('id');
                 $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
                 if(!is_null($album)) {
-                    $this->getMusicService()->deleteAlbum($album);
+                    $this->getAlbumService()->deleteAlbum($album);
                     return $this->getJSONResponse(array('success' => true));
                 } else {
                     throw new AppException('The album does not exist');
@@ -400,7 +404,7 @@ class AlbumController extends MozcuController
             $data = $request->get('album');
             
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
-            $album = $this->getMusicService()->updateAlbum($album, $data, true);
+            $album = $this->getAlbumService()->updateAlbum($album, $data, true);
             $content =array('success' => true,
                             'album_id' => $album->getId(),
                             'album_name' => $album->getName());

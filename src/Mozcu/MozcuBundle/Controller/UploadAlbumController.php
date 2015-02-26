@@ -69,7 +69,7 @@ class UploadAlbumController extends MozcuController {
     public function uploadAlbumAction(Request $request) {
         try {
             $albumData = $request->get('album');
-            $album = $this->getMusicService()->createAlbum($this->getUser()->getCurrentProfile(), $albumData);
+            $album = $this->getAlbumService()->createAlbum($this->getUser()->getCurrentProfile(), $albumData);
             $content = array('success' => true,
                             'album_id' => $album->getId(),
                             'album_name' => $album->getName());

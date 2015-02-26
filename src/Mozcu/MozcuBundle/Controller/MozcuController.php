@@ -25,10 +25,10 @@ abstract class MozcuController extends Controller{
     
     /**
      * 
-     * @return \Mozcu\MozcuBundle\Service\MusicService
+     * @return \Mozcu\MozcuBundle\Service\AlbumService
      */
-    protected function getMusicService() {
-        return $this->get('mozcu_mozcu.music_service');
+    protected function getAlbumService() {
+        return $this->get('mozcu_mozcu.album_service');
     }
     
     /**
