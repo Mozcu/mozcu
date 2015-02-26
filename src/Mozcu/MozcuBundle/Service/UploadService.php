@@ -218,7 +218,8 @@ class UploadService extends BaseService{
             unlink($file['path']);
         }
         rmdir($filesDir);
-        $response = $this->google_storage->upload($zipPath, $zipName, $this->getMimeType($zipPath));
+        $staticZipName = $album->getStaticDirectory() . '/' . $zipName;
+        $response = $this->google_storage->upload($zipPath, $staticZipName, $this->getMimeType($zipPath));
         unlink($zipPath);
         rmdir($baseDir);
         
