@@ -249,8 +249,9 @@ class AlbumService extends BaseService{
     public function prepareZip(Album $album) {
         $response = $this->uploadService->generateZip($album);
         $baseUrl = $this->container->getParameter('google_api.base_url');
+        $bucket = $this->container->getParameter('google_api.storage_bucket');
         
-        $album->setZipUrl($baseUrl . $response['name']);
+        $album->setZipUrl($baseUrl . $bucket . '/' . $response['name']);
         $album->setStaticZipFileName($response['name']);
         
         $this->getEntityManager()->persist($album);
