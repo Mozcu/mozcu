@@ -242,10 +242,17 @@ class AlbumService extends BaseService{
         $em->flush();
     }
     
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
     public function prepareZip(Album $album) {
         $response = $this->uploadService->generateZip($album);
-        $album->setZipUrl($response['mediaLink']);
+        $baseUrl = $this->container->getParameter('google_api.base_url');
+        
+        $album->setZipUrl($baseUrl . $response['name']);
         $album->setStaticZipFileName($response['name']);
+        
         $this->getEntityManager()->persist($album);
         $this->getEntityManager()->flush();
     }
