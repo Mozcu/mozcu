@@ -97,6 +97,7 @@ $(function() {
         var ready = div.find('.ready');
         
         me.addClass('hidden');
+        cancel.addClass('hidden');
         inProcess.removeClass('hidden');
         loader.removeClass('hidden');
         
