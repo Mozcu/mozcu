@@ -203,8 +203,8 @@ class UploadService extends BaseService{
         $files = $this->downloadAlbumFilesForZip($album, $filesDir);
         
         $zip = new \ZipArchive();
-        $zipName = $album->getReleaseDate() . ' - ' . $this->sanitizeString($album->getName());
-        $zipPath = $baseDir . '/' .$zipName . '.zip';
+        $zipName = $album->getReleaseDate() . ' - ' . $this->sanitizeString($album->getName())  . '.zip';
+        $zipPath = $baseDir . '/' .$zipName;
         if ($zip->open($zipPath, \ZipArchive::CREATE) !== TRUE) {
             throw new ServiceException('Error al crear el archivo Zip');
         }
