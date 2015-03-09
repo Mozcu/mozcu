@@ -781,7 +781,7 @@ $pos = strpos($host,':', strrpos($host,']'));
 $pos = strrpos($host,':');
 }
 if (false !== $pos) {
-return intval(substr($host, $pos + 1));
+return (int) substr($host, $pos + 1);
 }
 return'https'=== $this->getScheme() ? 443 : 80;
 }
@@ -1687,7 +1687,7 @@ return in_array($this->statusCode, array(204, 304));
 protected function ensureIEOverSSLCompatibility(Request $request)
 {
 if (false !== stripos($this->headers->get('Content-Disposition'),'attachment') && preg_match('/MSIE (.*?);/i', $request->server->get('HTTP_USER_AGENT'), $match) == 1 && true === $request->isSecure()) {
-if (intval(preg_replace("/(MSIE )(.*?);/","$2", $match[0])) < 9) {
+if ((int) preg_replace("/(MSIE )(.*?);/","$2", $match[0]) < 9) {
 $this->headers->remove('Cache-Control');
 }
 }

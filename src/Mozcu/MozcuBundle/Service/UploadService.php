@@ -205,8 +205,12 @@ class UploadService extends BaseService{
         $filesDir = $baseDir . '/files';
         
         // creando los directorios temporales del album
-        mkdir($baseDir);
-        mkdir($filesDir);
+        if(!is_dir($baseDir)) {
+            mkdir($baseDir);
+        }
+        if(!is_dir($filesDir)) {
+            mkdir($filesDir);
+        }
         
         $files = $this->downloadAlbumFilesForZip($album, $filesDir);
         

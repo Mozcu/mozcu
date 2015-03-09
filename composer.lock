@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fd2559a130cda03c739c71c6631883e1",
+    "hash": "29b829a98fb95d4513afecc5f56aa6fc",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -80,12 +80,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "15334410a781da60f861df536b460f24c8f01eeb"
+                "reference": "6c5c32eb6c596993d04e13b95d0c1e8153783d7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/15334410a781da60f861df536b460f24c8f01eeb",
-                "reference": "15334410a781da60f861df536b460f24c8f01eeb",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/6c5c32eb6c596993d04e13b95d0c1e8153783d7a",
+                "reference": "6c5c32eb6c596993d04e13b95d0c1e8153783d7a",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-02-01 04:40:53"
+            "time": "2015-02-16 12:24:01"
         },
         {
             "name": "doctrine/collections",
@@ -216,12 +216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "f1004b8b336465fafd498ee6539cc2502d16f98f"
+                "reference": "ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/f1004b8b336465fafd498ee6539cc2502d16f98f",
-                "reference": "f1004b8b336465fafd498ee6539cc2502d16f98f",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a",
+                "reference": "ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a",
                 "shasum": ""
             },
             "require": {
@@ -281,7 +281,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-02-16 02:14:17"
+            "time": "2015-03-02 16:47:59"
         },
         {
             "name": "doctrine/dbal",
@@ -423,12 +423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineMigrationsBundle.git",
-                "reference": "81575a4316951125ce408c70f30547c77d98f78a"
+                "reference": "6a1bd731dbdd4ad952a3b246a8f38c9c12f52e62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/81575a4316951125ce408c70f30547c77d98f78a",
-                "reference": "81575a4316951125ce408c70f30547c77d98f78a",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/6a1bd731dbdd4ad952a3b246a8f38c9c12f52e62",
+                "reference": "6a1bd731dbdd4ad952a3b246a8f38c9c12f52e62",
                 "shasum": ""
             },
             "require": {
@@ -473,7 +473,7 @@
                 "migrations",
                 "schema"
             ],
-            "time": "2014-08-17 07:53:47"
+            "time": "2015-02-16 13:24:46"
         },
         {
             "name": "doctrine/inflector",
@@ -602,12 +602,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "1ac14fac3ced533047d8feae8edc7c283d5b8a67"
+                "reference": "fca67c4a5a6f4334e8b6a57410f7b386b012ab01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/1ac14fac3ced533047d8feae8edc7c283d5b8a67",
-                "reference": "1ac14fac3ced533047d8feae8edc7c283d5b8a67",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/fca67c4a5a6f4334e8b6a57410f7b386b012ab01",
+                "reference": "fca67c4a5a6f4334e8b6a57410f7b386b012ab01",
                 "shasum": ""
             },
             "require": {
@@ -652,7 +652,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2015-01-19 02:26:02"
+            "time": "2015-03-06 20:53:13"
         },
         {
             "name": "doctrine/orm",
@@ -953,12 +953,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "f05ed3a44a8e40533d4cf60a0669db6b1887b499"
+                "reference": "c31a2c4e8db5da8b46c74cf275d7f109c0f249ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f05ed3a44a8e40533d4cf60a0669db6b1887b499",
-                "reference": "f05ed3a44a8e40533d4cf60a0669db6b1887b499",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c31a2c4e8db5da8b46c74cf275d7f109c0f249ac",
+                "reference": "c31a2c4e8db5da8b46c74cf275d7f109c0f249ac",
                 "shasum": ""
             },
             "require": {
@@ -975,6 +975,7 @@
                 "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
+                "swiftmailer/swiftmailer": "~5.3",
                 "videlalvaro/php-amqplib": "~2.4"
             },
             "suggest": {
@@ -991,7 +992,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12.x-dev"
+                    "dev-master": "1.13.x-dev"
                 }
             },
             "autoload": {
@@ -1017,7 +1018,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-02-11 14:20:33"
+            "time": "2015-03-09 09:58:04"
         },
         {
             "name": "phansys/getid3",
@@ -1114,12 +1115,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "ac4893621b30faf8f970758afea7640122767817"
+                "reference": "d1c2238eb228d464bb48303fa993ae6378273972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/ac4893621b30faf8f970758afea7640122767817",
-                "reference": "ac4893621b30faf8f970758afea7640122767817",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/d1c2238eb228d464bb48303fa993ae6378273972",
+                "reference": "d1c2238eb228d464bb48303fa993ae6378273972",
                 "shasum": ""
             },
             "require": {
@@ -1151,7 +1152,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-02-01 05:39:51"
+            "time": "2015-03-02 12:20:06"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -1488,12 +1489,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "31bfc9508b92b7f08541823e0d2acdf57a8aa565"
+                "reference": "43f74ef41f5918ad60ba65e6ed68b1b7fc4f5978"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/31bfc9508b92b7f08541823e0d2acdf57a8aa565",
-                "reference": "31bfc9508b92b7f08541823e0d2acdf57a8aa565",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/43f74ef41f5918ad60ba65e6ed68b1b7fc4f5978",
+                "reference": "43f74ef41f5918ad60ba65e6ed68b1b7fc4f5978",
                 "shasum": ""
             },
             "require": {
@@ -1548,7 +1549,8 @@
                 "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.3",
                 "ocramius/proxy-manager": "~0.3.1",
-                "propel/propel1": "~1.6"
+                "propel/propel1": "~1.6",
+                "symfony/phpunit-bridge": "~2.7"
             },
             "type": "library",
             "extra": {
@@ -1587,7 +1589,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-02-16 09:51:32"
+            "time": "2015-03-09 15:14:43"
         },
         {
             "name": "twig/extensions",
@@ -1640,16 +1642,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "dev-master",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "fb8b04ef1537301b889dd6a404f8f62a7ac8a720"
+                "reference": "eecf85e903322e425ea921fd2588238f632965d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/fb8b04ef1537301b889dd6a404f8f62a7ac8a720",
-                "reference": "fb8b04ef1537301b889dd6a404f8f62a7ac8a720",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/eecf85e903322e425ea921fd2588238f632965d2",
+                "reference": "eecf85e903322e425ea921fd2588238f632965d2",
                 "shasum": ""
             },
             "require": {
@@ -1693,7 +1695,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-02-16 10:15:51"
+            "time": "2015-03-06 07:12:47"
         }
     ],
     "packages-dev": [],
@@ -1701,6 +1703,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "phansys/getid3": 20,
+        "google/apiclient": 10,
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20
     },

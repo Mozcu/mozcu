@@ -30,7 +30,16 @@ class AlbumListener
     }
     
     public function preUpdate(Album $album, PreUpdateEventArgs $event) {
-        $oldSongIds = $this->em->getRepository('MozcuMozcuBundle:Song')->getSongIdsFromAlbum($album);
+        $params = $this->em->getConnection()->getParams();
+        $config = new \Doctrine\DBAL\Configuration();
+        $conn = \Doctrine\DBAL\DriverManager::getConnection($params, $config);
+        
+        $ids = $conn->fetchAll("SELECT id FROM song WHERE album_id = {$album->getId()}");
+        $conn->close();
+        
+        $oldSongIds = array_map(function($row) {
+            return $row['id'];
+        }, $ids);
         
         $newSongIds = array_map(function($song) {
             return $song->getId();
