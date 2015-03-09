@@ -248,6 +248,12 @@ MozcuMozcuBundle_getCities:
   defaults: {_controller: MozcuMozcuBundle:Profile:getCities}
   requirements:
     _method: GET
+    
+MozcuMozcuBundle_follow:
+  pattern: /ajax/follow
+  defaults: {_controller: MozcuMozcuBundle:Profile:follow}
+  requirements:
+    _method: POST
 
 MozcuMozcuBundle_profile:
   pattern: /{username}

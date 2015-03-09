@@ -175,12 +175,20 @@ class UploadService extends BaseService{
                 $this->google_storage->delete($pres->getStaticFileName());
             }
             //Zip
-            if(!is_null($album->getStaticZipFileName())) {
-                $this->google_storage->delete($album->getStaticZipFileName());
-            }
+            $this->deleteAlbumZip($album);
             //$this->google_storage->delete($album->getStaticDirectory());
         } catch (\Exception $e) {
             throw new AppException("Error al eliminar archivos de un album: {$e->getMessage()}");
+        }
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
+    public function deleteAlbumZip(Album $album) {
+        if(!is_null($album->getStaticZipFileName())) {
+            $this->google_storage->delete($album->getStaticZipFileName());
         }
     }
     

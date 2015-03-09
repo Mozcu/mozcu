@@ -21,6 +21,40 @@ $(function() {
         });
     });
     
+    // Seguir
+    $('.mainContent').on('click', '.headerPerfil .btnSeguir', function(e) {
+        e.preventDefault();
+        var me = $(this);
+        var counter = me.parents('.headerPerfil').find('.followCounter');
+        
+        $.post(me.data('url'), {profileId: me.data('id')}, function(data) {
+            if(data.success) {
+                if(data.action == 'following') {
+                    me.addClass('following');
+                    me.find('.text').html(me.data('following'));
+                } else {
+                    me.removeClass('following');
+                    me.find('.text').html(me.data('follow'));
+                }
+                counter.html(data.followers_count)
+            }
+        });
+    });
+    
+    $('.mainContent').on('mouseover', '.headerPerfil .btnSeguir', function(e) {
+        var me = $(this);
+        if(me.hasClass('following')) {
+            me.find('.text').html(me.data('unfollow'));
+        }
+    });
+    
+    $('.mainContent').on('mouseout', '.headerPerfil .btnSeguir', function(e) {
+        var me = $(this);
+        if(me.hasClass('following')) {
+            me.find('.text').html(me.data('following'));
+        }
+    });
+    
     // Ir al album
     $('.mainContent').on('click', '.profileContent .albumManager a', function(e) {
         e.preventDefault();

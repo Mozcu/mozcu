@@ -1,5 +1,5 @@
 <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
-    {{ include('MozcuMozcuBundle:Profile:_profileHeader.html.twig', { 'user': user,'selected': selectedOption }) }}
-
+    {{ render(controller('MozcuMozcuBundle:Profile:loadUserHeader', { 'user': user, 'selectedOption': selectedOption })) }}
+    
     {{ include(template, parameters) }}
 </div>

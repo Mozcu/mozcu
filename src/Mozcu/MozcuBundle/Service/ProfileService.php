@@ -203,4 +203,32 @@ class ProfileService extends BaseService{
         }
         return true;
     }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @param \Mozcu\MozcuBundle\Entity\Profile $toFollow
+     */
+    public function followProfile(Profile $profile, Profile $toFollow) {
+        $profile->addFollowing($toFollow);
+        $toFollow->addFollower($profile);
+        
+        $this->getEntityManager()->persist($profile);
+        $this->getEntityManager()->persist($toFollow);
+        $this->getEntityManager()->flush();
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @param \Mozcu\MozcuBundle\Entity\Profile $toUnfollow
+     */
+    public function unfollowProfile(Profile $profile, Profile $toUnfollow) {
+        $profile->removeFollowing($toUnfollow);
+        $toUnfollow->removeFollower($profile);
+        
+        $this->getEntityManager()->persist($profile);
+        $this->getEntityManager()->persist($toUnfollow);
+        $this->getEntityManager()->flush();
+    }
 }

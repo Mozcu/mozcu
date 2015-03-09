@@ -393,4 +393,13 @@ class User implements UserInterface, \Serializable {
     public function getProfile() {
         return $this->profiles->first();
     }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\User $user
+     * @return boolean
+     */
+    public function sameAs(User $user) {
+        return $this->id == $user->getId();
+    }
 }

@@ -278,7 +278,9 @@
             container.find('.removeImg').show();
         }
         
-        $('#tags').tagit();
+        $('#tags').tagit({
+            placeholderText: 'Tags'
+        });
         
         //for edit
         if($('#tags').attr('data-tags')) {

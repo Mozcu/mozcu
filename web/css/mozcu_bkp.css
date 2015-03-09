@@ -136,12 +136,11 @@ body{
 }
 
 .nombreBanda{
-    color: #9E9E9E;
+    color: #555;
     }
 
 .nombreAlbumUser{
     margin-top: 15px;
-    color: #757575;
 }
 .nombreAlbumUser>a{
     padding-left: 5px;

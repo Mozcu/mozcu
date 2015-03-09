@@ -92,12 +92,31 @@ class Profile {
      **/
     private $links;
     
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Profile", mappedBy="following")
+     * @var ArrayCollection
+     **/
+    private $followers;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Profile", inversedBy="friendsWithMe")
+     * @ORM\JoinTable(name="following",
+     *      joinColumns={@ORM\JoinColumn(name="profile_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="following_profile_id", referencedColumnName="id")}
+     *      )
+     * @var ArrayCollection
+     **/
+    private $following;
+    
     public function __construct() {
         $this->albums = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->playlists = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->followers = new ArrayCollection();
+        $this->following = new ArrayCollection();
     }
     
     /**
@@ -551,5 +570,70 @@ class Profile {
     public function getLinks()
     {
         return $this->links;
+    }
+    
+    /**
+     * 
+     * @return ArrayCollection
+     */
+    public function getFollowers() {
+        return $this->followers;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @return \Mozcu\MozcuBundle\Entity\Profile
+     */
+    public function addFollower(Profile $profile) {
+        $this->followers->add($profile);
+        
+        return $this;
+    }
+    
+    public function removeFollower(Profile $profile) {
+        $this->followers->removeElement($profile);
+    }
+    
+    /**
+     * 
+     * @return ArrayCollection
+     */
+    public function getFollowing() {
+        return $this->following;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @return \Mozcu\MozcuBundle\Entity\Profile
+     */
+    public function addFollowing(Profile $profile) {
+        $this->following->add($profile);
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     */
+    public function removeFollowing(Profile $profile) {
+        $this->following->removeElement($profile);
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @return boolean
+     */
+    public function following(Profile $profile) {
+        foreach($this->following as $following) {
+            if($profile->sameAs($following)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

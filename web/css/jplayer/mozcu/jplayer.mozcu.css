@@ -450,6 +450,8 @@ div.jp-type-playlist div.jp-playlist li.jp-playlist-current {
 div.jp-type-playlist div.jp-playlist a {
 	color: #333;
 	text-decoration: none;
+    font-weight: 600;
+    font-family: roboto;
 }
 div.jp-type-playlist div.jp-playlist a:hover {
 	color:#0d88c1;
@@ -464,7 +466,6 @@ div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove {
 	display:inline;
 	text-align:right;
 	margin-right:10px;
-	font-weight:bold;
 	color:#666;
 }
 div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove:hover {

@@ -32,16 +32,28 @@
                 {{ user.getProfile.getCountry.getName }}
             {% endif %}
         </a></p>
-        <button type="button" class="btn btn-success btnSeguir"><i class="ion-person-add"></i>Seguir</button>
+        {% if loggedInUser and not loggedInUser.sameAs(user) %}
+            <button type="button" class="btn btn-success btnSeguir" data-url="{{ path('MozcuMozcuBundle_follow') }}" 
+                    data-id="{{ user.getProfile.getId }}" data-unfollow="Dejar de seguir" data-following="Siguiendo" data-follow="Seguir">
+                <i class="ion-person-add"></i>
+                <span class="text">
+                {% if loggedInUser.getProfile.following(user.getProfile) %}
+                    Siguiendo
+                {% else %}
+                    Seguir
+                {% endif %}
+                </span>
+            </button>
+        {% endif %}
     </div>
                
     <div class="followersPerfil col-xs-12 col-sm-2 col-md-2 col-lg-2 center-block">
         <div class="followersFollow col-xs-6 col-md-12 col-sm-12 col-lg-12">
-            <p class="numFollow">1,7k</p>
+            <p class="numFollow followCounter">{{ user.getProfile.getFollowers.count }}</p>
             <p class="nomFollow">Seguidores</p>   
         </div>
         <div class="col-xs-6 col-md-12 col-sm-12 col-lg-12">
-            <p class="numFollow">100k</p>
+            <p class="numFollow visitCounter">100k</p>
             <p class="nomFollow">Visitas</p>   
         </div>
     </div>

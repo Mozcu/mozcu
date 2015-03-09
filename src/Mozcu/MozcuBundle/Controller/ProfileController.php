@@ -3,7 +3,7 @@
 namespace Mozcu\MozcuBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
-use Entities\User;
+use Mozcu\MozcuBundle\Entity\User;
 use Mozcu\MozcuBundle\Entity\Profile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -22,7 +22,16 @@ class ProfileController extends MozcuController
     private function renderTemplateForRequest($template, array $parameters, array $parametersForTemplate = array()) {
         $parameters['template'] = $template;
         $parameters['parameters'] = $parametersForTemplate;
+        
         return $this->render('MozcuMozcuBundle:Profile:templateForRequest.html.twig', $parameters);
+    }
+    
+    public function loadUserHeaderAction(User $user, $selectedOption) {
+        $parameters['loggedInUser'] = $this->getUser();
+        $parameters['user'] = $user;
+        $parameters['selectedOption'] = $selectedOption;
+        
+        return $this->render('MozcuMozcuBundle:Profile:_profileHeader.html.twig', $parameters);
     }
     
     /**
@@ -249,5 +258,25 @@ class ProfileController extends MozcuController
         }
         
         return $this->getJSONResponse($export);
+    }
+    
+    public function followAction(Request $request) {
+        $user = $this->getUser();
+        $profileId = $request->get('profileId');
+        $profile = $this->getRepository('MozcuMozcuBundle:Profile')->find($profileId);
+        
+        if(empty($user) || empty($profile) || !$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException();
+        }
+        
+        if(!$user->getProfile()->following($profile)) {
+            $this->getProfileService()->followProfile($user->getProfile(), $profile);
+            return $this->getJSONResponse(array('success' => true, 'followers_count' => $profile->getFollowers()->count(), 
+                                                'action' => 'following'));
+        } else {
+            $this->getProfileService()->unfollowProfile($user->getProfile(), $profile);
+            return $this->getJSONResponse(array('success' => true, 'followers_count' => $profile->getFollowers()->count(),
+                                                'action' => 'follow'));
+        }
     }
 }
