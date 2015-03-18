@@ -46,11 +46,13 @@ $(function() {
         var rememberMe = me.parent().find('#remember_me');
         //var loader = me.parents('.loginLinkWrapper').find('.ajaxLoader');
         
-        //loader.show();
-        if(rememberMe.is(':checked')) {
-            loginCheck(username, password, true);
-        } else {
-            loginCheck(username, password);
+        if(username.length > 0 && password.length > 0) {
+            //loader.show();
+            if(rememberMe.is(':checked')) {
+                loginCheck(username, password, true);
+            } else {
+                loginCheck(username, password);
+            }
         }
     });
     
@@ -125,6 +127,8 @@ $(function() {
                     currentLogin(postData);
                 }
             } else {
+                $('.form-signin .alert').hide();
+                $('.form-signin .alert').show('300');
                 throw data.message;
             }
         }, 'json');
@@ -137,6 +141,8 @@ $(function() {
             if(data.success) {
                 validLogin(data.callback_url);
             } else {
+                $('.form-signin .alert').hide();
+                $('.form-signin .alert').show('300');
                 throw data.message;
             }
         }, 'json');

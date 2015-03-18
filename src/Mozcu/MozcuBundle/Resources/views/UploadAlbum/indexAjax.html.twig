@@ -47,8 +47,8 @@
                 
                 <div class="placeholder">
                     <i class="center-block text-center glyphicon glyphicon-picture"></i>
-                    <span class="text-center center-block">Arrastra la portada acá</span>
-                    <span class="text-center center-block">-o bien-</span>
+                    <span class="text-center center-block"><!--Arrastra la portada acá--> &nbsp;</span>
+                    <span class="text-center center-block">-<!--o bien--->&nbsp;</span>
                 </div>
                 
                 <div class="imgArchivoBtn">
@@ -148,6 +148,8 @@
             </div>
         </div>
         
+        <p>Recuerda que en Mozcu solo puedes distribuir obras que te pertenecen y/ó que estás autorizado para hacerlo. Queremos mantener una red de distribución moderna y coherente a nuestros usos.</p>
+                
         <footer class="col-lg-10 publicarFooter">
             {% if edit %}
                 <button type="button" data-url="{{ path('MozcuMozcuBundle_updateAlbum', {'id': album.getId}) }}" class="btn btn-success pull-right">Publicar</button>
