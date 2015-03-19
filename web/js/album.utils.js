@@ -133,6 +133,17 @@ $(function() {
         $('.row.headerDisco').append(iframe);
     };
     
+    // Modal compartir
+    $('.mainContent').on('click', '#shareAlbum', function(e) {
+        e.preventDefault();
+        var me = $(this);
+
+        var url = me.attr('href');
+        $.getJSON(url, {}, function(data){
+            $(data.html).modal();
+        });
+    });
+    
     // Modal denunciar obra
     $('.mainContent').on('click', '#reportAlbum', function(e) {
         e.preventDefault();

@@ -100,6 +100,10 @@ body{
     
 }
 
+.compartirModal .modal-body{
+    min-height: 80px;
+}
+
 /*++++++++++++++++++++CABECERA DE DISCO CON GRADIENTE++++++++++++++++++++++++++++*/
 
 .headerDisco{

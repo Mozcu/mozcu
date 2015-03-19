@@ -133,6 +133,12 @@ MozcuMozcuBundle_albumReportModal:
     requirements:
       _method: GET
       
+MozcuMozcuBundle_albumShareModal:
+    pattern: /album/{id}/share
+    defaults: {_controller: MozcuMozcuBundle:Album:albumShareModal}
+    requirements:
+      _method: GET
+      
 MozcuMozcuBundle_albumSubmitReport:
     pattern: /album/{id}/report
     defaults: {_controller: MozcuMozcuBundle:Album:albumSubmitReport}

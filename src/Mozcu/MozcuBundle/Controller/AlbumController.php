@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Mozcu\MozcuBundle\Exception\AppException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Mozcu\MozcuBundle\Entity\Album;
 
 
 class AlbumController extends MozcuController
@@ -252,6 +253,16 @@ class AlbumController extends MozcuController
         } else {
             throw new BadRequestHttpException();
         }
+    }
+    
+    public function albumShareModalAction(Album $album) {
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $template = "MozcuMozcuBundle:Album:_albumShareModal.html.twig";
+            $parameters = array('album' => $album);
+            return $this->renderAjaxResponse($template, $parameters);
+        } else {
+            throw new BadRequestHttpException();
+        }  
     }
     
     /**

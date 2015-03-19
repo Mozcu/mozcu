@@ -45,8 +45,8 @@
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs hidden-sm">
         <div class="btn-group btn-group-justified btngroupCompartir">
-            <a href="#" class="btn btn-default btnCompartir"><i class="glyphicon glyphicon-heart-empty"></i></a>
-            <a href="#" class="btn btn-default btnCompartir"><i class="glyphicon glyphicon-share"></i></a>
+            <!-- <a href="#" class="btn btn-default btnCompartir"><i class="glyphicon glyphicon-heart-empty"></i></a> -->
+            <a href="{{ path('MozcuMozcuBundle_albumShareModal', {id: album.getId})}}" class="btn btn-default btnCompartir" id="shareAlbum"><i class="glyphicon glyphicon-share"></i></a>
         </div>
     </div>
 
@@ -87,5 +87,4 @@
         </div>
     </div>
     <!-- FIN MENU DISCO SOLO PARA MOBILES-->
-
 </div>
