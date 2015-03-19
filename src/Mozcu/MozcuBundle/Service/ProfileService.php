@@ -161,9 +161,11 @@ class ProfileService extends BaseService{
             $response['message'] = "Ya existe una cuenta con el email {$accountData['email']}";
         }
         
-        foreach($accountData['links'] as $linkData) {
-            if(!$this->validateUrl($linkData['url'])) {
-                $response['message'] =  "Formato de link invalido: {$linkData['url']}";
+        if(isset($accountData['links']) && !empty($accountData['links'])) {
+            foreach($accountData['links'] as $linkData) {
+                if(!$this->validateUrl($linkData['url'])) {
+                    $response['message'] =  "Formato de link invalido: {$linkData['url']}";
+                }
             }
         }
         

@@ -61,7 +61,7 @@ class UserService extends BaseService{
         
         $user->setUsername($data['username']);
         $user->setEmail($data['email']);
-        $user->setPassword($data['password']);
+        $user->setPassword($password);
         $user->addGroup($group);
         
         $profile = new Profile;
