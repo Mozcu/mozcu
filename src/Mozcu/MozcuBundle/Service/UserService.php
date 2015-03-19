@@ -9,6 +9,7 @@ use Mozcu\MozcuBundle\Entity\Profile;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 
 class UserService extends BaseService{
     
@@ -47,26 +48,28 @@ class UserService extends BaseService{
     
     /**
      * 
-     * @param string $username
-     * @param string $password
-     * @param string $email
+     * @param array $data
      * @return User
      */
-    public function createUser($username, $password, $email) {
+    public function createUser(array $data) {
         $factory = $this->encoder_factory;
         $group = $this->getEntityManager()->getRepository('Mozcu\MozcuBundle\Entity\Group')->find(2);
         $user = new User();
         
         $encoder = $factory->getEncoder($user);
-        $password = $encoder->encodePassword($password, $user->getSalt());
+        $password = $encoder->encodePassword($data['password'], $user->getSalt());
         
-        $user->setUsername($username);
-        $user->setEmail($email);
-        $user->setPassword($password);
+        $user->setUsername($data['username']);
+        $user->setEmail($data['email']);
+        $user->setPassword($data['password']);
         $user->addGroup($group);
         
         $profile = new Profile;
-        $profile->setPaypalEmail($email);
+        $profile->setPaypalEmail($data['email']);
+        $profile->setCity($data['city']);
+        $country = $this->em->getRepository('MozcuMozcuBundle:Country')->find($data['country']);
+        $profile->setCountry($country);
+        
         $user->addProfile($profile);
         $profile->setUser($user);
         
@@ -98,7 +101,7 @@ class UserService extends BaseService{
      * @return boolean
      */
     public function checkUsernameDisponibility($username) {
-        $invalidUsernames = $this->container->get('parameters.invalid_usernames');
+        $invalidUsernames = $this->container->getParameter('invalid_usernames');
         $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:User');
         
         $user = $repo->findOneBy(array('username' => $username));
@@ -171,6 +174,45 @@ class UserService extends BaseService{
         }
         
         return $user;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @param array $accountData
+     * @return array
+     */
+    public function validateAccountData(array $accountData) {
+        $response =  array('success' => false);
+        
+        if(!$this->validateEmail($accountData['email'])) {
+            $response['message'] =  "El formato del email es invalido: {$accountData['email']}";
+        }
+        if(!$this->checkUsernameDisponibility($accountData['username'])) {
+            $response['message'] = "El nombre {$accountData['username']} esta siendo utilizado";
+        }
+        if(!$this->checkEmailDisponibility($accountData['email'])) {
+            $response['message'] = "Ya existe una cuenta con el email {$accountData['email']}";
+        }
+        
+        if(!isset($response['message'])) {
+            $response['success'] = true;
+        }
+        
+        return $response;
+    }
+    
+    private function validateEmail($email) {
+        $emailConstraint = new EmailConstraint();
+        $errors = $this->container->get('validator')->validateValue(
+            $email,
+            $emailConstraint 
+        );
+        
+        if (count($errors) > 0) {
+            return false;    
+        }
+        return true;
     }
 
 }

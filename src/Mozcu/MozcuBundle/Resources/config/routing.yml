@@ -239,13 +239,13 @@ MozcuMozcuBundle_saveAccount:
     
 MozcuMozcuBundle_getCountries:
   pattern: /ajax/countries
-  defaults: {_controller: MozcuMozcuBundle:Profile:getCountries}
+  defaults: {_controller: MozcuMozcuBundle:Common:getCountries}
   requirements:
     _method: GET
     
 MozcuMozcuBundle_getCities:
   pattern: /ajax/cities
-  defaults: {_controller: MozcuMozcuBundle:Profile:getCities}
+  defaults: {_controller: MozcuMozcuBundle:Common:getCities}
   requirements:
     _method: GET
     

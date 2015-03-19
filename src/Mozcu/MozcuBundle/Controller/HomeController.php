@@ -109,7 +109,24 @@ class HomeController extends MozcuController
     }
     
     public function postRegistrationAction(Request $request) {
-        
+        if($request->isXmlHttpRequest()) {
+            $data = $request->get('data');
+            
+            try {
+                $validation = $this->getUserService()->validateAccountData($data);
+                if($validation['success']) {
+                    $user = $this->getUserService()->createUser($data);
+                    $this->getUserService()->logUser($user);
+                    $validation['callback_url'] = $this->generateUrl('MozcuMozcuBundle_profile', 
+                                                                      array('username' => $user->getUsername()));
+                }
+                return $this->getJSONResponse($validation);
+            } catch(\Exception $e) {
+                return $this->getJSONResponse(array('success' => false, 'message' => $e->getMessage()));
+            }
+        } else {
+            throw new BadRequestHttpException();
+        }
     }
     
     /**

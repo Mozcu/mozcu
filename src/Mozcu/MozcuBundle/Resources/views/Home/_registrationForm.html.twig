@@ -22,7 +22,7 @@
         <input type="password" class="form-control" placeholder="********" id="repeat_password">
 
         <label>Ciudad</label>
-        <input type="text" class="form-control" placeholder="Buenos Aires" id="city">
+        <input type="text" class="form-control" placeholder="Buenos Aires" id="city" data-url="{{ path('MozcuMozcuBundle_getCities') }}">
 
         <label>País</label>  
         <select class="form-control" id="country">
@@ -35,6 +35,15 @@
             <input type="checkbox" id="terms"> Acepto los <a href="{{ path('MozcuMozcuBundle_terms') }}" target="_blank">Terminos y condiciones</a>
         </label>
 
-        <button class="btn btn-success btn-block btnRegCont" type="button">Continuar</button>
+        <button class="btn btn-success btn-block btnRegCont" type="button" data-url="{{ path('MozcuMozcuBundle_postRegistration') }}">Continuar</button>
     </div>
 </div>
+    
+<script type="text/javascript">
+$(function() {
+    $( "#city" ).autocomplete({
+            source: $('#city').data('url'),
+            minLength: 3
+    });
+});
+</script>

@@ -182,5 +182,103 @@ $(function() {
         });
     };
     
+    
+    $('.mainContent').on('click', '.btn-success.btnRegCont', function(e){
+        var url = $(this).data('url');
+        
+        var account = prepareAccountData();
+        
+        var errorMsg = $('.alert-danger');
+        errorMsg.hide();
+        errorMsg.find('.error').remove();
+        
+        var validation = validateAccountData(account);
+        if (!validation.success) {
+            $.each(validation.errors, function(key, value) {
+                errorMsg.append('<p class="error"> - ' + value.message + '</p>');
+            });
+            errorMsg.show();
+            $('html,body').animate({scrollTop: 0}, 800);
+            return;
+        }
+        
+        $(this).prop('disabled', true);
+        $.post(url, {data: account}, function(data) {
+            if(data.success) {
+                $.getJSON(data.callback_url, {}, function(data) {
+                    if(data.success) {
+                        $('.mainContent').html(data.html);
+                        reloadUserBar();
+                        reloadLeftBar();
+                        $('html,body').animate({scrollTop: 0}, 800);
+                    }
+                });
+            } else {
+                errorMsg.append('<p class="error"> - ' + data.message + '</p>');
+                errorMsg.show();
+                $('html,body').animate({scrollTop: 0}, 800);
+                $(this).prop('disabled', false);
+            }
+        }, 'json');
+    });
+    
+    var prepareAccountData = function() {
+        var account = {};
+        account.username = $.trim($('#username').val());
+        account.city = $.trim($('#city').val());
+        account.country = $('#country').val();
+        account.email = $.trim($('#email').val());
+        account.password = $('#password').val();
+        account.passwordRepeat = $('#repeat_password').val();
+        account.terms = $('#terms').is(':checked');
+        
+        return account;
+    };
+    
+    var validateAccountData = function(account) {
+        var response = {};
+        response.success = true;
+        response.errors = new Array();
+        
+        if (account.username.length === 0) {
+            response.success = false;
+            response.errors.push({message: "El campo nombre de usuario esta vacio"});
+        }
+        
+        if (account.city.length === 0) {
+            response.success = false;
+            response.errors.push({message: "El campo ciudad esta vacio"});
+        }
+        
+        if (account.email.length === 0) {
+            response.success = false;
+            response.errors.push({message: "El campo email esta vacio"});
+        } else if (!validateEmail(account.email)) {
+            response.success = false;
+            response.errors.push({message: "El formato del email es invalido: " + account.email});
+        }
+        
+        if((account.password.length > 0 || account.passwordRepeat.length > 0)
+                && (account.password !== account.passwordRepeat)) {
+            response.success = false;
+            response.errors.push({message: "Los passwords no coinciden"});
+        } else if(account.password.length === 0) {
+            response.success = false;
+            response.errors.push({message: "El password esta vacio"});
+        }
+        
+        if(!account.terms) {
+            response.success = false;
+            response.errors.push({message: "Debes aceptar los terminos y condiciones"})
+        }
+        
+        return response;
+    };
+    
+    var validateEmail = function(email) { 
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    };
+    
 });
 
