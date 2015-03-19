@@ -59,9 +59,9 @@
             <li {% if selected == 'information' %} class="discoActive" {% endif %}>
                 <a href="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'username': username, 'id': album.getId}) }}">Información</a>
             </li>
-            <li {% if selected == 'comments' %} class="discoActive" {% endif %}>
+            <!-- <li {% if selected == 'comments' %} class="discoActive" {% endif %}>
                 <a href="#">Comentarios</a>
-            </li>
+            </li> --> 
             <li {% if selected == 'related' %} class="discoActive" {% endif %}>
                 <a href="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'username': username, 'id': album.getId}) }}">Similares</a>
             </li>

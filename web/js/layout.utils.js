@@ -106,6 +106,7 @@ $(function() {
          $.getJSON(url, function(data) {
             if(data.success) {
                 $('.mainContent').html(data.html);
+                $('html,body').animate({scrollTop: 0}, 800);
             }
         });
     };
@@ -279,6 +280,13 @@ $(function() {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     };
+    
+    // Links de terminos y condiciones
+    $('.mainContent').on('click', '.terms footer a', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        changeMainContent(url);
+    });
     
 });
 

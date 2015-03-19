@@ -162,6 +162,14 @@ class Profile {
         } 
         return $this->name;
     }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getUsername() {
+        return $this->user->getUsername();
+    }
 
     /**
      * Set slogan

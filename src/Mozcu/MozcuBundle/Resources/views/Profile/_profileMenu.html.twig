@@ -7,12 +7,12 @@
         <li {% if selectedOption == 'albums' %} class="discoActive" {% endif %} >
             <a href="{{ path('MozcuMozcuBundle_profileAlbums', {'username': user.username}) }}">Álbumes</a>
         </li>
-        <li {% if selectedOption == 'reviews' %} class="discoActive" {% endif %} >
+        <!-- <li {% if selectedOption == 'reviews' %} class="discoActive" {% endif %} >
             <a href="{{ path('MozcuMozcuBundle_profileReviews', {'username': user.username}) }}">Reseñas</a>
         </li>
         <li {% if selectedOption == 'playlists' %} class="discoActive" {% endif %} >
             <a href="{{ path('MozcuMozcuBundle_profilePlaylists', {'username': user.username}) }}">Compilados</a>
-        </li>
+        </li> -->
     </ul>       
 </div>           
 <!-- FIN MENU perfil -->
@@ -28,14 +28,14 @@
            class="btn btn-default {% if selectedOption == 'albums' %} navDiscoMobileActive {% endif %}">
             <i class="center-block glyphicon glyphicon-headphones"></i>Álbumes
         </a>
-        <a href="{{ path('MozcuMozcuBundle_profileReviews', {'username': user.username}) }}" 
+        <!-- <a href="{{ path('MozcuMozcuBundle_profileReviews', {'username': user.username}) }}" 
            class="btn btn-default {% if selectedOption == 'reviews' %} navDiscoMobileActive {% endif %}">
             <i class="center-block glyphicon glyphicon-pencil"></i>Reseñas
         </a>
         <a href="{{ path('MozcuMozcuBundle_profilePlaylists', {'username': user.username}) }}" 
            class="btn btn-default {% if selectedOption == 'playlists' %} navDiscoMobileActive {% endif %}">
             <i class="center-block glyphicon glyphicon-th-large"></i>Compilados
-        </a>
+        </a> -->
     </div>
 
 </div>
