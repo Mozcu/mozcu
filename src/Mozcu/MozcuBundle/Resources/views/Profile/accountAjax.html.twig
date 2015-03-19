@@ -158,7 +158,8 @@ $(function() {
             success: function(data) {
                 if(data.success) {
                     var img = $('.imgPerfil');
-                    img.attr('src', "/uploads/images/tmp/" + data.file_name);
+                    // TODO: sacar esta ruta hardcodeada
+                    img.attr('src', "/uploads/tmp/images/" + data.file_name);
                     $("#imageFileName").val(data.file_name);
                 }
             }
