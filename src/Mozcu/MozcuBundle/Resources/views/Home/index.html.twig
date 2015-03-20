@@ -1,5 +1,13 @@
 {% extends 'MozcuMozcuBundle::layout.html.twig' %}
 
+{% block metadata %}
+    <meta property="og:title" content="Mozcu">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('MozcuMozcuBundle_home') }}">
+    <meta property="og:description" content="La re-evolución musical">
+    <meta property="og:image" content="{{ app.request.uri ~ 'images/logo.png' }}">
+{% endblock %}
+
 {% block mainContent %}
 
     {{ include('MozcuMozcuBundle:Home:_homeHome.html.twig') }}

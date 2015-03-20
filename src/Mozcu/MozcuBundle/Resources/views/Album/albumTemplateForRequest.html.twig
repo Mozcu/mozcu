@@ -8,8 +8,7 @@
     <meta property="og:site_name" content="{{ album.getArtistName }}">
     <meta property="og:description" content="Escucha los {{ album.getSongs.count }} temas de {{ album.getName }}">
     <meta property="og:image" content="{{ album.getListThumbnailUrl }}">
-    <!--<meta property="og:url" content="{{ path('MozcuMozcuBundle_albumAlbum', {'username': album.getProfile.getUsername, 'id': album.getId}) }}">-->
-    <meta property="og:url" content="{{app.request.uri}}">
+    <meta property="og:url" content="{{ url('MozcuMozcuBundle_albumAlbum', {'username': album.getProfile.getUsername, 'id': album.getId}) }}">
 {% endblock %}
 
 {% block title %} {% trans with {'%name%': album.getArtistName} %}%name% en Mozcu{% endtrans %} {% endblock %}

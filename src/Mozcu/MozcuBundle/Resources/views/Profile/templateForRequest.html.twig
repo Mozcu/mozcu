@@ -1,5 +1,14 @@
 {% extends 'MozcuMozcuBundle::layout.html.twig' %}
 
+{% block metadata %}
+    <meta property="og:title" content="{{ user.getCurrentName }}">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="{{ url('MozcuMozcuBundle_profile', {'username': user.getUsername} )}}">
+    <meta property="og:site_name" content="{% trans with {'%name%': user.getCurrentName} %}%name% en Mozcu{% endtrans %}">
+    <meta property="og:description" content="{{ user.getProfile.getSlogan }}">
+    <meta property="og:image" content="{{ user.getProfile.getProfileImageUrlForHeader }}">
+{% endblock %}
+
 {% block title %} {% trans with {'%name%': user.getCurrentName} %}%name% en Mozcu{% endtrans %} {% endblock %}
 
 {% block mainContent %}
