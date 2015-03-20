@@ -257,4 +257,28 @@ class AlbumService extends BaseService{
         $this->getEntityManager()->persist($album);
         $this->getEntityManager()->flush();
     }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
+    public function increasePlayCount(Album $album) {
+        $plays = $album->getVisits();
+        $album->setVisits($plays + 1);
+        
+        $this->getEntityManager()->persist($album);
+        $this->getEntityManager()->flush();
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
+    public function increaseDownloadCount(Album $album) {
+        $downloads = $album->getDownloads();
+        $album->setDownloads($downloads + 1);
+        
+        $this->getEntityManager()->persist($album);
+        $this->getEntityManager()->flush();
+    }
 }

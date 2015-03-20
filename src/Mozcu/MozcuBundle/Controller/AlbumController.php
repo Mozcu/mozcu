@@ -313,6 +313,9 @@ class AlbumController extends MozcuController
                 $this->getAlbumService()->prepareZip($album);
             }
             
+            // Incrementamos el contador de descargas
+            $this->getAlbumService()->increaseDownloadCount($album);
+            
             return $this->getJSONResponse(array('success' => true, 'zipUrl' => $album->getZipUrl()));    
         } else {
             throw new BadRequestHttpException();
@@ -374,6 +377,9 @@ class AlbumController extends MozcuController
                     $songData['artist'] = $artist;
                     $albumData['songs'][] = $songData;
                 }
+                // Incrementamos el contador de reproducciones
+                $this->getAlbumService()->increasePlayCount($album);
+                
                 return $this->getJSONResponse(array('success' => true, 'album' => $albumData));
             } else {
                 return $this->getJSONResponse(array('success' => false, 'message' => 'El album no existe'));   
