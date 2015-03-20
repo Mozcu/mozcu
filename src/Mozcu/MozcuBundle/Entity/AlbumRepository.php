@@ -77,16 +77,22 @@ class AlbumRepository extends EntityRepository {
         $in = "(" . implode(',', $tags) . ")";
         
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        $queryBuilder->select("a");
+        $queryBuilder->select("a, COUNT(t.id) as tagsCant");
         $queryBuilder->from('MozcuMozcuBundle:Album', 'a');
         $queryBuilder->innerJoin('a.tags', 't');
         $queryBuilder->where("t.id IN {$in} AND a.id <> {$album->getId()} AND a.isActive = 1");
-        $queryBuilder->orderBy('a.id', 'DESC');
+        $queryBuilder->groupBy('a.id');
+        $queryBuilder->orderBy('tagsCant', 'DESC');
         
         $query = $queryBuilder->getQuery()
                        ->setFirstResult(0)
                        ->setMaxResults(15);
 
-        return $query->getResult();
+        $results = $query->getResult();
+        
+        return array_map(
+            function ($result) { return $result[0]; },
+            $results
+        );
     }
 }

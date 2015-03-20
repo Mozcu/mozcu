@@ -36,6 +36,13 @@ $(function() {
         changeMainContent(url);
     });
     
+    // Link registrarse home
+    $('.mainContent').on('click', '.crearRegistro', function(e) {
+        e.preventDefault();
+        
+        changeMainContent($(this).attr('href'));
+    });
+    
     // Check login
     $('.mainContent').on('click', '.loginCheckButton', function(e){
         e.preventDefault();
