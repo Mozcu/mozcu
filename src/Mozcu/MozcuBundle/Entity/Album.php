@@ -113,6 +113,13 @@ class Album {
      */
     private $artist_name;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="Profile", mappedBy="likedAlbums")
+     **/
+    private $likers;
+    
+    
+    
     public function __construct() {
         $this->songs = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -681,5 +688,45 @@ class Album {
             return $this->getProfile()->getCurrentName();
         }
         return $this->artist_name;
+    }
+    
+    /**
+     * 
+     * @return ArrayCollection
+     */
+    public function getLikers()
+    {
+        return $this->likers;
+    }
+    
+    /**
+     *
+     * @param \Mozcu\MozcuBundle\Entity\Profile $liker
+     * @return Album
+     */
+    public function addLiker(Profile $liker)
+    {
+        $this->likers[] = $liker;
+    
+        return $this;
+    }
+
+    /**
+     *
+     * @param \Mozcu\MozcuBundle\Entity\Profile $liker
+     */
+    public function removeLiker(Profile $liker)
+    {
+        $this->likers->removeElement($liker);
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @return boolean
+     */
+    public function sameAs(Album $album)
+    {
+        return $this->id == $album->getId();
     }
 }

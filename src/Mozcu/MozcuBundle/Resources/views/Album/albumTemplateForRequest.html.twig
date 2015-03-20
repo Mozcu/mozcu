@@ -15,10 +15,5 @@
 {% block title %} {% trans with {'%name%': album.getArtistName} %}%name% en Mozcu{% endtrans %} {% endblock %}
 
 {% block mainContent %}
-    <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 albumPage">
-        {{ include('MozcuMozcuBundle:Album:_albumHeader.html.twig', parameters) }}
-
-        {{ include(template, parameters) }}
-        
-    </div>
+    {{ include('MozcuMozcuBundle:Album:albumTemplateForAjax.html.twig', {'album': album,'selected': parameters.selected, 'parameters': parameters}) }}
 {% endblock %}

@@ -12,6 +12,7 @@ use Mozcu\MozcuBundle\Exception\AppException;
 use Mozcu\MozcuBundle\Entity\ProfileLink;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Symfony\Component\Validator\Constraints\Url as UrlConstraint;
+use Mozcu\MozcuBundle\Entity\Album;
 
 class ProfileService extends BaseService{
     
@@ -231,6 +232,34 @@ class ProfileService extends BaseService{
         
         $this->getEntityManager()->persist($profile);
         $this->getEntityManager()->persist($toUnfollow);
+        $this->getEntityManager()->flush();
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
+    public function likeAlbum(Profile $profile, Album $album) {
+        $profile->addLikedAlbum($album);
+        $album->addLiker($profile);
+        
+        $this->getEntityManager()->persist($profile);
+        $this->getEntityManager()->persist($album);
+        $this->getEntityManager()->flush();
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
+    public function unlikeAlbum(Profile $profile, Album $album) {
+        $profile->removeLikedAlbum($album);
+        $album->removeLiker($profile);
+        
+        $this->getEntityManager()->persist($profile);
+        $this->getEntityManager()->persist($album);
         $this->getEntityManager()->flush();
     }
 }

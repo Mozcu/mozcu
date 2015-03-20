@@ -109,6 +109,12 @@ class Profile {
      **/
     private $following;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="Album", inversedBy="likers")
+     * @ORM\JoinTable(name="likers_albums")
+     **/
+    private $likedAlbums;
+    
     public function __construct() {
         $this->albums = new ArrayCollection();
         $this->reviews = new ArrayCollection();
@@ -638,6 +644,52 @@ class Profile {
     public function following(Profile $profile) {
         foreach($this->following as $following) {
             if($profile->sameAs($following)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 
+     * @return ArrayCollection
+     */
+    public function getLikedAlbums()
+    {
+        return $this->likedAlbums;
+    }
+    
+    /**
+     *
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @return Profile
+     */
+    public function addLikedAlbum(Album $album)
+    {
+        $this->likedAlbums[] = $album;
+    
+        return $this;
+    }
+
+    /**
+     *
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     */
+    public function removeLikedAlbum(Album $album)
+    {
+        $this->likedAlbums->removeElement($album);
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\Album $album
+     * @return boolean
+     */
+    public function likeAlbum(Album $album) 
+    {
+        foreach($this->likedAlbums as $likedAlbum) {
+            if($album->sameAs($likedAlbum)) {
                 return true;
             }
         }

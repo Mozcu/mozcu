@@ -40,6 +40,14 @@ class AlbumController extends MozcuController
         return $this->renderAlbumsForRequest('MozcuMozcuBundle:Album:_albumNotFound.html.twig', array());
     }
     
+    public function loadAlbumHeaderAction(Album $album, $selected) {
+        $parameters['loggedInUser'] = $this->getUser();
+        $parameters['album'] = $album;
+        $parameters['selected'] = $selected;
+        
+        return $this->render('MozcuMozcuBundle:Album:_albumHeader.html.twig', $parameters);
+    }
+    
     /**
      * 
      * @return \Symfony\Component\HttpFoundation\Response
@@ -159,7 +167,7 @@ class AlbumController extends MozcuController
             if(!is_null($album)) {
                 $albums = $this->getRepository('MozcuMozcuBundle:Album')->findRelated($album);
                 $template = "MozcuMozcuBundle:Album:_albumRelated.html.twig";
-                $parameters = array('albums' => $albums, 'selected' => 'related');
+                $parameters = array('album'=> $album, 'albums' => $albums, 'selected' => 'related');
             } else {
                 $success = false;
             }

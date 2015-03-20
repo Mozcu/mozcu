@@ -255,4 +255,24 @@ class ProfileController extends MozcuController
                                                 'action' => 'follow'));
         }
     }
+    
+    public function likeAlbumAction(Request $request) {
+        $user = $this->getUser();
+        $album = $this->getRepository('MozcuMozcuBundle:Album')->find($request->get('albumId'));
+        
+        if(empty($user) || empty($album) || !$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException();
+        }
+        
+        $profile = $user->getProfile();
+        if(!$profile->likeAlbum($album)) {
+            $this->getProfileService()->likeAlbum($profile, $album);
+            return $this->getJSONResponse(array('success' => true, 'album_likes' => $album->getLikers()->count(), 
+                                                'action' => 'unlike'));
+        } else {
+            $this->getProfileService()->unlikeAlbum($profile, $album);
+            return $this->getJSONResponse(array('success' => true, 'album_likes' => $album->getLikers()->count(),
+                                                'action' => 'like'));
+        }
+    }
 }

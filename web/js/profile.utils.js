@@ -38,7 +38,7 @@ $(function() {
                 }
                 counter.html(data.followers_count)
             }
-        });
+        }, 'json');
     });
     
     $('.mainContent').on('mouseover', '.headerPerfil .btnSeguir', function(e) {

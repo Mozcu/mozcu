@@ -230,6 +230,22 @@ $(function() {
                 }
             }
         }, 'json');
-    }
+    };
+    
+    // Album favorito
+    $('.mainContent').on('click', '#likeAlbum', function(e) {
+        e.preventDefault();
+        var me = $(this);
+
+        $.post(me.attr('href'), function(data) {
+            if(data.success) {
+                if(data.action == 'unlike') {
+                    me.addClass('unlike');
+                } else {
+                    me.removeClass('unlike');
+                }
+            }
+        }, 'json');
+    });
     
 });

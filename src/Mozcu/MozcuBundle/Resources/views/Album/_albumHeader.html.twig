@@ -45,8 +45,10 @@
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs hidden-sm">
         <div class="btn-group btn-group-justified btngroupCompartir">
-            <!-- <a href="#" class="btn btn-default btnCompartir"><i class="glyphicon glyphicon-heart-empty"></i></a> -->
-            <a href="{{ path('MozcuMozcuBundle_albumShareModal', {id: album.getId})}}" class="btn btn-default btnCompartir" id="shareAlbum"><i class="glyphicon glyphicon-share"></i></a>
+            {% if loggedInUser  %}
+                <a href="{{ path ('MozcuMozcuBundle_likeAlbum', {'albumId': album.getId}) }}" class="btn btn-default btnCompartir {% if loggedInUser.getProfile.likeAlbum(album) %} unlike {% endif %}" id="likeAlbum"><i class="glyphicon glyphicon-heart-empty"></i></a>
+            {% endif %}
+            <a href="{{ path('MozcuMozcuBundle_albumShareModal', {'id': album.getId})}}" class="btn btn-default btnCompartir" id="shareAlbum"><i class="glyphicon glyphicon-share"></i></a>
         </div>
     </div>
 

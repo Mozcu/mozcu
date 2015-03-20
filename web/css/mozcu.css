@@ -221,6 +221,10 @@ body{
     margin-right: 45px;
 }
 
+.unlike {
+    color: #ff0000 !important;
+}
+
 .btnCompartir{
     background-color: #333;
     background-image: -webkit-linear-gradient(#111, #333);
@@ -230,7 +234,7 @@ body{
     border-radius: 2px;
     -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
     box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
-    color: #aaa !important;
+    color: #aaa;
     cursor: pointer !important;
     display: inline-block;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
