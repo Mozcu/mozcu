@@ -2,19 +2,93 @@
     <h3>Licencia</h3>
     
     {% if license == 2 %}
-        
+        <p class="licTitl">Atribución (by)
+            <i class="entypo cc"></i>
+            <i class="entypo cc-by"></i>
+        </p>
+
+        <p>Se permite cualquier explotación de la obra, incluyendo la explotación con fines comerciales y la creación de obras derivadas, la distribución de las cuales también está permitida sin ninguna restricción. <a href="http://creativecommons.org.ar/faq#p3-01" target="_blank">Esta licencia es una licencia libre según la Freedom Defined.</a></p>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-by"></i></h4></td>
+                    <td class="licText"><h5>Menciones el nombre del artista.</h5></td>
+                </tr>
+            </tbody>
+        </table>
     {% elseif license == 3 %}
+        <p class="licTitl">Reconocimiento – Compartir Igual (by-sa)
+            <i class="entypo cc"></i>
+            <i class="entypo cc-by"></i>
+            <i class="entypo cc-sa"></i>
+        </p>
+
+        <p>Se permite el uso comercial de la obra y de las posibles obras derivadas, la distribución de las cuales se debe hacer con una licencia igual a la que regula la obra original.<a href="http://creativecommons.org.ar/faq#p3-01" target="_blank"> Esta licencia es una licencia libre según la Freedom Defined.</a></p>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-by"></i></h4></td>
+                    <td class="licText"><h5>Menciones el nombre del artista.</h5></td>
+                </tr>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-sa"></i></h4></td>
+                    <td class="licText"><h5>Distribuyas todas las obras derivadas de este álbum bajo la misma licencia CC.</h5></td>
+                </tr>
+            </tbody>
+        </table>
     {% elseif license == 4 %}
+        <p class="licTitl">Atribución – Sin Obra Derivada (by-nd)
+            <i class="entypo cc"></i>
+            <i class="entypo cc-by"></i>
+            <i class="entypo cc-nd"></i>
+        </p>
+
+        <p> Se permite el uso comercial de la obra pero no la generación de obras derivadas. Esta licencia no es una licencia libre.</p>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-by"></i></h4></td>
+                    <td class="licText"><h5>Menciones el nombre del artista.</h5></td>
+                </tr>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-nd"></i></h4></td>
+                    <td class="licText"><h5>No alteres, transformes o crees obras derivadas, basados en este álbum.</h5></td>
+                </tr>
+            </tbody>
+        </table>
     {% elseif license == 5 %}
+        <p class="licTitl">Atribución – No Comercial (by-nc)
+            <i class="entypo cc"></i>
+            <i class="entypo cc-by"></i>
+            <i class="entypo cc-nc"></i>
+        </p>
+
+       <p>Se permite la generación de obras derivadas siempre que no se haga con fines comerciales. Tampoco se puede utilizar la obra original con fines comerciales. Esta licencia no es una licencia libre.</p>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-by"></i></h4></td>
+                    <td class="licText"><h5>Menciones el nombre del artista.</h5></td>
+                </tr>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-nc"></i></h4></td>
+                    <td class="licText"><h5>No utilices este álbum con fines comerciales.</h5></td>
+                </tr>
+            </tbody>
+        </table>
+    {% elseif license == 6 %}
         <p class="licTitl">Atribución – No Comercial – Compartir Igual (by-nc-sa)
             <i class="entypo cc"></i>
             <i class="entypo cc-by"></i>
             <i class="entypo cc-nc"></i>
             <i class="entypo cc-sa"></i>
-            <i class="entypo cc-nd"></i>
         </p>
 
-        <p>Puedes copiar, distribuir, promocionar y tocar este álbum siempre y cuando tú:</p>
+        <p>No se permite un uso comercial de la obra original ni de las posibles obras derivadas, la distribución de las cuales se debe hacer con una licencia igual a la que regula la obra original. Esta licencia no es una licencia libre.</p>
 
         <table class="table">
             <tbody>
@@ -30,14 +104,34 @@
                     <td class="licIcon"><h4><i class="entypo cc-sa"></i></h4></td>
                     <td class="licText"><h5>Distribuyas todas las obras derivadas de este álbum bajo la misma licencia CC.</h5></td>
                 </tr>
+            </tbody>
+        </table>
+    {% elseif license == 7 %}
+        <p class="licTitl">Atribución – No Comercial – Sin Obra Derivada (by-nc-nd)
+            <i class="entypo cc"></i>
+            <i class="entypo cc-by"></i>
+            <i class="entypo cc-nc"></i>
+            <i class="entypo cc-nd"></i>
+        </p>
+
+        <p> No se permite un uso comercial de la obra original ni la generación de obras derivadas. Esta licencia no es una licencia libre, y es la más cercana al derecho de autor tradicional.</p>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-by"></i></h4></td>
+                    <td class="licText"><h5>Menciones el nombre del artista.</h5></td>
+                </tr>
+                <tr>
+                    <td class="licIcon"><h4><i class="entypo cc-nc"></i></h4></td>
+                    <td class="licText"><h5>No utilices este álbum con fines comerciales.</h5></td>
+                </tr>
                 <tr>
                     <td class="licIcon"><h4><i class="entypo cc-nd"></i></h4></td>
                     <td class="licText"><h5>No alteres, transformes o crees obras derivadas, basados en este álbum.</h5></td>
                 </tr>
             </tbody>
         </table>
-    {% elseif license == 6 %}
-    {% elseif license == 7 %}
     {% endif %}
     
     <a href="{{ path('MozcuMozcuBundle_albumReportModal', {id: album.getId}) }}" class="pull-right" id="reportAlbum">
