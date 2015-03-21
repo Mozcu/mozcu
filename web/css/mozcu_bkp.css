@@ -100,6 +100,10 @@ body{
     
 }
 
+.compartirModal .modal-body{
+    min-height: 80px;
+}
+
 /*++++++++++++++++++++CABECERA DE DISCO CON GRADIENTE++++++++++++++++++++++++++++*/
 
 .headerDisco{
@@ -136,11 +140,12 @@ body{
 }
 
 .nombreBanda{
-    color: #555;
+    color: #9E9E9E;
     }
 
 .nombreAlbumUser{
     margin-top: 15px;
+    color: #757575;
 }
 .nombreAlbumUser>a{
     padding-left: 5px;
@@ -216,6 +221,10 @@ body{
     margin-right: 45px;
 }
 
+.unlike {
+    color: #ff0000 !important;
+}
+
 .btnCompartir{
     background-color: #333;
     background-image: -webkit-linear-gradient(#111, #333);
@@ -225,7 +234,7 @@ body{
     border-radius: 2px;
     -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
     box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
-    color: #aaa !important;
+    color: #aaa;
     cursor: pointer !important;
     display: inline-block;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
@@ -1664,9 +1673,10 @@ footer .entypo{
     cursor: pointer;
     opacity: 0;
     position: absolute;
-    bottom: 0px;
+    bottom: 17px;
     height: 26px;
     width: 160px;
+    right: 18px;
 }
 
 .titlDisco>input{
