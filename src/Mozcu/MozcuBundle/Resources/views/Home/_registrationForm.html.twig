@@ -7,36 +7,35 @@
     </div>
     
     <div class="container col-md-12 col-lg-12">
-        <h3 class="siginsubTitl text-center">Crear una nueva cuenta</h3>
-        
-        <label>Nombre de usuario</label>
-        <input type="text" class="form-control" placeholder="Nombre de usuario" id="username">
 
-        <label>Email</label>  
-        <input type="email" class="form-control" placeholder="ejemplo@mozcu.com" id="email">
+        <h2 class="siginTitl regTitl text-center">Bienvenido a Mozcu</h2>
+        <p class="subtregistro text-center">Crear una nueva cuenta</p>
+        <form class="panelRegistro panel center-block" role="form">
+            <label>Nombre de usuario</label>
+            <input type="text" class="form-control" placeholder="Nombre de usuario" id="username">
+            <label>Email</label>  
+            <input type="email" class="form-control" placeholder="ejemplo@mozcu.com" id="email">
+            <label>Contraseña</label>    
+            <input type="password" class="form-control" placeholder="********" id="password">
+            <label>Repetir contraseña</label>  
+            <input type="password" class="form-control" placeholder="********" id="repeat_password">
+            <label>Ciudad</label>
+            <input type="text" class="form-control" placeholder="Buenos Aires" id="city" data-url="{{ path('MozcuMozcuBundle_getCities') }}">
+            <label>País</label>  
+            <select class="form-control" id="country">
+                {% for country in countries %}
+                    <option value="{{ country.getId }}">{{ country.getName }}</option>
+                {% endfor %}
+            </select>
 
-        <label>Contraseña</label>    
-        <input type="password" class="form-control" placeholder="********" id="password">
-
-        <label>Repetir contraseña</label>  
-        <input type="password" class="form-control" placeholder="********" id="repeat_password">
-
-        <label>Ciudad</label>
-        <input type="text" class="form-control" placeholder="Buenos Aires" id="city" data-url="{{ path('MozcuMozcuBundle_getCities') }}">
-
-        <label>País</label>  
-        <select class="form-control" id="country">
-            {% for country in countries %}
-                <option value="{{ country.getId }}">{{ country.getName }}</option>
-            {% endfor %}
-        </select>
-
-        <label class="checkbox">
-            <input type="checkbox" id="terms"> Acepto los <a href="{{ path('MozcuMozcuBundle_terms') }}" target="_blank">Terminos y condiciones</a>
-        </label>
-
-        <button class="btn btn-success btn-block btnRegCont" type="button" data-url="{{ path('MozcuMozcuBundle_postRegistration') }}">Continuar</button>
-    </div>
+            <label class="checkbox">
+                <input type="checkbox" id="terms"> Acepto los <a href="{{ path('MozcuMozcuBundle_terms') }}" target="_blank">Terminos y condiciones</a>
+            </label>
+                
+            <button class="btn btn-success btn-block btnRegCont" type="button" data-url="{{ path('MozcuMozcuBundle_postRegistration') }}">Continuar</button>
+              
+        </form>
+    </div>     
 </div>
     
 <script type="text/javascript">

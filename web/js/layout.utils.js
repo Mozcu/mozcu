@@ -72,6 +72,41 @@ $(function() {
         
         changeMainContent(url);
     });
+    
+    // Link recuperar password
+    $('.mainContent').on('click', '.forgotPasswordLink', function(e) {
+        e.preventDefault();
+        
+        changeMainContent($(this).attr('href'));
+    });
+    
+    // Enviar mail para recuperar password
+    $('.mainContent').on('click', '.recoveryPassword .btnRecPass', function(e) {
+        e.preventDefault();
+        var me = $(this);
+        var email = me.parent().find('.email').val();
+        var errorMsg = $('.alert-danger');
+        
+        errorMsg.hide();
+        errorMsg.find('.error').remove();
+        
+        if(!validateEmail(email)) {
+            errorMsg.append('<p class="error"> - Formato de email invalido </p>');
+            errorMsg.show();
+            return;
+        }
+        
+        me.prop('disabled', true);
+        $.post(me.data('url'), {email: email}, function(data) {
+            if(data.success) {
+                me.parent().replaceWith('<p class="text-success text-center">' + data.message + '</p>')
+            } else {
+                errorMsg.append('<p class="error"> - ' + data.message +' </p>');
+                errorMsg.show();
+            }
+            me.prop('disabled', false);
+        });
+    });
    
     // Links del menu de usuario
     $('.navbar.navbar-fixed-top').on('click', '.userBar .dropdown-menu a', function(e) {
@@ -190,9 +225,10 @@ $(function() {
         });
     };
     
-    
+    // Registro
     $('.mainContent').on('click', '.btn-success.btnRegCont', function(e){
-        var url = $(this).data('url');
+        var me = $(this);
+        var url = me.data('url');
         
         var account = prepareAccountData();
         
@@ -210,7 +246,7 @@ $(function() {
             return;
         }
         
-        $(this).prop('disabled', true);
+        me.prop('disabled', true);
         $.post(url, {data: account}, function(data) {
             if(data.success) {
                 $.getJSON(data.callback_url, {}, function(data) {
@@ -225,7 +261,7 @@ $(function() {
                 errorMsg.append('<p class="error"> - ' + data.message + '</p>');
                 errorMsg.show();
                 $('html,body').animate({scrollTop: 0}, 800);
-                $(this).prop('disabled', false);
+                me.prop('disabled', false);
             }
         }, 'json');
     });

@@ -239,24 +239,23 @@ body{
     display: inline-block;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
     font-weight: bold;
-    margin: 0 5px;
+    margin: 0px;
     outline: 0;
-    text-align: center;
     text-decoration: none !important;
     text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-    -webkit-user-select: none;
-    user-select: none vertical-align:middle;
+    vertical-align:middle;
     white-space: normal;
     word-wrap: normal;
-    padding: 7px 5px;
+    padding: 7px 20px;
 }
+
 
 .btnCompartir:hover{
     opacity: 0.7;
     transition: opacity .3s ease-in-out;
    -moz-transition: opacity .3s ease-in-out;
    -webkit-transition: opacity .3s ease-in-out;
-    border: none;
+    border: 1px solid #111;
 }
 
 /*+++++++++++++++++++++MEDIA QUERY HEADER DISCO PARA TABLETS Y CELULARES+++++++++++++++++++++++++++++*/
@@ -1444,6 +1443,47 @@ body{
 /*+++++++++++++++++++++++++++++++++FIN LOGIN++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
+/*+++++++++++++++++++++++++++++++++Inicio registro++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+.panelRegistro{
+    max-width: 500px;
+    padding: 25px;
+    padding-left: 35px;
+    padding-right: 35px;
+    background-color: #fafafa;
+    border: 1px solid #eeeeee;
+    margin-bottom: 10px;}
+
+.regTitl{
+    margin-bottom: 10px;
+}
+
+.subtregistro{
+    font-weight: lighter;
+    margin-bottom: 20px;
+}
+
+/*+++++++++++++++++++++++++++++++++FIN registro++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*+++++++++++++++++++++++++++++++++inicio reestablecer contraseña pass++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.subtreestablecerPass{
+    font-weight: lighter;
+    margin-bottom: 30px;
+    }
+.recuperarPassTitl{
+    margin-top: 70px;
+    margin-bottom: 10px;
+    font-weight: lighter;
+}
+
+.btnRecPass{
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+/*+++++++++++++++++++++++++++++++++FIN reestablecer contraseña++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /*+++++++++++++++++++++++++++++++++INICIO EXPLORER++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 

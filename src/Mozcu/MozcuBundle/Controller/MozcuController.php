@@ -41,6 +41,14 @@ abstract class MozcuController extends Controller{
     
     /**
      * 
+     * @return \Mozcu\MozcuBundle\Service\EmailService
+     */
+    public function getEmailService() {
+        return $this->get('mozcu_mozcu.email_service');
+    }
+    
+    /**
+     * 
      * @param string $className
      * @return \Doctrine\ORM\EntityRepository
      */

@@ -129,6 +129,16 @@ class HomeController extends MozcuController
         }
     }
     
+    public function forgotPasswordAction(Request $request) {
+        $template = 'MozcuMozcuBundle:Home:_forgotPassword.html.twig';
+        
+        if($request->isXmlHttpRequest()) {
+            $html = $this->renderView($template);
+            return $this->getJSONResponse(['success' => true, 'html' => $html]);
+        }
+        return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => [], 'template' => $template));
+    }
+    
     /**
      * 
      * @return \Symfony\Component\HttpFoundation\Response
@@ -224,5 +234,53 @@ class HomeController extends MozcuController
         } else {
             return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => $parameters, 'template' => $template));
         }
+    }
+    
+    public function sendPasswordEmailAction(Request $request) {
+        if($request->isXmlHttpRequest()) {
+            $email = $request->get('email');
+            $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('email' => $email));
+            if(!is_null($user)) {
+                $pr = $this->getUserService()->createPasswordRecovery($user);
+                $this->getEmailService()->sendPasswordRecoveryEmail($user, $pr);
+                return $this->getJSONResponse(array('success' => true, 'message' => 'Mensaje enviado! en instantes llegara a tu cuenta de correo.'));
+            } else {
+                return $this->getJSONResponse(array('success' => false, 'message' => 'La cuenta de mail no corresponde a un usuario registrado.'));
+            }
+        } else {
+            throw new BadRequestHttpException();
+        }
+    }
+    
+    public function passwordRecoveryAction($hash) {
+        $passwordRecovery = $this->getRepository('MozcuMozcuBundle:PasswordRecovery')->findOneBy(array('hash' => $hash));
+        if(is_null($passwordRecovery)) {
+            throw new BadRequestHttpException();
+        }
+        return $this->render('MozcuMozcuBundle:Home:passwordRecovery.html.twig', array('hash' => $passwordRecovery->getHash()));
+    }
+    
+    public function createNewPasswordAction($hash, Request $request) {
+        if(!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException();
+        }
+        
+        $password = $request->get('password');
+        $confirmPassword = $request->get('confirm_password');
+        $passwordRecovery = $this->getRepository('MozcuMozcuBundle:PasswordRecovery')->findOneBy(array('hash' => $hash));
+        
+        if(is_null($passwordRecovery)) {
+            return $this->getJSONResponse(array('success' => false, 'error' => 'Codigo invalido.'));
+        }
+        if($this->getUserService()->passwordRecoveryIsOld($passwordRecovery)) {
+            return $this->getJSONResponse(array('success' => false, 'error' => 'El codigo ha expirado.'));
+        }
+        if($password != $confirmPassword) {
+            return $this->getJSONResponse(array('success' => false, 'error' => 'Las contraseñas no coinciden.'));
+        }
+        
+        $this->getUserService()->changePassword($passwordRecovery->getUser(), $password);
+        $this->getUserService()->removePasswordRecovery($passwordRecovery);
+        return $this->getJSONResponse(array('success' => true, 'error' => 'La contraseña se ha cambiado exitosamente'));
     }
 }

@@ -85,3 +85,7 @@ services:
     arguments: [ "@doctrine.orm.entity_manager", "@mozcu_mozcu.queue_service" ]
     tags:
       -  { name: doctrine.entity_listener }
+      
+  mozcu_mozcu.email_service:
+    class: Mozcu\MozcuBundle\Service\EmailService
+    arguments: ["@mailer", "@templating", "%mail.noreply_address%"]

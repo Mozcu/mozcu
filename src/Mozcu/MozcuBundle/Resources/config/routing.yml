@@ -35,7 +35,31 @@ MozcuMozcuBundle_postRegistration:
   defaults: { _controller: MozcuMozcuBundle:Home:postRegistration}
   requirements:
     _method:  POST
-        
+    
+MozcuMozcuBundle_forgotPassword:
+  pattern: /forgotPassword
+  defaults: { _controller: MozcuMozcuBundle:Home:forgotPassword}
+  requirements:
+      _method: GET
+      
+MozcuMozcuBundle_sendPasswordEmail:
+  pattern: /forgotPassword/email
+  defaults: { _controller: MozcuMozcuBundle:Home:sendPasswordEmail}
+  requirements:
+      _method: POST
+      
+MozcuMozcuBundle_passwordRecovery:
+  pattern: /passwordRecovery/{hash}
+  defaults: { _controller: MozcuMozcuBundle:Home:passwordRecovery}
+  requirements:
+      _method: GET
+      
+MozcuMozcuBundle_createNewPassword:
+  pattern: /passwordRecovery/{hash}
+  defaults: { _controller: MozcuMozcuBundle:Home:createNewPassword}
+  requirements:
+      _method: POST
+      
 MozcuMozcuBundle_login:
   pattern: /login
   defaults: { _controller: MozcuMozcuBundle:Home:login}

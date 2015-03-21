@@ -2,16 +2,21 @@
 
 namespace Mozcu\MozcuBundle\Service;
 
+// Servicios
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Mozcu\MozcuBundle\Entity\User;
-use Mozcu\MozcuBundle\Entity\Profile;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 
-class UserService extends BaseService{
+// Entidades
+use Mozcu\MozcuBundle\Entity\User;
+use Mozcu\MozcuBundle\Entity\Profile;
+use Mozcu\MozcuBundle\Entity\PasswordRecovery;
+
+class UserService extends BaseService
+{
     
     /**
      *
@@ -31,7 +36,8 @@ class UserService extends BaseService{
      */
     private $container;
     
-    public function __construct(EntityManager $entityManager, EncoderFactory $encoderFactory, SecurityContext $securityContext, Container $container) {
+    public function __construct(EntityManager $entityManager, EncoderFactory $encoderFactory, SecurityContext $securityContext, Container $container)
+    {
         $this->encoder_factory = $encoderFactory;
         $this->securityContext = $securityContext;
         $this->container = $container;
@@ -42,7 +48,8 @@ class UserService extends BaseService{
      * 
      * @return string
      */
-    public function toString() {
+    public function toString() 
+    {
         return 'UserService';
     }
     
@@ -51,7 +58,8 @@ class UserService extends BaseService{
      * @param array $data
      * @return User
      */
-    public function createUser(array $data) {
+    public function createUser(array $data) 
+    {
         $factory = $this->encoder_factory;
         $group = $this->getEntityManager()->getRepository('Mozcu\MozcuBundle\Entity\Group')->find(2);
         $user = new User();
@@ -79,7 +87,8 @@ class UserService extends BaseService{
         return $user;
     }
     
-    public function updateUser(User $user, $username, $email, $password = null, $flush = true) {
+    public function updateUser(User $user, $username, $email, $password = null, $flush = true) 
+    {
         $user->setUsername($username);
         $user->setEmail($email);
         
@@ -100,7 +109,8 @@ class UserService extends BaseService{
      * @param string $username
      * @return boolean
      */
-    public function checkUsernameDisponibility($username) {
+    public function checkUsernameDisponibility($username) 
+    {
         $invalidUsernames = $this->container->getParameter('invalid_usernames');
         $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:User');
         
@@ -116,7 +126,8 @@ class UserService extends BaseService{
      * @param string $email
      * @return boolean
      */
-    public function checkEmailDisponibility($email) {
+    public function checkEmailDisponibility($email) 
+    {
         $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:User');
         
         $user = $repo->findOneBy(array('email' => $email));
@@ -130,7 +141,8 @@ class UserService extends BaseService{
      * 
      * @param \Entities\User $user
      */
-    public function logUser(User $user) {
+    public function logUser(User $user) 
+    {
         /* 'secured_area' is the name of the firewall */
         $token = new UsernamePasswordToken($user, null, 'secured_area', $user->getRoles());
         $this->securityContext->setToken($token);
@@ -142,7 +154,8 @@ class UserService extends BaseService{
      * @param string $password
      * @return boolean
      */
-    public function oldLoginCheck(User $user, $password) {
+    public function oldLoginCheck(User $user, $password) 
+    {
         $storedPass = $user->getOldPassword();
         if(!$user->getOldLogin() || empty($storedPass) || $storedPass != (md5($password))) {
             return false;
@@ -158,7 +171,8 @@ class UserService extends BaseService{
      * @param boolean $flush
      * @return \Mozcu\MozcuBundle\Entity\User
      */
-    public function changePassword(User $user, $password, $flush = true) {
+    public function changePassword(User $user, $password, $flush = true) 
+    {
         $factory = $this->encoder_factory;
         $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword($password, $user->getSalt());
@@ -182,7 +196,8 @@ class UserService extends BaseService{
      * @param array $accountData
      * @return array
      */
-    public function validateAccountData(array $accountData) {
+    public function validateAccountData(array $accountData) 
+    {
         $response =  array('success' => false);
         
         if(!$this->validateEmail($accountData['email'])) {
@@ -202,7 +217,8 @@ class UserService extends BaseService{
         return $response;
     }
     
-    private function validateEmail($email) {
+    private function validateEmail($email) 
+    {
         $emailConstraint = new EmailConstraint();
         $errors = $this->container->get('validator')->validateValue(
             $email,
@@ -214,5 +230,51 @@ class UserService extends BaseService{
         }
         return true;
     }
-
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\User $user
+     * @return \Mozcu\MozcuBundle\Entity\PasswordRecovery
+     */
+    public function createPasswordRecovery(User $user) 
+    {
+        $now = new \DateTime();
+        $hash = md5($user->getId() . $now->getTimestamp());
+        
+        $pr = new PasswordRecovery();
+        $pr->setUser($user)
+            ->setHash($hash);
+        
+        $this->getEntityManager()->persist($pr);
+        $this->getEntityManager()->flush();
+        
+        return $pr;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\PasswordRecovery $passwordRecovery
+     * @return boolean
+     */
+    public function passwordRecoveryIsOld(PasswordRecovery $passwordRecovery)
+    {
+        $now = new \DateTime();
+        $diff = $now->getTimestamp() - $passwordRecovery->getCreatedAt()->getTimestamp();
+        $validDiff = $this->container->getParameter('password_recovery.valid_time');
+        
+        if($diff > $validDiff) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\PasswordRecovery $passwordRecovery
+     */
+    public function removePasswordRecovery(PasswordRecovery $passwordRecovery)
+    {
+        $this->getEntityManager()->remove($passwordRecovery);
+        $this->getEntityManager()->flush();
+    }
 }
