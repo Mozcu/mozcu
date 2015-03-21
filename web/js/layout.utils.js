@@ -81,7 +81,7 @@ $(function() {
     });
     
     // Enviar mail para recuperar password
-    $('.mainContent').on('click', '.recoveryPassword .btnRecPass', function(e) {
+    $('.mainContent').on('click', '.forgotPassword .btnRecPass', function(e) {
         e.preventDefault();
         var me = $(this);
         var email = me.parent().find('.email').val();
@@ -105,7 +105,41 @@ $(function() {
                 errorMsg.show();
             }
             me.prop('disabled', false);
-        });
+        }, 'json');
+    });
+    
+    // Enviar formulario para recuperar password
+    $('.mainContent').on('click', '.passwordRecovery .btnRecPass', function(e) {
+        e.preventDefault();
+        var me = $(this);
+        var errorMsg = $('.alert-danger');
+        var passwd = me.parent().find('.password').val();
+        var confirm = me.parent().find('.confirm-password').val();
+        
+        errorMsg.hide();
+        errorMsg.find('.error').remove();
+        
+        if(passwd.length === 0) {
+            errorMsg.append('<p class="error"> - Contraseña vacia </p>');
+            errorMsg.show();
+            return;
+        }
+        if(passwd !== confirm) {
+            errorMsg.append('<p class="error"> - Las contraseñas no coinciden </p>');
+            errorMsg.show();
+            return;
+        }
+        
+        me.prop('disabled', true);
+        $.post(me.data('url'), {password: passwd, confirm_password: confirm}, function(data) {
+            if(data.success) {
+                me.parent().replaceWith('<p class="text-success text-center">' + data.message + '</p>')
+            } else {
+                errorMsg.append('<p class="error"> - ' + data.message +' </p>');
+                errorMsg.show();
+            }
+            me.prop('disabled', false);
+        }, 'json');
     });
    
     // Links del menu de usuario

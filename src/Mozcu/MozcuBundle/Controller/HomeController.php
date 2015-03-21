@@ -270,17 +270,17 @@ class HomeController extends MozcuController
         $passwordRecovery = $this->getRepository('MozcuMozcuBundle:PasswordRecovery')->findOneBy(array('hash' => $hash));
         
         if(is_null($passwordRecovery)) {
-            return $this->getJSONResponse(array('success' => false, 'error' => 'Codigo invalido.'));
+            return $this->getJSONResponse(array('success' => false, 'message' => 'Codigo invalido.'));
         }
         if($this->getUserService()->passwordRecoveryIsOld($passwordRecovery)) {
-            return $this->getJSONResponse(array('success' => false, 'error' => 'El codigo ha expirado.'));
+            return $this->getJSONResponse(array('success' => false, 'message' => 'El codigo ha expirado.'));
         }
         if($password != $confirmPassword) {
-            return $this->getJSONResponse(array('success' => false, 'error' => 'Las contraseñas no coinciden.'));
+            return $this->getJSONResponse(array('success' => false, 'message' => 'Las contraseñas no coinciden.'));
         }
         
         $this->getUserService()->changePassword($passwordRecovery->getUser(), $password);
         $this->getUserService()->removePasswordRecovery($passwordRecovery);
-        return $this->getJSONResponse(array('success' => true, 'error' => 'La contraseña se ha cambiado exitosamente'));
+        return $this->getJSONResponse(array('success' => true, 'message' => 'La contraseña se ha cambiado exitosamente'));
     }
 }
