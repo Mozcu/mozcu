@@ -1,15 +1,15 @@
 <div class="row center-block perfilContenido profileContent">
     <div class="headerAlbumes col-lg-12 text-center">
         <div class="btn-group">
-            <button type="button" class="btn btn-default btnPerfilActive">Álbumes de {{ user.getCurrentName}}</button>
-            <button type="button" class="btn btn-default">Favoritos de {{ user.getCurrentName}}</button>
+            <button type="button" data-option='albums' class="btn btn-default btnPerfilActive">Álbumes de {{ user.getCurrentName}}</button>
+            <button type="button" data-option='favorites' class="btn btn-default">Favoritos de {{ user.getCurrentName}}</button>
         </div>
         <div class="col-lg-2 pull-right hidden">
             <input type="search" class="form-control" placeholder="Buscar">
         </div>
     </div>
 
-    <div class="row center-block rowContenido">
+    <div class="row center-block rowContenido albums">
         <!--INICIO DE ALBUMES-->
         {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
             <div class="albumManager col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id="{{ album.getId }}">
@@ -30,7 +30,7 @@
                     </a>
                 {% endif %}
                 
-                <p class="pull-right visible-sm visible-md visible-lg text-muted">Publicado hace al rededor de un mes</p>
+                <!--<p class="pull-right visible-sm visible-md visible-lg text-muted">Publicado hace al rededor de un mes</p>-->
                 <h5>{{ album.getName }} {% if album.getIsActive == false %}(procesando...){% endif %}</h5>
                 <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}"><p>{{ album.getArtistName }}</p></a>
                 <p>{{ album.getReleaseDate }}</p>
@@ -52,5 +52,5 @@
         {% endfor %}
     </div>
     
-    <!--FIN DE ALBUMES-->                          
+    {{ include('MozcuMozcuBundle:Profile:_likedAlbums.html.twig', {'albums': likedAlbums}) }}
 </div>

@@ -55,6 +55,26 @@ $(function() {
         }
     });
     
+    // Toggle mis albumes y favoritos
+    $('.mainContent').on('click', '.profileContent .headerAlbumes .btn-default', function(e) {
+        e.preventDefault();
+        
+        var me = $(this);
+        if(me.hasClass('btnPerfilActive')) {
+            return;
+        }
+        
+        var parent = me.parents('.profileContent');
+        var option = me.data('option');
+        var currentOption = parent.find('.btnPerfilActive').data('option');
+        
+        parent.find('.btnPerfilActive').removeClass('btnPerfilActive');
+        me.addClass('btnPerfilActive');
+        parent.find('.'+option).removeClass('hidden');
+        parent.find('.'+currentOption).addClass('hidden');
+        
+    });
+    
     // Ir al album
     $('.mainContent').on('click', '.profileContent .albumManager a', function(e) {
         e.preventDefault();

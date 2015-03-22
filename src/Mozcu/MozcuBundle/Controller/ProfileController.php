@@ -117,9 +117,11 @@ class ProfileController extends MozcuController
         $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
         if(!empty($user)) {
             $albums = $this->getRepository('MozcuMozcuBundle:Album')->findByProfile($user->getCurrentProfile());
+            $likedAlbums = $user->getProfile()->getLikedAlbums();
             
             $template = 'MozcuMozcuBundle:Profile:_profileAlbums.html.twig';
-            $parameters = array('user' => $user, 'selectedOption' => 'albums', 'albums' => $albums, 'isAuthenticated' => false);
+            $parameters = array('user' => $user, 'selectedOption' => 'albums', 'albums' => $albums, 
+                                'likedAlbums' => $likedAlbums, 'isAuthenticated' => false);
             
             $loggedInUser = $this->getUser(); 
             $parameters['isAuthenticated'] = false;
