@@ -111,7 +111,7 @@ $(function() {
                     amount = 0;
                 }
                 
-                if (amount == 0) {
+                if (amount === 0) {
                     inProcess.addClass('hidden');
                     ready.removeClass('hidden');
                     initDownlaod(zipUrl);
@@ -121,6 +121,7 @@ $(function() {
                 } else {
                     $('#amount').val(amount);
                     $('#checkoutUrl').val(zipUrl);
+                    window.onbeforeunload = null;
                     $('#paypalForm').submit();
                 }
             }
