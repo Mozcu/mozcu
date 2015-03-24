@@ -124,7 +124,8 @@ $(function() {
     
     /***** Account Configuration *****/
     $('.mainContent').on('click', '.botonesPerfil .btn-success', function(e){
-        var url = $(this).data('url');
+        var me = $(this);
+        var url = me.data('url');
         
         var account = prepareAccountData();
         
@@ -142,7 +143,7 @@ $(function() {
             return;
         }
         
-        $(this).prop('disabled', true);
+        me.prop('disabled', true);
         $.post(url, {account: account}, function(data) {
             if(data.success) {
                 $.getJSON(data.callback_url, {}, function(data) {
@@ -157,7 +158,7 @@ $(function() {
                 errorMsg.append('<p class="error"> - ' + data.message + '</p>');
                 errorMsg.show();
                 $('html,body').animate({scrollTop: 0}, 800);
-                $(this).prop('disabled', false);
+                me.prop('disabled', false);
             }
         }, 'json');
     });
