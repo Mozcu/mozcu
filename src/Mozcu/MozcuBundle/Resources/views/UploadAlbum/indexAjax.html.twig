@@ -188,7 +188,6 @@
             auto            : true,
             removeCompleted : false,
             fileSizeLimit   : '0',
-            fileType        : 'mp3',
             itemTemplate    : uploadifyTemplate,
             queueID         : 'add_tracks-queue',
             width           : 200,
@@ -201,10 +200,17 @@
                 } else {
                     file.queueItem.find('.fileinfo').html('ERROR');
                 }
+                $('#uploadifive-add_tracks input[type="file"]').attr(
+                    'accept',
+                    'audio/mpeg'
+                );
             },
             onInit : function(instance) {
-                console.log(instance);
                 $('.upload-plugin .uploadify').attr('style', '');
+                $('#uploadifive-add_tracks input[type="file"]').attr(
+                    'accept',
+                    'audio/mpeg'
+                );
             }
         });
         
