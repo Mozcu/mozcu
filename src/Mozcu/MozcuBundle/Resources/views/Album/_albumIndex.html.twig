@@ -1,8 +1,8 @@
 <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 albumsPage">
 <!--INICIO DE CONTENIDO-->
     <div class="row center-block perfilContenido">
-        <div class="headerExplorer col-lg-12">
-            <!--<div class="btn-group btnTag">
+        {#<div class="headerExplorer col-lg-12">
+            <div class="btn-group btnTag">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     Todos los tags <span class="caret"></span>
                 </button>
@@ -51,9 +51,9 @@
                     <li><a href="#">Fecha de subida</a></li>
                     <li><a href="#">Reproducciones</a></li>
                 </ul>
-            </div> -->
+            </div> 
 
-        </div>
+        </div>#}
                 
         {% if tag is defined %}
             <div data-tag="{{ tag.getName }}" class="row headerResultados tagResult">

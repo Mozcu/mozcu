@@ -8,7 +8,7 @@
     <meta property="og:description" content="{{ user.getProfile.getSlogan }}">
     <meta property="og:image" content="
         {% if user.getProfile.getMainImage is null %}
-            {{ app.request.uri ~ 'images/profile_125x125.jpg' }}
+            http://mozcudev.com.ar/images/profile_125x125.jpg
         {% else %}
             {{ user.getProfile.getProfileImageUrlForHeader }}
         {% endif %}">
