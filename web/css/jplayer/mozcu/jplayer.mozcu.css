@@ -400,6 +400,7 @@ div.jp-playlist {
 	overflow-y: auto;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    background-size: cover;
 }
 div.jp-playlist::-webkit-scrollbar {
     /*background-color: #FFFFFF;*/
