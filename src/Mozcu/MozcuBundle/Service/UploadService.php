@@ -172,8 +172,11 @@ class UploadService extends BaseService{
             }
             //Images
             foreach($album->getImage()->getPresentations() as $pres) {
-                $this->google_storage->delete($pres->getStaticFileName());
-            }
+                $static = $pres->getStaticFileName();
+                if(!empty($static)) {
+                        $this->google_storage->delete($pres->getStaticFileName());
+                    }
+                }
             //Zip
             $this->deleteAlbumZip($album);
             //$this->google_storage->delete($album->getStaticDirectory());

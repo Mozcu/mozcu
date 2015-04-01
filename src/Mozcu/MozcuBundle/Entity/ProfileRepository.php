@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class ProfileRepository extends EntityRepository
 {
     public function liveSearch($query, $limit = 4) {
-        $dql = "FROM MozcuMozcuBundle:Profile p JOIN p.user u JOIN p.albums a
+        $dql = "FROM MozcuMozcuBundle:Profile p JOIN p.user u LEFT JOIN p.albums a
                 WHERE p.name LIKE '%$query%' OR u.username LIKE '%$query%' OR a.artist_name LIKE '%$query%'";
         if($limit > 0) {
             $dql = "SELECT p " . $dql;

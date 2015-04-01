@@ -30,6 +30,7 @@ security:
         success_handler: authentication_handler
         failure_handler: authentication_handler
         remember_me: true
+        require_previous_session: false
       
       logout:
         path:   /logout
