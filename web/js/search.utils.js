@@ -1,14 +1,4 @@
 $(function() {
-    
-    // Modifica el contenido principal
-    var changeMainContent = function(url) {
-         $.getJSON(url, function(data) {
-            if(data.success) {
-                $('.mainContent').html(data.html);
-            }
-        });
-    };
-    
     // Search
     $('.mainContent').on('click', '.searchResults .result a', function(e){
         e.preventDefault();

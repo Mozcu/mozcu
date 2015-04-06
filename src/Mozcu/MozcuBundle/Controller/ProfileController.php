@@ -194,9 +194,9 @@ class ProfileController extends MozcuController
     public function followersAction($username) {
         $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
         if(!empty($user)) {
-            
+            $path = explode('/', $this->getRequest()->getPathInfo());
             $template = 'MozcuMozcuBundle:Profile:_profileFollowers.html.twig';
-            $parameters = array('user' => $user, 'selectedOption' => 'followers');
+            $parameters = array('user' => $user, 'selectedOption' => 'followers', 'loggedInUser' => $this->getUser(), 'subOption' => $path[2]);
             
             if($this->getRequest()->isXmlHttpRequest()) {
                 return $this->renderAjaxResponse($template, $parameters);

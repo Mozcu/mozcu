@@ -48,14 +48,19 @@
     </div>
                
     <div class="followersPerfil col-xs-12 col-sm-2 col-md-2 col-lg-2 center-block">
-        <div class="followersFollow col-xs-6 col-md-12 col-sm-12 col-lg-12">
-            <p class="numFollow followCounter">{{ user.getProfile.getFollowers.count }}</p>
-            <p class="nomFollow">Seguidores</p>   
-        </div>
-        <div class="col-xs-6 col-md-12 col-sm-12 col-lg-12">
-            <!--<p class="numFollow visitCounter">100k</p>
-            <p class="nomFollow">Visitas</p>   -->
-        </div>
+        <a href="{{ path('MozcuMozcuBundle_profileFollowers', {'username': user.getUsername}) }}">
+            <div class="followersFollow col-xs-6 col-md-12 col-sm-12 col-lg-12">
+                <p class="numFollow followCounter">{{ user.getProfile.getFollowers.count }}</p>
+                <p class="nomFollow">Seguidores</p>   
+            </div>
+        </a>
+        
+        <a href="{{ path('MozcuMozcuBundle_profileFollowing', {'username': user.getUsername}) }}">
+            <div class="col-xs-6 col-md-12 col-sm-12 col-lg-12">
+                <p class="numFollow">{{ user.getProfile.getFollowing.count }}</p>
+                <p class="nomFollow">Siguiendo</p>   
+            </div>
+        </a>
     </div>
     
     {{ include('MozcuMozcuBundle:Profile:_profileMenu.html.twig', {'user': user,'selected': selectedOption}) }}

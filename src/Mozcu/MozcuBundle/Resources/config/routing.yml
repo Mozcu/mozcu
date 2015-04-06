@@ -326,6 +326,12 @@ MozcuMozcuBundle_profileFollowers:
   defaults: {_controller: MozcuMozcuBundle:Profile:followers}
   requirements:
     _method: GET
+    
+MozcuMozcuBundle_profileFollowing:
+  pattern: /{username}/following
+  defaults: {_controller: MozcuMozcuBundle:Profile:followers}
+  requirements:
+    _method: GET
   
 MozcuMozcuBundle_albumsForProfile:
   pattern: /{username}/albumsForProfile

@@ -55,6 +55,49 @@ $(function() {
         }
     });
     
+    $('.mainContent').on('click', '.headerPerfil .followersPerfil a', function(e) {
+        e.preventDefault()
+        var me = $(this);
+        
+        $.getJSON(me.attr('href'), function(data) {
+            $('.profileContent').replaceWith(data.html);
+            $('.headerPerfil .navDisco').find('.discoActive').removeClass('discoActive');
+            $('.headerPerfil .navPerfilMobile').find('.navDiscoMobileActive').removeClass('navDiscoMobileActive');
+        });
+    });
+    
+    // Pagina de seguidores
+    $('.mainContent').on('click', '.paginaSeguidores .btn-seguidores button', function(e) {
+        var me = $(this);
+        if (me.hasClass('btnPerfilActive')) {
+            return;
+        }
+        
+        var other = me.parent().find('.btnPerfilActive');
+        other.removeClass('btnPerfilActive');
+        me.addClass('btnPerfilActive');
+        $('.paginaSeguidores .' + other.data('type')).addClass('hidden');
+        $('.paginaSeguidores .' + me.data('type')).removeClass('hidden');
+    });
+    
+    $('.mainContent').on('click', '.paginaSeguidores a', function(e) {
+        e.preventDefault();
+        changeMainContent($(this).attr('href'));
+    });
+    
+    // Pagina de seguidores
+    $('.mainContent').on('click', '.paginaSeguidores .btnSeguirFollow', function(e) {
+        var me = $(this);
+        $.post(me.data('url'), {profileId: me.data('id')}, function(data) {
+            if(data.success) {
+                if(data.action == 'following') {
+                    me.addClass('disabled');
+                    me.find('.text').html(me.data('following'));
+                }
+            }
+        }, 'json');
+    });
+    
     // Toggle mis albumes y favoritos
     $('.mainContent').on('click', '.profileContent .headerAlbumes .btn-default', function(e) {
         e.preventDefault();

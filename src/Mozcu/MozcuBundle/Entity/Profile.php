@@ -454,9 +454,11 @@ class Profile {
      */
     public function getProfileImageUrlForHeader() {
         $image = $this->getMainImage();
-        foreach($image->getPresentations() as $p) {
-            if($p->getName() == 'profile_header') {
-                return $p->getUrl();
+        if(!empty($image)) {
+            foreach($image->getPresentations() as $p) {
+                if($p->getName() == 'profile_header') {
+                    return $p->getUrl();
+                }
             }
         }
     }

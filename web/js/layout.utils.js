@@ -184,16 +184,6 @@ $(function() {
         changeMainContent(url);
     });
     
-    // Modifica el contenido principal
-    var changeMainContent = function(url) {
-         $.getJSON(url, function(data) {
-            if(data.success) {
-                $('.mainContent').html(data.html);
-                $('html,body').animate({scrollTop: 0}, 800);
-            }
-        });
-    };
-    
     // Ejecuta el login 
     var loginCheck = function(username, password, rememberMe) {
         var url = $('#old_login_check_url').val();

@@ -871,6 +871,10 @@ body{
     color: #ccc;
 }
 
+.followersPerfil a {
+    color: #ccc;
+}
+
 .numFollow{
     font-size: 24px;
     margin-bottom: 0px;

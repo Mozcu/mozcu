@@ -1,274 +1,59 @@
-<div class="content profileContent">
-    <div class="filtrerLeft">
-            <a href="" class="btnFil selected down">Siguiendo</a>
-            <a href="" class="btnFil over">Seguidores</a>
+<div class="row center-block perfilContenido profileContent paginaSeguidores">
+    <div class="headerAlbumes col-lg-12 text-center">
+        <div class="btn-group btn-seguidores">
+            <button type="button" data-type="followers" class="btn btn-default {% if subOption == 'followers' %}btnPerfilActive{% endif %}">{{ user.getProfile.getFollowers.count }} Seguidores</button>
+            <button type="button" data-type="following" class="btn btn-default {% if subOption == 'following' %}btnPerfilActive{% endif %}">{{ user.getProfile.getFollowing.count }} Seguidos</button>
+        </div>
+        <div class="col-lg-2 pull-right hidden">
+            <input type="search" class="form-control" placeholder="Buscar">
+        </div>
     </div>
-    <div class="filtrerRight">
-            <div class="boxSearch">
-                            <input class="search" type="" placeholder="Filtrar colección" />
-            </div>
+
+    <div class="followers {% if subOption == 'following' %}hidden{% endif %}">
+    {% for follower in user.getProfile.getFollowers %}        
+        <div class="follow col-xs-6 col-sm-4 col-md-3 col-lg-3 center-block {% if subOption == 'following' %}hidden{% endif %}">
+            <div class="followBox">
+               <a href="{{ path('MozcuMozcuBundle_profile', {'username': follower.getUsername()}) }}">
+                    {% if follower.getProfileImageUrlForHeader is null %}
+                        <img src="{{ asset('images/profile_125x125.jpg')}}" alt="image" class="img-circle img-perfil imgFollow center-block">
+                    {% else %}
+                        <img src="{{ follower.getProfileImageUrlForHeader }}" alt="image" class="img-circle img-perfil imgFollow center-block">
+                    {% endif %}
+               </a>
+                <a href="{{ path('MozcuMozcuBundle_profile', {'username': follower.getUsername()}) }}" class="text-center"><h5 class="titlFollower">{{ follower.getCurrentName}}</h5></a>
+                {% if loggedInUser is not null and not loggedInUser.getProfile.sameAs(follower) %}
+                    {% if loggedInUser.getProfile.following(follower) %}
+                        <button type="button" class="btn btn-success btnSeguirFollow center-block disabled"><i class="ion-person-add"></i>Siguiendo</button>
+                    {% else %}
+                        <button data-url="{{ path('MozcuMozcuBundle_follow') }}" data-id="{{ follower.getId() }}" type="button" class="btn btn-success btnSeguirFollow center-block"><i class="ion-person-add"></i><span class="text">Seguir</span></button>
+                    {% endif %}
+                {% endif %}
+             </div> 
+         </div>
+    {% endfor %}
     </div>
-    <div class="clearBoth"></div>
-    <div class="contentInner">
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollowing">Following</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollowing">Following</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollowing">Following</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollowing">Following</a>
-            </div>
-            <!-- /USUARIO -->
-            <!-- USUARIO -->
-            <div class="user">
-                    <div class="userInfo">
-                            <div class="avatar">
-                                    <img src="images/userAvatar.jpg" height="50" width="50" alt="" />
-                            </div>
-                            <h1 class="title">Gal Sanchez 1</h1>
-                            <span class="desc">Buenos Aires, Argentina</span>
-                    <div class="clearBoth"></div>	
-                    </div>
-                            <a href="" class="btnUserFollow">Follow back</a>
-            </div>
-            <!-- /USUARIO -->
+    
+    <div class="following {% if subOption == 'followers' %}hidden{% endif %}">
+    {% for following in user.getProfile.getFollowing %}        
+        <div class="follow col-xs-6 col-sm-4 col-md-3 col-lg-3 center-block">
+            <div class="followBox">
+               <a href="{{ path('MozcuMozcuBundle_profile', {'username': following.getUsername()}) }}">
+                    {% if following.getProfileImageUrlForHeader is null %}
+                        <img src="{{ asset('images/profile_125x125.jpg')}}" alt="image" class="img-circle img-perfil imgFollow center-block">
+                    {% else %}
+                        <img src="{{ following.getProfileImageUrlForHeader }}" alt="image" class="img-circle img-perfil imgFollow center-block">
+                    {% endif %}
+               </a>
+                <a href="{{ path('MozcuMozcuBundle_profile', {'username': following.getUsername()}) }}" class="text-center"><h5 class="titlFollower">{{ following.getCurrentName}}</h5></a>
+                {% if loggedInUser is not null and not loggedInUser.getProfile.sameAs(following) %}
+                    {% if loggedInUser.getProfile.following(following) %}
+                        <button type="button" class="btn btn-success btnSeguirFollow center-block disabled"><i class="ion-person-add"></i>Siguiendo</button>
+                    {% else %}
+                        <button data-url="{{ path('MozcuMozcuBundle_follow') }}" data-id="{{ following.getId() }}" data-following="Siguiendo" type="button" class="btn btn-success btnSeguirFollow center-block"><i class="ion-person-add"></i><span class="text">Seguir</span></button>
+                    {% endif %}
+                {% endif %}
+             </div>   
+        </div>
+    {% endfor %}
     </div>
 </div>
