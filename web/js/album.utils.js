@@ -50,11 +50,11 @@ $(function() {
     });
     
     // Pestañas del album (lista de temas, informacion, comentarios, similares)
-    $('.mainContent').on('click', '.headerDisco .navDisco a', function(e) {
+    $('.mainContent').on('click', '.headerDisco .navDisco button', function(e) {
       e.preventDefault();
       var me = $(this);
       
-      var url = me.attr('href');
+      var url = me.data('url');
       if(url == '#') {
           return;
       }
@@ -170,49 +170,25 @@ $(function() {
     // Ir al disco
     $('.mainContent').on('click', '.album .albumLink', function(e) {
       e.preventDefault();
-      var me = $(this);
-      
-      $.getJSON(me.attr('href'), {}, function(data) {
-        if(data.success) {
-          $('.mainContent').html(data.html);
-        }
-      });
+      changeMainContent($(this).attr('href'));
     });
     
     // Ir al perfil del usuario
     $('.mainContent').on('click', '.album .profileLink', function(e) {
       e.preventDefault();
-      var me = $(this);
-      
-      $.getJSON(me.attr('href'), {}, function(data) {
-        if(data.success) {
-          $('.mainContent').html(data.html);
-        }
-      });
+      changeMainContent($(this).attr('href'));
     });
     
     // Subido por
     $('.mainContent').on('click', '.headerDisco .nombreAlbumUser a', function(e) {
       e.preventDefault();
-      var url = $(this).attr('href');
-      
-      $.getJSON(url, {}, function(data) {
-        if(data.success) {
-          $('.mainContent').html(data.html);
-        }
-      });
+      changeMainContent($(this).attr('href'));
     });
     
     // click en tags de informacion
     $('.mainContent').on('click', '.infoDisco .tag', function(e) {
       e.preventDefault();
-      var url = $(this).attr('href');
-      
-      $.getJSON(url, {}, function(data) {
-        if(data.success) {
-          $('.mainContent').html(data.html);
-        }
-      });
+      changeMainContent($(this).attr('href'));
     });
     
     var searchAlbums = function() {

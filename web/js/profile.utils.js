@@ -1,11 +1,12 @@
 $(function() {
     
     // Menu del perfil
-    $('.mainContent').on('click', '.headerPerfil .navDisco a', function(e){
+    $('.mainContent').on('click', '.headerPerfil .navDisco button', function(e){
         e.preventDefault();
         
         var me = $(this);
-        var url = me.attr('href');
+        //var url = me.attr('href');
+        var url = me.data('url');
         
         $.getJSON(url, function(data) {
             if(data.success) {
@@ -55,18 +56,18 @@ $(function() {
         }
     });
     
-    $('.mainContent').on('click', '.headerPerfil .followersPerfil a', function(e) {
+    // Pagina de seguidores
+    $('.mainContent').on('click', '.headerPerfil .followersPerfil .link', function(e) {
         e.preventDefault()
         var me = $(this);
         
-        $.getJSON(me.attr('href'), function(data) {
+        $.getJSON(me.data('url'), function(data) {
             $('.profileContent').replaceWith(data.html);
             $('.headerPerfil .navDisco').find('.discoActive').removeClass('discoActive');
             $('.headerPerfil .navPerfilMobile').find('.navDiscoMobileActive').removeClass('navDiscoMobileActive');
         });
     });
     
-    // Pagina de seguidores
     $('.mainContent').on('click', '.paginaSeguidores .btn-seguidores button', function(e) {
         var me = $(this);
         if (me.hasClass('btnPerfilActive')) {
@@ -85,7 +86,6 @@ $(function() {
         changeMainContent($(this).attr('href'));
     });
     
-    // Pagina de seguidores
     $('.mainContent').on('click', '.paginaSeguidores .btnSeguirFollow', function(e) {
         var me = $(this);
         $.post(me.data('url'), {profileId: me.data('id')}, function(data) {
@@ -121,13 +121,7 @@ $(function() {
     // Ir al album
     $('.mainContent').on('click', '.profileContent .albumManager a', function(e) {
         e.preventDefault();
-        var me = $(this);
-        
-        $.getJSON(me.attr('href'), {}, function(data) {
-            if(data.success) {
-                $('.mainContent').html(data.html);
-            }
-        });
+        changeMainContent($(this).attr('href'));
     });
     
     // Eliminar album
@@ -157,12 +151,7 @@ $(function() {
         
         album.find('.btnAlbumManager').hide();
         album.find('.loader').show();
-        $.getJSON(url, {id: album.find('.albumId').val()}, function(data) {
-            if(data.success) {
-                $('.mainContent').html(data.html);
-                $('html,body').animate({scrollTop: 0}, 800);
-            }
-        });
+        changeMainContent(url)
     });
     
     /***** Account Configuration *****/
@@ -189,12 +178,14 @@ $(function() {
         me.prop('disabled', true);
         $.post(url, {account: account}, function(data) {
             if(data.success) {
-                $.getJSON(data.callback_url, {}, function(data) {
+                var callbackUrl = data.callback_url;
+                $.getJSON(callbackUrl, {}, function(data) {
                     if(data.success) {
                         $('.mainContent').html(data.html);
                         reloadUserBar();
                         reloadLeftBar();
                         $('html,body').animate({scrollTop: 0}, 800);
+                        historyPushState(callbackUrl, 'mainContent', 'inner');
                     }
                 });
             } else {

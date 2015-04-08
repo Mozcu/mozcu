@@ -76,7 +76,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface,
     {
         $request->getSession()->invalidate();
         if ($request->isXmlHttpRequest()) {
-            $url = $this->router->generate('MozcuMozcuBundle_ajaxGetHome');
+            $url = $this->router->generate('MozcuMozcuBundle_home');
             $response = new Response(json_encode(array('success' => true, 'callback_url' => $url)));
             $response->headers->set('Content-Type', 'application/json');
             return $response;

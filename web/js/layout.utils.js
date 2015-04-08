@@ -1,39 +1,27 @@
 $(function() {
    
     // Abandonar pagina
-    function closePageWarning(){
+    /*function closePageWarning(){
         return 'Si te vas no vas a poder escuchar mas musica. Estas seguro?';
     }
-    window.onbeforeunload = closePageWarning;
+    window.onbeforeunload = closePageWarning;*/
    
    // Click en el logo superior izquirdo
    $('.navbar.navbar-fixed-top').on('click', '.navbar-header a', function(e){
         e.preventDefault();
-        
-        var me = $(this);
-        var url = me.attr('href');
-        
-        changeMainContent(url);
+        changeMainContent($(this).attr('href'));
     });
     
     // Link login
     $('.navbar.navbar-fixed-top').on('click', '.userBar .loginLink', function(e) {
         e.preventDefault();
-        
-        var me = $(this);
-        var url = me.attr('href');
-        
-        changeMainContent(url);
+        changeMainContent($(this).attr('href'));
     });
     
     // Link login home
     $('.mainContent').on('click', '.btnIngresar', function(e) {
         e.preventDefault();
-        
-        var me = $(this);
-        var url = me.data('url');
-        
-        changeMainContent(url);
+        changeMainContent($(this).attr('href'));
     });
     
     // Links footer
@@ -73,17 +61,12 @@ $(function() {
     // Link Registrarse
     $('.navbar.navbar-fixed-top').on('click', '.userBar .registration', function(e) {
         e.preventDefault();
-        
-        var me = $(this);
-        var url = me.data('url');
-        
-        changeMainContent(url);
+        changeMainContent($(this).attr('href'));
     });
     
     // Link recuperar password
     $('.mainContent').on('click', '.forgotPasswordLink', function(e) {
         e.preventDefault();
-        
         changeMainContent($(this).attr('href'));
     });
     
@@ -161,14 +144,11 @@ $(function() {
                 if(me.hasClass('logoutLink')) {
                     reloadUserBar();
                     reloadLeftBar();
-                    $.getJSON(data.callback_url, function(data) {
-                        if(data.success) {
-                            $('.mainContent').html(data.html);
-                        }
-                    });
+                    changeMainContent(data.callback_url);
                 } else {
                     $('.mainContent').html(data.html);
                     $('html,body').animate({scrollTop: 0}, 800);
+                    historyPushState(url, 'mainContent', 'inner');
                 }
             } 
         });
@@ -177,11 +157,7 @@ $(function() {
     // Opciones del sidebar
     $('.container-fluid').on('click', '.sidebar .nav-sidebar a', function(e){
         e.preventDefault();
-        
-        var me = $(this);
-        var url = me.attr('href');
-        
-        changeMainContent(url);
+        changeMainContent($(this).attr('href'));
     });
     
     // Ejecuta el login 
@@ -225,11 +201,7 @@ $(function() {
     var validLogin = function(callbackUrl) {
         reloadUserBar();
         reloadLeftBar();
-        $.getJSON(callbackUrl, function(data) {
-            if(data.success) {
-                $('.mainContent').html(data.html);
-            }
-        });
+        changeMainContent(callbackUrl);
     };
     
     // Recarga la barra superior derecha
@@ -280,12 +252,14 @@ $(function() {
         me.prop('disabled', true);
         $.post(url, {data: account}, function(data) {
             if(data.success) {
-                $.getJSON(data.callback_url, {}, function(data) {
+                var callbackUrl = data.callback_url;
+                $.getJSON(callbackUrl, {}, function(data) {
                     if(data.success) {
                         $('.mainContent').html(data.html);
                         reloadUserBar();
                         reloadLeftBar();
                         $('html,body').animate({scrollTop: 0}, 800);
+                        historyPushState(callbackUrl, 'mainContent', 'inner');
                     }
                 });
             } else {
@@ -358,8 +332,7 @@ $(function() {
     // Links de terminos y condiciones
     $('.mainContent').on('click', '.terms footer a', function(e) {
         e.preventDefault();
-        var url = $(this).attr('href');
-        changeMainContent(url);
+        changeMainContent($(this).attr('href'));
     });
     
 });
