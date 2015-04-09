@@ -48,10 +48,7 @@ class HomeController extends MozcuController
         $template = 'MozcuMozcuBundle:Home:_homeLogin.html.twig';
         $parameters = array();
         if($this->getRequest()->isXmlHttpRequest($template)) {
-            $html = $this->renderView($template);
-            $response = new Response(json_encode(array('success' => true, 'html' => $html)));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            return $this->renderAjaxResponse($template);
         } else {
             return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => $parameters, 'template' => $template));
         }
@@ -88,10 +85,8 @@ class HomeController extends MozcuController
     
     public function ajaxGetHomeAction() {
         if($this->getRequest()->isXmlHttpRequest()) {
-            $html = $this->renderView('MozcuMozcuBundle:Home:_homeHome.html.twig');
-            $response = new Response(json_encode(array('success' => true, 'html' => $html)));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            $html = $this->renderView();
+            return $this->renderAjaxResponse('MozcuMozcuBundle:Home:_homeHome.html.twig');
         } else {
             throw $this->createNotFoundException('Not found');
         }
@@ -102,8 +97,7 @@ class HomeController extends MozcuController
         $countries = $this->getRepository('MozcuMozcuBundle:Country')->findAll();
         
         if($request->isXmlHttpRequest()) {
-            $html = $this->renderView($template, ['countries' => $countries]);
-            return $this->getJSONResponse(['success' => true, 'html' => $html]);
+            return $this->renderAjaxResponse($template, ['countries' => $countries]);
         }
         return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => ['countries' => $countries], 'template' => $template));
     }
@@ -133,8 +127,7 @@ class HomeController extends MozcuController
         $template = 'MozcuMozcuBundle:Home:_forgotPassword.html.twig';
         
         if($request->isXmlHttpRequest()) {
-            $html = $this->renderView($template);
-            return $this->getJSONResponse(['success' => true, 'html' => $html]);
+            return $this->renderAjaxResponse($template);
         }
         return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => [], 'template' => $template));
     }
@@ -183,7 +176,7 @@ class HomeController extends MozcuController
             
             $template = "MozcuMozcuBundle:Home:_liveSearchResult.html.twig";
             
-            return $this->renderAjaxResponse($template, $parameters);
+            return $this->renderAjaxResponse($template, $parameters, true);
         } else {
             throw new BadRequestHttpException();
         }
@@ -214,10 +207,7 @@ class HomeController extends MozcuController
         $template = 'MozcuMozcuBundle:Home:_homeAbout.html.twig';
         $parameters = array();
         if($this->getRequest()->isXmlHttpRequest($template)) {
-            $html = $this->renderView($template);
-            $response = new Response(json_encode(array('success' => true, 'html' => $html)));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            return $this->renderAjaxResponse($template);
         } else {
             return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => $parameters, 'template' => $template));
         }
@@ -227,10 +217,7 @@ class HomeController extends MozcuController
         $template = 'MozcuMozcuBundle:Home:_homeTerms.html.twig';
         $parameters = array();
         if($this->getRequest()->isXmlHttpRequest($template)) {
-            $html = $this->renderView($template);
-            $response = new Response(json_encode(array('success' => true, 'html' => $html)));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            return $this->renderAjaxResponse($template);
         } else {
             return $this->render( 'MozcuMozcuBundle:Home:templateForRequest.html.twig', array('parameters' => $parameters, 'template' => $template));
         }

@@ -16,11 +16,8 @@ class UploadAlbumController extends MozcuController {
     
     public function indexAction() {
         if($this->getRequest()->isXmlHttpRequest()) {
-            $html = $this->renderView('MozcuMozcuBundle:UploadAlbum:indexAjax.html.twig',
-                                      array('username' => $this->getUser()->getUsername()));
-            $response = new Response(json_encode(array('success' => true, 'html' => $html)));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            return $this->renderAjaxResponse('MozcuMozcuBundle:UploadAlbum:indexAjax.html.twig', 
+                                             array('username' => $this->getUser()->getUsername()));
         }
         return $this->render('MozcuMozcuBundle:UploadAlbum:index.html.twig', 
                              array('username' => $this->getUser()->getUsername()));

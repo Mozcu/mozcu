@@ -92,7 +92,7 @@ class AlbumController extends MozcuController
             $parameters['page']   = $page + 1;
             
             $template = 'MozcuMozcuBundle:Album:_albumsNextPage.html.twig';
-            return $this->renderAjaxResponse($template, $parameters);
+            return $this->renderAjaxResponse($template, $parameters, true);
         } else {
             throw new BadRequestHttpException();
         }
@@ -412,12 +412,11 @@ class AlbumController extends MozcuController
         $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
         if(!is_null($album)) {
             $parameters = array('album' => $album, 'username' => $this->getUser()->getUsername());
-
+            $template = "MozcuMozcuBundle:UploadAlbum:indexAjax.html.twig";
             if($this->getRequest()->isXmlHttpRequest()) {
-                $html = $this->renderView("MozcuMozcuBundle:UploadAlbum:indexAjax.html.twig", $parameters);
-                return $this->getJSONResponse(array('success' => true, 'html' => $html));
+                return $this->renderAjaxResponse($template, $parameters);
             }
-            return $this->render("MozcuMozcuBundle:UploadAlbum:index.html.twig", $parameters);
+            return $this->render($template, $parameters);
 
         } else {
             return $this->getJSONResponse(array('success' => false));

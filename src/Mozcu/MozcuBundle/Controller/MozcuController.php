@@ -71,12 +71,19 @@ abstract class MozcuController extends Controller{
      * 
      * @param string $template
      * @param array $parameters
+     * @param boolean $cache = false
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderAjaxResponse($template, array $parameters = array()) {
+    protected function renderAjaxResponse($template, array $parameters = array(), $cache = false) {
         $html = $this->renderView($template, $parameters);
         $response = new Response(json_encode(array('success' => true, 'html' => $html)));
         $response->headers->set('Content-Type', 'application/json');
+        if (!$cache) {
+            $response->headers->addCacheControlDirective('no-cache', true);
+            $response->headers->addCacheControlDirective('max-age', 0);
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+            $response->headers->addCacheControlDirective('no-store', true);
+        }
         return $response;
     }
     
