@@ -85,7 +85,6 @@ class HomeController extends MozcuController
     
     public function ajaxGetHomeAction() {
         if($this->getRequest()->isXmlHttpRequest()) {
-            $html = $this->renderView();
             return $this->renderAjaxResponse('MozcuMozcuBundle:Home:_homeHome.html.twig');
         } else {
             throw $this->createNotFoundException('Not found');
