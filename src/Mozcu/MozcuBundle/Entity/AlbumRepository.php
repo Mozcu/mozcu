@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class AlbumRepository extends EntityRepository {
     
     public function findAllPaginated($page, $cant) {
-        $dql  = "SELECT a FROM MozcuMozcuBundle:Album a WHERE a.isActive = 1 ORDER BY a.downloads DESC";
+        $dql  = "SELECT a FROM MozcuMozcuBundle:Album a WHERE a.isActive = 1 ORDER BY a.visits DESC";
         $query = $this->getEntityManager()->createQuery($dql);
         
         $query->setFirstResult($page * $cant)

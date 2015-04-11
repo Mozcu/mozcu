@@ -307,6 +307,12 @@ body{
     text-decoration: none;
 }
 
+.navDisco> li > .btn-link:hover, .btn-link:focus{
+    text-decoration: none;
+    color: #fff;
+    outline:0px;
+}
+
 .discoActive{
     background-color: #333;
     -webkit-box-shadow: inset 0px 0px 7px 0px rgba(100, 100, 100, 0.5);
@@ -1811,6 +1817,11 @@ footer .entypo{
 
 /*+++++++++++++++++++++++++++++++++inicio resultados busqueda+++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.headerResultados{
+    margin-left:10px;
+    margin-bottom:20px;
+}
+
 .resultados{
     margin-top: 20px;
     padding-left: 0px;

@@ -1,3 +1,11 @@
+// Abandonar pagina
+function closePageWarning(){
+    if ($('.jp-playlist ul li').length > 0) {
+        return 'Si te vas no vas a poder escuchar mas musica. Estas seguro?';
+    }
+}
+window.onbeforeunload = closePageWarning;
+
 // Modifica el contenido principal
 function changeMainContent(url, parameters, preventPush) {
     if (!parameters) {

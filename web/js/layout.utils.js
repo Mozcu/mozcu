@@ -1,13 +1,7 @@
 $(function() {
    
-    // Abandonar pagina
-    /*function closePageWarning(){
-        return 'Si te vas no vas a poder escuchar mas musica. Estas seguro?';
-    }
-    window.onbeforeunload = closePageWarning;*/
-   
-   // Click en el logo superior izquirdo
-   $('.navbar.navbar-fixed-top').on('click', '.navbar-header a', function(e){
+    // Click en el logo superior izquirdo
+    $('.navbar.navbar-fixed-top').on('click', '.navbar-header a', function(e){
         e.preventDefault();
         changeMainContent($(this).attr('href'));
     });
