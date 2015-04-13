@@ -2,7 +2,7 @@
     <div class="infoDisco col-lg-8">
         <h3>Información</h3>
         {% if user.getCurrentProfile.description is not empty %}
-            <p class="infoDiscoParrafo">{{ user.getCurrentProfile.description }}</p>
+            <p class="infoDiscoParrafo">{{ user.getCurrentProfile.description|nl2br }}</p>
         {% else %}
             <p class="infoDiscoParrafo">
                 {% trans with {'%name%': user.getCurrentName} %}El usuario %name% a&uacute;n no posee una biograf&iacute;a{% endtrans %}

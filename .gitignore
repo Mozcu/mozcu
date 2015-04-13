@@ -7,8 +7,10 @@ MyProject.komodoproject
 /app/config/parameters_local.yml
 /app/logs
 /app/cache
+/app/bootstrap.php.cache
 /web/uploads
 /bin/clean_db.sql
 /bin/cleandb.sh
 composer.lock
 composer.phar
+/
