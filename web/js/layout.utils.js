@@ -55,7 +55,7 @@ $(function() {
     // Link Registrarse
     $('.navbar.navbar-fixed-top').on('click', '.userBar .registration', function(e) {
         e.preventDefault();
-        changeMainContent($(this).attr('href'));
+        changeMainContent($(this).data('url'));
     });
     
     // Link recuperar password
