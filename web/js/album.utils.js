@@ -1,54 +1,5 @@
 $(function() {
 
-    $( ".pageDiscListen #searchTags" ).autocomplete({
-      source: $('#getTagListUrl').val(),
-      minLength: 2,
-      select: function( event, ui ) {
-        var span = $('<span>', {id: ui.item.id, class: 'category'}).html(ui.item.value);
-        var plus = $('<span>',{class: 'plus'}).html(' + ');
-        if ($( ".pageDiscListen .wrapperCategories .plus").length > 0) {
-            $( ".pageDiscListen .wrapperCategories .plus").last().after(span);
-            $( ".pageDiscListen .wrapperCategories .category").last().after(plus);
-        } else {
-            $( ".pageDiscListen .wrapperCategories").prepend(plus);
-            $( ".pageDiscListen .wrapperCategories").prepend(span);
-        }
-        
-        $( ".pageDiscListen #searchTags" ).val('');
-        
-        $( document ).ajaxStop();
-        searchAlbums();
-        
-        event.preventDefault();
-      }
-    });
-    
-
-    $( ".pageDiscListen .wrapperTags" ).on('click', '.category', function(e) {
-        e.preventDefault();
-        var me = $(this);
-        var aux = me.attr('id').split('tag-');
-        var id = aux[1];
-        
-        if ($(".pageDiscListen .wrapperCategories #" + parseInt(id)).length > 0) {
-            return;
-        }
-        
-        var span = $('<span>', {id: id, class: 'category'}).html(me.html());
-        var plus = $('<span>',{class: 'plus'}).html(' + ');
-        
-        if ($( ".pageDiscListen .wrapperCategories .plus").length > 0) {
-            $( ".pageDiscListen .wrapperCategories .plus").last().after(span);
-            $( ".pageDiscListen .wrapperCategories .category").last().after(plus);
-        } else {
-            $( ".pageDiscListen .wrapperCategories").prepend(plus);
-            $( ".pageDiscListen .wrapperCategories").prepend(span);
-        }
-        
-        $( document ).ajaxStop();
-        searchAlbums();
-    });
-    
     // Pestañas del album (lista de temas, informacion, comentarios, similares)
     $('.mainContent').on('click', '.headerDisco .navDisco button', function(e) {
       e.preventDefault();
@@ -190,24 +141,6 @@ $(function() {
       e.preventDefault();
       changeMainContent($(this).attr('href'));
     });
-    
-    var searchAlbums = function() {
-        var container = $('.pageDiscListen .wrapperDiscListen');
-        var tags = new Array();
-        $( ".pageDiscListen .wrapperCategories .category").each(function(key, value) {
-            tags.push($(value).attr('id'));
-        });
-        
-        var url = $('#findAlbumsByTagUrl').val();
-        $.post(url, {tags: tags}, function(data){
-            if (data.success) {
-                container.html('');
-                for(key in data.html) {
-                    container.append($(data.html[key]));
-                }
-            }
-        }, 'json');
-    };
     
     // Album favorito
     $('.mainContent').on('click', '#likeAlbum', function(e) {

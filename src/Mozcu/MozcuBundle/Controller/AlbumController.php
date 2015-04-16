@@ -65,11 +65,9 @@ class AlbumController extends MozcuController
         } else {
             $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated(0, 16);    
         }
-        $tags = $this->getRepository('MozcuMozcuBundle:Tag')->getTagsPaginated(1, 10);
-        
         $template = 'MozcuMozcuBundle:Album:_albumIndex.html.twig';
         $parameters['albums'] = $albums;
-        $parameters['tags'] = $tags;
+        $parameters['tags'] = $this->getRepository('MozcuMozcuBundle:Tag')->findMostPopular();
         
         if($this->getRequest()->isXmlHttpRequest()) {
             return $this->renderAjaxResponse($template, $parameters);
@@ -86,7 +84,8 @@ class AlbumController extends MozcuController
                 $albums = $this->getRepository('MozcuMozcuBundle:Album')->findByTags(array($tag->getId()), $page, 16);
                 $parameters['tag'] = $tag;
             } else {
-                $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated($page, 18);    
+                $filters = $this->getRequest()->get('filters', []);
+                $albums = $this->getRepository('MozcuMozcuBundle:Album')->findAllPaginated($page, 18, $filters);
             }
             $parameters['albums'] = $albums;
             $parameters['page']   = $page + 1;
@@ -322,21 +321,8 @@ class AlbumController extends MozcuController
         }
     }
     
-    public function getTagsPaginatedAction($page) {
-        try {
-            $limit = 10;
-            $tags = $this->getRepository('MozcuMozcuBundle:Tag')->getTagsPaginated($page, $limit);
-            $result = array("success" => true, "tags" => $tags);    
-        } catch(\Exception $e) {
-            $result = array("success" => false, "message" => $e->getMessage());    
-        }
-        
-        return $this->getJSONResponse($result);
-        
-    }
-    
     public function getTagsLiveAction(Request $request) {
-        $tags = $this->getRepository('MozcuMozcuBundle:Tag')->liveSearchByName($request->get('term'));
+        $tags = $this->getRepository('MozcuMozcuBundle:Tag')->liveSearchByName($request->get('term'), true);
         
         $result = array();
         foreach($tags as $tag) {

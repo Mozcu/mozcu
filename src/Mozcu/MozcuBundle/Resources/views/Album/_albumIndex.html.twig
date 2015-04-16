@@ -1,59 +1,49 @@
 <div class="col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 albumsPage">
 <!--INICIO DE CONTENIDO-->
     <div class="row center-block perfilContenido">
-        {#<div class="headerExplorer col-lg-12">
-            <div class="btn-group btnTag">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Todos los tags <span class="caret"></span>
+        <div class="headerExplorer col-lg-12" data-url="{{ path('MozcuMozcuBundle_albumsNextPage', {'page' : 0}) }}">
+            <div class="btn-group btnTag tag">
+                <button type="button" class="btn btn-default dropdown-toggle dropdownButton"
+                        data-toggle="dropdown">
+                    <span class="name">Todos los tags</span> <span class="caret"></span>
                 </button>
-
-                <ul class="dropdown-menu dropdownTag" role="menu">
-                    <li><input type="search" placeholder="Busca un tag" class="form-control"></li>
-                    {% for tag in tags %}
-                        <li><a id="tag-{{ tag.getId }}" href="#" class="tag">{{ tag.getName }}</a></li>
-                    {% endfor %}  
-                </ul>
-            </div>
-            <div class="btn-group btnUbicacion">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Todos los países<span class="caret"></span>
-                </button>
-
-
-                <ul class="dropdown-menu dropdownTag" role="menu">
-                    <li><input type="search" placeholder="Busca un país" class="form-control"></li>
-                    <li><a href="#">Argentina</a></li>
-                    <li><a href="#">Bolivia</a></li>
-                    <li><a href="#">Brasil</a></li>
-                    <li><a href="#">Chile</a></li>
-                    <li><a href="#">Colombia</a></li>
-                    <li><a href="#">Uruguay</a></li>
-                    <li><a href="#">Venezuela</a></li>
-                    <li><a href="#">Zimbague</a></li>
-                    <li><a href="#">Argentina</a></li>
-                    <li><a href="#">Bolivia</a></li>
-                    <li><a href="#">Brasil</a></li>
-                    <li><a href="#">Chile</a></li>
-                    <li><a href="#">Colombia</a></li>
-                    <li><a href="#">Uruguay</a></li>
-                    <li><a href="#">Venezuela</a></li>
-                    <li><a href="#">Zimbague</a></li>   
-                </ul>
-            </div>
-            
-            <div class="btn-group btnFilter">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Ordenar por <span class="caret"></span>
-                </button>
-
+                <input type="hidden" class="filterValue" id="tag" value="" />
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Relevancia</a></li>
-                    <li><a href="#">Fecha de subida</a></li>
-                    <li><a href="#">Reproducciones</a></li>
+                    <li><input data-url="{{ path('MozcuMozcuBundle_getTagsLive') }}" type="search" placeholder="Busca un tag" class="form-control"></li>
+                    {% for tag in tags %}
+                        <li><button data-id="{{ tag.getId }}" class="btn btn-link">{{ tag.getName }}</button></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="btn-group btnUbicacion country">
+                <button type="button" class="btn btn-default dropdown-toggle dropdownButton"
+                        data-toggle="dropdown"> <span class="name">Todos los países</span><span class="caret"></span>
+                </button>
+                <input type="hidden" class="filterValue" id="country" value="" />
+                <ul class="dropdown-menu" role="menu">
+                    <li><input data-url="{{ path('MozcuMozcuBundle_getCountries') }}" type="search" placeholder="Busca un pais" class="form-control"></li>
+                    <li><button data-id="12" class="btn btn-link">Argentina</button></li>
+                    <li><button data-id="45" class="btn btn-link">Chile</button></li>
+                    <li><button data-id="228" class="btn btn-link">Uruguay</button></li>
+                    <li><button data-id="28" class="btn btn-link">Bolivia</button></li>
+                    <li><button data-id="51" class="btn btn-link">Colombia</button></li>
+                    <li><button data-id="178" class="btn btn-link">Perú</button></li>
+                    <li><button data-id="32" class="btn btn-link">Brasil</button></li>
+                </ul>
+            </div>
+            <div class="btn-group btnFilter order">
+                <button type="button" class="btn btn-default dropdown-toggle dropdownButton"
+                      data-toggle="dropdown">
+                    <span class="name">Ordenar por</span><span class="caret"></span>
+                </button>
+                <input type="hidden" class="filterValue" id="order" value="" />
+                <ul class="dropdown-menu" role="menu">
+                    <li><button data-id="a.downloads" class="btn btn-link">Mas descargados</button></li>
+                    <li><button data-id="a.visits" class="btn btn-link">Mas escuchados</button></li>
+                    <li><button data-id="a.createdAt" class="btn btn-link">Mas recientes</button></li>
                 </ul>
             </div> 
-
-        </div>#}
+        </div>
                 
         {% if tag is defined %}
             <div data-tag="{{ tag.getName }}" class="row headerResultados tagResult">
@@ -66,6 +56,7 @@
         {% endif %}
         
         <!--INICIO DE ALBUMES               -->
+        
         {% for album in albums %}
             {{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
         {% endfor %}
@@ -81,8 +72,6 @@
 $(function(){
     window.scrollTo(0,0);
     
-    $('.dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
-
     var loading = false;
 
     $(window).off('scroll');
@@ -106,6 +95,7 @@ $(function(){
         if($('.tagResult').length > 0) {
             params.tag = $('.tagResult').data('tag');
         }
+        params.filters = getFilters();
         
         $.getJSON(url, params, function(data) {
             if(data.success) {
@@ -114,6 +104,57 @@ $(function(){
                 loading = false;
             }
         });
+    };
+    
+    // Filtros
+    $('.headerExplorer .dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
+    
+    var lastSearchAjax = null;
+    $('.headerExplorer .dropdown-menu').on('keyup', 'input[type=search]', function(e){
+        var me = $(this);
+        if(lastSearchAjax !== null) {
+            lastSearchAjax.abort();
+        }
+        
+        if(me.val().length < 0) {
+            removeLiveSearchResult();
+            return false;
+        }
+        lastSearchAjax = $.getJSON(me.data('url'), { term: me.val() }, function (data) {
+            if(data.length === 0) {
+                return;
+            }
+            me.parent().nextAll().remove();
+            $.each(data, function(key, item) {
+                me.parents('ul').append('<li><button data-id="' + item.id + '" class="btn btn-link">' + item.label + '</button></li>')
+            });
+            lastSearchAjax = null;
+        });
+    });
+    
+    $('.headerExplorer .dropdown-menu').on('click', 'button', function(e){
+        var me = $(this);
+        var url = $('.headerExplorer').data('url');
+        
+        me.parents('.btn-group').find('.filterValue').val(me.data('id'));
+        me.parents('.btn-group').find('.dropdownButton .name').html(me.html());
+        
+        $.getJSON(url, {filters: getFilters()}, function(data) {
+            if(data.success) {
+                $('#albumsNextPage').remove();
+                $('.album').remove();
+                $('.headerResultados').remove();
+                $('.headerExplorer').after(data.html);
+            }
+        });
+    });
+    
+    var getFilters = function() {
+        var filters = {tag: $('#tag').val(), country: $('#country').val()};
+        if($('#order').val().length > 0) {
+            filters.orderBy = {sort: $('#order').val(), order: 'DESC'};
+        }
+        return filters;
     };
 
 });

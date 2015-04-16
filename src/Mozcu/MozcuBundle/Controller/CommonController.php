@@ -9,7 +9,7 @@ class CommonController extends MozcuController {
     
     public function getCountriesAction(Request $request) {
         $name = $request->get('term');
-        $countries = $this->getRepository('MozcuMozcuBundle:Country')->findByLikeName($name);
+        $countries = $this->getRepository('MozcuMozcuBundle:Country')->findByLikeName($name, true);
         
         $export = [];
         foreach($countries as $c) {
@@ -21,7 +21,7 @@ class CommonController extends MozcuController {
     
     public function getCitiesAction(Request $request) {
         $term = $request->get('term');
-        $cities = $this->getRepository('MozcuMozcuBundle:Profile')->findCitiesByLike($term);
+        $cities = $this->getRepository('MozcuMozcuBundle:Profile')->findCitiesByLike($term, true);
         
         $export = [];
         foreach($cities as $c) {

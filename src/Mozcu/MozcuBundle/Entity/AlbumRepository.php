@@ -12,12 +12,42 @@ use Doctrine\ORM\EntityRepository;
  */
 class AlbumRepository extends EntityRepository {
     
-    public function findAllPaginated($page, $cant) {
-        $dql  = "SELECT a FROM MozcuMozcuBundle:Album a WHERE a.isActive = 1 ORDER BY a.visits DESC";
-        $query = $this->getEntityManager()->createQuery($dql);
+    public function findAllPaginated($page, $cant, $filters = []) {
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select("a")
+            ->from('MozcuMozcuBundle:Album', 'a')
+            ->where('a.isActive = 1');
+        // order
+        $map = false;
+        if(isset($filters['orderBy']) && !empty($filters['orderBy'])) {
+            $qb->orderBy($filters['orderBy']['sort'], $filters['orderBy']['order']);
+        } else {
+            $qb->orderBy('a.visits', 'DESC');
+        }
+        // tag
+        if(isset($filters['tag']) && !empty($filters['tag'])) {
+            $qb->innerJoin('a.tags', 't')
+               ->andWhere("t.id = :tag")
+               ->setParameter('tag', $filters['tag']);
+        }
+        // country
+        if(isset($filters['country']) && !empty($filters['country'])) {
+            $qb->innerJoin('a.profile', 'p')
+               ->innerJoin('p.country', 'c')
+               ->andWhere("c.id = :country")
+               ->setParameter('country', $filters['country']);
+        }
+            
+        $query = $qb->getQuery()
+                    ->setFirstResult($page * $cant)
+                    ->setMaxResults($cant);
         
-        $query->setFirstResult($page * $cant)
-            ->setMaxResults($cant);
+        if ($map) {
+            return array_map(
+                function ($result) { return $result[0]; },
+                $query->getResult()
+            );
+        }
         
         return $query->getResult();
     }

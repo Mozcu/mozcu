@@ -132,12 +132,6 @@ MozcuMozcuBundle_getTagsLive:
   defaults: {_controller: MozcuMozcuBundle:Album:getTagsLive}
   requirements:
     _method: GET
-    
-MozcuMozcuBundle_getTagsPaginated:
-  pattern: /album/getTagsPaginated/{page}
-  defaults: {_controller: MozcuMozcuBundle:Album:getTagsPaginated}
-  requirements:
-    _method: GET
 
 MozcuMozcuBundle_findAlbumsByTags:
   pattern: /album/findAlbumsByTags

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\ProfileRepository")
- * @ORM\Table(name="profile")
+ * @ORM\Table(name="profile", indexes={@ORM\Index(name="livesearch_idx", columns={"name"})})
  */
 class Profile {
     

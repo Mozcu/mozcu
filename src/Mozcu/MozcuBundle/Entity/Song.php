@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\SongRepository")
- * @ORM\Table(name="song")
+ * @ORM\Table(name="song", indexes={@ORM\Index(name="livesearch_idx", columns={"name"})})
  */
 class Song {
     

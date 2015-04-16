@@ -17,13 +17,14 @@ class CountryRepository extends EntityRepository
      * @param string $name
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function findByLikeName($name) {
+    public function findByLikeName($name, $startWith = false) {
+        $like = $startWith ? "$name%" : "%$name%" ;
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('c')
                 ->from("MozcuMozcuBundle:Country", "c")
                 ->where("c.name LIKE :name")
                 ->orderBy('c.name', 'ASC')
-                ->setParameter('name', '%' . $name . '%');
+                ->setParameter('name', $like);
         
         $query = $qb->getQuery()
                 ->setFirstResult(0)
