@@ -56,16 +56,16 @@
     <div class="visible-sm visible-md visible-lg">
         <ul class="nav nav-pills navDisco col-sm-12 col-md-12 col-lg-12">
             <li {% if selected == 'playlist' %} class="discoActive" {% endif %}>
-                <button data-url="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'username': username, 'id': album.getId}) }}" class="btn btn-link">Lista de temas</button>
+                <button data-url="{{ path('MozcuMozcuBundle_albumAlbumAction', {'username': username, 'slug': album.getSlug, 'action': 'playlist'}) }}" class="btn btn-link">Lista de temas</button>
             </li>
             <li {% if selected == 'information' %} class="discoActive" {% endif %}>
-                <button data-url="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'username': username, 'id': album.getId}) }}" class="btn btn-link">Información</button>
+                <button data-url="{{ path('MozcuMozcuBundle_albumAlbumAction', {'username': username, 'slug': album.getSlug, 'action': 'information'}) }}" class="btn btn-link">Información</button>
             </li>
             {# <li {% if selected == 'comments' %} class="discoActive" {% endif %}>
                 <button data-url="#" class="btn btn-link">Comentarios</button>
             </li> #}
             <li {% if selected == 'related' %} class="discoActive" {% endif %}>
-                <button data-url="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'username': username, 'id': album.getId}) }}" class="btn btn-link">Similares</button>
+                <button data-url="{{ path('MozcuMozcuBundle_albumAlbumAction', {'username': username, 'slug': album.getSlug, 'action': 'related'}) }}" class="btn btn-link">Similares</button>
             </li>
         </ul>
     </div>
@@ -74,16 +74,16 @@
     <div class="visible-xs">
         <ul class="nav nav-pills navDiscoMobile">
             <li {% if selected == 'playlist' %} class="navDiscoMobileActive" {% endif %}>
-                <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_albumAlbumPlaylist', {'username': username, 'id': album.getId}) }}"><i class="center-block glyphicon glyphicon-list"></i>Lista de temas</button>
+                <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_albumAlbumAction', {'username': username, 'slug': album.getSlug, 'action': 'playlist'}) }}"><i class="center-block glyphicon glyphicon-list"></i>Lista de temas</button>
             </li>
             <li {% if selected == 'information' %} class="navDiscoMobileActive" {% endif %}>
-                <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_albumAlbumInformation', {'username': username, 'id': album.getId}) }}"><i class="center-block glyphicon glyphicon-book"></i>Información</button>
+                <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_albumAlbumAction', {'username': username, 'slug': album.getSlug, 'action': 'playlist'}) }}"><i class="center-block glyphicon glyphicon-book"></i>Información</button>
             </li>
             {# <li {% if selected == 'comments' %} class="navDiscoMobileActive" {% endif %}>
                 <button class="btn btn-link"><i class="center-block glyphicon glyphicon-comment"></i>Reseñas</button>
             </li> #}
             <li {% if selected == 'related' %} class="navDiscoMobileActive" {% endif %}>
-                <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_albumAlbumRelated', {'username': username, 'id': album.getId}) }}"><i class="center-block glyphicon glyphicon-th-large"></i>Similares</button>
+                <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_albumAlbumAction', {'username': username, 'slug': album.getSlug, 'action': 'playlist'}) }}"><i class="center-block glyphicon glyphicon-th-large"></i>Similares</button>
             </li>
         </ul>
     </div>

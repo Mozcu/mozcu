@@ -2,6 +2,7 @@
 
 namespace Mozcu\MozcuBundle\Service;
 
+// Entities
 use Mozcu\MozcuBundle\Entity\Album,
     Mozcu\MozcuBundle\Entity\Song,
     Mozcu\MozcuBundle\Entity\Tag,
@@ -9,16 +10,22 @@ use Mozcu\MozcuBundle\Entity\Album,
     Mozcu\MozcuBundle\Entity\AlbumImage,
     Mozcu\MozcuBundle\Entity\ImagePresentation;
 
+// Exception
 use Mozcu\MozcuBundle\Exception\AppException;
 use Mozcu\MozcuBundle\Exception\ServiceException;
+
+// Services Helpers Factories
 use Mozcu\MozcuBundle\Service\UploadService;
 use Mozcu\MozcuBundle\Factory\AlbumFactory;
+use Mozcu\MozcuBundle\Helper\StringHelper;
 
-use \Doctrine\ORM\EntityManager;
+// Vendor
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use GetId3\GetId3Core as GetId3;
 
-class AlbumService extends BaseService{
+class AlbumService extends BaseService
+{
     
     /**
      *
@@ -32,17 +39,20 @@ class AlbumService extends BaseService{
      */
     private $container;
     
-    public function __construct(EntityManager $entityManager, Container $container) {
+    public function __construct(EntityManager $entityManager, Container $container) 
+    {
         parent::__construct($entityManager);
         $this->container = $container;
         $this->uploadService = $this->container->get('mozcu_mozcu.upload_service');
     }
     
-    public function toString() {
+    public function toString() 
+    {
         return 'MusicService';
     }
     
-    public function createAlbum(Profile $profile, array $data) {
+    public function createAlbum(Profile $profile, array $data) 
+    {
         try {
             $factory = new AlbumFactory($this->container);
             $factory->setName($data['name'])
@@ -55,6 +65,9 @@ class AlbumService extends BaseService{
                     ->setSongs($data['songs'])
                     ->setTags($data['tags']);
             $album = $factory->create();
+            
+            $slug = $this->generateSlug($data['name'], $profile);
+            $album->setSlug($slug);
             
             $this->getEntityManager()->persist($album);
             $this->getEntityManager()->flush();
@@ -73,7 +86,8 @@ class AlbumService extends BaseService{
      * @return Mozcu\MozcuBundle\Entity\Album
      * @throws AppException
      */
-    public function updateAlbum(Album $album, array $data) {
+    public function updateAlbum(Album $album, array $data) 
+    {
         try {
             $album->setName($data['name'])
                     ->setLicense($data['license'])
@@ -96,6 +110,9 @@ class AlbumService extends BaseService{
             
             $this->updateTags($album, $data['tags']);
             
+            $slug = $this->generateSlug($data['name'], $album->getProfile());
+            $album->setSlug($slug);
+            
             $this->getEntityManager()->persist($album);
             $this->getEntityManager()->flush();
             
@@ -110,7 +127,8 @@ class AlbumService extends BaseService{
      * @param array $songsData
      * @return array
      */
-    private function getSongIdsToUpdate(array $songsData) {
+    private function getSongIdsToUpdate(array $songsData) 
+    {
         return array_map(function($songData) { 
             if(array_key_exists('id', $songData)) {
                 return $songData['id'];
@@ -123,7 +141,8 @@ class AlbumService extends BaseService{
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      * @param array $songsData
      */
-    private function removeOldSongs(Album $album, array $songsData) {
+    private function removeOldSongs(Album $album, array $songsData) 
+    {
         $toPreserve = $this->getSongIdsToUpdate($songsData);
         
         foreach($album->getSongs() as $song) {
@@ -140,7 +159,8 @@ class AlbumService extends BaseService{
      * @param array $songsData
      * @throws ServiceException
      */
-    private function updateSongs(Album $album, array $songsData) {
+    private function updateSongs(Album $album, array $songsData) 
+    {
         foreach($songsData as $songData) {
             if(!array_key_exists('id', $songData)) {
                 continue;
@@ -164,7 +184,8 @@ class AlbumService extends BaseService{
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      * @param array $songsData
      */
-    private function createNewSongs(Album $album, array $songsData) {
+    private function createNewSongs(Album $album, array $songsData) 
+    {
         $albumFactory = new AlbumFactory($this->container);
         foreach($songsData as $songData) {
             if(!array_key_exists('id', $songData)) {
@@ -183,7 +204,8 @@ class AlbumService extends BaseService{
      * @return \Mozcu\MozcuBundle\Entity\Album
      * @throws AppException
      */
-    private function updateTags(Album $album, array $tagsData) {
+    private function updateTags(Album $album, array $tagsData) 
+    {
         try {
             $albumFactory = new AlbumFactory($this->container);
             $this->removeTagsFromAlbum($album);
@@ -205,8 +227,9 @@ class AlbumService extends BaseService{
      * 
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      */
-    private function removeTagsFromAlbum(Album $album) {
-        if(!$album->getTags()->isEmpty()) {
+    private function removeTagsFromAlbum(Album $album) 
+    {
+        if (!$album->getTags()->isEmpty()) {
             foreach($album->getTags() as $tag) {
                 $album->removeTag($tag);
             }
@@ -219,7 +242,8 @@ class AlbumService extends BaseService{
      * 
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      */
-    public function deleteAlbum(Album $album) {
+    public function deleteAlbum(Album $album) 
+    {
         $em = $this->getEntityManager();
         
         $pending = $em->getRepository('MozcuMozcuBundle:AlbumUploadQueuePending')
@@ -246,7 +270,8 @@ class AlbumService extends BaseService{
      * 
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      */
-    public function prepareZip(Album $album) {
+    public function prepareZip(Album $album) 
+    {
         $response = $this->uploadService->generateZip($album);
         $baseUrl = $this->container->getParameter('google_api.base_url');
         $bucket = $this->container->getParameter('google_api.storage_bucket');
@@ -262,7 +287,8 @@ class AlbumService extends BaseService{
      * 
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      */
-    public function increasePlayCount(Album $album) {
+    public function increasePlayCount(Album $album) 
+    {
         $plays = $album->getVisits();
         $album->setVisits($plays + 1);
         
@@ -274,11 +300,35 @@ class AlbumService extends BaseService{
      * 
      * @param \Mozcu\MozcuBundle\Entity\Album $album
      */
-    public function increaseDownloadCount(Album $album) {
+    public function increaseDownloadCount(Album $album) 
+    {
         $downloads = $album->getDownloads();
         $album->setDownloads($downloads + 1);
         
         $this->getEntityManager()->persist($album);
         $this->getEntityManager()->flush();
+    }
+    
+    /**
+     * 
+     * @param string $name
+     * @param \Mozcu\MozcuBundle\Entity\Profile $profile
+     * @return string
+     */
+    private function generateSlug($name, Profile $profile)
+    {
+        $slug = StringHelper::slugify($name);
+        $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:Album');
+        
+        $count = 0;
+        $origSlug = $slug;
+        do {
+            $altSlug = ($count > 0) ? $origSlug . '_' . $count : $origSlug;
+            $album = $repo->findOneByUsernameAndSlug($profile->getUsername(), $altSlug);
+            $count++;
+            $slug = $altSlug;
+        } while(!is_null($album));
+        
+        return $slug;
     }
 }

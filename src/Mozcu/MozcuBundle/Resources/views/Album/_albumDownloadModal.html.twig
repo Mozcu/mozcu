@@ -30,7 +30,7 @@
                 <input type="hidden" name="rm" value="1">
                 {% set username = album.getProfile.getUser.getUsername %}
                 <input type="hidden" id="checkoutUrl" name="return" value="">
-                <input type="hidden" name="cancel_return" value="{{ url('MozcuMozcuBundle_albumAlbum', {'username': username, 'id': album.getId }) }}">
+                <input type="hidden" name="cancel_return" value="{{ url('MozcuMozcuBundle_albumAlbum', {'username': username, 'slug': album.getSlug }) }}">
                 <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
                 <input type="hidden" name="cbt" value="Terminar con la descarga del disco">
             </form>

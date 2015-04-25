@@ -12,14 +12,6 @@ use Mozcu\MozcuBundle\Entity\Album;
 class AlbumController extends MozcuController
 {
     
-    /**
-     *
-     * @param string $baseTemplate
-     * @param string $template
-     * @param arrray $parameters
-     * @param array $parametersForTemplate
-     * @return Response
-     */
     private function renderTemplateForRequest($baseTemplate, $template, array $parametersForTemplate = array()) {
         $parameters['template'] = $template;
         $parameters['parameters'] = $parametersForTemplate;
@@ -40,7 +32,8 @@ class AlbumController extends MozcuController
         return $this->renderAlbumsForRequest('MozcuMozcuBundle:Album:_albumNotFound.html.twig', array());
     }
     
-    public function loadAlbumHeaderAction(Album $album, $selected) {
+    public function loadAlbumHeaderAction(Album $album, $selected) 
+    {
         $parameters['loggedInUser'] = $this->getUser();
         $parameters['album'] = $album;
         $parameters['selected'] = $selected;
@@ -49,10 +42,12 @@ class AlbumController extends MozcuController
     }
     
     /**
+     * Pagina de albumes
      * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request) 
+    {
         $parameters = array();
         if($request->get('tag')) {
             $tag = $this->getRepository('MozcuMozcuBundle:Tag')->findOneByName($request->get('tag'));
@@ -76,7 +71,15 @@ class AlbumController extends MozcuController
         }
     }
     
-    public function nextPageAction($page) {
+    /**
+     * Carga una pagina de albums
+     * 
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws BadRequestHttpException
+     */
+    public function nextPageAction($page) 
+    {
         if($this->getRequest()->isXmlHttpRequest()) {
             $parameters = array();
             if($this->getRequest()->get('tag')) {
@@ -97,14 +100,25 @@ class AlbumController extends MozcuController
         }
     }
     
-    public function albumAction($id) {
+    /**
+     * Pagina de album
+     * 
+     * @param string $slug
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Mozcu\MozcuBundle\Controller\Exception
+     */
+    public function albumAction($username, $slug) 
+    {
         try {
             $success = true;
-            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
+            $album = $this->getRepository('MozcuMozcuBundle:Album')->findOneByUsernameAndSlug($username, $slug);
             if(!is_null($album)) {
                 $template = "MozcuMozcuBundle:Album:_albumPlaylist.html.twig";
                 $parameters = array('album' => $album, 'selected' => 'playlist');
             } else {
+                if($response = $this->checkIdFromSlug($slug)) {
+                    return $response;
+                }
                 $success = false;
             }
             
@@ -128,97 +142,45 @@ class AlbumController extends MozcuController
         }
     }
     
-    public function albumPlaylistAction($id) {
-        try {
-            $success = true;
-            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
-            if(!is_null($album)) {
-                $template = "MozcuMozcuBundle:Album:_albumPlaylist.html.twig";
-                $parameters = array('album' => $album, 'selected' => 'playlist');
-            } else {
-                $success = false;
-            }
-            
-            if($this->getRequest()->isXmlHttpRequest()) {
-                if($success) {
-                    return $this->renderAjaxResponse($template, $parameters);    
-                } else {
-                    return $this->getJSONResponse(array('success' => false));   
-                }
-                
-            } else {
-                if($success) {
-                    return $this->renderAlbumForRequest($template, $parameters);
-                } else {
-                    return $this->renderAlbumNotFound();
-                }
-            }  
-        } catch(\Exception $e) {
-            throw $e;
-        }    
-    }
-
-    public function albumsRelatedAction($id) {
-        try {
-            $success = true;
-            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
-            
-            if(!is_null($album)) {
-                $albums = $this->getRepository('MozcuMozcuBundle:Album')->findRelated($album);
-                $template = "MozcuMozcuBundle:Album:_albumRelated.html.twig";
-                $parameters = array('album'=> $album, 'albums' => $albums, 'selected' => 'related');
-            } else {
-                $success = false;
-            }
-            
-            if($this->getRequest()->isXmlHttpRequest()) {
-                if($success) {
-                    return $this->renderAjaxResponse($template, $parameters);    
-                } else {
-                    return $this->getJSONResponse(array('success' => false));   
-                }
-                
-            } else {
-                if($success) {
-                    return $this->renderAlbumForRequest($template, $parameters);
-                } else {
-                    return $this->renderAlbumNotFound();
-                }
-            }  
-        } catch(\Exception $e) {
-            throw $e;
-        }    
-    }    
-    
-    
-    public function albumInformationAction($id) {
-        try {
-            $success = true;
-            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
-            if(!is_null($album)) {
-                $template = "MozcuMozcuBundle:Album:_albumInformation.html.twig";
-                $parameters = array('album' => $album, 'selected' => 'information');
-            } else {
-                $success = false;
-            }
-            
-            if($this->getRequest()->isXmlHttpRequest()) {
-                if($success) {
-                    return $this->renderAjaxResponse($template, $parameters);    
-                } else {
-                    return $this->getJSONResponse(array('success' => false));   
-                }
-                
-            } else {
-                if($success) {
-                    return $this->renderAlbumForRequest($template, $parameters);
-                } else {
-                    return $this->renderAlbumNotFound();
-                }
-            }  
-        } catch(\Exception $e) {
-            throw $e;
+    /**
+     * Verifica si se esta ingresando un id en lugar de un slug
+     * 
+     * @param string $slug
+     */
+    private function checkIdFromSlug($slug)
+    {
+        $album = $this->getRepository('MozcuMozcuBundle:Album')->find($slug);
+        if(!is_null($album)) {
+            return $this->redirect($this->generateUrl('MozcuMozcuBundle_albumAlbum', ['username' => $album->getProfile()->getUsername(),
+                                                                                      'slug' => $album->getSlug()]));
         }
+        return false;
+    }
+    
+    /**
+     * 
+     * @param type $username
+     * @param type $slug
+     * @param type $action
+     * @return Response
+     */
+    public function albumOptionAction($username, $slug, $action)
+    {   
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $album = $this->getRepository('MozcuMozcuBundle:Album')->findOneByUsernameAndSlug($username, $slug);
+            if(is_null($album)) {
+                return $this->getJSONResponse(['success' => false, 'message' => 'album not found']);
+            }
+
+            $template = 'MozcuMozcuBundle:Album:_album' . ucfirst($action) . '.html.twig';
+            $parameters = ['album' => $album, 'selected' => $action];
+            if ($action == 'related') {
+                $parameters['albums'] = $this->getRepository('MozcuMozcuBundle:Album')->findRelated($album);
+            }
+            return $this->renderAjaxResponse($template, $parameters);
+        } else {
+            throw new BadRequestHttpException();
+        }  
     }
     
     /**

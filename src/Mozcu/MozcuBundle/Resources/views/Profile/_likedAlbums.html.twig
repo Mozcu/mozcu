@@ -5,7 +5,7 @@
             <input type="hidden" class="albumId" value="{{ album.getId }}" />
 
             {% if album.getIsActive %}
-                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'id': album.getId}) }}">
+                <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'slug': album.getSlug}) }}">
                     <img src="{{ album.getListThumbnailUrl }}" alt="{{ album.getName }}" class="imgAlbumManager col-xs-4 col-sm-3 col-md-2 col-lg-2">
                 </a>
             {% endif %}
