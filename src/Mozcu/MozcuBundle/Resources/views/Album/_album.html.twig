@@ -2,7 +2,7 @@
 <div class="album col-xs-6 col-sm-4 col-md-3 col-lg-3 discListen">
     {% for presentation in album.getImage.getPresentations %}
         {% if presentation.getName == 'list_thumbanil' %}
-            <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': username, 'id': album.getId}) }}" class="albumLink">
+            <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': username, 'slug': album.getSlug}) }}" class="albumLink">
                 <img src="{{ presentation.url }}" alt="{{ album.getName }}" class="imgAlbum" />
             </a>
         {% endif %}

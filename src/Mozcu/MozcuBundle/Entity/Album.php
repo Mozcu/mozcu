@@ -118,6 +118,11 @@ class Album {
      **/
     private $likers;
     
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
+    
     
     
     public function __construct() {
@@ -728,5 +733,25 @@ class Album {
     public function sameAs(Album $album)
     {
         return $this->id == $album->getId();
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    
+    /**
+     * 
+     * @param string $slug
+     * @return \Mozcu\MozcuBundle\Entity\Album
+     */
+    public function setSlug($slug) {
+        $this->slug = $slug;
+        
+        return $this;
     }
 }

@@ -29,8 +29,8 @@
             <li class="segmentoTitl col-xs-12 col-sm-12 col-md-12 col-lg-12">Álbumes</li>
         {% endif %}
         {% for album in albums %}
-            <li class="autoResult col-lg-12" data-url="{{ path('MozcuMozcuBundle_albumAlbum', {id: album.getId, 
-                            username: album.getProfile.getUser.getUsername }) }}">
+            <li class="autoResult col-lg-12" data-url="{{ path('MozcuMozcuBundle_albumAlbum', {'slug': album.getSlug, 
+                            'username': album.getProfile.getUser.getUsername }) }}">
                 {% for presentation in album.getImage.getPresentations %}
                     {% if presentation.getName == 'livesearch' %}
                         <img src="{{ presentation.url }}" alt="album" class="autoImgAlbum col-xs-4 col-sm-2 col-md-2 col-lg-2">
@@ -45,8 +45,8 @@
             <li class="segmentoTitl col-xs-12 col-sm-12 col-md-12 col-lg-12">Tracks</li>
         {% endif %}
         {% for song in songs %}
-            <li class="autoResult col-lg-12" data-url="{{ path('MozcuMozcuBundle_albumAlbum', {id: song.getAlbum.getId, 
-                            username: song.getAlbum.getProfile.getUser.getUsername }) }}">
+            <li class="autoResult col-lg-12" data-url="{{ path('MozcuMozcuBundle_albumAlbum', {'slug': song.getAlbum.getSlug, 
+                            'username': song.getAlbum.getProfile.getUser.getUsername }) }}">
                 {% for presentation in song.getAlbum.getImage.getPresentations %}
                     {% if presentation.getName == 'livesearch' %}
                         <img src="{{ presentation.url }}" alt="album" class="autoImgAlbum col-xs-4 col-sm-2 col-md-2 col-lg-2">

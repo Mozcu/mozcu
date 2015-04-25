@@ -3,6 +3,7 @@
 namespace Mozcu\MozcuBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * AlbumRepository
@@ -94,5 +95,22 @@ class AlbumRepository extends EntityRepository {
             function ($result) { return $result[0]; },
             $results
         );
+    }
+    
+    public function findOneByUsernameAndSlug($username, $slug)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')
+                ->from('MozcuMozcuBundle:Album', 'a')
+                ->innerJoin('a.profile', 'p')
+                ->innerJoin('p.user', 'u')
+                ->where('a.slug = :slug')
+                ->andWhere('u.username = :username')
+                ->setParameters(['slug' => $slug, 'username' => $username]);
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch(NoResultException $e) {
+            return null;
+        }
     }
 }

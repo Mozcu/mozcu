@@ -156,18 +156,18 @@ MozcuMozcuBundle_albumReportModal:
     defaults: {_controller: MozcuMozcuBundle:Album:albumReportModal}
     requirements:
       _method: GET
-      
-MozcuMozcuBundle_albumShareModal:
-    pattern: /album/{id}/share
-    defaults: {_controller: MozcuMozcuBundle:Album:albumShareModal}
-    requirements:
-      _method: GET
-      
+
 MozcuMozcuBundle_albumSubmitReport:
     pattern: /album/{id}/report
     defaults: {_controller: MozcuMozcuBundle:Album:albumSubmitReport}
     requirements:
       _method: POST
+
+MozcuMozcuBundle_albumShareModal:
+    pattern: /album/{id}/share
+    defaults: {_controller: MozcuMozcuBundle:Album:albumShareModal}
+    requirements:
+      _method: GET
     
 MozcuMozcuBundle_albumDownloadModal:
     pattern: /album/{id}/download
@@ -200,26 +200,14 @@ MozcuMozcuBundle_updateAlbum:
       _method: POST
 
 MozcuMozcuBundle_albumAlbum:
-    pattern: /{username}/album/{id}
+    pattern: /{username}/album/{slug}
     defaults: {_controller: MozcuMozcuBundle:Album:album}
     requirements:
       _method: GET
       
-MozcuMozcuBundle_albumAlbumInformation:
-    pattern: /{username}/album/{id}/information
-    defaults: {_controller: MozcuMozcuBundle:Album:albumInformation}
-    requirements:
-      _method: GET
-      
-MozcuMozcuBundle_albumAlbumRelated:
-    pattern: /{username}/album/{id}/related
-    defaults: {_controller: MozcuMozcuBundle:Album:albumsRelated}
-    requirements:
-      _method: GET
-
-MozcuMozcuBundle_albumAlbumPlaylist:
-    pattern: /{username}/album/{id}/playlist
-    defaults: {_controller: MozcuMozcuBundle:Album:albumPlaylist}
+MozcuMozcuBundle_albumAlbumAction:
+    pattern: /{username}/album/{slug}/{action}
+    defaults: {_controller: MozcuMozcuBundle:Album:albumOption}
     requirements:
       _method: GET
 

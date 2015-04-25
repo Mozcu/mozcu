@@ -7,8 +7,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="crearCompi">
-                        <input type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" value="{{ url('MozcuMozcuBundle_albumAlbum', { 'username': album.getProfile.getusername, 'id': album.getId }) }}">
-                        <button class="btn btn-default col-lg-2" id="copy-button" data-clipboard-text="{{ url('MozcuMozcuBundle_albumAlbum', { 'username': album.getProfile.getusername, 'id': album.getId }) }}">Copiar</button>
+                        <input type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" value="{{ url('MozcuMozcuBundle_albumAlbum', { 'username': album.getProfile.getusername, 'slug': album.getSlug }) }}">
+                        <button class="btn btn-default col-lg-2" id="copy-button" data-clipboard-text="{{ url('MozcuMozcuBundle_albumAlbum', { 'username': album.getProfile.getusername, 'slug': album.getSlug }) }}">Copiar</button>
                     </div>
 
                 </div>

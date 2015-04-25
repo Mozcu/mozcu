@@ -14,7 +14,7 @@
                         <div class="result resultadoDisco album col-xs-4 col-sm-3 col-md-3 col-lg-2">
                             {% for presentation in album.getImage.getPresentations %}
                                 {% if presentation.getName == 'list_thumbanil' %}
-                                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {id: album.getId, 
+                                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {slug: album.getSlug, 
                                                 username: album.getProfile.getUser.getUsername }) }}">
                                         <img src="{{ presentation.url }}" alt="album" class="imgAlbum">
                                     </a>
@@ -85,12 +85,12 @@
                                 <tr class="result">
                                     <td class="text-center">{{ key + 1}}</td>
                                     <td class="nombreTabla">
-                                        <a href="{{ path('MozcuMozcuBundle_albumAlbum', {id: song.getAlbum.getId, 
+                                        <a href="{{ path('MozcuMozcuBundle_albumAlbum', {slug: song.getAlbum.getSlug, 
                                                     username: song.getAlbum.getProfile.getUser.getUsername }) }}">{{ song.getName}}</a>
                                     </td>
-                                    <td class="compiTable text-right"><a href="#"><i class="glyphicon glyphicon-plus-sign"></i></a></td>
+                                    {# <td class="compiTable text-right"><a href="#"><i class="glyphicon glyphicon-plus-sign"></i></a></td> #}
                                     <td class="text-right">{{ song.getLength }}</td>
-                                    <td class="shareTable text-center"><a href="#"><i class="glyphicon glyphicon-share"></i></a></td>
+                                    {# <td class="shareTable text-center"><a href="#"><i class="glyphicon glyphicon-share"></i></a></td> #}
                                 </tr>
                             {% endfor %}
                         </tbody>
