@@ -472,6 +472,14 @@ body{
     text-decoration: none;
 }
 
+.numeroTabla{
+    width: 40px;}
+
+.duracionTabla{
+    width: 80px;
+    padding-left: 5px;
+}
+
 .playList > table > thead{
     font-weight: bold;
     color: #555;
@@ -920,27 +928,44 @@ body{
     
 }
 
-@media (max-width: 480px){
+@media (min-width: 300px) and (max-width: 480px){
     .album{
-        height: 200px;
+        height:240px;
     }
 }
 
-@media (max-width: 760px){
+@media (min-width: 480px) and (max-width: 600px){
     .album{
-        height: 380px;
+        height:300px;
+    }
+}
+@media (min-width: 600px) and (max-width: 767px){
+    .album{
+        height:370px;
     }
 }
 
-@media (min-width: 960px){
+@media (min-width: 768px) and (max-width: 991px){
     .album{
-        height: 300px;
+        height:340px;
     }
 }
 
-@media (min-width: 1300px){
+@media (min-width: 992px) and (max-width: 1200px){
     .album{
-        height: 330px;
+        height:270px;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1400px){
+    .album{
+        height:300px;
+    }
+}
+
+@media (min-width: 1400px){
+    .album{
+        height: 350px;
     }
     
 }
@@ -958,34 +983,6 @@ body{
 
 }
 
-.imgAlbum{
-    margin-bottom: 3px;
-    border: none;
-    border-radius: 2px;
-    max-width: 100%;
-    height: auto;
-    line-height: 1.42857143;
-    background-color: #fff;
-    -webkit-transition: opacity 0.5s;
-          transition: opacity 0.5s ;
-    opacity: 1;
-    box-shadow: 1px 1px 5px #555;
-}
-
-.imgAlbum:hover{
-    opacity: 0.8;
-}
-.album > h5{
-    margin-top: 5px;
-    margin-bottom: 2px;
-    color: #111;
-    font-size: 15px;
-}
-.album > a >p{
-    color: #555;
-    font-size: 12px;
-    
-}
 
 .btnPerfilActive{
      -webkit-box-shadow: inset 0px 0px 7px 0px rgba(100, 100, 100, 0.5);
@@ -1505,48 +1502,12 @@ body{
     overflow: scroll;
     
 }
+
+.btnFiltros{
+    margin-right:10px;
+}
 /*INICIO DE ALBUMES*/
 
-.album{
-    padding: 5px 20px;
-    margin-bottom: 10px;
-    
-}
-
-.album:hover{
-    opacity: 0.8;
-    transition: opacity 0.6s;
-
-}
-
-.imgAlbum{
-    margin-bottom: 3px;
-    border: none;
-    border-radius: 2px;
-    max-width: 100%;
-    height: auto;
-    line-height: 1.42857143;
-    background-color: #fff;
-    -webkit-transition: opacity 0.5s;
-          transition: opacity 0.5s ;
-    opacity: 1;
-    box-shadow: 1px 1px 5px #555;
-}
-
-.imgAlbum:hover{
-    opacity: 0.8;
-}
-.album > h5{
-    margin-top: 5px;
-    margin-bottom: 2px;
-    color: #111;
-    font-size: 15px;
-}
-.album > a >p{
-    color: #555;
-    font-size: 12px;
-    
-}
 
 .btnPerfilActive{
      -webkit-box-shadow: inset 0px 0px 7px 0px rgba(100, 100, 100, 0.5);

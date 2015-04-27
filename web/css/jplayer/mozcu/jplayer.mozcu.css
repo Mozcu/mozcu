@@ -402,6 +402,14 @@ div.jp-playlist {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+@media (min-width: 1300px) { 
+
+	div.jp-playlist{
+		height:250px;
+	}
+}
+
 div.jp-playlist::-webkit-scrollbar {
     /*background-color: #FFFFFF;*/
 }

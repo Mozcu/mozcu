@@ -23,6 +23,13 @@ body {
     box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .1), 1px 1px 0 rgba(255, 255, 255, .1);
     -moz-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .1), 1px 1px 0 rgba(255, 255, 255, .1);
 }
+/*MEDIA QUERIE PARA LA BARRA DE BUSQUEDA*/
+@media (max-width: 480px) { 
+	.buscador{
+		float:right;
+	}
+
+}
 
 .inputBuscador{
     background-color: #424242;   
@@ -111,12 +118,14 @@ body {
     margin-top: 0px;
     margin-bottom: 5px;
     padding-left: 30px;
+    
 }
 
 .autoImgAlbum{
     padding-top: 5px;
     padding-bottom: 5px;
     max-width: 70px;
+    border-radius: 50%;
 }
 
 

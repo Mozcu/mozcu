@@ -11,7 +11,7 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><input data-url="{{ path('MozcuMozcuBundle_getTagsLive') }}" type="search" placeholder="Busca un tag" class="form-control"></li>
                     {% for tag in tags %}
-                        <li><button data-id="{{ tag.getId }}" class="btn btn-link">{{ tag.getName }}</button></li>
+                        <li><button data-id="{{ tag.getId }}" class="btn btn-link btnFiltros">{{ tag.getName }}</button></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -22,13 +22,13 @@
                 <input type="hidden" class="filterValue" id="country" value="" />
                 <ul class="dropdown-menu" role="menu">
                     <li><input data-url="{{ path('MozcuMozcuBundle_getCountries') }}" type="search" placeholder="Busca un pais" class="form-control"></li>
-                    <li><button data-id="12" class="btn btn-link">Argentina</button></li>
-                    <li><button data-id="45" class="btn btn-link">Chile</button></li>
-                    <li><button data-id="228" class="btn btn-link">Uruguay</button></li>
-                    <li><button data-id="28" class="btn btn-link">Bolivia</button></li>
-                    <li><button data-id="51" class="btn btn-link">Colombia</button></li>
-                    <li><button data-id="178" class="btn btn-link">Perú</button></li>
-                    <li><button data-id="32" class="btn btn-link">Brasil</button></li>
+                    <li><button data-id="12" class="btn btn-link btnFiltros">Argentina</button></li>
+                    <li><button data-id="45" class="btn btn-link btnFiltros">Chile</button></li>
+                    <li><button data-id="228" class="btn btn-link btnFiltros">Uruguay</button></li>
+                    <li><button data-id="28" class="btn btn-link btnFiltros">Bolivia</button></li>
+                    <li><button data-id="51" class="btn btn-link btnFiltros">Colombia</button></li>
+                    <li><button data-id="178" class="btn btn-link btnFiltros">Perú</button></li>
+                    <li><button data-id="32" class="btn btn-link btnFiltros">Brasil</button></li>
                 </ul>
             </div>
             <div class="btn-group btnFilter order">
@@ -38,9 +38,9 @@
                 </button>
                 <input type="hidden" class="filterValue" id="order" value="" />
                 <ul class="dropdown-menu" role="menu">
-                    <li><button data-id="a.downloads" class="btn btn-link">Mas descargados</button></li>
-                    <li><button data-id="a.visits" class="btn btn-link">Mas escuchados</button></li>
-                    <li><button data-id="a.createdAt" class="btn btn-link">Mas recientes</button></li>
+                    <li><button data-id="a.downloads" class="btn btn-link btnFiltros">Mas descargados</button></li>
+                    <li><button data-id="a.visits" class="btn btn-link btnFiltros">Mas escuchados</button></li>
+                    <li><button data-id="a.createdAt" class="btn btn-link btnFiltros">Mas recientes</button></li>
                 </ul>
             </div> 
         </div>

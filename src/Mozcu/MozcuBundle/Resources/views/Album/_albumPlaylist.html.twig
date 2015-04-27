@@ -2,23 +2,21 @@
      <table class="table table-striped table-condensed">
         <thead>
             <tr>
-                <td class="text-center">#</td>
+                <td class="text-center numeroTabla">#</td>
                 <td class="nombreTabla">Nombre</td>
-                <!-- <td class="shareTable text-right">Agregar</td> -->
-                <td class="text-left">Duración</td>
-                <!-- <td class="shareTable text-center">Compartir</td> -->
-                <td class="shareTable text-center">&nbsp;</td>
+                {# <td class="shareTable text-right">Agregar</td> #}
+                <td class="text-left duracionTabla">Duración</td>
+                {# <td class="shareTable text-center">Compartir</td> #}
             </tr>
         </thead>
         <tbody>
             {% for key, song in album.getSongs%}
                 <tr>
-                    <td class="text-center">{{ song.getTrackNumber }}</td>
+                    <td class="text-center numeroTabla">{{ song.getTrackNumber }}</td>
                     <td class="nombreTabla songName"><a href="#" id="{{ album.getId }}-{{ song.getTrackNumber }}">{{ song.getName }}</a></td>
-                    <!-- <td class="compiTable text-right"><a href="#"><i class="glyphicon glyphicon-plus-sign"></i></a></td> -->
-                    <td class="text-left">{{ song.getLength}}</td>
-                    <!-- <td class="shareTable text-center"><a href="#"><i class="glyphicon glyphicon-share"></i></a></td> -->               
-                    <td class="shareTable text-center">&nbsp;</td>
+                    {# <td class="compiTable text-right"><a href="#"><i class="glyphicon glyphicon-plus-sign"></i></a></td> #}
+                    <td class="text-left duracionTabla">{{ song.getLength}}</td>
+                    {# <td class="shareTable text-center"><a href="#"><i class="glyphicon glyphicon-share"></i></a></td> #}              
                 </tr>
             {% endfor %}
         </tbody>      
