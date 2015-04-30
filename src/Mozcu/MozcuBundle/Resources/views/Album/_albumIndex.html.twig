@@ -125,10 +125,8 @@ $(function(){
                 $('.headerExplorer').after(data.html);
                 $('.headerExplorer .clearFilters').addClass('hidden');
                 
-                $.getJSON(loadFiltersUrl, function(data) {
-                    if(data.success) {
-                        $('.headerExplorer').html(data.html);
-                    }
+                $.get(loadFiltersUrl, function(data) {
+                    $('.headerExplorer').html(data);
                 });
             }
         });
