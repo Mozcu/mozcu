@@ -23,7 +23,7 @@ class AlbumRepository extends EntityRepository {
         if(isset($filters['orderBy']) && !empty($filters['orderBy'])) {
             $qb->orderBy($filters['orderBy']['sort'], $filters['orderBy']['order']);
         } else {
-            $qb->orderBy('a.visits', 'DESC');
+            $qb->orderBy('a.createdAt', 'DESC');
         }
         // tag
         if(isset($filters['tag']) && !empty($filters['tag'])) {
