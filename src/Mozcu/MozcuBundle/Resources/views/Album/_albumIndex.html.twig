@@ -2,47 +2,7 @@
 <!--INICIO DE CONTENIDO-->
     <div class="row center-block perfilContenido">
         <div class="headerExplorer col-lg-12" data-url="{{ path('MozcuMozcuBundle_albumsNextPage', {'page' : 0}) }}">
-            <div class="btn-group btnTag tag">
-                <button type="button" class="btn btn-default dropdown-toggle dropdownButton"
-                        data-toggle="dropdown">
-                    <span class="name">Todos los tags</span> <span class="caret"></span>
-                </button>
-                <input type="hidden" class="filterValue" id="tag" value="" />
-                <ul class="dropdown-menu" role="menu">
-                    <li><input data-url="{{ path('MozcuMozcuBundle_getTagsLive') }}" type="search" placeholder="Busca un tag" class="form-control"></li>
-                    {% for tag in tags %}
-                        <li><button data-id="{{ tag.getId }}" class="btn btn-link btnFiltros">{{ tag.getName }}</button></li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="btn-group btnUbicacion country">
-                <button type="button" class="btn btn-default dropdown-toggle dropdownButton"
-                        data-toggle="dropdown"> <span class="name">Todos los países</span><span class="caret"></span>
-                </button>
-                <input type="hidden" class="filterValue" id="country" value="" />
-                <ul class="dropdown-menu" role="menu">
-                    <li><input data-url="{{ path('MozcuMozcuBundle_getCountries') }}" type="search" placeholder="Busca un pais" class="form-control"></li>
-                    <li><button data-id="12" class="btn btn-link btnFiltros">Argentina</button></li>
-                    <li><button data-id="45" class="btn btn-link btnFiltros">Chile</button></li>
-                    <li><button data-id="228" class="btn btn-link btnFiltros">Uruguay</button></li>
-                    <li><button data-id="28" class="btn btn-link btnFiltros">Bolivia</button></li>
-                    <li><button data-id="51" class="btn btn-link btnFiltros">Colombia</button></li>
-                    <li><button data-id="178" class="btn btn-link btnFiltros">Perú</button></li>
-                    <li><button data-id="32" class="btn btn-link btnFiltros">Brasil</button></li>
-                </ul>
-            </div>
-            <div class="btn-group btnFilter order">
-                <button type="button" class="btn btn-default dropdown-toggle dropdownButton"
-                      data-toggle="dropdown">
-                    <span class="name">Ordenar por</span><span class="caret"></span>
-                </button>
-                <input type="hidden" class="filterValue" id="order" value="" />
-                <ul class="dropdown-menu" role="menu">
-                    <li><button data-id="a.downloads" class="btn btn-link btnFiltros">Mas descargados</button></li>
-                    <li><button data-id="a.visits" class="btn btn-link btnFiltros">Mas escuchados</button></li>
-                    <li><button data-id="a.createdAt" class="btn btn-link btnFiltros">Mas recientes</button></li>
-                </ul>
-            </div> 
+            {{ render(controller('MozcuMozcuBundle:Album:loadFilters')) }}
         </div>
                 
         {% if tag is defined %}
@@ -107,10 +67,10 @@ $(function(){
     };
     
     // Filtros
-    $('.headerExplorer .dropdown-menu').on('click', '.form-control', function(e) { e.stopPropagation(); });
+    $('.headerExplorer').on('click', '.dropdown-menu .form-control', function(e) { e.stopPropagation(); });
     
     var lastSearchAjax = null;
-    $('.headerExplorer .dropdown-menu').on('keyup', 'input[type=search]', function(e){
+    $('.headerExplorer').on('keyup', '.dropdown-menu input[type=search]', function(e){
         var me = $(this);
         if(lastSearchAjax !== null) {
             lastSearchAjax.abort();
@@ -132,7 +92,7 @@ $(function(){
         });
     });
     
-    $('.headerExplorer .dropdown-menu').on('click', 'button', function(e){
+    $('.headerExplorer').on('click', '.dropdown-menu button', function(e){
         var me = $(this);
         var url = $('.headerExplorer').data('url');
         
@@ -141,10 +101,35 @@ $(function(){
         
         $.getJSON(url, {filters: getFilters()}, function(data) {
             if(data.success) {
+                $('.notFound').remove();
                 $('#albumsNextPage').remove();
                 $('.album').remove();
                 $('.headerResultados').remove();
                 $('.headerExplorer').after(data.html);
+                $('.headerExplorer .clearFilters').removeClass('hidden');
+            }
+        });
+    });
+    
+    $('.headerExplorer').on('click', '.clearFilters button', function(e){
+        var me = $(this);
+        var url = $('.headerExplorer').data('url');
+        var loadFiltersUrl = me.data('url');
+        
+        $.getJSON(url, function(data) {
+            if(data.success) {
+                $('.notFound').remove();
+                $('#albumsNextPage').remove();
+                $('.album').remove();
+                $('.headerResultados').remove();
+                $('.headerExplorer').after(data.html);
+                $('.headerExplorer .clearFilters').addClass('hidden');
+                
+                $.getJSON(loadFiltersUrl, function(data) {
+                    if(data.success) {
+                        $('.headerExplorer').html(data.html);
+                    }
+                });
             }
         });
     });

@@ -121,6 +121,12 @@ MozcuMozcuBundle_albumsNextPage:
     requirements:
       _method: GET
       
+MozcuMozcuBundle_albumsLoadFilters:
+    pattern: /ajax/albums/filters
+    defaults: {_controller: MozcuMozcuBundle:Album:loadFilters}
+    requirements:
+      _method: GET
+      
 MozcuMozcuBundle_albumsTag:
     pattern: /albums/tag/{tag}
     defaults: {_controller: MozcuMozcuBundle:Album:index}

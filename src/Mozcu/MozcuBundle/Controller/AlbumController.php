@@ -100,6 +100,18 @@ class AlbumController extends MozcuController
         }
     }
     
+    public function loadFiltersAction()
+    {
+        $template = 'MozcuMozcuBundle:Album:_albumFilters.html.twig';
+        $parameters['tags'] = $this->getRepository('MozcuMozcuBundle:Tag')->findMostPopular();
+        
+        if($this->getRequest()->isXmlHttpRequest()) {
+            return $this->renderAjaxResponse($template, $parameters);
+        } else {
+           return $this->render($template, $parameters);
+        }
+    }
+    
     /**
      * Pagina de album
      * 

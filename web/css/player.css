@@ -6,3 +6,10 @@
 	bottom: 35px;
         margin-left: -15px;
 }
+
+@media (min-width: 1300px) { 
+	.sidebar .player{
+		height:320px;
+	}
+
+}

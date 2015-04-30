@@ -1,5 +1,9 @@
 {% for album in albums %}
     {{ include('MozcuMozcuBundle:Album:_album.html.twig', {album: album}) }}
+{% else %}
+    {% if page == 1 %}
+        <p class="notFound">No se han encontrado albumes para los criterios de busqueda</p>
+    {% endif %}
 {% endfor %}
 
 <input type="hidden" id="albumsNextPage" value="{{ path('MozcuMozcuBundle_albumsNextPage', {page: page}) }}" />
