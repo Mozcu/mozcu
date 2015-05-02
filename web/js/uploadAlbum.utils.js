@@ -9,7 +9,7 @@ $(function() {
         var parent = me.parent();
         
         parent.find('.editSongName').hide();
-        parent.find('.editingSongName').val(parent.find('.filename').html()).show().focus();
+        parent.find('.editingSongName').val(parent.find('.filename').text()).show().focus();
         parent.find('.confirm').show();
     });
     
@@ -29,7 +29,7 @@ $(function() {
         if(e.which == 27) { // esc
             e.preventDefault();
             
-            me.val(parent.find('.filename').html()).hide();
+            me.val(parent.find('.filename').text()).hide();
             parent.find('.confirm').hide();
             parent.find('.editSongName').show();
         }
@@ -53,7 +53,7 @@ $(function() {
         var me = $(this);
         var parent = me.parent();
         
-        me.val(parent.find('.filename').html()).hide();
+        me.val(parent.find('.filename').text()).hide();
         parent.find('.confirm').hide();
         parent.find('.editSongName').show();
     });
@@ -121,7 +121,7 @@ $(function() {
         $('.uploadedSong').each(function(key, value){
             var me = $(value);
             var song = {};
-            song.name = $.trim(me.find('.filename').html());
+            song.name = $.trim(me.find('.filename').text());
             song.file_name = me.find('.realFileName').val();
             song.track_number = key + 1;
             
@@ -134,7 +134,7 @@ $(function() {
         
         album.tags = new Array;
         $('.tagit-choice').each(function(key, value) {
-            var tag = {name: $.trim($(value).find('.tagit-label').html())};
+            var tag = {name: $.trim($(value).find('.tagit-label').text())};
             album.tags.push(tag);
         });
         
