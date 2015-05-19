@@ -1,0 +1,32 @@
+{% extends 'MozcuMozcuBundle::layout.html.twig' %}
+
+{% block title %} {% trans with {'%name%': album.getArtistName} %}%name% en Mozcu{% endtrans %} {% endblock %}
+
+{% block mainContent %}
+    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+        <div class="row center-block perfilContenido">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <h3 class="titlAlbumManager">Descargando</h3>
+
+                <div class="albumManager downloadAlbum col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                    <a href="#"><img src="{{ album.getCoverImageUrl }}" class="imgDownloadAlbum img-responsive col-xs-12 col-sm-4 col-md-4 col-lg-4"></a>
+                    <p class="pull-right visible-sm visible-md visible-lg text-muted">{{ album.getSongs.count }} temas</p>
+                    <h5>{{ album.getName }}</h5>
+                    <a href="#"><p>{{ album.getArtistName }}</p></a>
+                    <p>{{ album.getReleaseDate }}</p>
+                    <div class="btn-group center-block">
+                        <button type="button" class="btn btn-default btnAlbumManager"><i class="glyphicon glyphicon-heart"></i>Favoritos</button>
+                        <button type="button" class="btn btn-default btnAlbumManager"><i class="glyphicon glyphicon-user"></i>Seguir</button>
+                    </div>  
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
+                        <p class="text center">Si tu descarga no comienza automáticamente, haz click<button class="btn-link">acá</button></p>
+                    </div>
+                </div>
+            </div>
+        </div>           
+    </div>
+{% endblock %}

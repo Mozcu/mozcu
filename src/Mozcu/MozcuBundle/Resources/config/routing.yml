@@ -211,6 +211,12 @@ MozcuMozcuBundle_albumAlbumAction:
     requirements:
       _method: GET
 
+MozcuMozcuBundle_albumCheckoutFromPaymentAction:
+    pattern: /checkout/{checkoutId}
+    defaults: {_controller: MozcuMozcuBundle:Album:checkOutFromPayment}
+    requirements:
+      _method: GET
+      
 ### Upload Album Controller ###
 MozcuMozcuBundle_uploadAlbumIndex:
   pattern: /albums/upload
@@ -324,5 +330,11 @@ MozcuMozcuBundle_profileFollowing:
 MozcuMozcuBundle_albumsForProfile:
   pattern: /{username}/albumsForProfile
   defaults: {_controller: MozcuMozcuBundle:Profile:albumsForProfile}
+  requirements:
+    _method: GET
+    
+MozcuMozcuBundle_returnFromPayment:
+  pattern: /payment/return/{checkoutId}
+  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromPayment}
   requirements:
     _method: GET

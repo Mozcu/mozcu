@@ -71,7 +71,6 @@ $(function() {
                     }, 3000);
                 } else {
                     $('#amount').val(amount);
-                    $('#checkoutUrl').val(zipUrl);
                     window.onbeforeunload = null;
                     $('#paypalForm').submit();
                 }

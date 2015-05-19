@@ -253,8 +253,13 @@ class AlbumController extends MozcuController
         if($this->getRequest()->isXmlHttpRequest()) {
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
             if(!is_null($album)) {
+                // TODO: encapsular
+                $date = new \DateTime;
+                $checkoutId = md5($album->getId() . $date->getTimestamp());
+                $this->getRequest()->getSession()->set($checkoutId, $album->getId());
+                
                 $template = "MozcuMozcuBundle:Album:_albumDownloadModal.html.twig";
-                $parameters = array('album' => $album);
+                $parameters = array('album' => $album, 'checkoutId' => $checkoutId);
                 return $this->renderAjaxResponse($template, $parameters);
             } else {
                 return $this->getJSONResponse(array('success' => false));
@@ -289,6 +294,19 @@ class AlbumController extends MozcuController
         } else {
             throw new BadRequestHttpException();
         }
+    }
+    
+    
+    public function checkOutFromPaymentAction($checkoutId)
+    {
+        if (!$this->getRequest()->isXmlHttpRequest() && $this->getRequest()->getSession()->has($checkoutId)) {
+            $albumId = $this->getRequest()->getSession()->get($checkoutId);
+            $album = $this->getRepository('MozcuMozcuBundle:Album')->find($albumId);
+            if (!is_null($album)) {
+                return $this->render('MozcuMozcuBundle:Album:albumDownloadFromCheckout.html.twig', ['album' => $album]);
+            } 
+        }
+        throw new BadRequestHttpException();
     }
     
     public function getTagsLiveAction(Request $request) {

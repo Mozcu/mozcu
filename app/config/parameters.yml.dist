@@ -14,3 +14,6 @@ parameters:
     locale: es
     secret: 7ba54572bab26c2b65175ab5589249327d548be0
     database_path: null
+    mongo_host: 127.0.0.1
+    mongo_port: 27017
+    mongo_database:

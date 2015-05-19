@@ -1081,6 +1081,26 @@ body{
     border-radius: 2px;
 }
 
+/*INICIO DOWNLOAD / DESCARGA ALBUM*/
+
+.downloadAlbum{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding:15px;
+    border: none;
+}
+
+.imgDownloadAlbum{
+    box-shadow: 1px 1px 5px #555;
+    border-radius: 2px;
+    padding: 0px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+   
+}
+
+/*FIN DESCARGA / DOWNLOAD ALBUM*/
+
 /*INICIO DE RESENAS*/
 
 .resena{

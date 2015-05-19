@@ -1,0 +1,41 @@
+<?php
+
+namespace Mozcu\MozcuBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+
+/**
+ * @MongoDB\Document(repositoryClass="Mozcu\MozcuBundle\Repository\PurchaseRepository")
+ */
+class Purchase
+{
+    /**
+     * @MongoDB\Id
+     */
+    protected $id;
+
+    /**
+     * @MongoDB\Int
+     */
+    protected $album;
+    
+    /**
+     * @MongoDB\Int
+     */
+    protected $user;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $paymentService;
+    
+    /**
+     * @MongoDB\Float
+     */
+    protected $price;
+    
+    /**
+     * @MongoDB\Date
+     */
+    protected $date;
+}

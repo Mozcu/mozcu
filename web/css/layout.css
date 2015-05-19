@@ -239,6 +239,102 @@ body {
 /* ++++++++++++++SIDEBAR++++++++++++++++++++
  * =========================================
  */
+
+     /*-------------------------------*/
+    /*        sidebar toggle query   */
+   /*-------------------------------*/
+
+@media (max-width: 979px) {
+
+
+
+    #wrapper {
+        padding-left: 0;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    #wrapper.toggled {
+        padding-left: 220px;
+        
+    }
+
+    #sidebar-wrapper {
+        z-index: 1000;
+        left: 220px;
+        width: 0;
+        height: 100%;
+        margin-left: -250px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    #sidebar-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 220px;
+        padding-left: 35px;
+      
+    }
+
+    #page-content-wrapper {
+        position: absolute;
+        width: 100%;
+        
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: absolute;
+        margin-right: -220px;
+        opacity: 0.4;
+        transition: opacity .4s ease-in-out;
+       -moz-transition: opacity .4s ease-in-out;
+       -webkit-transition: opacity .4s ease-in-out;
+    }
+    /*-------------------------------*/
+   /*     Sidebar nav styles        */
+  /*-------------------------------*/
+
+.sidebar-nav {
+    position: absolute;
+    width: 220px;
+    padding-right: 15px;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    position: relative; 
+    line-height: 20px;
+    display: inline-block;
+    width: 100%;
+}
+.divider{
+    background-color: #ccc;
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    
+    }
+.menuPerfilXs{
+    }
+    
+.buscador{
+    float: right!important;
+    }
+}
+
+
+    /*-------------------------------*/
+   /*     Fin query sidebar menu    */
+  /*-------------------------------*/
     
 .sidebar{
     background-color: #f5f5f5;

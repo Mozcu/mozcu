@@ -22,7 +22,9 @@
         "phansys/getid3": "2.1.*@dev",
         "google/apiclient": "1.0.*@beta",
         "doctrine/migrations": "dev-master",
-        "doctrine/doctrine-migrations-bundle": "dev-master"
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "doctrine/mongodb-odm": "~1.0@dev",
+        "doctrine/mongodb-odm-bundle": "~3.0@dev"
     },
     "scripts": {
         "post-install-cmd": [
