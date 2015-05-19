@@ -89,3 +89,7 @@ services:
   mozcu_mozcu.email_service:
     class: Mozcu\MozcuBundle\Service\EmailService
     arguments: ["@mailer", "@templating", "%mail.noreply_address%"]
+    
+  mozcu_mozcu.payment_service:
+    class: Mozcu\MozcuBundle\Service\PaymentService
+    arguments: [ "@doctrine_mongodb.odm.document_manager" ]

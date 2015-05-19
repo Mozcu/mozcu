@@ -15,9 +15,13 @@
                 <small class="center-block text-center">*Recuerda que esta transacción se realiza libre de intermediarios, por lo tanto el 100% de lo que ingreses va a la cuenta del artista.</small>  
             </div>
             
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="paypal" name="myform" id="paypalForm">
+            <form action="https://www.{% if app.environment == 'dev' %}sandbox.{% endif %}paypal.com/cgi-bin/webscr" method="post" class="paypal" name="myform" id="paypalForm">
                 <input type="hidden" name="cmd" value="_xclick">
-                <input type="hidden" name="business" value="{{ album.getProfile.getPaypalEmail }}">
+                {% if app.environment == 'dev' %}
+                    <input type="hidden" name="business" value="maurocristy-facilitator@gmail.com">
+                {% else %}
+                    <input type="hidden" name="business" value="{{ album.getProfile.getPaypalEmail }}">
+                {% endif %}
                 <input type="hidden" name="lc" value="AR">
                 <input type="hidden" name="item_name" value="{{ album.getArtistName }} - {{ album.getName }}">
                 <input type="hidden" name="item_number" value="mozcudotcom-{{ album.getId }}">
@@ -28,7 +32,8 @@
                 <input type="hidden" name="no_shipping" value="2">
                 <input type="hidden" name="rm" value="1">
                 {% set username = album.getProfile.getUser.getUsername %}
-                <input type="hidden" id="checkoutUrl" name="return" value="{{ url('MozcuMozcuBundle_returnFromPayment', {'checkoutId': checkoutId}) }}">
+                <input type="hidden" name="return" value="{{ url('MozcuMozcuBundle_returnFromPayment', {'service' : 'paypal' , 'checkoutId': checkoutId}) }}">
+                {# <input type="hidden" name="notify_url" value="{{ url('MozcuMozcuBundle_notifyPaypal') }}"> #}
                 <input type="hidden" name="cancel_return" value="{{ url('MozcuMozcuBundle_albumAlbum', {'username': username, 'slug': album.getSlug }) }}">
                 <input type="hidden" name="bn" value="Moscu_BuyNow_WPS_AR">
                 <input type="hidden" name="cbt" value="Descargar el album">

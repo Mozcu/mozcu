@@ -332,9 +332,17 @@ MozcuMozcuBundle_albumsForProfile:
   defaults: {_controller: MozcuMozcuBundle:Profile:albumsForProfile}
   requirements:
     _method: GET
+
     
+### Payment ###
 MozcuMozcuBundle_returnFromPayment:
-  pattern: /payment/return/{checkoutId}
+  pattern: /payment/return/{service}/{checkoutId}
   defaults: {_controller: MozcuMozcuBundle:Payment:returnFromPayment}
   requirements:
     _method: GET
+
+MozcuMozcuBundle_notifyPaypal:
+  pattern: /payment/notify/paypal
+  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromPayment}
+  requirements:
+    _method: POST

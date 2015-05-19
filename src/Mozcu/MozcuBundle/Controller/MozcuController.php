@@ -49,6 +49,15 @@ abstract class MozcuController extends Controller{
     
     /**
      * 
+     * @return \Mozcu\MozcuBundle\Service\PaymentService
+     */
+    public function getPaymentService()
+    {
+        return $this->get('mozcu_mozcu.payment_service');
+    }
+    
+    /**
+     * 
      * @param string $className
      * @return \Doctrine\ORM\EntityRepository
      */
