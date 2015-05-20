@@ -28,7 +28,7 @@ class PaymentController extends MozcuController
     
     public function notifyPaypalAction(Request $request)
     {
-        
+        return $this->getJSONResponse(json_encode($request->query->all()));
     }
     
 }
