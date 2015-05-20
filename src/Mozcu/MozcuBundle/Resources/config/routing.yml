@@ -343,6 +343,6 @@ MozcuMozcuBundle_returnFromPayment:
 
 MozcuMozcuBundle_notifyPaypal:
   pattern: /payment/notify/paypal
-  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromPayment}
+  defaults: {_controller: MozcuMozcuBundle:Payment:notifyPaypal}
   requirements:
     _method: POST
