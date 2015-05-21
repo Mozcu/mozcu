@@ -92,4 +92,4 @@ services:
     
   mozcu_mozcu.payment_service:
     class: Mozcu\MozcuBundle\Service\PaymentService
-    arguments: [ "@doctrine_mongodb.odm.document_manager" ]
+    arguments: [ "@doctrine_mongodb.odm.document_manager", "@session" ]

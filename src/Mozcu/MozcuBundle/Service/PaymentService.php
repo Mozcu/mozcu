@@ -3,6 +3,7 @@
 namespace Mozcu\MozcuBundle\Service;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use Mozcu\MozcuBundle\Document\Purchase,
     Mozcu\MozcuBundle\Entity\Album,
@@ -18,9 +19,16 @@ class PaymentService
      */
     private $dm;
     
-    public function __construct(DocumentManager $dm)
+    /**
+     *
+     * @var Session
+     */
+    private $session;
+    
+    public function __construct(DocumentManager $dm, Session $session)
     {
         $this->dm = $dm;
+        $this->session = $session;
     }
     
     /**
@@ -51,5 +59,35 @@ class PaymentService
         } catch (\Exception $e) {
             throw new ServiceException($e->getMessage());
         }
+    }
+    
+    public function createCheckout(Album $album)
+    {
+        $date = new \DateTime;
+        $checkoutId = md5($album->getId() . $date->getTimestamp());
+        
+        $this->session->set($checkoutId, ['album_id' => $album->getId(), 'price' => 0]);
+        
+        return $checkoutId;
+    }
+    
+    public function updateCheckout($id, $price)
+    {
+        if ($this->session->has($id)) {
+            $checkout = $this->session->get($id);
+            $checkout['price'] = $price;
+            $this->session->set($id, $checkout);
+            return $id;
+        }
+        throw new ServiceException("Checkout with id $id does not exist.");
+    }
+
+
+    public function getCheckout($id)
+    {
+        if ($this->session->has($id)) {
+            return $this->session->get($id);
+        }
+        return null;
     }
 }

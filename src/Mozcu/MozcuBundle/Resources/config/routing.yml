@@ -340,9 +340,9 @@ MozcuMozcuBundle_returnFromPayment:
   defaults: {_controller: MozcuMozcuBundle:Payment:returnFromPayment}
   requirements:
     _method: GET
-
-MozcuMozcuBundle_notifyPaypal:
-  pattern: /payment/notify/paypal
-  defaults: {_controller: MozcuMozcuBundle:Payment:notifyPaypal}
+    
+MozcuMozcuBundle_checkoutSetPrice:
+  pattern: /ajax/payment/{checkoutId}/setPrice
+  defaults: {_controller: MozcuMozcuBundle:Payment:ajaxSetCheckoutPrice}
   requirements:
     _method: POST

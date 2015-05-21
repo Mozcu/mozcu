@@ -70,12 +70,23 @@ $(function() {
                         $('.mozcu-descarga-modal').modal('hide');
                     }, 3000);
                 } else {
-                    $('#amount').val(amount);
-                    window.onbeforeunload = null;
-                    $('#paypalForm').submit();
+                    initPaymentCheckout(amount);
                 }
             }
         });
+    });
+    
+    var initPaymentCheckout = function(amount) {
+        $('#amount').val(amount);
+        window.onbeforeunload = null;
+        $('#paypalForm').submit();
+    };
+    
+    $('body').on('submit', '.paymentForm', function(e) {
+        var url = $(this).data('price-url');
+        $.post(url, {'price': $('#amount').val()}, function(data) {
+            return data.success;
+        }, 'json');
     });
     
     var initDownlaod = function(url) {
