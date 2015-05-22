@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\ProfileLinkRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\ProfileLinkRepository")
  * @ORM\Table(name="profile_link")
  */
 class ProfileLink {

@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class User implements UserInterface, \Serializable {

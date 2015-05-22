@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\AlbumRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\AlbumRepository")
  * @ORM\Table(name="album", indexes={@ORM\Index(name="livesearch_idx", columns={"name", "artist_name"})})
  * @ORM\EntityListeners({ "Mozcu\MozcuBundle\Listener\AlbumListener" })
  */

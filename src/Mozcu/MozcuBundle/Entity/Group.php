@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="mozcu_groups")
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\GroupRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\GroupRepository")
  */
 class Group extends Role
 {

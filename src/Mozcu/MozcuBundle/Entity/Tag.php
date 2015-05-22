@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\TagRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\TagRepository")
  * @ORM\Table(name="tag", indexes={@ORM\Index(name="search_idx", columns={"name"})})
  */
 class Tag {

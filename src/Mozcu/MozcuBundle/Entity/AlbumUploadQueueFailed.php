@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\AlbumUploadQueueFailedRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\AlbumUploadQueueFailedRepository")
  * @ORM\Table(name="album_upload_queue_failed")
  */
 class AlbumUploadQueueFailed {

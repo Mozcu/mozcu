@@ -7,7 +7,7 @@ use Mozcu\MozcuBundle\Entity\AlbumImage;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\ImagePresentationRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\ImagePresentationRepository")
  * @ORM\Table(name="image_presentation")
  */
 class ImagePresentation {

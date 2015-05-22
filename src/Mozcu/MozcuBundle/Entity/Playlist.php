@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\PlaylistRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\PlaylistRepository")
  * @ORM\Table(name="playlist")
  */
 class Playlist {

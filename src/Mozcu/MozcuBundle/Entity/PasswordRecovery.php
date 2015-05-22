@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\PasswordRecoveryRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\PasswordRecoveryRepository")
  * @ORM\Table(name="password_recovery")
  */
 class PasswordRecovery {

@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\AlbumImageRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\AlbumImageRepository")
  */
 class AlbumImage extends Image {
     

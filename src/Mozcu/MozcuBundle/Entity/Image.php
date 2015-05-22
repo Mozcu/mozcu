@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\ImageRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\ImageRepository")
  * @ORM\Table(name="image")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="integer")

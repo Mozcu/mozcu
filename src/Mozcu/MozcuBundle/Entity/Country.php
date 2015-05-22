@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\CountryRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\CountryRepository")
  * @ORM\Table(name="country")
  */
 class Country {

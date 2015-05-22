@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Entity\ReviewRepository")
+ * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\ReviewRepository")
  * @ORM\Table(name="review")
  */
 class Review {
