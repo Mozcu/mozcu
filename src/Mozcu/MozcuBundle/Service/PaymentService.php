@@ -46,10 +46,13 @@ class PaymentService
         try {
             $purchase = new Purchase();
             $purchase->setAlbum($album->getId())
+                ->setAlbumName($album->getName())
                 ->setPaymentService($paymentService)
                 ->setPrice($price);
+            
             if (!is_null($user)) {
-               $purchase->setUser($user->getId()); 
+               $purchase->setUser($user->getId())
+                   ->setUsername($user->getUsername()); 
             }
 
             $this->dm->persist($purchase);

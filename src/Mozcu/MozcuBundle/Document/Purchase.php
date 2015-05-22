@@ -20,9 +20,19 @@ class Purchase
     protected $album;
     
     /**
+     * @MongoDB\String
+     */
+    protected $albumName;
+    
+    /**
      * @MongoDB\Int
      */
     protected $user;
+    
+    /**
+     * @MongoDB\String
+     */
+    protected $username;
 
     /**
      * @MongoDB\String
@@ -172,5 +182,93 @@ class Purchase
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set albumName
+     *
+     * @param string $albumName
+     * @return self
+     */
+    public function setAlbumName($albumName)
+    {
+        $this->albumName = $albumName;
+        return $this;
+    }
+
+    /**
+     * Get albumName
+     *
+     * @return string $albumName
+     */
+    public function getAlbumName()
+    {
+        return $this->albumName;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return self
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string $username
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set transactionId
+     *
+     * @param string $transactionId
+     * @return self
+     */
+    public function setTransactionId($transactionId)
+    {
+        $this->transactionId = $transactionId;
+        return $this;
+    }
+
+    /**
+     * Get transactionId
+     *
+     * @return string $transactionId
+     */
+    public function getTransactionId()
+    {
+        return $this->transactionId;
+    }
+
+    /**
+     * Set buyerId
+     *
+     * @param string $buyerId
+     * @return self
+     */
+    public function setBuyerId($buyerId)
+    {
+        $this->buyerId = $buyerId;
+        return $this;
+    }
+
+    /**
+     * Get buyerId
+     *
+     * @return string $buyerId
+     */
+    public function getBuyerId()
+    {
+        return $this->buyerId;
     }
 }
