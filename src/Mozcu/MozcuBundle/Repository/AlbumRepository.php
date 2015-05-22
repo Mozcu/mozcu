@@ -1,9 +1,12 @@
 <?php
 
-namespace Mozcu\MozcuBundle\Entity;
+namespace Mozcu\MozcuBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+
+use Mozcu\MozcuBundle\Entity\Album;
+use Mozcu\MozcuBundle\Entity\Profile;
 
 /**
  * AlbumRepository

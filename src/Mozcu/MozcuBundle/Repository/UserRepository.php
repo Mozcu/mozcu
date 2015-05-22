@@ -1,6 +1,6 @@
 <?php
 
-namespace Mozcu\MozcuBundle\Entity;
+namespace Mozcu\MozcuBundle\Repository;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;

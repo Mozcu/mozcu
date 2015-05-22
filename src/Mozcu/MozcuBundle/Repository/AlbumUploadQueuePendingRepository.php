@@ -1,6 +1,6 @@
 <?php
 
-namespace Mozcu\MozcuBundle\Entity;
+namespace Mozcu\MozcuBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
