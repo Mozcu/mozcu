@@ -26,7 +26,7 @@ class PaymentController extends MozcuController
                 return $this->getJSONResponse(['success' => true]);
             }
         }
-        //throw new BadRequestHttpException();
+        throw new BadRequestHttpException();
     }
 
 
@@ -39,6 +39,7 @@ class PaymentController extends MozcuController
                 $user = $this->getUser();
                 try {
                     $this->getPaymentService()->createPurchase($album, $service, $checkout['price'], [], $user);
+                    $this->getAlbumService()->increaseDownloadCount($album);
                     return $this->redirect($this->generateUrl('MozcuMozcuBundle_albumCheckoutFromPaymentAction', ['checkoutId' => $checkoutId]));
                 } catch (ServiceException $e) {
                     throw new BadRequestHttpException();

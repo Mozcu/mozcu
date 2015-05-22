@@ -47,33 +47,34 @@ $(function() {
         var inProcess = div.find('.in-process');
         var ready = div.find('.ready');
         
+        var amount = parseFloat($.trim($('#valor').val()));
+        if (isNaN(amount)) {
+            amount = 0;
+        }
+        
         me.addClass('hidden');
         cancel.addClass('hidden');
         inProcess.removeClass('hidden');
         loader.removeClass('hidden');
         
-        var url = me.data('url');
-        $.getJSON(url, {}, function(data){
-            if(data.success) {
-                var zipUrl = data.zipUrl;
-                var amount = parseFloat($.trim($('#valor').val()));
-                
-                if(isNaN(amount)) {
-                    amount = 0;
-                }
-                
-                if (amount === 0) {
+        if (amount === 0) {
+            var url = me.data('url');
+            $.getJSON(url, {}, function(data){
+                if(data.success) {
+                    var zipUrl = data.zipUrl;
+
                     inProcess.addClass('hidden');
                     ready.removeClass('hidden');
                     initDownlaod(zipUrl);
+
                     setTimeout(function() {
                         $('.mozcu-descarga-modal').modal('hide');
                     }, 3000);
-                } else {
-                    initPaymentCheckout(amount);
                 }
-            }
-        });
+            });
+        } else {
+            initPaymentCheckout(amount);
+        }            
     });
     
     var initPaymentCheckout = function(amount) {

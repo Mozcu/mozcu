@@ -176,7 +176,7 @@ MozcuMozcuBundle_albumDownloadModal:
       _method: GET
 
 MozcuMozcuBundle_albumCheckout:
-    pattern: /album/{id}/checkout
+    pattern: /album/{id}/checkout?increaseCounter={increaseCounter}
     defaults: {_controller: MozcuMozcuBundle:Album:albumCheckout}
     requirements:
       _method: GET

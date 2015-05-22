@@ -3,30 +3,63 @@
 {% block title %} {% trans with {'%name%': album.getArtistName} %}%name% en Mozcu{% endtrans %} {% endblock %}
 
 {% block mainContent %}
-    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10">
+    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-10 checkoutContent">
         <div class="row center-block perfilContenido">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                 <h3 class="titlAlbumManager">Descargando</h3>
-
+                
+                {% set username = album.getProfile.getUsername %}
                 <div class="albumManager downloadAlbum col-xs-12 col-sm-12 col-md-12 col-lg-10">
-                    <a href="#"><img src="{{ album.getCoverImageUrl }}" class="imgDownloadAlbum img-responsive col-xs-12 col-sm-4 col-md-4 col-lg-4"></a>
+                    <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': username, 'slug': album.getSlug }) }}"><img src="{{ album.getCoverImageUrl }}" class="imgDownloadAlbum img-responsive col-xs-12 col-sm-4 col-md-4 col-lg-4"></a>
                     <p class="pull-right visible-sm visible-md visible-lg text-muted">{{ album.getSongs.count }} temas</p>
                     <h5>{{ album.getName }}</h5>
-                    <a href="#"><p>{{ album.getArtistName }}</p></a>
-                    <p>{{ album.getReleaseDate }}</p>
-                    <div class="btn-group center-block">
-                        <button type="button" class="btn btn-default btnAlbumManager"><i class="glyphicon glyphicon-heart"></i>Favoritos</button>
-                        <button type="button" class="btn btn-default btnAlbumManager"><i class="glyphicon glyphicon-user"></i>Seguir</button>
-                    </div>  
+                    <a href="{{ path('MozcuMozcuBundle_profile', {'username': username}) }}"><p>{{ album.getArtistName }}</p></a>
+                    <p>{{ album.getReleaseDate }}</p>                    
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
-                        <p class="text center">Si tu descarga no comienza automáticamente, haz click<button class="btn-link">acá</button></p>
+                        <p class="text center processing">Preparando tu descarga, aguarda un instante <img src="{{ asset("images/ajax-loader-small.gif")}}" class="ajaxLoader" /></p>
+                        <p class="text center ready hidden">Si tu descarga no comienza automáticamente, haz click<button class="btn-link">acá</button></p>
                     </div>
                 </div>
             </div>
         </div>           
     </div>
+                        
+<script type="text/javascript">
+$(function() {
+    
+    $('.mainContent').on('click', '.checkoutContent a', function(e) {
+        e.preventDefault();
+        changeMainContent($(this).attr('href'));
+    });
+    
+    // todo: negreada
+    var url = '{{ path("MozcuMozcuBundle_albumCheckout", {id: album.getId, increaseCounter: 0})}}';
+    $.getJSON(url, {}, function(data){
+        if(data.success) {
+            var zipUrl = data.zipUrl;
+
+            $('.text.processing').addClass('hidden');
+            $('.text.ready button').attr('data-url', zipUrl);
+            $('.text.ready').removeClass('hidden');
+            initDownlaod(zipUrl);
+        }
+    });
+    
+    var initDownlaod = function(url) {
+        var iframe = $('<iframe>', {width:'1', height:'1', frameborder:'0', src:url, id:'downloadAlbumIframe'});
+        $('#downloadAlbumIframe').remove();
+        $('.checkoutContent').append(iframe);
+    };
+    
+    $('.mainContent').on('click', '.text.ready button', function(e) {
+        var url = $(this).data('url');
+        initDownlaod(url);
+    });
+    
+});
+</script>
 {% endblock %}

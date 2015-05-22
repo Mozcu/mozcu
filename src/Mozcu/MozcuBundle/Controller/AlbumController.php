@@ -269,7 +269,7 @@ class AlbumController extends MozcuController
      * @return string
      * @throws BadRequestHttpException
      */
-    public function albumCheckoutAction($id) {
+    public function albumCheckoutAction($id, $increaseCounter) {
         if($this->getRequest()->isXmlHttpRequest()) {
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
             if(is_null($album)) {
@@ -281,7 +281,9 @@ class AlbumController extends MozcuController
             }
             
             // Incrementamos el contador de descargas
-            $this->getAlbumService()->increaseDownloadCount($album);
+            if ($increaseCounter) {
+                $this->getAlbumService()->increaseDownloadCount($album);
+            }
             
             return $this->getJSONResponse(array('success' => true, 'zipUrl' => $album->getZipUrl()));    
         } else {
