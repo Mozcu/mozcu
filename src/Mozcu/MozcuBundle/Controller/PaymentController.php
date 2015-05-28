@@ -60,13 +60,15 @@ class PaymentController extends MozcuController
     
     public function returnFromMercadopagoAuthAction(Profile $profile)
     {
-        $this->getPaymentService()->createPaymentMethod($profile, PaymentMethod::MERCADOPAGO, 
+        if(!is_null($this->getRequest()->get('code'))) {
+            $this->getPaymentService()->createPaymentMethod($profile, PaymentMethod::MERCADOPAGO, 
                                                               ['code' => $this->getRequest()->get('code')]);
-        $this->getRequest()->getSession()->getFlashBag()->add(
-            'notice',
-            'Tu cuenta de Mercado Pago se ha vinculado correctamente!'
-        );
-        
+            $this->getRequest()->getSession()->getFlashBag()->add(
+                'notice',
+                'Tu cuenta de Mercado Pago se ha vinculado correctamente!'
+            );
+        }
+                
         return $this->redirect($this->generateUrl('MozcuMozcuBundle_account'));
         
     }
