@@ -24,7 +24,8 @@
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "doctrine/mongodb-odm": "~1.0@dev",
-        "doctrine/mongodb-odm-bundle": "~3.0@dev"
+        "doctrine/mongodb-odm-bundle": "~3.0@dev",
+        "mercadopago/sdk": "0.3.2"
     },
     "scripts": {
         "post-install-cmd": [

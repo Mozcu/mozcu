@@ -345,4 +345,22 @@ MozcuMozcuBundle_checkoutSetPrice:
   pattern: /ajax/payment/{checkoutId}/setPrice
   defaults: {_controller: MozcuMozcuBundle:Payment:ajaxSetCheckoutPrice}
   requirements:
+   _method: POST
+   
+MozcuMozcuBundle_returnFroMPAuth:
+  pattern: /payment/mp/auth/{profile}
+  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromMercadopagoAuth}
+  requirements:
+    _method: GET
+    
+MozcuMozcuBundle_MPCheckout:
+  pattern: /payment/mp/checkout
+  defaults: {_controller: MozcuMozcuBundle:Payment:mercadopagoCheckout}
+  requirements:
+    _method: POST
+    
+MozcuMozcuBundle_unlinkMP:
+  pattern: /payment/mp/unlink
+  defaults: {_controller: MozcuMozcuBundle:Payment:unlinkMercadopago}
+  requirements:
     _method: POST

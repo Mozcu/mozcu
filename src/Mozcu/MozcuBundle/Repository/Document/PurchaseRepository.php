@@ -1,6 +1,6 @@
 <?php
 
-namespace Mozcu\MozcuBundle\Repository;
+namespace Mozcu\MozcuBundle\Repository\Document;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 

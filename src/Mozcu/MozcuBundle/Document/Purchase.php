@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document(repositoryClass="Mozcu\MozcuBundle\Repository\PurchaseRepository")
+ * @MongoDB\Document(repositoryClass="Mozcu\MozcuBundle\Repository\Document\PurchaseRepository")
  */
 class Purchase
 {

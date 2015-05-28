@@ -7,6 +7,15 @@
         <strong>Por favor verifique los siguientes errores:</strong>
     </div>
     
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+            </button>
+            <strong>{{ flashMessage }}</strong>
+        </div>
+    {% endfor %}
+    
     <h3 class="titlAlbumManager">Ajustes de cuenta</h3>
            
     <div class="row center-block headerCuenta">
@@ -138,17 +147,41 @@
                     placeholder="">
          </div>
 
+    </div>
+    
+    <div class="row center-block bodyCuenta">
+        <h4 class="infoPrivada">Mercado pago</h4>
+        
+        <div class="form-group col-lg-12">
+            {% if user.getProfile.hasPaymentMethod('mercadopago') %}
+                <label for="mercadopago">Tu cuenta de Mercado Pago ya se encuentra vinculada:</label>
+                <a href="{{ path('MozcuMozcuBundle_unlinkMP') }}" id="unlinkMP">Desvincular</a>
+            {% else %}
+                <label for="mercadopago">Aun no tienes vinculada tu cuenta de Mercado Pago:</label>
+                <a href="https://auth.mercadolibre.com.ar/authorization?client_id={{ mp.app_id }}&response_type=code&platform_id=mp&redirect_uri={{ url('MozcuMozcuBundle_returnFroMPAuth', {'profile': user.getProfile.getId }) }}">Vincular</a>
+            {% endif %}
+        </div>
 
-         <div class="botonesPerfil col-md-12 col-lg-12 ">
+        <div class="botonesPerfil col-md-12 col-lg-12 ">
              <button class="btn btn-success pull-right" data-url="{{ path('MozcuMozcuBundle_saveAccount') }}">Guardar</button>
              <button class="btn btn-link pull-right" data-url="{{ path('MozcuMozcuBundle_profile', {username: user.getUsername}) }}">Cancelar</button>
-
-         </div>
+        </div>
      </div>
 </div>
                     
 <script type="text/javascript">
 $(function() {
+    
+    $('#unlinkMP').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        
+        $.post(url, function(data) {
+            if(data.success) {
+                //
+            }
+        }); 
+    });
     
     $('#changeImage').change(function(){
         var me = $(this);

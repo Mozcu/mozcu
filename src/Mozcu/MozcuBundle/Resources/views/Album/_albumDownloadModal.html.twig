@@ -15,7 +15,11 @@
                 <small class="center-block text-center">*Recuerda que esta transacción se realiza libre de intermediarios, por lo tanto el 100% de lo que ingreses va a la cuenta del artista.</small>  
             </div>
             
-            {{ render(controller('MozcuMozcuBundle:Payment:renderPaypalForm', {'album': album.getId})) }}
+            {% if album.getProfile.hasPaymentMethod('mercadopago') %}
+                {{ render(controller('MozcuMozcuBundle:Payment:renderMercadopagoInput', {'album': album.getId})) }}
+            {% else %}
+                {{ render(controller('MozcuMozcuBundle:Payment:renderPaypalForm', {'album': album.getId})) }}
+            {% endif %}
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>

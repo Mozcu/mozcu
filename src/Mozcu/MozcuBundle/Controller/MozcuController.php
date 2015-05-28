@@ -62,7 +62,7 @@ abstract class MozcuController extends Controller{
      * @return \Doctrine\ORM\EntityRepository
      */
     protected function getRepository($className) {
-        return $this->getDoctrine()->getEntityManager()->getRepository($className);
+        return $this->getDoctrine()->getManager()->getRepository($className);
     }
     
     /**

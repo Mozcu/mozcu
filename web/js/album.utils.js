@@ -78,12 +78,24 @@ $(function() {
     });
     
     var initPaymentCheckout = function(amount) {
-        $('#amount').val(amount);
         window.onbeforeunload = null;
-        $('#paypalForm').submit();
+        
+        if($('#mercadopago').length > 0) {
+            var mp = $('#mercadopago');
+            $.post(mp.val(), {albumId: mp.data('album-id'), checkoutId: mp.data('checkout-id'), price: amount}, function(data) {
+                if(data.success) {
+                    window.location.href = data.checkout_url;
+                }
+            });
+        } else if($('#paypalForm').length > 0) {
+            $('#amount').val(amount);
+            $('#paypalForm').submit();
+        }
     };
     
-    $('body').on('submit', '.paymentForm', function(e) {
+    
+    // Submit de paypal form
+    $('body').on('submit', '#paypalForm', function(e) {
         var url = $(this).data('price-url');
         $.post(url, {'price': $('#amount').val()}, function(data) {
             return data.success;

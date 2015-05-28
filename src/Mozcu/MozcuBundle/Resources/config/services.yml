@@ -89,7 +89,13 @@ services:
   mozcu_mozcu.email_service:
     class: Mozcu\MozcuBundle\Service\EmailService
     arguments: ["@mailer", "@templating", "%mail.noreply_address%"]
+  
+  mozcu_mozcu.mercado_pago_service:
+    class: Mozcu\MozcuBundle\Service\PaymentMethod\MercadoPagoService
+    arguments: [ "%mercadopago%", "@router" ]
+    scope: request
     
   mozcu_mozcu.payment_service:
     class: Mozcu\MozcuBundle\Service\PaymentService
-    arguments: [ "@doctrine_mongodb.odm.document_manager", "@session" ]
+    arguments: [ "@doctrine.orm.entity_manager", "@doctrine_mongodb.odm.document_manager", "@session", "@mozcu_mozcu.mercado_pago_service" ]
+    scope: request

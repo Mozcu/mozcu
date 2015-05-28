@@ -29,6 +29,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         analyticsKey: %google.analytics.key%
+        mp: %mercadopago%
 
 # Assetic Configuration
 assetic:

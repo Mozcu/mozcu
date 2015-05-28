@@ -100,7 +100,7 @@ class Profile {
     private $followers;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Profile", inversedBy="friendsWithMe")
+     * @ORM\ManyToMany(targetEntity="Profile", inversedBy="followers")
      * @ORM\JoinTable(name="following",
      *      joinColumns={@ORM\JoinColumn(name="profile_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="following_profile_id", referencedColumnName="id")}
@@ -115,6 +115,11 @@ class Profile {
      **/
     private $likedAlbums;
     
+    /**
+     * @ORM\OneToMany(targetEntity="PaymentMethod", mappedBy="profile", cascade={"persist"})
+     **/
+    private $paymentMethods;
+    
     public function __construct() {
         $this->albums = new ArrayCollection();
         $this->reviews = new ArrayCollection();
@@ -123,6 +128,7 @@ class Profile {
         $this->tags = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->following = new ArrayCollection();
+        $this->paymentMethods = new ArrayCollection();
     }
     
     /**
@@ -698,4 +704,65 @@ class Profile {
         
         return false;
     }
+    
+    /**
+     * 
+     * @return ArrayCollection
+     */
+    public function getPaymentMethods()
+    {
+        return $this->paymentMethods;
+    }
+
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\PaymentMethod $paymentMethod
+     * @return \Mozcu\MozcuBundle\Entity\Profile
+     */
+    public function addPaymentMethod(PaymentMethod $paymentMethod)
+    {
+        $this->paymentMethods[] = $paymentMethod;
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param \Mozcu\MozcuBundle\Entity\PaymentMethod $paymentMethod
+     */
+    public function removePaymentMethod(PaymentMethod $paymentMethod)
+    {
+        $this->paymentMethods->removeElement($paymentMethod);
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @return boolean
+     */
+    public function hasPaymentMethod($type)
+    {
+        foreach ($this->paymentMethods as $pm) {
+            if ($pm->getType() == $type && $pm->getActive()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @return PaymentMethod
+     */
+    public function getPaymentMethod($type)
+    {
+        foreach ($this->paymentMethods as $pm) {
+            if ($pm->getType() == $type && $pm->getActive()) {
+                return $pm;
+            }
+        }
+        return null;
+    }
+    
 }

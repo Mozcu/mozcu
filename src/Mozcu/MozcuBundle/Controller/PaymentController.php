@@ -3,9 +3,12 @@
 namespace Mozcu\MozcuBundle\Controller;
 
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpFoundation\Request;
 
 use Mozcu\MozcuBundle\Exception\ServiceException;
-use Mozcu\MozcuBundle\Entity\Album;
+use Mozcu\MozcuBundle\Entity\Album,
+    Mozcu\MozcuBundle\Entity\Profile,
+    Mozcu\MozcuBundle\Entity\PaymentMethod;
 
 
 class PaymentController extends MozcuController
@@ -14,6 +17,12 @@ class PaymentController extends MozcuController
     public function renderPaypalFormAction(Album $album) {
         $checkoutId = $this->getPaymentService()->createCheckout($album);
         return $this->render('MozcuMozcuBundle:Payment:paypalForm.html.twig', ['album' => $album, 'checkoutId' => $checkoutId]);
+    }
+    
+    public function renderMercadopagoInputAction(Album $album)
+    {
+        $checkoutId = $this->getPaymentService()->createCheckout($album);
+        return $this->render('MozcuMozcuBundle:Payment:mercadopagoInput.html.twig', ['album' => $album, 'checkoutId' => $checkoutId]);
     }
     
     public function ajaxSetCheckoutPriceAction($checkoutId)
@@ -47,5 +56,48 @@ class PaymentController extends MozcuController
             }
         }
         throw new BadRequestHttpException();
+    }
+    
+    public function returnFromMercadopagoAuthAction(Profile $profile)
+    {
+        $this->getPaymentService()->createPaymentMethod($profile, PaymentMethod::MERCADOPAGO, 
+                                                              ['code' => $this->getRequest()->get('code')]);
+        $this->getRequest()->getSession()->getFlashBag()->add(
+            'notice',
+            'Tu cuenta de Mercado Pago se ha integrado correctamente!'
+        );
+        
+        return $this->redirect($this->generateUrl('MozcuMozcuBundle_account'));
+        
+    }
+    
+    public function unlinkMercadopagoAction(Request $request) 
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException();
+        }
+        $pm = $this->getUser()->getProfile()->getPaymentMethod(PaymentMethod::MERCADOPAGO);
+        if (!is_null($pm)) {
+           $this->getPaymentService()->removePaymentMethod($pm); 
+        }
+        
+        return $this->getJSONResponse(['success' => TRUE]);
+    }
+    
+    public function mercadopagoCheckoutAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException();
+        }
+        $album = $this->getRepository('MozcuMozcuBundle:Album')->find($request->get('albumId'));
+        if (!is_null($album)) {
+            $checkoutId = $request->get('checkoutId');
+            $price = $request->get('price');
+            $checkoutUrl = $this->getPaymentService()->createMercadopagoCheckout($album, $checkoutId, $price);
+            $this->getPaymentService()->updateCheckout($checkoutId, $price);
+            return $this->getJSONResponse(['success' => true, 'checkout_url' => $checkoutUrl]);
+        } else {
+            return $this->getJSONResponse(['success' => false, 'message' => 'Invalid album id']);
+        }        
     }
 }
