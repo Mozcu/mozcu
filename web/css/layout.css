@@ -1,6 +1,7 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+  overflow-x: hidden;
 }
 .navbar-fixed-top{
     box-shadow:0 0 5px #333;
@@ -282,6 +283,7 @@ body {
     #wrapper.toggled #sidebar-wrapper {
         width: 220px;
         padding-left: 35px;
+
       
     }
 
@@ -425,48 +427,3 @@ body {
         
     
 }
-@media screen and (max-width: 768px) {
-
-.sidebar .nav-pills{
-    display: block;
-    float: left;
-    margin-left: -27px;
-}
-.sidebar .nav-pills > li{
-    padding: 0px;
-}    
-.sidebar .nav-pills > li > a{
-    color: #999;
-    font-size: 9px;
-    display: block;
-    text-align: center;
-    opacity: 1;
-    
-}
-    
-.sidebar .nav-pills > li > a:hover{
-    background-color: transparent;
-    border: 1px transparent solid;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    color: #555;
-    opacity: 0.7;
-    transition: opacity .3s ease-in-out;
-   -moz-transition: opacity .3s ease-in-out;
-   -webkit-transition: opacity .3s ease-in-out;
-    
-}
-.sidebar .nav-pills .glyphicon{
-    color: #999;
-    font-size: 15px;
-    margin-right: 8px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    padding-bottom: 3px;
-}
-    
-}
-
-

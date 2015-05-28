@@ -121,66 +121,81 @@
     </div>
                   
     <div class="row center-block bodyCuenta">
-         <h4 class="infoPrivada">Información personal</h4>
-
-         <div class="form-group col-lg-6">
-             <label for="email">Email</label>
-             <input type="email" class="form-control" id="email" value="{{ user.getEmail }}"
-                    placeholder="joey@ramones.com">
-         </div>
-
-         <div class="form-group col-lg-6">
-             <label for="email">Email asociado a Paypal (recepción de pagos)</label>
-             <input type="email" class="form-control" id="paypalEmail" value="{{ profile.getPaypalEmail }}"
-                    placeholder="tony@blacksabbath.com">
-         </div>
-
-         <div class="form-group col-lg-6">
+        <h4 class="infoPrivada">Información personal</h4>
+        
+        <div class="form-group col-lg-6">
              <label for="newPassword">Nueva contraseña</label>
              <input type="password" class="form-control" id="password"
                     placeholder="">
-         </div>
+        </div>
 
-         <div class="form-group col-lg-6">
+        <div class="form-group col-lg-6">
              <label for="newPasswordRepeat">Repetir nueva contraseña</label>
              <input type="password" class="form-control" id="passwordRepeat"
                     placeholder="">
-         </div>
+        </div>
+        
+        <div class="form-group col-lg-6">
+             <label for="email">Email</label>
+             <input type="email" class="form-control" id="email" value="{{ user.getEmail }}"
+                    placeholder="joey@ramones.com">
+        </div>
 
     </div>
     
     <div class="row center-block bodyCuenta">
-        <h4 class="infoPrivada">Mercado pago</h4>
+               
+        <h4>Facturación</h4>
+        <div class="alert alert-info infoPagos">
+             <p>Podrás utilizar solo un sistema de pagos. Si vives en <strong>Argentina</strong> te recomendamos utilizar 
+                <a href="http://mercadopago.com.ar" target="_blank">Mercado Pago</a>, así podrás transferir las recaudaciones 
+                directamente a tu cuenta bancaria. El resto de los paises podrán utilizar únicamente <strong>Paypal</strong>.</p>
+        </div>
+
+        {% set mppm = user.getProfile.hasPaymentMethod('mercadopago') %}
         
-        <div class="form-group col-lg-12">
-            {% if user.getProfile.hasPaymentMethod('mercadopago') %}
-                <label for="mercadopago">Tu cuenta de Mercado Pago ya se encuentra vinculada:</label>
-                <a href="{{ path('MozcuMozcuBundle_unlinkMP') }}" id="unlinkMP">Desvincular</a>
+        <div class="form-group col-lg-6">
+            <label for="email">Asociar email de Paypal {% if mppm %}<em>(Desactivada por Mercado Pago)</em>{% endif %}</label>
+             <input type="email" class="form-control" id="paypalEmail" value="{{ profile.getPaypalEmail }}"
+                    placeholder="tony@blacksabbath.com" {% if mppm %}disabled="disabled"{% endif %}>
+         </div>
+
+        <div class="form-group col-lg-6">
+            {% if mppm %}
+                <label class="col-lg-12 labelMp">Tu cuenta de Mercado Pago ya se encuentra vinculada</label>
+                <button data-url="{{ path('MozcuMozcuBundle_unlinkMP') }}" id="unlinkMP" class="col-lg-6 btn btn-primary-boot">Desvincular de <img src="{{ asset('images/mp.png') }}"></button>
             {% else %}
-                <label for="mercadopago">Aun no tienes vinculada tu cuenta de Mercado Pago:</label>
-                <a href="https://auth.mercadolibre.com.ar/authorization?client_id={{ mp.app_id }}&response_type=code&platform_id=mp&redirect_uri={{ url('MozcuMozcuBundle_returnFroMPAuth', {'profile': user.getProfile.getId }) }}">Vincular</a>
+                <label class="col-lg-12 labelMp">Vincular cuenta de Mercado Pago</label>
+                <button data-url="https://auth.mercadolibre.com.ar/authorization?client_id={{ mp.app_id }}&response_type=code&platform_id=mp&redirect_uri={{ url('MozcuMozcuBundle_returnFroMPAuth', {'profile': user.getProfile.getId }) }}" 
+                        class="col-lg-6 btn btn-primary-boot" id="linkMP">Vincular con <img src="{{ asset('images/mp.png') }}"></button>
             {% endif %}
         </div>
+
 
         <div class="botonesPerfil col-md-12 col-lg-12 ">
              <button class="btn btn-success pull-right" data-url="{{ path('MozcuMozcuBundle_saveAccount') }}">Guardar</button>
              <button class="btn btn-link pull-right" data-url="{{ path('MozcuMozcuBundle_profile', {username: user.getUsername}) }}">Cancelar</button>
         </div>
-     </div>
+           
+    </div>
 </div>
                     
 <script type="text/javascript">
 $(function() {
     
     $('#unlinkMP').on('click', function(e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
+        var url = $(this).data('url');
         
         $.post(url, function(data) {
             if(data.success) {
-                //
+                changeMainContent(data.url, {}, true);
             }
         }); 
+    });
+    
+    $('#linkMP').on('click', function(e) {
+        var url = $(this).data('url');
+        window.location.href = url; 
     });
     
     $('#changeImage').change(function(){

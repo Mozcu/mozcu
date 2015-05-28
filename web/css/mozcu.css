@@ -1087,7 +1087,9 @@ body{
     margin-top: 20px;
     margin-bottom: 20px;
     padding:15px;
-    border: none;
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+    background-color: #F5F5F5;
 }
 
 .imgDownloadAlbum{
@@ -1095,8 +1097,14 @@ body{
     border-radius: 2px;
     padding: 0px;
     margin-right: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
    
+}
+
+@media (max-width: 768px){
+    .imgDownloadAlbum{
+        margin-bottom: 20px;
+    }
 }
 
 /*FIN DESCARGA / DOWNLOAD ALBUM*/
@@ -1576,13 +1584,29 @@ footer .entypo{
     height: 200px;
     width: auto;
     margin-bottom: 10px;
+    margin-right: 20px;
 }
-.bodyCuenta{margin-bottom: 40px;}
+.bodyCuenta{
+    margin-bottom: 40px;
+}
+
+.bodyCuenta h4{
+    margin-left: 15px;
+}
+
+.infoPagos{
+    margin-bottom: 30px;
+    margin-left: 15px;
+}
 
 .infoPublica{
     margin-bottom: 40px;
 }
-
+.btn-primary-boot{
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
 .infoPrivada{
     margin-bottom: 40px;
     margin-top: 30px;
@@ -1602,12 +1626,18 @@ footer .entypo{
     margin-top: 20px;
 }
 
+.botonesPerfil .btn{
+margin-left: 15px;}
+
 .vinculos>label{
     padding-left: 30px;
 }
 
 .vinculosGroup{
     margin-bottom: 10px;
+}
+.labelMp{
+    margin-left: -10px;
 }
 
 
@@ -1865,5 +1895,29 @@ footer .entypo{
 
 /*+++++++++++++++++++++++++++++++++fin compilado++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*+++++++++++++++++++++++++++++++++INICIO CROP IMAGEN DE PERFIL+++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+ .cropit-image-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        margin-top: 7px;
+        width: 250px;
+        height: 250px;
+        cursor: move;
+      }
+
+      .cropit-image-background {
+        opacity: .2;
+        cursor: auto;
+      }
+
+      .image-size-label {
+        margin-top: 10px;
+      }
 
 
+/*+++++++++++++++++++++++++++++++++FIN CROP IMAGEN DE PERFIL+++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/

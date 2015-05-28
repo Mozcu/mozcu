@@ -64,7 +64,7 @@ class PaymentController extends MozcuController
                                                               ['code' => $this->getRequest()->get('code')]);
         $this->getRequest()->getSession()->getFlashBag()->add(
             'notice',
-            'Tu cuenta de Mercado Pago se ha integrado correctamente!'
+            'Tu cuenta de Mercado Pago se ha vinculado correctamente!'
         );
         
         return $this->redirect($this->generateUrl('MozcuMozcuBundle_account'));
@@ -81,7 +81,12 @@ class PaymentController extends MozcuController
            $this->getPaymentService()->removePaymentMethod($pm); 
         }
         
-        return $this->getJSONResponse(['success' => TRUE]);
+        $this->getRequest()->getSession()->getFlashBag()->add(
+            'notice',
+            'Tu cuenta de Mercado Pago se ha desvinculado correctamente!'
+        );
+        
+        return $this->getJSONResponse(['success' => TRUE, 'url' => $this->generateUrl('MozcuMozcuBundle_account')]);
     }
     
     public function mercadopagoCheckoutAction(Request $request)
