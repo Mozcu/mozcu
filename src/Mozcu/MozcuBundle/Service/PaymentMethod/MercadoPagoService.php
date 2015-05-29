@@ -73,7 +73,7 @@ class MercadoPagoService
                     "quantity"  => 1,
                     "unit_price" => floatval($price),
                     "currency_id" => "ARS",
-                    "picture_url" => $album->getCoverImageUrl()
+                    "picture_url" => $album->getListThumbnailUrl()
                 ]
             ],
             'marketplace_fee' => 0,
