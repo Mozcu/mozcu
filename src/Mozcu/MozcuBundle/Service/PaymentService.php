@@ -68,7 +68,8 @@ class PaymentService
             $purchase->setAlbum($album->getId())
                 ->setAlbumName($album->getName())
                 ->setPaymentService($paymentService)
-                ->setPrice($price);
+                ->setPrice($price)
+                ->setCurrency('USD'); // TODO: no hardcodear
             
             if (!is_null($user)) {
                $purchase->setUser($user->getId())

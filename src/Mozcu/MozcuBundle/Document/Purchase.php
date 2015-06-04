@@ -55,6 +55,11 @@ class Purchase
     protected $price;
     
     /**
+     * @MongoDB\String
+     */
+    protected $currency;
+    
+    /**
      * @MongoDB\Date
      */
     protected $date;
@@ -270,5 +275,27 @@ class Purchase
     public function getBuyerId()
     {
         return $this->buyerId;
+    }
+
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     * @return self
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return string $currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 }
