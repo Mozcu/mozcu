@@ -1895,29 +1895,19 @@ margin-left: 15px;}
 
 /*+++++++++++++++++++++++++++++++++fin compilado++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-/*+++++++++++++++++++++++++++++++++INICIO CROP IMAGEN DE PERFIL+++++++++++++++++++
+/*+++++++++++++++++++++++++++++++++INICIO HECHO CON <3 EN BSAS+++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
- .cropit-image-preview {
-        background-color: #f8f8f8;
-        background-size: cover;
-        border: 1px solid #ccc;
-        border-radius: 50%;
-        margin-top: 7px;
-        width: 250px;
-        height: 250px;
-        cursor: move;
-      }
+.blink {
+  color: #d88;
+  animation: blink-anim 1s ease 0s infinite alternate;
+}
 
-      .cropit-image-background {
-        opacity: .2;
-        cursor: auto;
-      }
-
-      .image-size-label {
-        margin-top: 10px;
-      }
+@keyframes blink-anim {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 
 
-/*+++++++++++++++++++++++++++++++++FIN CROP IMAGEN DE PERFIL+++++++++++++++++++
+/*+++++++++++++++++++++++++++++++++FIN HECHO CON <3 EN BSAS+++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/

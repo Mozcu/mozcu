@@ -72,7 +72,7 @@ class MercadoPagoService
                     "description" => 'mozcudotcom-' . $album->getId(),
                     "quantity"  => 1,
                     "unit_price" => floatval($price),
-                    "currency_id" => "ARS",
+                    "currency_id" => "USD",
                     "picture_url" => $album->getListThumbnailUrl()
                 ]
             ],
