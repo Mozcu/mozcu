@@ -85,7 +85,7 @@ MozcuMozcuBundle_ajaxLiveSearch:
         _method: GET
         
 MozcuMozcuBundle_searchResult:
-    pattern: /search?query={query};
+    pattern: /search/query/{query}
     defaults: { _controller: MozcuMozcuBundle:Home:search}
     requirements:
         _method: GET
@@ -104,7 +104,7 @@ MozcuMozcuBundle_about:
 
 ### Album Controller ###
 MozcuMozcuBundle_tagSearchResult:
-    pattern: /search?tag={tag}
+    pattern: /search/tag/{tag}
     defaults: { _controller: MozcuMozcuBundle:Album:index}
     requirements:
         _method: GET
