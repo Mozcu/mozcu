@@ -1,0 +1,40 @@
+<?php
+
+namespace Mozcu\MozcuBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="user_email_sent")
+ */
+class UserEmailSent
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
+    
+    /**
+     * @ORM\Column(name="last_user_id", type="integer")
+     */
+    private $lastUserId;
+    
+    /**
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+    
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+}
