@@ -40,7 +40,7 @@ class MailingSendCommand extends ContainerAwareCommand
         }
         
         $from = $this->getContainer()->getParameter('mail.noreply_address');
-        //$mailer = $this->getContainer()->get('mozcu_mozcu.email_service');
+        $mailer = $this->getContainer()->get('mozcu_mozcu.email_service');
         $templating = $this->getContainer()->get('templating');
         $body = $templating->render('MozcuMozcuBundle:Emails:welcome.html.twig');
         $subject = 'Mozcu ha regresado!';
