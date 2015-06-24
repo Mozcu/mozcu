@@ -26,6 +26,8 @@ $(function() {
             var player = $('.sidebar .player');
             $('.mainContent').after(player);
         }
+        $('.albumContent.playList').hide(800);
+        //$("html, body").animate({ scrollTop: $(document).height() }, 1000);
     };
 	
     $('.mainContent').on('click', '.headerDisco .playPause', function(e) {
