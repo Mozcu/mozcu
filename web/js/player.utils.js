@@ -24,10 +24,12 @@ $(function() {
     var movePlaylist = function() {
         if ($('.sidebar').css('display') === 'none' && $('.sidebar .player').length > 0) {
             var player = $('.sidebar .player');
-            $('.mainContent').after(player);
+            player.css('position', 'absolute');
+            player.css('left', '-500px');
+            $('body').append(player);
         }
-        $('.albumContent.playList').hide(800);
-        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        //$('.albumContent.playList').hide(800);
+        //$("html, body").animate({ scrollTop: $(document).height() }, 1000);
     };
 	
     $('.mainContent').on('click', '.headerDisco .playPause', function(e) {
