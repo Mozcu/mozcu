@@ -141,6 +141,9 @@ body {
     padding-left: 0px;
     border: 0px;
 
+}
+body {
+    padding-bottom: 0px;
 }}
 
 .navbar-brand{

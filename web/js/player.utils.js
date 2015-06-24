@@ -20,9 +20,18 @@ $(function() {
         var album = getAlbumForPlaylist(id);
         return album.songs;
     };
+    
+    var movePlaylist = function() {
+        if ($('.sidebar').css('display') === 'none' && $('.sidebar .player').length > 0) {
+            var player = $('.sidebar .player');
+            $('.mainContent').after(player);
+        }
+    };
 	
     $('.mainContent').on('click', '.headerDisco .playPause', function(e) {
         e.preventDefault();
+        movePlaylist();
+        
         var me = $(this);
         var album = getAlbumForPlaylist(me.attr('id'));
         var songs = album.songs;
@@ -34,8 +43,10 @@ $(function() {
 	
     $('.mainContent').on('click', '.playList .songName a', function(e) {
         e.preventDefault();
+        movePlaylist();
+        
         var me = $(this);
-		var data = me.attr('id').split('-');
+        var data = me.attr('id').split('-');
         var songs = getSongsForPlaylist(data[0]);
         if (currentPlayList != data[0]) {
             mozcuPlaylist.setPlaylist(songs);
