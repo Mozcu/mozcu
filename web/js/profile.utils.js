@@ -1,22 +1,26 @@
 $(function() {
     
     // Menu del perfil
-    $('.mainContent').on('click', '.headerPerfil .navDisco button', function(e){
+    $('.mainContent').on('click', '.headerPerfil .profileMenu .btn', function(e){
         e.preventDefault();
         
         var me = $(this);
-        //var url = me.attr('href');
-        var url = me.data('url');
+        
+        var url = me.is('a') ? me.attr('href') : me.data('url');
         
         $.getJSON(url, function(data) {
             if(data.success) {
                 $('.headerPerfil .navDisco').find('.discoActive').removeClass('discoActive');
                 $('.headerPerfil .navPerfilMobile').find('.navDiscoMobileActive').removeClass('navDiscoMobileActive');
                 
-                me.parent().addClass('discoActive');
-                var idx = me.parent().prevAll().length;
-                var mobileOption = $('.headerPerfil .navPerfilMobile a').get(idx);
+                var idx = me.is('a') ? me.prevAll().length : me.parent().prevAll().length;
+                
+                var option = $('.headerPerfil .navDisco .btn').get(idx);
+                $(option).addClass('discoActive');
+                
+                var mobileOption = $('.headerPerfil .navPerfilMobile .btn').get(idx);
                 $(mobileOption).addClass('navDiscoMobileActive');
+                
                 $('.profileContent').replaceWith(data.html);
             }
         });
@@ -119,20 +123,20 @@ $(function() {
     });
     
     // Ir al album
-    $('.mainContent').on('click', '.profileContent .albumManager a', function(e) {
+    $('.mainContent').on('click', '.profileContent .album a', function(e) {
         e.preventDefault();
         changeMainContent($(this).attr('href'));
     });
     
     // Eliminar album
-    $('.mainContent').on('click', '.profileContent .albumManager .delete', function(e) {
+    $('.mainContent').on('click', '.profileContent .album .delete', function(e) {
         if(!confirm('Esta seguro que desea eliminar el album?')) {
             return;
         }
         
         var me = $(this);
         var url = me.data('url');
-        var album = me.parents('.albumManager');
+        var album = me.parents('.album');
         
         album.find('.btnAlbumManager').hide();
         album.find('.loader').show();
@@ -144,10 +148,10 @@ $(function() {
     });
     
     // Editar album
-    $('.mainContent').on('click', '.profileContent .albumManager .edit', function(e) {
+    $('.mainContent').on('click', '.profileContent .album .edit', function(e) {
         var me = $(this);
         var url = me.data('url');
-        var album = me.parents('.albumManager');
+        var album = me.parents('.album');
         
         album.find('.btnAlbumManager').hide();
         album.find('.loader').show();

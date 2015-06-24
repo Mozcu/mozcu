@@ -1,7 +1,7 @@
 $(function() {
 
     // Pestañas del album (lista de temas, informacion, comentarios, similares)
-    $('.mainContent').on('click', '.headerDisco .navDisco button', function(e) {
+    $('.mainContent').on('click', '.headerDisco .albumMenu .btn', function(e) {
       e.preventDefault();
       var me = $(this);
       
@@ -11,9 +11,18 @@ $(function() {
       }
       $.getJSON(url, {}, function(data){
         if (data.success) {
-          me.parents('.navDisco').find('.discoActive').removeClass('discoActive');
-          me.parent().addClass('discoActive');
-          $('.mainContent .albumContent').replaceWith(data.html);
+            $('.headerDisco .navDisco').find('.discoActive').removeClass('discoActive');
+            $('.headerDisco .navDiscoMobile').find('.navDiscoMobileActive').removeClass('navDiscoMobileActive');
+
+            var idx = me.parent().prevAll().length;
+
+            var option = $('.headerDisco .navDisco .btn').get(idx);
+            $(option).addClass('discoActive');
+
+            var mobileOption = $('.headerDisco .navDiscoMobile .btn').get(idx);
+            $(mobileOption).addClass('navDiscoMobileActive');
+            
+            $('.mainContent .albumContent').replaceWith(data.html);
         }
       });
     });

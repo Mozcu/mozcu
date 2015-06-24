@@ -5,6 +5,9 @@ body{
 }
 
 /*++++++++++++++++++++++++++BOTONES+++++++++++++++++++++++++++*/
+.btn:focus{
+    color: #757575;
+}
 .btn-primary{
     background-image: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
     background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
@@ -213,8 +216,8 @@ body{
 }
 /*Modal boton descarga*/
 .mozcu-descarga-modal .modal-content .rowPagos{
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .inputPago{
@@ -657,10 +660,17 @@ body{
     margin-bottom: 2px;
     color: #111;
     font-size: 15px;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .album > a >p{
     color: #555;
-    font-size: 12px
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
     
 }
 
@@ -928,6 +938,7 @@ body{
     
 }
 
+/*
 @media (min-width: 300px) and (max-width: 480px){
     .album{
         height:240px;
@@ -969,13 +980,24 @@ body{
     }
     
 }
+*/
 
 @media (min-width: 1400px){
     .album{
-        height: 400px;
+        height: 450px;
+    }
+
+    .album > h5{
+        font-size:1.4em;
+        margin-top:15px;
+    }
+    .album > a> p{
+        font-size:1.2em;
+        
     }
     
 }
+
 
 .album:hover{
     opacity: 0.8;
@@ -988,6 +1010,7 @@ body{
      -webkit-box-shadow: inset 0px 0px 7px 0px rgba(100, 100, 100, 0.5);
     box-shadow: 0px 2px 10px 0px #CCC inset;
 }
+
 
 /*FIN DE ALBUMES*/
 
@@ -1011,6 +1034,8 @@ body{
 }
 .btnSeguirFollow > i{
     margin-right: 8px;
+    font-size: 18px;
+    vertical-align: sub;
 }
 .titlFollower{
     color: #333;
@@ -1061,9 +1086,6 @@ body{
     
 }
 
-.btngroupAlbumManager{
-    margin-top: 35px;
-}
 /*FIN ALBUM MANAGER*/
 
 /*INICIO COMPILADOS*/
@@ -1347,6 +1369,15 @@ body{
     color: #fff;
     text-decoration: none;
 }
+
+@media (max-width: 768px){
+.btnIngresar{
+    display: none;
+}
+
+.crearRegistro{
+    display: none;
+}}
 /*++++++++++++++++CARACTERISTICAS++++++++++++++++++++++++*/
 .rowCaract{
     margin-left: -15px;
@@ -1534,7 +1565,7 @@ body{
 .btnFiltros{
     margin-right:10px;
 }
-/*INICIO DE ALBUMES*/
+/*INICIO DE BOTONES DE ALBUMES*/
 
 
 .btnPerfilActive{
@@ -1542,7 +1573,13 @@ body{
     box-shadow: 0px 2px 10px 0px #CCC inset;
 }
 
-/*FIN DE ALBUMES*/
+.btnGroupMozcu{
+    text-overflow: ellipsis;
+    max-width: 155px;
+    overflow: hidden;
+}
+
+/*FIN DE BOTONES DE ALBUMES*/
 
 
 /*+++++++++++++++++++++++++++++++++FIN EXPLORER++++++++++++++++++++++++++++++++
@@ -1829,8 +1866,6 @@ margin-left: 15px;}
 /*+++++++++++++++++++++++++++++++++inicio resultados busqueda+++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 .headerResultados{
-    margin-left:10px;
-    margin-bottom:20px;
 }
 
 .resultados{
@@ -1911,3 +1946,176 @@ margin-left: 15px;}
 
 /*+++++++++++++++++++++++++++++++++FIN HECHO CON <3 EN BSAS+++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*+++++++++++++++++++++++++++++++++INICIO HISTORIAL DE REPRODUCCIÓN+++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+.tablaHistorial > tbody > tr > td {
+    padding-bottom: 10px;
+    padding-top: 12px;
+    vertical-align: middle;
+}
+.imgHistorial{
+    height: 50px;
+    width: auto;
+}
+.tdFecha{
+    width: 60px;
+}
+.tdImagen{
+    width: 60px;
+}
+
+/*+++++++++++++++++++++++++++++++++FIN HISTORIAL DE REPRODUCCIÓN+++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*+++++++++++++++++++++++++++++++++INICIO NOTIFICACIONES++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.tablaNotificaciones > tbody > tr > td{
+    vertical-align: baseline
+    
+}
+.tdIcon{
+    width: 60px;
+    padding-left: 15px !important;
+}
+
+.tdIcon > i{
+    color: #9E9E9E;
+    vertical-align: bottom;
+}
+
+/*+++++++++++++++++++++++++++++++++FIN NOTIFICACIONES+++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+/*+++++++++++++++++++++++++++++++++INICIO COVERFLOW+++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+.ui-coverflow-wrapper{
+    margin-top: 20px;
+    z-index:1;
+    height: 500px;
+}
+.ui-helper-clearfix:before,.ui-helper-clearfix:after{
+    content:" ";
+    display:table
+}
+.ui-helper-clearfix:after{
+    clear:both
+}
+.ui-coverflow{
+    -webkit-perspective:1000px;
+    perspective: 1000px;
+    position: absolute;
+}
+.ui-coverflow,.ui-coverflow *{
+    -ms-touch-action:pan-y!important
+}
+.ui-coverflow .ui-coverflow-item{
+    position:relative;
+    cursor:pointer;
+    float:left;
+    display:block
+}.ui-coverflow .ui-coverflow-item:focus{
+    outline:0
+}
+.ui-coverflow img{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-user-drag:none;
+    -moz-user-drag:none;
+    -ms-user-drag:none;
+    user-drag:none;
+    border:0 none
+}
+
+.imgCoverflow{
+    height: 300px;
+    width: auto;
+    -webkit-box-reflect: below 0
+    -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(rgba(255,255,255,0.2)));
+}
+
+.tituloDashboard{
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.tituloDashboard > i{
+    vertical-align: sub;
+    color: #9E9E9E;
+    margin-right: 10px;
+}
+
+.albumDashboard{
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+}
+
+.contenedorAlbumsDash{
+    margin-left: -15px;
+    padding-right: 0px;
+}
+
+.contenedorUserDash {
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.userDashboard > a > p{
+    font-size: 13px;
+    color: black;
+    margin-top: 20px;
+}
+
+.btnFollowDash{
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    margin-right: 0px;
+    margin-top: 0px;
+    border-radius: 50%;
+    box-shadow: 0px 1px 5px rgba( 0, 0, 0, 0.27 );
+    padding: 6px 10px;
+}
+
+.btnFollowDash > i{
+    font-size: 18px;
+    line-height: inherit;
+}
+
+.nosabesDash{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    border-top: 1px solid #ccc;
+}
+
+.nosabesDash > a > p >i{
+    vertical-align: middle;
+}
+/*+++++++++++++++++++++++++++++++++FIN COVERFLOW+++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* preloader */
+#preloader {
+    position: fixed;
+    top:0; left:0;
+    right:0; bottom:0;
+    background: #fff;
+    z-index: 100;
+    overflow: hidden;
+}
+#loader {
+    position: absolute;
+    left:50%; 
+    top:50%;
+    background: url(../images/ajax-loader.gif) no-repeat center 0;
+}

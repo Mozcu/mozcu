@@ -1,19 +1,17 @@
 <div class="row center-block rowContenido favorites hidden">
     <!--INICIO DE ALBUMES-->
     {% for album in albums %}
-        <div class="albumManager col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id="{{ album.getId }}">
+        <div class="album col-xs-6 col-sm-4 col-md-3 col-lg-3" data-id="{{ album.getId }}">
             <input type="hidden" class="albumId" value="{{ album.getId }}" />
 
             {% if album.getIsActive %}
                 <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': album.getProfile.getUsername,'slug': album.getSlug}) }}">
-                    <img src="{{ album.getListThumbnailUrl }}" alt="{{ album.getName }}" class="imgAlbumManager col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                    <img src="{{ album.getListThumbnailUrl }}" alt="{{ album.getName }}" class="imgAlbum">
                 </a>
             {% endif %}
 
-            <!--<p class="pull-right visible-sm visible-md visible-lg text-muted">Publicado hace al rededor de un mes</p>-->
-            <h5>{{ album.getName }}</h5>
-            <a href="{{ path('MozcuMozcuBundle_profile', {'username': album.getProfile.getUsername}) }}"><p>{{ album.getArtistName }}</p></a>
-            <p>{{ album.getReleaseDate }}</p>
+            <h5>{{ album.getName }} {% if album.getIsActive == false %}(procesando...){% endif %}</h5>
+            <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}"><p>{{ album.getArtistName }}</p></a>
         </div>
     {% else %}
         <div class="noAlbums">{{ user.getCurrentName }} no tiene ningun album favorito!</div>

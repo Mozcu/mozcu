@@ -15,7 +15,7 @@ $(function() {
     // Link login home
     $('.mainContent').on('click', '.btnIngresar', function(e) {
         e.preventDefault();
-        changeMainContent($(this).attr('href'));
+        changeMainContent($(this).data('url'));
     });
     
     // Links footer

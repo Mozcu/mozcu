@@ -8,9 +8,14 @@ window.onbeforeunload = closePageWarning;
 
 // Modifica el contenido principal
 function changeMainContent(url, parameters, preventPush) {
+    if(url == '#') {
+        return;
+    }
+    
     if (!parameters) {
        parameters = {}; 
     }
+    
     $.getJSON(url, parameters, function(data) {
         if(data.success) {
             $('.mainContent').html(data.html);

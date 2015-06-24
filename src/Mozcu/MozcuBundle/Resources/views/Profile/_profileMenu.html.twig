@@ -1,5 +1,5 @@
 <div class="visible-sm visible-md visible-lg">
-    <ul class="nav nav-pills navDisco col-sm-12 col-md-12 col-lg-12">
+    <ul class="nav nav-pills navDisco col-sm-12 col-md-12 col-lg-12 profileMenu">
         <li {% if selectedOption == 'biography' %} class="discoActive" {% endif %} >
             <button data-url="{{ path('MozcuMozcuBundle_profileBiography', {'username': user.username}) }}" class="btn btn-link">Información</button>
         </li>
@@ -15,26 +15,9 @@
     </ul>
 </div>
 
-{# Mobile #}
-<div class="visible-xs">
-    <ul class="nav nav-pills navDiscoMobile">
-        <li {% if selected == 'biography' %} class="navDiscoMobileActive" {% endif %}>
-            <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_profileBiography', {'username': user.username}) }}"><i class="center-block glyphicon glyphicon-list-alt"></i>Información</button>
-        </li>
-        <li {% if selected == 'albums' %} class="navDiscoMobileActive" {% endif %}>
-            <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_profileAlbums', {'username': user.username}) }}"><i class="center-block glyphicon glyphicon-headphones"></i>Álbumes</button>
-        </li>
-        {# <li {% if selected == 'reviews' %} class="navDiscoMobileActive" {% endif %}>
-            <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_profileReviews', {'username': user.username}) }}"><i class="center-block glyphicon glyphicon-pencil"></i>Reseñas</button>
-        </li> 
-        <li {% if selected == 'playlists' %} class="navDiscoMobileActive" {% endif %}>
-            <button class="btn btn-link" data-url="{{ path('MozcuMozcuBundle_profilePlaylists', {'username': user.username}) }}"><i class="center-block glyphicon glyphicon-th-large"></i>Compilados</button>
-        </li> #}
-    </ul>
-</div>
 <!-- INICIO MENU DISCO SOLO PARA MOBILES-->
 <div class="visible-xs">
-    <div class="btn-group btn-group-justified navDiscoMobile navPerfilMobile">
+    <div class="btn-group btn-group-justified navDiscoMobile navPerfilMobile profileMenu">
         <a href="{{ path('MozcuMozcuBundle_profileBiography', {'username': user.username}) }}" 
            class="btn btn-default {% if selectedOption == 'biography' %} navDiscoMobileActive {% endif %}">
             <i class="center-block glyphicon glyphicon-book"></i>Información
@@ -43,14 +26,14 @@
            class="btn btn-default {% if selectedOption == 'albums' %} navDiscoMobileActive {% endif %}">
             <i class="center-block glyphicon glyphicon-headphones"></i>Álbumes
         </a>
-        <!-- <a href="{{ path('MozcuMozcuBundle_profileReviews', {'username': user.username}) }}" 
+        {# <a href="{{ path('MozcuMozcuBundle_profileReviews', {'username': user.username}) }}" 
            class="btn btn-default {% if selectedOption == 'reviews' %} navDiscoMobileActive {% endif %}">
             <i class="center-block glyphicon glyphicon-pencil"></i>Reseñas
         </a>
         <a href="{{ path('MozcuMozcuBundle_profilePlaylists', {'username': user.username}) }}" 
            class="btn btn-default {% if selectedOption == 'playlists' %} navDiscoMobileActive {% endif %}">
             <i class="center-block glyphicon glyphicon-th-large"></i>Compilados
-        </a> -->
+        </a> #}
     </div>
 
 </div>
