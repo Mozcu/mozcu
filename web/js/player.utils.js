@@ -51,7 +51,7 @@ $(function() {
             }
         }
         
-        movePlaylist();
+        //movePlaylist();
         
         var album = getAlbumForPlaylist(me.attr('id'));
         var songs = album.songs;
@@ -63,7 +63,7 @@ $(function() {
 	
     $('.mainContent').on('click', '.playList .songName a', function(e) {
         e.preventDefault();
-        movePlaylist();
+        //movePlaylist();
         
         var me = $(this);
         var data = me.attr('id').split('-');

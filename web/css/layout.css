@@ -364,6 +364,12 @@ body {
     }
 }
 
+@media (max-width: 991px) { 
+.sidebar {
+  position: absolute !important;
+  left: -500px !important;
+}}
+
 
     /*-------------------------------*/
    /*     Fin query sidebar menu    */
