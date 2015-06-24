@@ -34,9 +34,25 @@ $(function() {
 	
     $('.mainContent').on('click', '.headerDisco .playPause', function(e) {
         e.preventDefault();
+        var me = $(this);
+        
+        var toActivate = me.find('.glyphicon.hidden');
+        if(toActivate.hasClass('glyphicon-play')) {
+            mozcuPlaylist.pause();
+            me.find('.glyphicon-pause').addClass('hidden');
+            toActivate.removeClass('hidden');
+            return;
+        } else {
+            me.find('.glyphicon-play').addClass('hidden');
+            toActivate.removeClass('hidden');
+            if (currentPlayList == me.attr('id')) {
+                mozcuPlaylist.play();
+                return;
+            }
+        }
+        
         movePlaylist();
         
-        var me = $(this);
         var album = getAlbumForPlaylist(me.attr('id'));
         var songs = album.songs;
         var image = album.image;
@@ -52,6 +68,10 @@ $(function() {
         var me = $(this);
         var data = me.attr('id').split('-');
         var songs = getSongsForPlaylist(data[0]);
+        
+        $('.headerDisco .playPause .glyphicon-play').addClass('hidden');
+        $('.headerDisco .playPause .glyphicon-pause').removeClass('hidden');
+        
         if (currentPlayList != data[0]) {
             mozcuPlaylist.setPlaylist(songs);
             currentPlayList = data[0];
