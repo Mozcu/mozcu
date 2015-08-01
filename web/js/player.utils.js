@@ -21,17 +21,6 @@ $(function() {
         return album.songs;
     };
     
-    var movePlaylist = function() {
-        if ($('.sidebar').css('display') === 'none' && $('.sidebar .player').length > 0) {
-            var player = $('.sidebar .player');
-            player.css('position', 'absolute');
-            player.css('left', '-500px');
-            $('body').append(player);
-        }
-        //$('.albumContent.playList').hide(800);
-        //$("html, body").animate({ scrollTop: $(document).height() }, 1000);
-    };
-	
     $('.mainContent').on('click', '.headerDisco .playPause', function(e) {
         e.preventDefault();
         var me = $(this);
@@ -41,17 +30,23 @@ $(function() {
             mozcuPlaylist.pause();
             me.find('.glyphicon-pause').addClass('hidden');
             toActivate.removeClass('hidden');
+            
+            $('#playerControlBottom .jp-pause').hide();
+            $('#playerControlBottom .jp-play').show();
+            
             return;
         } else {
             me.find('.glyphicon-play').addClass('hidden');
             toActivate.removeClass('hidden');
+            
+            $('#playerControlBottom .jp-play').hide();
+            $('#playerControlBottom .jp-pause').show();
+            
             if (currentPlayList == me.attr('id')) {
                 mozcuPlaylist.play();
                 return;
             }
         }
-        
-        //movePlaylist();
         
         var album = getAlbumForPlaylist(me.attr('id'));
         var songs = album.songs;
@@ -78,6 +73,45 @@ $(function() {
         }
         mozcuPlaylist.play(data[1] - 1);
     });
+    
+    /** Villereadas para player de mobile **/
+    $('body').on('click', '#playerControlBottom .jp-previous', function(e) {
+        e.preventDefault();
+        mozcuPlaylist.previous();
+    });
+    
+    $('body').on('click', '#playerControlBottom .jp-next', function(e) {
+        e.preventDefault();
+        mozcuPlaylist.next();
+    });
+    
+    $('body').on('click', '#playerControlBottom .jp-play', function(e) {
+        e.preventDefault();
+        mozcuPlaylist.play();
+        $(this).hide();
+        $('#playerControlBottom .jp-pause').show();
+    });
+    
+    $('body').on('click', '#playerControlBottom .jp-pause', function(e) {
+        e.preventDefault();
+        mozcuPlaylist.pause();
+        $(this).hide();
+        $('#playerControlBottom .jp-play').show();
+        
+    });
+    
+    $('body').on('click', '#musicPlayer .jp-play', function(e) {
+        e.preventDefault();
+        $('#musicPlayer .jp-play').hide();
+        $('#musicPlayer .jp-pause').show();
+    });
+    
+    $('body').on('click', '#musicPlayer .jp-pause', function(e) {
+        e.preventDefault();
+        $('#musicPlayer .jp-pause').hide();
+        $('#musicPlayer .jp-play').show();
+    });
+    /** fin de las villereadas **/
     
     var mozcuPlaylist = new jPlayerPlaylist({
             jPlayer: "#jquery_jplayer_1",

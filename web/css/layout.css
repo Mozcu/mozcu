@@ -520,3 +520,24 @@ body {
 */
 
 /*FIN PERSONALIZACIÓN DE LAS BARRAS DE SCROLL - SCROLLBAR*/
+
+
+/* CONTROL DE PLAYER PARA MOBILE */
+#playerControlBottom {
+    position: fixed; 
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+}
+
+#playerControlBottom .jp-controls {
+    width: 100px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px){
+    #playerControlBottom {
+        display: none;
+    }
+}
