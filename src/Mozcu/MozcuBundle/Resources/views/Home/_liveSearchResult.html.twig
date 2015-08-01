@@ -9,15 +9,17 @@
         {% endif %}
         {% for profile in profiles %}
             <li class="autoResult col-xs-12 col-sm-12 col-md-12 col-lg-12" data-url="{{ path('MozcuMozcuBundle_profile', {username: profile.getUser.getUsername }) }}">
-                {% if profile.getMainImage is null %}
-                    <img src="{{ asset('images/profile_125x125.jpg')}}" alt="perfil" class="autoImgAlbum col-xs-4 col-sm-2 col-md-2 col-lg-2">
-                {% else %}
-                    {% for presentation in profile.getMainImage.getPresentations %}
-                        {% if presentation.getName == 'livesearch' %}
-                            <img src="{{ presentation.url }}" alt="perfil" class="autoImgAlbum col-xs-4 col-sm-2 col-md-2 col-lg-2">
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+                <div class="autoImgAlbum col-xs-4 col-sm-2 col-md-2 col-lg-2">
+                    {% if profile.getMainImage is null %}
+                        <img src="{{ asset('images/profile_125x125.jpg')}}" alt="perfil">
+                    {% else %}
+                        {% for presentation in profile.getMainImage.getPresentations %}
+                            {% if presentation.getName == 'livesearch' %}
+                                <img src="{{ presentation.url }}" alt="perfil">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
                 <p class="autoArtist col-xs-8 col-sm-10 col-md-10 col-lg-10">{{ profile.getCurrentName }}</p>
                 <p class="autoArtistMuted col-xs-8 col-sm-10 col-md-10 col-lg-10">
                     {{ profile.getArtists | join(', ') }}

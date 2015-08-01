@@ -7,7 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Mozcu\MozcuBundle\Repository\AlbumRepository")
- * @ORM\Table(name="album", indexes={@ORM\Index(name="livesearch_idx", columns={"name", "artist_name"})})
+ * @ORM\Table(name="album", indexes={@ORM\Index(name="livesearch_idx", columns={"name", "artist_name"}), 
+ *                                   @ORM\Index(name="slug_idx", columns={"slug"})})
  * @ORM\EntityListeners({ "Mozcu\MozcuBundle\Listener\AlbumListener" })
  */
 class Album {

@@ -5,20 +5,19 @@ $(function() {
         e.preventDefault();
         
         var me = $(this);
-        
-        var url = me.is('a') ? me.attr('href') : me.data('url');
+        var url = me.data('url');
         
         $.getJSON(url, function(data) {
             if(data.success) {
                 $('.headerPerfil .navDisco').find('.discoActive').removeClass('discoActive');
-                $('.headerPerfil .navPerfilMobile').find('.navDiscoMobileActive').removeClass('navDiscoMobileActive');
+                $('.headerPerfil .navDiscoMobile').find('.navDiscoMobileActive').removeClass('navDiscoMobileActive');
                 
-                var idx = me.is('a') ? me.prevAll().length : me.parent().prevAll().length;
+                var idx = me.parent().prevAll().length;
                 
-                var option = $('.headerPerfil .navDisco .btn').get(idx);
+                var option = $('.headerPerfil .navDisco li').get(idx);
                 $(option).addClass('discoActive');
                 
-                var mobileOption = $('.headerPerfil .navPerfilMobile .btn').get(idx);
+                var mobileOption = $('.headerPerfil .navDiscoMobile li').get(idx);
                 $(mobileOption).addClass('navDiscoMobileActive');
                 
                 $('.profileContent').replaceWith(data.html);
