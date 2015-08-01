@@ -87,6 +87,10 @@ $(function() {
     
     $('body').on('click', '#playerControlBottom .jp-play', function(e) {
         e.preventDefault();
+        if(!currentPlayList) {
+            return;
+        }
+        
         mozcuPlaylist.play();
         $(this).hide();
         $('#playerControlBottom .jp-pause').show();
