@@ -1,6 +1,6 @@
 $(function() {
     
-    var currentPlayList = null;
+    currentPlayList = null;
 	
     var getAlbumForPlaylist = function(id) {
         var url = $('#urlAlbumForPlayer').val();
@@ -94,5 +94,6 @@ $(function() {
         keyEnabled: true,
         solution: "flash, html"
     });
+    
     
 });
