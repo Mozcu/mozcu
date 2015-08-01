@@ -88,7 +88,7 @@
 </div>
             
 <script type="text/javascript">
-    if (currentPlayList == {{ album.getId }} && $('#musicPlayer .jp-pause').is(':visible') ) {
+    if (typeof currentPlayList !== 'undefined' && currentPlayList == {{ album.getId }} && $('#musicPlayer .jp-pause').is(':visible') ) {
         $('.headerDisco .glyphicon-play').addClass('hidden');
         $('.headerDisco .glyphicon-pause').removeClass('hidden');
     }
