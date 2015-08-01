@@ -12,7 +12,13 @@
     <div class="row center-block rowContenido albums">
         <!--INICIO DE ALBUMES-->
         {% for album in albums if (isAuthenticated == true or album.getIsActive  == true) %}
-            <div class="album col-xs-6 col-sm-4 col-md-3 col-lg-3" data-id="{{ album.getId }}">
+            {% set albumManager = '' %}
+            {% if isAuthenticated == true and album.getIsActive  == true %}
+                {% set albumManager = 'manager' %}
+            {% endif %}
+            
+            
+            <div class="album col-xs-6 col-sm-4 col-md-3 col-lg-3 {{ albumManager }}" data-id="{{ album.getId }}">
                 <input type="hidden" class="albumId" value="{{ album.getId }}" />
                 
                 {% if album.getListThumbnailUrl is null %}
@@ -33,7 +39,7 @@
                 <h5>{{ album.getName }} {% if album.getIsActive == false %}(procesando...){% endif %}</h5>
                 <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}"><p>{{ album.getArtistName }}</p></a>
                                 
-                {% if isAuthenticated == true and album.getIsActive  == true %}
+                {% if albumManager != '' %}
                     <div class="btn-group btngroupAlbumManager">
                         <button type="button" class="edit btn btn-default btnAlbumManager" data-url="{{ path('MozcuMozcuBundle_editAlbum', {'id': album.getId}) }}">
                             <i class="glyphicon glyphicon-pencil"></i>Modificar

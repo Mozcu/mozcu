@@ -937,16 +937,28 @@ body{
     .album{
         height:240px;
     }
+    .album.manager {
+        height:300px;
+    }
+    
 }
 
 @media (min-width: 480px) and (max-width: 600px){
     .album{
         height:300px;
     }
+    
+    .album.manager {
+        height:330px;
+    }
 }
 @media (min-width: 600px) and (max-width: 767px){
     .album{
         height:370px;
+    }
+    
+    .album.manager {
+        height:400px;
     }
 }
 
@@ -954,11 +966,19 @@ body{
     .album{
         height:340px;
     }
+    
+    .album.manager {
+        height:370px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1200px){
     .album{
         height:270px;
+    }
+    
+    .album.manager {
+        height:300px;
     }
 }
 
@@ -966,11 +986,19 @@ body{
     .album{
         height:300px;
     }
+    
+    .album.manager {
+        height:330px;
+    }
 }
 
 @media (min-width: 1400px){
     .album{
         height: 350px;
+    }
+    
+    .album.manager {
+        height:380px;
     }
 
 }
@@ -979,6 +1007,10 @@ body{
 @media (min-width: 1400px){
     .album{
         height: 450px;
+    }
+    
+    .album.manager {
+        height:470px;
     }
 
     .album > h5{
