@@ -1,8 +1,8 @@
 parameters:
     image_presentation.album_list_thumbnail_size:
       name: 'list_thumbanil'
-      width: 234
-      height: 234
+      width: 350
+      height: 350
       thumbnail: true
     image_presentation.album_header_size:
       name: 'album_header'

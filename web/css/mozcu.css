@@ -688,6 +688,7 @@ body{
     margin-bottom: 3px;
     border: none;
     border-radius: 2px;
+    width: 350px;
     max-width: 100%;
     height: auto;
     line-height: 1.42857143;
