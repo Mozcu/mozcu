@@ -89,6 +89,8 @@ class AlbumService extends BaseService
     public function updateAlbum(Album $album, array $data) 
     {
         try {
+            $oldName = $album->getName();
+            
             $album->setName($data['name'])
                     ->setLicense($data['license'])
                     ->setArtistName($data['artist'])
@@ -110,8 +112,10 @@ class AlbumService extends BaseService
             
             $this->updateTags($album, $data['tags']);
             
-            $slug = $this->generateSlug($data['name'], $album->getProfile());
-            $album->setSlug($slug);
+            if($oldName != $data['name']) {
+                $slug = $this->generateSlug($data['name'], $album->getProfile());
+                $album->setSlug($slug);
+            }
             
             $this->getEntityManager()->persist($album);
             $this->getEntityManager()->flush();
