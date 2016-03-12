@@ -20,7 +20,8 @@ class AlbumRepository extends EntityRepository {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select("a")
             ->from('MozcuMozcuBundle:Album', 'a')
-            ->where('a.isActive = 1');
+            ->where('a.status = :status')
+            ->setParameter('status', Album::STATUS_ACTIVE);
         // order
         $map = false;
         if(isset($filters['orderBy']) && !empty($filters['orderBy'])) {
@@ -66,16 +67,17 @@ class AlbumRepository extends EntityRepository {
         $in = "(" . implode(',', $tags) . ")";
         //$cant = count($tags);
         
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        $queryBuilder->select("a");
-        $queryBuilder->from('MozcuMozcuBundle:Album', 'a');
-        $queryBuilder->innerJoin('a.tags', 't');
-        $queryBuilder->where("t.id IN {$in} AND a.isActive = 1");
-        //$queryBuilder->groupBy("a.name");
-        //$queryBuilder->having("COUNT(t.id) = {$cant}");
-        $queryBuilder->orderBy('a.id', 'DESC');
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select("a")
+            ->from('MozcuMozcuBundle:Album', 'a')
+            ->innerJoin('a.tags', 't')
+            ->where("t.id IN {$in} AND a.status = :status")
+            ->setParameter('status', Album::STATUS_ACTIVE)
+            //->groupBy("a.name")
+            //->having("COUNT(t.id) = {$cant}")
+            ->orderBy('a.id', 'DESC');
 
-        $query = $queryBuilder->getQuery();
+        $query = $qb->getQuery();
         $query->setFirstResult($page * $cant)
               ->setMaxResults($cant);
         
@@ -83,20 +85,32 @@ class AlbumRepository extends EntityRepository {
     }
     
     public function liveSearch($name, $limit = 4) {
-        $dql = "FROM MozcuMozcuBundle:Album a
-                WHERE (a.name LIKE '%$name%' OR a.artist_name LIKE '%$name%') AND a.isActive = 1";
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->from('MozcuMozcuBundle:Album', 'a')
+            ->where('a.name LIKE :like OR a.artist_name LIKE :like')
+            ->andWhere('a.status = :status')
+            ->setParameters([
+                'like' => '%' . $name .'%',
+                'status' => Album::STATUS_ACTIVE,
+            ]);
+        
         
         if($limit > 0) {
-            $dql = "SELECT a " . $dql;
-            $query = $this->getEntityManager()->createQuery($dql);
+            $qb->select('a')
+                ->addSelect('LOCATE(:term, a.name) position')
+                ->orderBy('position', 'DESC')
+                ->setParameter('term', $name);
+            $query = $qb->getQuery();
             $query->setFirstResult(0)->setMaxResults($limit);
-        } else {
-            $dql = "SELECT COUNT(a.id) " . $dql;
-            $query = $this->getEntityManager()->createQuery($dql);
-            return $query->getSingleScalarResult();
+            $results = $query->getResult();
+            return array_map(
+                function ($result) { return $result[0]; },
+                $results
+            );
         }
         
-        return $query->getResult();
+        $qb->select('COUNT(a.id)');
+        return $qb->getQuery()->getSingleScalarResult();
     }
     
     public function searchTotalCount($query) {
@@ -110,17 +124,18 @@ class AlbumRepository extends EntityRepository {
         }
         $in = "(" . implode(',', $tags) . ")";
         
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        $queryBuilder->select("a, COUNT(t.id) as tagsCant");
-        $queryBuilder->from('MozcuMozcuBundle:Album', 'a');
-        $queryBuilder->innerJoin('a.tags', 't');
-        $queryBuilder->where("t.id IN {$in} AND a.id <> {$album->getId()} AND a.isActive = 1");
-        $queryBuilder->groupBy('a.id');
-        $queryBuilder->orderBy('tagsCant', 'DESC');
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select("a, COUNT(t.id) as tagsCant")
+            ->from('MozcuMozcuBundle:Album', 'a')
+            ->innerJoin('a.tags', 't')
+            ->where("t.id IN {$in} AND a.id <> {$album->getId()} AND a.status = :status")
+            ->setParameter('status', Album::STATUS_ACTIVE)
+            ->groupBy('a.id')
+            ->orderBy('tagsCant', 'DESC');
         
-        $query = $queryBuilder->getQuery()
+        $query = $qb->getQuery()
                        ->setFirstResult(0)
-                       ->setMaxResults(15);
+                       ->setMaxResults(16);
 
         $results = $query->getResult();
         
@@ -139,7 +154,8 @@ class AlbumRepository extends EntityRepository {
                 ->innerJoin('p.user', 'u')
                 ->where('a.slug = :slug')
                 ->andWhere('u.username = :username')
-                ->setParameters(['slug' => $slug, 'username' => $username]);
+                ->andWhere('a.status = :status')
+                ->setParameters(['slug' => $slug, 'username' => $username, 'status' => Album::STATUS_ACTIVE]);
         try {
             return $qb->getQuery()->getSingleResult();
         } catch(NoResultException $e) {

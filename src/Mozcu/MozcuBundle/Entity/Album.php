@@ -13,6 +13,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Album {
     
+    const STATUS_PROCESSING = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
+    const STATUS_DELETED = 3;
+    
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -70,9 +75,9 @@ class Album {
     private $createdAt;
     
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="status", type="integer")
      */
-    private $isActive;
+    private $status;
     
     /**
      * @ORM\OneToOne(targetEntity="AlbumImage", mappedBy="album", cascade={"persist", "remove"})
@@ -131,7 +136,7 @@ class Album {
         $this->tags = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->createdAt = new \DateTime();
-        $this->isActive = false;
+        $this->status = self::STATUS_PROCESSING;
         $this->visits = 0;
         $this->downloads = 0;
     }
@@ -300,28 +305,44 @@ class Album {
     }
 
     /**
-     * Set isActive
      *
-     * @param boolean $isActive
+     * @param boolean $status
      * @return Album
      */
-    public function setIsActive($isActive)
+    public function setStatus($status)
     {
-        $this->isActive = $isActive;
+        $this->status = $status;
     
         return $this;
     }
 
     /**
-     * Get isActive
      *
      * @return boolean 
      */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
     public function getIsActive()
     {
-        return $this->isActive;
+        return $this->status == self::STATUS_ACTIVE;
     }
-
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function isProcessing()
+    {
+        return $this->status == self::STATUS_PROCESSING;
+    }
+    
     /**
      * Set profile
      *

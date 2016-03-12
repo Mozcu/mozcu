@@ -56,6 +56,13 @@ class ProfileController extends MozcuController
         }
     }
     
+    /**
+     * Este action es ejecutado cuando la pagina de upload redirige luego de la subida del album
+     * TODO: kill it with fire
+     * 
+     * @param string $username
+     * @return Response
+     */
     public function albumsForProfileAction($username) {
         $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
         

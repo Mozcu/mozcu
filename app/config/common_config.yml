@@ -1,11 +1,12 @@
 parameters:
-# Uploads
+  # Uploads
   uploads:
     tmp_images_dir: '%kernel.root_dir%/../web/uploads/tmp/images'
     tmp_songs_dir:  '%kernel.root_dir%/../web/uploads/tmp/songs'
     tmp_zip_dir:    '%kernel.root_dir%/../web/uploads/tmp/zip'
     valid_song_types: ['audio/mpeg', 'audio/mpeg3', 'audio/x-mpeg-3', 'video/mpeg', 'video/x-mpeg', 'application/octet-stream']
     valid_image_types: ['image/jpeg', 'image/pjpeg', 'image/png']
+  tmp_images_url: 'uploads/tmp/images/'
     
   # Google Api
   google_api:

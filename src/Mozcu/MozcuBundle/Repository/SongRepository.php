@@ -16,7 +16,7 @@ class SongRepository extends EntityRepository
 {
     public function liveSearch($name, $limit = 4) {
         $dql = "FROM MozcuMozcuBundle:Song s JOIN s.album a
-                WHERE (s.name LIKE '%$name%' OR a.artist_name LIKE '%$name%') AND a.isActive = 1";
+                WHERE (s.name LIKE '%$name%' OR a.artist_name LIKE '%$name%') AND a.status = :status";
         
         if($limit > 0) {
             $dql = "SELECT s " . $dql;
@@ -27,6 +27,8 @@ class SongRepository extends EntityRepository
             $query = $this->getEntityManager()->createQuery($dql);
             return $query->getSingleScalarResult();
         }
+        
+        $query->setParameter('status', Album::STATUS_ACTIVE);
         
         return $query->getResult();
     }

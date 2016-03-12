@@ -22,13 +22,12 @@
                 <input type="hidden" class="albumId" value="{{ album.getId }}" />
                 
                 {% if album.getListThumbnailUrl is null %}
-                    {# TODO: sacar esta ruta hardcodeada de aca #}
-                    {% set albumImageUrl = '/uploads/tmp/images/' ~  album.getImage.getTemporalFileName  %}
+                    {% set albumImageUrl = asset(uploadImageDir ~  album.getImage.getTemporalFileName)  %}
                 {% else %}
                     {% set albumImageUrl = album.getListThumbnailUrl %}
                 {% endif %}
                 
-                {% if album.getIsActive == false %}
+                {% if album.isProcessing == true %}
                     <img src={{ albumImageUrl }} alt="{{ album.getName }}" class="imgAlbum"/>
                 {% else %}
                     <a href="{{ path('MozcuMozcuBundle_albumAlbum', {'username': user.getUsername,'slug': album.getSlug}) }}">
@@ -36,7 +35,7 @@
                     </a>
                 {% endif %}
                 
-                <h5>{{ album.getName }} {% if album.getIsActive == false %}(procesando...){% endif %}</h5>
+                <h5>{{ album.getName }} {% if album.isProcessing %}(procesando...){% endif %}</h5>
                 <a href="{{ path('MozcuMozcuBundle_profile', {'username': user.username}) }}"><p>{{ album.getArtistName }}</p></a>
                                 
                 {% if albumManager != '' %}

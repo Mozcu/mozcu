@@ -29,6 +29,7 @@ twig:
     globals:
         analyticsKey: %google.analytics.key%
         mp: %mercadopago%
+        uploadImageDir: %tmp_images_url%
 
 # Assetic Configuration
 assetic:

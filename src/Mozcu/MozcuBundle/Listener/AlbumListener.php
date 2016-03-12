@@ -47,12 +47,12 @@ class AlbumListener
         sort($newSongIds, SORT_NUMERIC);
         
         if($oldSongIds != $newSongIds) {
-            $album->setIsActive(false);
+            $album->setStatus(Album::STATUS_PROCESSING);
             $this->addToUpdateQueue = true;
         }
         
         if(!is_null($album->getImage()->getTemporalFileName())) {
-            $album->setIsActive(false);
+            $album->setStatus(Album::STATUS_PROCESSING);
             $this->addToUpdateQueue = true;
         }
     }

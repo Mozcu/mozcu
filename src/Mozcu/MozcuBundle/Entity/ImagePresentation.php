@@ -181,11 +181,6 @@ class ImagePresentation {
      */
     public function getUrl()
     {
-        if(empty($this->url) && $this->getImage() instanceof AlbumImage && $this->getImage()->getAlbum()->getIsActive()) {
-            $albumId = $this->getImage()->getAlbum()->getId();
-            $imageName = $this->getImage()->getTemporalFileName();
-            $this->url = " https://storage.googleapis.com/static-mozcu/$albumId/$imageName";
-        }
         return $this->url;
     }
 
