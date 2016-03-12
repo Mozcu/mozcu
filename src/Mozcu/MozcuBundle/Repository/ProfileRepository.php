@@ -3,6 +3,7 @@
 namespace Mozcu\MozcuBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Mozcu\MozcuBundle\Entity\User;
 
 /**
  * ProfileRepository
@@ -13,21 +14,34 @@ use Doctrine\ORM\EntityRepository;
 class ProfileRepository extends EntityRepository
 {
     public function liveSearch($query, $limit = 4) {
-        $dql = "FROM MozcuMozcuBundle:Profile p 
-                INNER JOIN p.user u 
-                LEFT JOIN p.albums a
-                WHERE (p.name LIKE '%$query%' OR u.username LIKE '%$query%' OR a.artist_name LIKE '%$query%')";
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->from('MozcuMozcuBundle:Profile', 'p')
+            ->innerJoin('p.user', 'u')
+            ->leftJoin('p.albums', 'a')
+            ->where('p.name LIKE :like OR u.username LIKE :like OR a.artist_name LIKE :like')
+            ->andWhere('u.status = :status')
+            ->setParameters([
+                'like' => '%' . $query .'%',
+                'status' => User::STATUS_ACTIVE,
+            ]);
+        
+        
         if($limit > 0) {
-            $dql = "SELECT p " . $dql;
-            $query = $this->getEntityManager()->createQuery($dql);
+            $qb->select('p')
+                ->addSelect('LOCATE(:term, p.name) position')
+                ->orderBy('position', 'DESC')
+                ->setParameter('term', $query);
+            $query = $qb->getQuery();
             $query->setFirstResult(0)->setMaxResults($limit);
-        } else {
-            $dql = "SELECT COUNT(p.id) " . $dql;
-            $query = $this->getEntityManager()->createQuery($dql);
-            return $query->getSingleScalarResult();
+            $results = $query->getResult();
+            return array_map(
+                function ($result) { return $result[0]; },
+                $results
+            );
         }
         
-        return $query->getResult();
+        $qb->select('COUNT(p.id)');
+        return $qb->getQuery()->getSingleScalarResult();
     }
     
     public function searchTotalCount($query) {

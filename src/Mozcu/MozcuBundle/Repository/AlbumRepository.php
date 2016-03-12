@@ -7,6 +7,7 @@ use Doctrine\ORM\NoResultException;
 
 use Mozcu\MozcuBundle\Entity\Album;
 use Mozcu\MozcuBundle\Entity\Profile;
+use Mozcu\MozcuBundle\Entity\User;
 
 /**
  * AlbumRepository
@@ -20,8 +21,12 @@ class AlbumRepository extends EntityRepository {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select("a")
             ->from('MozcuMozcuBundle:Album', 'a')
+            ->innerJoin('a.profile', 'p')
+            ->innerJoin('p.user', 'u')
             ->where('a.status = :status')
-            ->setParameter('status', Album::STATUS_ACTIVE);
+            ->setParameter('status', Album::STATUS_ACTIVE)
+            ->andWhere('u.status = :userStatus')
+            ->setParameter('userStatus', User::STATUS_ACTIVE);
         // order
         $map = false;
         if(isset($filters['orderBy']) && !empty($filters['orderBy'])) {
@@ -37,8 +42,7 @@ class AlbumRepository extends EntityRepository {
         }
         // country
         if(isset($filters['country']) && !empty($filters['country'])) {
-            $qb->innerJoin('a.profile', 'p')
-               ->innerJoin('p.country', 'c')
+            $qb->innerJoin('p.country', 'c')
                ->andWhere("c.id = :country")
                ->setParameter('country', $filters['country']);
         }
@@ -71,8 +75,12 @@ class AlbumRepository extends EntityRepository {
         $qb->select("a")
             ->from('MozcuMozcuBundle:Album', 'a')
             ->innerJoin('a.tags', 't')
+            ->innerJoin('a.profile', 'p')
+            ->innerJoin('p.user', 'u')
             ->where("t.id IN {$in} AND a.status = :status")
             ->setParameter('status', Album::STATUS_ACTIVE)
+            ->andWhere('u.status = :userStatus')
+            ->setParameter('userStatus', User::STATUS_ACTIVE)
             //->groupBy("a.name")
             //->having("COUNT(t.id) = {$cant}")
             ->orderBy('a.id', 'DESC');
@@ -87,12 +95,16 @@ class AlbumRepository extends EntityRepository {
     public function liveSearch($name, $limit = 4) {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->from('MozcuMozcuBundle:Album', 'a')
+            ->innerJoin('a.profile', 'p')
+            ->innerJoin('p.user', 'u')
             ->where('a.name LIKE :like OR a.artist_name LIKE :like')
             ->andWhere('a.status = :status')
             ->setParameters([
                 'like' => '%' . $name .'%',
                 'status' => Album::STATUS_ACTIVE,
-            ]);
+            ])
+            ->andWhere('u.status = :userStatus')
+            ->setParameter('userStatus', User::STATUS_ACTIVE);
         
         
         if($limit > 0) {
@@ -128,8 +140,12 @@ class AlbumRepository extends EntityRepository {
             ->select("a, COUNT(t.id) as tagsCant")
             ->from('MozcuMozcuBundle:Album', 'a')
             ->innerJoin('a.tags', 't')
+            ->innerJoin('a.profile', 'p')
+            ->innerJoin('p.user', 'u')
             ->where("t.id IN {$in} AND a.id <> {$album->getId()} AND a.status = :status")
             ->setParameter('status', Album::STATUS_ACTIVE)
+            ->andWhere('u.status = :userStatus')
+            ->setParameter('userStatus', User::STATUS_ACTIVE)
             ->groupBy('a.id')
             ->orderBy('tagsCant', 'DESC');
         
@@ -155,11 +171,36 @@ class AlbumRepository extends EntityRepository {
                 ->where('a.slug = :slug')
                 ->andWhere('u.username = :username')
                 ->andWhere('a.status = :status')
-                ->setParameters(['slug' => $slug, 'username' => $username, 'status' => Album::STATUS_ACTIVE]);
+                ->setParameters(['slug' => $slug, 'username' => $username, 'status' => Album::STATUS_ACTIVE])
+                ->andWhere('u.status = :userStatus')
+                ->setParameter('userStatus', User::STATUS_ACTIVE);
         try {
             return $qb->getQuery()->getSingleResult();
         } catch(NoResultException $e) {
             return null;
         }
+    }
+    
+    /**
+     * TODO: ver que onda esta query, resuelve de una manera rara porque Doctrine
+     * 
+     * @param Profile $profile
+     * @return Collection
+     */
+    public function findLikedAlbums(Profile $profile)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')
+                ->from('MozcuMozcuBundle:Album', 'a')
+                ->innerJoin('a.likers', 'l')
+                ->innerJoin('a.profile', 'p')
+                ->innerJoin('p.user', 'u')
+                ->where('l.id = :profile')
+                ->setParameter('profile', $profile->getId())
+                ->andWhere('u.status = :userStatus')
+                ->setParameter('userStatus', User::STATUS_ACTIVE)
+                ->orderBy('a.name', 'ASC');
+        
+        return $qb->getQuery()->getResult();
     }
 }

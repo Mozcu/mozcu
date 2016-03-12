@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
+use Mozcu\MozcuBundle\Entity\User;
+
 /**
  * UserRepository
  *
@@ -23,8 +25,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface {
             ->select('u, g')
             ->leftJoin('u.groups', 'g')
             ->where('u.email = :email')
-            //->setParameter('username', $username)
+            ->andWhere('u.status = :status')
             ->setParameter('email', $email)
+            ->setParameter('status', User::STATUS_ACTIVE)
             ->getQuery();
 
         try {

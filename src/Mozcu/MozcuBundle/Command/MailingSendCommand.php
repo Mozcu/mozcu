@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Mozcu\MozcuBundle\Entity\UserEmailSent;
+use Mozcu\MozcuBundle\Entity\User;
 
 class MailingSendCommand extends ContainerAwareCommand 
 {
@@ -95,8 +96,8 @@ class MailingSendCommand extends ContainerAwareCommand
         $q  = $qb->select('u')
             ->from('MozcuMozcuBundle:User', 'u')
             ->where('u.id > :userId')
-            ->andWhere('u.isActive = 1')
-            ->setParameters(['userId' => $sent->getLastUserId()])
+            ->andWhere('u.status = :status')
+            ->setParameters(['userId' => $sent->getLastUserId(), 'status' => User::STATUS_ACTIVE])
             ->getQuery();
         
         $q->setFirstResult(0)

@@ -7,6 +7,7 @@ use Mozcu\MozcuBundle\Entity\User;
 use Mozcu\MozcuBundle\Entity\Profile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class ProfileController extends MozcuController
@@ -36,10 +37,31 @@ class ProfileController extends MozcuController
     
     /**
      * 
+     * @param string $username
+     * @return User
+     * @throws NotFoundHttpException
+     */
+    private function getProfileUser($username)
+    {
+        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy([
+            'username' => $username,
+            'status' => User::STATUS_ACTIVE
+        ]);
+        
+        if (empty($user)) {
+            // todo: resolver bien el tema de pantallas de error
+            //throw new NotFoundHttpException(sprintf('User %s not found.', $username));
+        }
+        
+        return $user;
+    }
+    
+    /**
+     * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($username) {
-        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->getProfileUser($username);
         
         if(!empty($user)) {
             $parameters = array('user' => $user, 'selectedOption' => 'biography');
@@ -64,13 +86,13 @@ class ProfileController extends MozcuController
      * @return Response
      */
     public function albumsForProfileAction($username) {
-        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->getProfileUser($username);
         
         if(!empty($user)) {
             $albums = $this->getRepository('MozcuMozcuBundle:Album')->findByProfile($user->getCurrentProfile());
             $parameters = array('user' => $user, 'albums' => $albums, 'selectedOption' => 'albums');
             $template = 'MozcuMozcuBundle:Profile:_profileAlbums.html.twig';
-            $parameters['likedAlbums'] = $user->getProfile()->getLikedAlbums();
+            $parameters['likedAlbums'] = $this->getRepository('MozcuMozcuBundle:Album')->findLikedAlbums($user->getProfile());
             
             $loggedInUser = $this->getUser();
             $parameters['isAuthenticated'] = false;
@@ -100,7 +122,7 @@ class ProfileController extends MozcuController
         //$request = $this->getRequest();
         //$request->setLocale('en');
         
-        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->getProfileUser($username);
         
         if(!empty($user)) {
             $template = 'MozcuMozcuBundle:Profile:_profileBiography.html.twig';
@@ -122,10 +144,11 @@ class ProfileController extends MozcuController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function albumsAction($username) {
-        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->getProfileUser($username);
+        
         if(!empty($user)) {
             $albums = $this->getRepository('MozcuMozcuBundle:Album')->findByProfile($user->getCurrentProfile());
-            $likedAlbums = $user->getProfile()->getLikedAlbums();
+            $likedAlbums = $this->getRepository('Mozcu\MozcuBundle\Entity\Album')->findLikedAlbums($user->getProfile());
             
             $template = 'MozcuMozcuBundle:Profile:_profileAlbums.html.twig';
             $parameters = array('user' => $user, 'selectedOption' => 'albums', 'albums' => $albums, 
@@ -154,7 +177,8 @@ class ProfileController extends MozcuController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function playlistsAction($username) {
-        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->getProfileUser($username);
+        
         if(!empty($user)) {
             
             $template = 'MozcuMozcuBundle:Profile:_profilePlaylists.html.twig';
@@ -177,7 +201,8 @@ class ProfileController extends MozcuController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function reviewsAction($username) {
-        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->getProfileUser($username);
+        
         if(!empty($user)) {
             
             $template = 'MozcuMozcuBundle:Profile:_profileReviews.html.twig';
@@ -200,7 +225,8 @@ class ProfileController extends MozcuController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function followersAction($username) {
-        $user = $this->getRepository('MozcuMozcuBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->getProfileUser($username);
+        
         if(!empty($user)) {
             $path = explode('/', $this->getRequest()->getPathInfo());
             $template = 'MozcuMozcuBundle:Profile:_profileFollowers.html.twig';

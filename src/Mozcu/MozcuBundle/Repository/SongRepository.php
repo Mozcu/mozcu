@@ -5,6 +5,7 @@ namespace Mozcu\MozcuBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 use Mozcu\MozcuBundle\Entity\Album;
+use Mozcu\MozcuBundle\Entity\User;
 
 /**
  * SongRepository
@@ -15,22 +16,36 @@ use Mozcu\MozcuBundle\Entity\Album;
 class SongRepository extends EntityRepository
 {
     public function liveSearch($name, $limit = 4) {
-        $dql = "FROM MozcuMozcuBundle:Song s JOIN s.album a
-                WHERE (s.name LIKE '%$name%' OR a.artist_name LIKE '%$name%') AND a.status = :status";
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->from('MozcuMozcuBundle:Song', 's')
+            ->innerJoin('s.album', 'a')
+            ->innerJoin('a.profile', 'p')
+            ->innerJoin('p.user', 'u')
+            ->where('s.name LIKE :like OR a.artist_name LIKE :like')
+            ->andWhere('a.status = :status')
+            ->setParameters([
+                'like' => '%' . $name .'%',
+                'status' => Album::STATUS_ACTIVE,
+            ])
+            ->andWhere('u.status = :userStatus')
+            ->setParameter('userStatus', User::STATUS_ACTIVE);
         
         if($limit > 0) {
-            $dql = "SELECT s " . $dql;
-            $query = $this->getEntityManager()->createQuery($dql);
+            $qb->select('s')
+                ->addSelect('LOCATE(:term, s.name) position')
+                ->orderBy('position', 'DESC')
+                ->setParameter('term', $name);
+            $query = $qb->getQuery();
             $query->setFirstResult(0)->setMaxResults($limit);
-        } else {
-            $dql = "SELECT COUNT(s.id) " . $dql;
-            $query = $this->getEntityManager()->createQuery($dql);
-            return $query->getSingleScalarResult();
+            $results = $query->getResult();
+            return array_map(
+                function ($result) { return $result[0]; },
+                $results
+            );
         }
         
-        $query->setParameter('status', Album::STATUS_ACTIVE);
-        
-        return $query->getResult();
+        $qb->select('COUNT(s.id)');
+        return $qb->getQuery()->getSingleScalarResult();
     }
     
     public function searchTotalCount($query) {

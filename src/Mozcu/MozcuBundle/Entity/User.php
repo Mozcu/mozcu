@@ -12,6 +12,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User implements UserInterface, \Serializable {
     
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 10;
+    const STATUS_BANNED = 11;
+    
+    
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -40,9 +46,9 @@ class User implements UserInterface, \Serializable {
     private $email;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="status", type="integer")
      */
-    private $isActive;
+    private $status;
     
     /**
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
@@ -72,7 +78,7 @@ class User implements UserInterface, \Serializable {
     
     public function __construct()
     {
-        $this->isActive = true;
+        $this->status = 1;
         $this->salt = md5(uniqid(null, true));
         $this->groups = new ArrayCollection();
         $this->profiles = new ArrayCollection();
@@ -209,18 +215,26 @@ class User implements UserInterface, \Serializable {
     }
 
     /**
-     * Set isActive
      *
-     * @param boolean $isActive
+     * @param boolean $status
      * @return User
      */
-    public function setIsActive($isActive)
+    public function setStatus($status)
     {
-        $this->isActive = $isActive;
+        $this->status = $status;
     
         return $this;
     }
 
+    /**
+     * 
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
     /**
      * Get isActive
      *
@@ -228,7 +242,7 @@ class User implements UserInterface, \Serializable {
      */
     public function getIsActive()
     {
-        return $this->isActive;
+        return $this->status == self::STATUS_ACTIVE;
     }
 
     /**

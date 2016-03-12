@@ -599,7 +599,13 @@ class Profile {
      * @return ArrayCollection
      */
     public function getFollowers() {
-        return $this->followers;
+        $followers = new ArrayCollection();
+        foreach($this->followers as $follower) {
+            if ($follower->getUser()->getIsActive()) {
+                $followers->add($follower);
+            }
+        }
+        return $followers;
     }
     
     /**
@@ -622,7 +628,13 @@ class Profile {
      * @return ArrayCollection
      */
     public function getFollowing() {
-        return $this->following;
+        $following = new ArrayCollection();
+        foreach($this->following as $follows) {
+            if ($follows->getUser()->getIsActive()) {
+                $following->add($follows);
+            }
+        }
+        return $following;
     }
     
     /**
