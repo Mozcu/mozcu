@@ -7,8 +7,8 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
+use Symfony\Component\Validator\Validator;
 
 // Entidades
 use Mozcu\MozcuBundle\Entity\User;
@@ -32,15 +32,23 @@ class UserService extends BaseService
     
     /**
      *
-     * @var Container
+     * @var Validator
      */
-    private $container;
+    protected $validator;
     
-    public function __construct(EntityManager $entityManager, EncoderFactory $encoderFactory, SecurityContext $securityContext, Container $container)
+    protected $recoveryPasswordTime;
+    protected $invalidUsernames;
+    
+    public function __construct(
+            EntityManager $entityManager, EncoderFactory $encoderFactory, SecurityContext $securityContext,
+            Validator $validator, $recoveryPasswordTime, $invalidUsernames)
     {
         $this->encoder_factory = $encoderFactory;
         $this->securityContext = $securityContext;
-        $this->container = $container;
+        $this->validator = $validator;
+        $this->recoveryPasswordTime = $recoveryPasswordTime;
+        $this->invalidUsernames = $invalidUsernames;
+        
         parent::__construct($entityManager);
     }
     
@@ -111,11 +119,10 @@ class UserService extends BaseService
      */
     public function checkUsernameDisponibility($username) 
     {
-        $invalidUsernames = $this->container->getParameter('invalid_usernames');
         $repo = $this->getEntityManager()->getRepository('MozcuMozcuBundle:User');
         
         $user = $repo->findOneBy(array('username' => $username));
-        if($user || in_array($username, $invalidUsernames)) {
+        if($user || in_array($username, $this->invalidUsernames)) {
             return false;
         }
         return true;
@@ -220,7 +227,7 @@ class UserService extends BaseService
     private function validateEmail($email) 
     {
         $emailConstraint = new EmailConstraint();
-        $errors = $this->container->get('validator')->validateValue(
+        $errors = $this->validator->validateValue(
             $email,
             $emailConstraint 
         );
@@ -260,12 +267,8 @@ class UserService extends BaseService
     {
         $now = new \DateTime();
         $diff = $now->getTimestamp() - $passwordRecovery->getCreatedAt()->getTimestamp();
-        $validDiff = $this->container->getParameter('password_recovery.valid_time');
         
-        if($diff > $validDiff) {
-            return true;
-        }
-        return false;
+        return $diff > $this->recoveryPasswordTime;
     }
     
     /**

@@ -2,15 +2,7 @@
 
 namespace Mozcu\MozcuBundle\Lib;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-
 class GoogleApiConnector {
-    
-    /**
-     *
-     * @var Container
-     */
-    private $container;
     
     private $clientId;
     
@@ -20,13 +12,11 @@ class GoogleApiConnector {
     
     private $client;
     
-    public function __construct(Container $container) {
-        $this->container = $container;
-        
-        $this->clientId = $this->container->getParameter('google_api.client_id');
-        $this->serviceAccountName = $this->container->getParameter('google_api.service_acount_name');
-        $this->keyFile = $this->container->getParameter('google_api.key_file');
-        $this->app_name = $this->container->getParameter('google_api.storage_app_name');
+    public function __construct(array $googleApiData) {
+        $this->clientId = $googleApiData['client_id'];
+        $this->serviceAccountName = $googleApiData['service_acount_name'];
+        $this->keyFile = $googleApiData['key_file'];
+        $this->app_name = $googleApiData['storage_app_name'];
     }
     
     public function connect($scope) {

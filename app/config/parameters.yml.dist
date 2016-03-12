@@ -17,3 +17,49 @@ parameters:
     mongo_host: 127.0.0.1
     mongo_port: 27017
     mongo_database:
+
+parameters:
+    # General
+    locale: es
+    secret: 7ba54572bab26c2b65175ab5589249327d548be0
+    
+    # Database
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: 
+    database_user:
+    database_password:
+    database_path:
+    
+    # Mailer
+    mailer_transport: smtp
+    mailer_host:
+    mailer_user:
+    mailer_password:
+    mailer_port:
+    
+    # Mongo
+    mongo_host: 127.0.0.1
+    mongo_port:
+    mongo_database:
+    
+    # Google Api
+    google_api_client_id:
+    google_api_service_acount_name:
+    google_api_key_file:
+    google_api_storage_bucket:
+    
+    # Google Analytics
+    google.analytics.key:
+    
+    # Memcached
+    memcached.host: '127.0.0.1'
+    memcached.port: 11211
+    
+    # Mercado Pago
+    mp_app_id:
+    mp_secret_key:
+
+    # Password Recovery
+    password_recovery_time: 86400

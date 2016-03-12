@@ -2,16 +2,9 @@
 
 namespace Mozcu\MozcuBundle\Lib;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Mozcu\MozcuBundle\Exception\GoogleStorageException;
 
 class GoogleStorageService {
-    
-    /**
-     *
-     * @var Container
-     */
-    private $container;
     
     private $googleApi;
     
@@ -19,13 +12,10 @@ class GoogleStorageService {
     
     private $bucket;
     
-    public function __construct(Container $container, $googleApi) {
-        $this->container = $container;
+    public function __construct($googleApi, array $googleApiData) {
         $this->googleApi = $googleApi;
-        $this->bucket = $this->container->getParameter('google_api.storage_bucket');
-        
-        $scope = $this->container->getParameter('google_api.storage_scope');
-        $this->googleApi->connect($scope);
+        $this->bucket = $googleApiData['storage_bucket'];
+        $this->googleApi->connect($googleApiData['storage_scope']);
         $this->service = new \Google_Service_Storage($this->googleApi->getClient());
 
         
@@ -76,7 +66,7 @@ class GoogleStorageService {
     public function get($name) {
         try {
             return $this->service->objects->get($this->bucket,$name);
-        } catch (Exception $ex) {
+        } catch (Exception $e) {
             throw new GoogleStorageException($e->getMessage(), $e->getCode());
         }
     }

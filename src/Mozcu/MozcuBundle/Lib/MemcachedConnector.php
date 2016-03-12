@@ -2,26 +2,17 @@
 
 namespace Mozcu\MozcuBundle\Lib;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-
 class MemcachedConnector {
      
-     /**
+    /**
      *
-     * @var Container
+     * @var \Memcached
      */
-    private $container;
-    
     private $memcached;
     
-    public function __construct(Container $container) {
-        $this->container = $container;
-        
-        $host = $this->container->getParameter('memcached.host');
-        $port = $this->container->getParameter('memcached.port');
-        
+    public function __construct(array $memcachedData) {
         $this->memcached = new \Memcached(); 
-        $this->memcached->addServer($host, $port); 
+        $this->memcached->addServer($memcachedData['host'], $memcachedData['port']);
     }
     
     /**

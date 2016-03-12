@@ -3,24 +3,32 @@
 namespace Mozcu\MozcuBundle\Service;
 
 use \Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
-use Mozcu\MozcuBundle\Service\BaseService;
+use Mozcu\MozcuBundle\Service\BaseService,
+    Mozcu\MozcuBundle\Service\UploadService;
 
 use Mozcu\MozcuBundle\Entity\AlbumImage,
+    Mozcu\MozcuBundle\Entity\ProfileImage,
     Mozcu\MozcuBundle\Entity\ImagePresentation;
 
 class ImageService extends BaseService {
     
     /**
      *
-     * @var Container
+     * @var array
      */
-    private $container;
+    private $imageData;
     
-    public function __construct(EntityManager $entityManager, Container $container) {
+    /**
+     *
+     * @var UploadService
+     */
+    private $uploadService;
+    
+    public function __construct(EntityManager $entityManager, UploadService $uploadService, array $imageData) {
         parent::__construct($entityManager);
-        $this->container = $container;
+        $this->imageData = $imageData;
+        $this->uploadService = $uploadService;
     }
     
     
@@ -46,6 +54,23 @@ class ImageService extends BaseService {
         return $image;
     }
     
+    public function createProfileImage($temporalFileName)
+    {
+        $presentationsData = $this->uploadService->uploadImageToStaticServer($temporalFileName, $this->getProfilePresentations());
+        
+        $image = new ProfileImage();
+        $image->setMain(true);
+        $image->setCreatedAt(new \DateTime());
+        
+        foreach($presentationsData as $data) {
+            $ip = $this->createPresentation($data);
+            $ip->setImage($image);
+            $image->addPresentation($ip);
+        }
+        
+        return $image;
+    }
+    
     /**
      * 
      * @param array $data
@@ -56,7 +81,8 @@ class ImageService extends BaseService {
         $ip->setWidth($data['width']);
         $ip->setHeight($data['height']);
         $ip->setName($data['name']);
-        $ip->setUrl('');
+        $ip->setUrl(empty($data['url']) ? '' : $data['url']);
+        
         if(isset($data['thumbnail'])) {
             $ip->setThumbnail($data['thumbnail']);
         }
@@ -69,11 +95,24 @@ class ImageService extends BaseService {
      * @return array
      */
     private function getAlbumPresentations() {
-        return array(
-            $this->container->getParameter('image_presentation.album_list_thumbnail_size'),
-            $this->container->getParameter('image_presentation.album_header_size'),
-            $this->container->getParameter('image_presentation.livesearch_size'),
-            $this->container->getParameter('image_presentation.album_file_size'),
-        );
+        return [
+            $this->imageData['album_list_thumbnail_size'],
+            $this->imageData['album_header_size'],
+            $this->imageData['livesearch_size'],
+            $this->imageData['album_file_size'],
+        ];
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    private function getProfilePresentations()
+    {
+        return [
+            $this->imageData['profile_thumbnail_size'],
+            $this->imageData['profile_header_size'],
+            $this->imageData['livesearch_size'],
+        ];
     }
 }

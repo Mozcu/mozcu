@@ -1,0 +1,62 @@
+parameters:
+# Uploads
+  uploads:
+    tmp_images_dir: '%kernel.root_dir%/../web/uploads/tmp/images'
+    tmp_songs_dir:  '%kernel.root_dir%/../web/uploads/tmp/songs'
+    tmp_zip_dir:    '%kernel.root_dir%/../web/uploads/tmp/zip'
+    valid_song_types: ['audio/mpeg', 'audio/mpeg3', 'audio/x-mpeg-3', 'video/mpeg', 'video/x-mpeg', 'application/octet-stream']
+    valid_image_types: ['image/jpeg', 'image/pjpeg', 'image/png']
+    
+  # Google Api
+  google_api:
+    storage_app_name:     'Mozcu Upload'
+    base_url:             'https://storage.googleapis.com/'
+    storage_scope:        'https://www.googleapis.com/auth/devstorage.full_control'
+    client_id:            %google_api_client_id%
+    service_acount_name:  %google_api_service_acount_name%
+    key_file:             %google_api_key_file%
+    storage_bucket:       %google_api_storage_bucket%
+    
+  # Mail
+  mail.noreply_address: 'no-reply@mozcu.com'
+
+  # Mercado Pago
+  mercadopago:
+    app_id: %mp_app_id%
+    secret_key: %mp_secret_key%
+    
+  # Image presentations
+  image_presentation:
+    album_list_thumbnail_size:
+      name: 'list_thumbanil'
+      width: 350
+      height: 350
+      thumbnail: true
+    album_header_size:
+      name: 'album_header'
+      width: 155
+      height: 155
+    album_file_size:
+      name: 'cover'
+      width: 500
+      height: 500
+    profile_header_size:
+      name: 'profile_header'
+      width: 130
+      height: 130
+    profile_thumbnail_size:
+      name: 'profile_thumbnail'
+      width: 25
+      height: 25
+    livesearch_size:
+      name: 'livesearch'
+      width: 68
+      height: 68
+
+  # Default Profile Images
+  default_profile_image:      'images/profile_125x125.jpg'
+  default_profile_image_mini: 'images/profile_25x25.jpg'
+  default_profile_image_live: 'images/profile_25x25.jpg'
+
+  #Invalid usernames
+  invalid_usernames: ['account', 'album', 'albums', 'ajax', 'login', 'login_check', 'logout', 'registration', 'search', 'terms']

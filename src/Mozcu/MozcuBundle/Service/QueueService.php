@@ -2,24 +2,14 @@
 
 namespace Mozcu\MozcuBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Doctrine\ORM\EntityManager;
 use Mozcu\MozcuBundle\Entity\Album;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Mozcu\MozcuBundle\Exception\AppException;
 use Mozcu\MozcuBundle\Entity\AlbumUploadQueuePending;
 
 class QueueService extends BaseService{
     
-    /**
-     *
-     * @var Container
-     */
-    private $container;
-    
-    public function __construct(EntityManager $entityManager, Container $container) {
+    public function __construct(EntityManager $entityManager) {
         parent::__construct($entityManager);
-        $this->container = $container;
     }
     
     /**

@@ -2,7 +2,6 @@
 
 namespace Mozcu\MozcuBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use \Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Mozcu\MozcuBundle\Exception\AppException;
@@ -14,9 +13,9 @@ class UploadService extends BaseService{
     
     /**
      *
-     * @var Container
+     * @var array
      */
-    private $container;
+    private $uploadsData;
     
     /**
      *
@@ -24,10 +23,10 @@ class UploadService extends BaseService{
      */
     private $google_storage;
     
-    public function __construct(EntityManager $entityManager, Container $container) {
+    public function __construct(EntityManager $entityManager, GoogleStorageService $googleStorage, array $uploadsData) {
         parent::__construct($entityManager);
-        $this->container = $container;
-        $this->google_storage = $this->container->get('mozcu_mozcu.google_storage');
+        $this->uploadsData = $uploadsData;
+        $this->google_storage = $googleStorage;
     }
     
     /**
@@ -46,14 +45,14 @@ class UploadService extends BaseService{
      */
     public function processTemporarySong(UploadedFile $file) {
         try {
-            $validTypes = $this->container->getParameter('uploads.valid_song_types');
+            $validTypes = $this->uploadsData['valid_song_types'];
             
             if(!in_array($file->getMimeType(), $validTypes)) {
                 throw new AppException('Invalid file type');
             }
             
             /* Copying Song */
-            $tmpDir = $this->container->getParameter('uploads.tmp_songs_dir');
+            $tmpDir = $this->uploadsData['tmp_songs_dir'];
             $date = new \DateTime();
             $timestamp = $date->getTimestamp();
             
@@ -74,14 +73,14 @@ class UploadService extends BaseService{
      */
     public function processTemporaryImage(UploadedFile $file) {
         try {
-            $validTypes = $this->container->getParameter('uploads.valid_image_types');
+            $validTypes = $this->uploadsData['valid_image_types'];
             
             if(!in_array($file->getMimeType(), $validTypes)) {
                 throw new AppException('Invalid file type');
             }
             
             /* Copying Image */
-            $tmpDir = $this->container->getParameter('uploads.tmp_images_dir');
+            $tmpDir = $this->uploadsData['tmp_images_dir'];
             
             $date = new \DateTime();
             $timestamp = $date->getTimestamp();
@@ -103,7 +102,7 @@ class UploadService extends BaseService{
      * @throws AppException
      */
     public function uploadImageToStaticServer($temporaryImageName, array $presentationsData) {
-        $tmpDir = $this->container->getParameter('uploads.tmp_images_dir');
+        $tmpDir = $this->uploadsData['tmp_images_dir'];
         $tmpPath = $tmpDir . '/' . $temporaryImageName;
         
         $date = new \DateTime;
@@ -203,7 +202,7 @@ class UploadService extends BaseService{
      * @throws ServiceException
      */
     public function generateZip(Album $album) {
-        $tmpDir = $this->container->getParameter('uploads.tmp_zip_dir');
+        $tmpDir = $this->uploadsData['tmp_zip_dir'];
         $baseDir = $tmpDir . '/' . $album->getId();
         $filesDir = $baseDir . '/files';
         

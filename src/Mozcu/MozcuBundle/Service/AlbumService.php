@@ -4,11 +4,7 @@ namespace Mozcu\MozcuBundle\Service;
 
 // Entities
 use Mozcu\MozcuBundle\Entity\Album,
-    Mozcu\MozcuBundle\Entity\Song,
-    Mozcu\MozcuBundle\Entity\Tag,
-    Mozcu\MozcuBundle\Entity\Profile,
-    Mozcu\MozcuBundle\Entity\AlbumImage,
-    Mozcu\MozcuBundle\Entity\ImagePresentation;
+    Mozcu\MozcuBundle\Entity\Profile;
 
 // Exception
 use Mozcu\MozcuBundle\Exception\AppException;
@@ -18,11 +14,10 @@ use Mozcu\MozcuBundle\Exception\ServiceException;
 use Mozcu\MozcuBundle\Service\UploadService;
 use Mozcu\MozcuBundle\Factory\AlbumFactory;
 use Mozcu\MozcuBundle\Helper\StringHelper;
+use Mozcu\MozcuBundle\Service\ImageService;
 
 // Vendor
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use GetId3\GetId3Core as GetId3;
 
 class AlbumService extends BaseService
 {
@@ -35,15 +30,29 @@ class AlbumService extends BaseService
     
     /**
      *
-     * @var Container
+     * @var ImageService
      */
-    private $container;
+    private $imageService;
     
-    public function __construct(EntityManager $entityManager, Container $container) 
+    /**
+     *
+     * @var array
+     */
+    private $uploadsData;
+    
+    /**
+     *
+     * @var array
+     */
+    private $googleApiData;
+    
+    public function __construct(EntityManager $entityManager, UploadService $uploadService, ImageService $imageService, array $uploadsData, array $googleApiData) 
     {
         parent::__construct($entityManager);
-        $this->container = $container;
-        $this->uploadService = $this->container->get('mozcu_mozcu.upload_service');
+        $this->uploadService = $uploadService;
+        $this->imageService = $imageService;
+        $this->uploadsData = $uploadsData;
+        $this->googleApiData = $googleApiData;
     }
     
     public function toString() 
@@ -54,7 +63,7 @@ class AlbumService extends BaseService
     public function createAlbum(Profile $profile, array $data) 
     {
         try {
-            $factory = new AlbumFactory($this->container);
+            $factory = new AlbumFactory($this->em, $this->imageService, $this->uploadsData);
             $factory->setName($data['name'])
                     ->setArtistName($data['artist'])
                     ->setLicense($data['license'])
@@ -101,7 +110,7 @@ class AlbumService extends BaseService
                 $imageToDelete = $album->getImage();
                 $this->getEntityManager()->remove($imageToDelete);
                 
-                $image = $this->container->get('mozcu_mozcu.image_service')->createAlbumImage($data['image_file_name']);
+                $image = $this->imageService->createAlbumImage($data['image_file_name']);
                 $album->setImage($image);
                 $image->setAlbum($album);
             }
@@ -190,7 +199,7 @@ class AlbumService extends BaseService
      */
     private function createNewSongs(Album $album, array $songsData) 
     {
-        $albumFactory = new AlbumFactory($this->container);
+        $albumFactory = new AlbumFactory($this->em, $this->imageService, $this->uploadsData);
         foreach($songsData as $songData) {
             if(!array_key_exists('id', $songData)) {
                 $song = $albumFactory->createSong($songData);
@@ -211,7 +220,7 @@ class AlbumService extends BaseService
     private function updateTags(Album $album, array $tagsData) 
     {
         try {
-            $albumFactory = new AlbumFactory($this->container);
+            $albumFactory = new AlbumFactory($this->em, $this->imageService, $this->uploadsData);
             $this->removeTagsFromAlbum($album);
             $tagRepository = $this->getEntityManager()->getRepository('MozcuMozcuBundle:Tag');
             foreach($tagsData as $tagData) {
@@ -277,8 +286,8 @@ class AlbumService extends BaseService
     public function prepareZip(Album $album) 
     {
         $response = $this->uploadService->generateZip($album);
-        $baseUrl = $this->container->getParameter('google_api.base_url');
-        $bucket = $this->container->getParameter('google_api.storage_bucket');
+        $baseUrl = $this->googleApiData['base_url'];
+        $bucket = $this->googleApiData['storage_bucket'];
         
         $album->setZipUrl($baseUrl . $bucket . '/' . $response['name']);
         $album->setStaticZipFileName($response['name']);

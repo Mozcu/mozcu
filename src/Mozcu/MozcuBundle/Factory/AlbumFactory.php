@@ -7,8 +7,9 @@ use Mozcu\MozcuBundle\Entity\Album,
     Mozcu\MozcuBundle\Entity\Tag,
     Mozcu\MozcuBundle\Entity\Profile;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use \GetId3\GetId3Core as GetId3;
+
+use Mozcu\MozcuBundle\Service\ImageService;
 
 use Doctrine\ORM\EntityManager;
 
@@ -16,15 +17,21 @@ class AlbumFactory {
     
     /**
      *
-     * @var Container
-     */
-    private $container;
-    
-    /**
-     *
      * @var EntityManager
      */
     private $em;
+    
+    /**
+     *
+     * @var ImageService
+     */
+    private $imageService;
+    
+    /**
+     *
+     * @var array
+     */
+    private $uploadsData;
     
     /**
      *
@@ -170,10 +177,16 @@ class AlbumFactory {
         return $this;
     }
 
-    
-    public function __construct(Container $container) {
-        $this->container = $container;
-        $this->em = $this->container->get('doctrine')->getEntityManager();
+    /**
+     * 
+     * @param EntityManager $em
+     * @param ImageService $imageService
+     * @param array $uploadsData
+     */
+    public function __construct(EntityManager $em, ImageService $imageService, array $uploadsData) {
+        $this->em = $em;
+        $this->imageService = $imageService;
+        $this->uploadsData = $uploadsData;
     }
     
     /**
@@ -190,7 +203,7 @@ class AlbumFactory {
                 ->setLicense($this->license)
                 ->setReleaseDate($this->releaseDate);
         
-        $image = $this->container->get('mozcu_mozcu.image_service')->createAlbumImage($this->imageFileName);
+        $image = $this->imageService->createAlbumImage($this->imageFileName);
         $album->setImage($image);
         $image->setAlbum($album);
         
@@ -233,7 +246,7 @@ class AlbumFactory {
      * @return string
      */
     public function getSongTime($songName) {
-        $tmpDir = $this->container->getParameter('uploads.tmp_songs_dir');
+        $tmpDir = $this->uploadsData['tmp_songs_dir'];
         
         $getId3 = new GetId3();
         $audio = $getId3

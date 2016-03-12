@@ -11,70 +11,39 @@ services:
     
   mozcu_mozcu.memcached:
     class: Mozcu\MozcuBundle\Lib\MemcachedConnector
-    arguments:
-      container: '@service_container'
+    arguments: ['%memcached%']
       
   mozcu_mozcu.google_storage:
     class: Mozcu\MozcuBundle\Lib\GoogleStorageService
-    arguments:
-      container: '@service_container'
-      googleApi: "@mozcu_mozcu.google_api"
+    arguments: ['@mozcu_mozcu.google_api', '%google_api%']
       
   mozcu_mozcu.google_api:
     class: Mozcu\MozcuBundle\Lib\GoogleApiConnector
-    arguments:
-      container: '@service_container'
+    arguments: ['%google_api%']
   
   mozcu_mozcu.user_service:
     class: Mozcu\MozcuBundle\Service\UserService
-    arguments:
-      entityManager:   "@doctrine.orm.entity_manager"
-      encoderFactory:  "@security.encoder_factory"
-      securityContext: "@security.context"
-      container: '@service_container'
+    arguments: ['@doctrine.orm.entity_manager', '@security.encoder_factory', '@security.context', '@validator', '%password_recovery_time%', '%invalid_usernames%']
   
   mozcu_mozcu.profile_service:
     class: Mozcu\MozcuBundle\Service\ProfileService
-    arguments:
-      entityManager: "@doctrine.orm.entity_manager"
-      uploadService: "@mozcu_mozcu.upload_service"
-      container: '@service_container'
+    arguments: ['@doctrine.orm.entity_manager', '@mozcu_mozcu.image_service', '@mozcu_mozcu.user_service', '@validator']
       
   mozcu_mozcu.album_service:
     class: Mozcu\MozcuBundle\Service\AlbumService
-    arguments:
-      entityManager: "@doctrine.orm.entity_manager"
-      container: '@service_container'
+    arguments: ['@doctrine.orm.entity_manager', '@mozcu_mozcu.upload_service', '@mozcu_mozcu.image_service', '%uploads%', '%google_api%']
       
   mozcu_mozcu.upload_service:
     class: Mozcu\MozcuBundle\Service\UploadService
-    arguments:
-      entityManager: "@doctrine.orm.entity_manager"
-      container: '@service_container'
+    arguments: ['@doctrine.orm.entity_manager', '@mozcu_mozcu.google_storage', '%uploads%']
 
   mozcu_mozcu.queue_service:
     class: Mozcu\MozcuBundle\Service\QueueService
-    arguments:
-      entityManager: "@doctrine.orm.entity_manager"
-      container: '@service_container'
+    arguments: ['@doctrine.orm.entity_manager']
   
-  mozcu_mozcu.file_service:
-    class: Mozcu\MozcuBundle\Service\FileService
-    arguments:
-      entityManager: "@doctrine.orm.entity_manager"
-      container: '@service_container'
-      googleStorage: '@mozcu_mozcu.google_storage'
-      
-  mozcu_mozcu.rest_service:
-    class: Mozcu\MozcuBundle\Service\RestService
-    arguments:
-      entityManager: "@doctrine.orm.entity_manager"
-      
   mozcu_mozcu.image_service:
     class: Mozcu\MozcuBundle\Service\ImageService
-    arguments:
-      entityManager: "@doctrine.orm.entity_manager"
-      container: '@service_container'
+    arguments: ['@doctrine.orm.entity_manager', '@mozcu_mozcu.upload_service', '%image_presentation%']
       
   mozcu_mozcu.doctrine.entity_listener_resolver:
     class: Mozcu\MozcuBundle\Doctrine\EntityListenerResolver
