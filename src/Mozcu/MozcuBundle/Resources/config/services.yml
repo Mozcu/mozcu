@@ -68,3 +68,7 @@ services:
     class: Mozcu\MozcuBundle\Service\PaymentService
     arguments: [ "@doctrine.orm.entity_manager", "@doctrine_mongodb.odm.document_manager", "@session", "@mozcu_mozcu.mercado_pago_service" ]
     scope: request
+    
+  mozcu_mozcu.action_log_service:
+    class: Mozcu\MozcuBundle\Service\ActionLogService
+    arguments: [ %action_log% ]

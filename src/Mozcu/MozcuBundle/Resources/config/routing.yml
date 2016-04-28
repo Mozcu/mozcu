@@ -14,7 +14,7 @@ MozcuMozcuBundle_oldLoginCheck:
 ### Home Controller ###
 MozcuMozcuBundle_home:
   pattern: /
-  defaults: { _controller: MozcuMozcuBundle:Home:index}
+  defaults: { _controller: MozcuMozcuBundle:Album:index}
   requirements:
         _method:  GET
         
@@ -248,6 +248,44 @@ MozcuMozcuBundle_uploadAlbum:
   requirements:
     _method: POST
 
+### Payment ###
+MozcuMozcuBundle_returnFromPayment:
+  pattern: /payment/return/{service}/{checkoutId}
+  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromPayment}
+  requirements:
+    _method: GET
+    
+MozcuMozcuBundle_checkoutSetPrice:
+  pattern: /ajax/payment/{checkoutId}/setPrice
+  defaults: {_controller: MozcuMozcuBundle:Payment:ajaxSetCheckoutPrice}
+  requirements:
+   _method: POST
+   
+MozcuMozcuBundle_returnFroMPAuth:
+  pattern: /payment/mp/auth/{profile}
+  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromMercadopagoAuth}
+  requirements:
+    _method: GET
+    
+MozcuMozcuBundle_MPCheckout:
+  pattern: /payment/mp/checkout
+  defaults: {_controller: MozcuMozcuBundle:Payment:mercadopagoCheckout}
+  requirements:
+    _method: POST
+    
+MozcuMozcuBundle_unlinkMP:
+  pattern: /payment/mp/unlink
+  defaults: {_controller: MozcuMozcuBundle:Payment:unlinkMercadopago}
+  requirements:
+    _method: POST
+
+### Action Log Controller ###
+MozcuMozcuBundle_logAlbum:
+  pattern: /ajax/log/album
+  defaults: {_controller: MozcuMozcuBundle:ActionLog:logAlbum}
+  requirements:
+    _method: POST
+
 ### Profile Controller ###
 MozcuMozcuBundle_account:
   pattern: /account
@@ -332,35 +370,3 @@ MozcuMozcuBundle_albumsForProfile:
   defaults: {_controller: MozcuMozcuBundle:Profile:albumsForProfile}
   requirements:
     _method: GET
-
-    
-### Payment ###
-MozcuMozcuBundle_returnFromPayment:
-  pattern: /payment/return/{service}/{checkoutId}
-  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromPayment}
-  requirements:
-    _method: GET
-    
-MozcuMozcuBundle_checkoutSetPrice:
-  pattern: /ajax/payment/{checkoutId}/setPrice
-  defaults: {_controller: MozcuMozcuBundle:Payment:ajaxSetCheckoutPrice}
-  requirements:
-   _method: POST
-   
-MozcuMozcuBundle_returnFroMPAuth:
-  pattern: /payment/mp/auth/{profile}
-  defaults: {_controller: MozcuMozcuBundle:Payment:returnFromMercadopagoAuth}
-  requirements:
-    _method: GET
-    
-MozcuMozcuBundle_MPCheckout:
-  pattern: /payment/mp/checkout
-  defaults: {_controller: MozcuMozcuBundle:Payment:mercadopagoCheckout}
-  requirements:
-    _method: POST
-    
-MozcuMozcuBundle_unlinkMP:
-  pattern: /payment/mp/unlink
-  defaults: {_controller: MozcuMozcuBundle:Payment:unlinkMercadopago}
-  requirements:
-    _method: POST

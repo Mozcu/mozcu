@@ -60,4 +60,14 @@ parameters:
   default_profile_image_live: 'images/profile_25x25.jpg'
 
   #Invalid usernames
-  invalid_usernames: ['account', 'album', 'albums', 'ajax', 'login', 'login_check', 'logout', 'registration', 'search', 'terms']
+  invalid_usernames: ['account', 'album', 'albums', 'ajax', 'login', 'login_check', 'logout', 'registration', 'search', 'terms', 'payment']
+  
+  # Memcached
+  memcached:
+      host: %memcached.host%
+      port: %memcached.port%
+      
+  # Action Log
+  action_log:
+      url: %action_log_url%
+      token: %action_log_token%

@@ -339,11 +339,17 @@ class AlbumController extends MozcuController
                 $albumData['name'] = $album->getName();
                 $albumData['image'] = $album->getCoverImageUrl();
                 $artist = $album->getArtistName();
+                $ownerId = $album->getProfile()->getId();
                 $albumData['songs'] = array();
+                
                 foreach($album->getSongs() as $song) {
+                    $songData['id'] = $song->getId();
+                    $songData['album_id'] = $album->getId();
+                    $songData['owner_id'] = $ownerId;
                     $songData['title'] = $song->getName();
                     $songData['mp3'] = $song->getUrl();
                     $songData['artist'] = $artist;
+                    
                     $albumData['songs'][] = $songData;
                 }
                 // Incrementamos el contador de reproducciones

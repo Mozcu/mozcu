@@ -58,6 +58,15 @@ abstract class MozcuController extends Controller{
     
     /**
      * 
+     * @return \Mozcu\MozcuBundle\Service\ActionLogService
+     */
+    public function getActionLogService()
+    {
+        return $this->get('mozcu_mozcu.action_log_service');
+    }
+    
+    /**
+     * 
      * @param string $className
      * @return \Doctrine\ORM\EntityRepository
      */
