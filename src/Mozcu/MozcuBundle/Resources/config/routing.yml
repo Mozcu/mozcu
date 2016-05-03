@@ -280,9 +280,21 @@ MozcuMozcuBundle_unlinkMP:
     _method: POST
 
 ### Action Log Controller ###
-MozcuMozcuBundle_logAlbum:
+mozcu_logAlbum:
   pattern: /ajax/log/album
   defaults: {_controller: MozcuMozcuBundle:ActionLog:logAlbum}
+  requirements:
+    _method: POST
+
+mozcu_logSong:
+  pattern: /ajax/log/song
+  defaults: {_controller: MozcuMozcuBundle:ActionLog:logSong}
+  requirements:
+    _method: POST
+    
+mozcu_logDownload:
+  pattern: /ajax/log/download
+  defaults: {_controller: MozcuMozcuBundle:ActionLog:logAlbumDownload}
   requirements:
     _method: POST
 

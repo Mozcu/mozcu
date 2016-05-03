@@ -70,11 +70,9 @@ $(function() {
             var url = me.data('url');
             $.getJSON(url, {}, function(data){
                 if(data.success) {
-                    var zipUrl = data.zipUrl;
-
                     inProcess.addClass('hidden');
                     ready.removeClass('hidden');
-                    initDownlaod(zipUrl);
+                    initDownlaod(data.zipUrl, data.album_id, data.owner_id);
 
                     setTimeout(function() {
                         $('.mozcu-descarga-modal').modal('hide');
@@ -111,10 +109,14 @@ $(function() {
         }, 'json');
     });
     
-    var initDownlaod = function(url) {
+    var initDownlaod = function(url, albumId, ownerId) {
         var iframe = $('<iframe>', {width:'1', height:'1', frameborder:'0', src:url, id:'downloadAlbumIframe'});
         $('#downloadAlbumIframe').remove();
         $('.row.headerDisco').append(iframe);
+        $( "body" ).trigger({
+            type: 'albumdownload',
+            album: {album_id: albumId, album_owner_id: ownerId}
+        });
     };
     
     // Modal compartir

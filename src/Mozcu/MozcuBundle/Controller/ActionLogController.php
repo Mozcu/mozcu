@@ -41,7 +41,13 @@ class ActionLogController extends MozcuController
             throw new BadRequestHttpException();
         }
         
-        
+        $data = $this->prepareData($request->request->all());
+        try {
+            $this->getActionLogService()->logSong($data);
+            return $this->getJSONResponse(['success' => true]);
+        } catch (\Exception $e) {
+            return $this->getJSONResponse(['success' => false]);
+        }
     }
     
     /**
@@ -56,7 +62,13 @@ class ActionLogController extends MozcuController
             throw new BadRequestHttpException();
         }
         
-        
+        $data = $this->prepareData($request->request->all());
+        try {
+            $this->getActionLogService()->logDownload($data);
+            return $this->getJSONResponse(['success' => true]);
+        } catch (\Exception $e) {
+            return $this->getJSONResponse(['success' => false]);
+        }
     }
     
     private function prepareData(array $data)

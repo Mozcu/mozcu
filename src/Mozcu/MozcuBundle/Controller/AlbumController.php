@@ -285,7 +285,14 @@ class AlbumController extends MozcuController
                 $this->getAlbumService()->increaseDownloadCount($album);
             }
             
-            return $this->getJSONResponse(array('success' => true, 'zipUrl' => $album->getZipUrl()));    
+            $response = [
+                'success' => true, 
+                'zipUrl' => $album->getZipUrl(),
+                'album_id' => $album->getId(),
+                'owner_id' => $album->getProfile()->getId(),
+            ];
+            
+            return $this->getJSONResponse($response);    
         } else {
             throw new BadRequestHttpException();
         }

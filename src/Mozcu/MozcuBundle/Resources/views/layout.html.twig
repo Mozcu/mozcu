@@ -34,32 +34,6 @@
     <link rel="stylesheet" href="{{ asset('css/tagit/jquery.tagit.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/tagit/tagit.ui-zendesk.css') }}" />
     
-    <script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.3.custom.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-    {#<script type="text/javascript" src="{{ asset('js/docs.min.js') }}"></script>#}
-    <script type="text/javascript" src="{{ asset('js/mozcu.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/typeahead.bundle.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.uploadifive.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/fileUploader/ajaxfileupload.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/fileUploader/mozcuFileUploader.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/tagit/tag-it.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/zeroclipboard/ZeroClipboard.js') }}"></script>
-
-    <script type="text/javascript" src="{{ asset('js/jplayer/jquery.jplayer.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jplayer/jplayer.playlist.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/player.utils.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.jscroll.min.js') }}"></script>
-
-    <script type="text/javascript" src="{{ asset('js/content.utils.js?v=4') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/layout.utils.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/search.utils.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/profile.utils.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/uploadAlbum.utils.js') }}"></script>
-
-    {% block javascript %}{% endblock %}
-
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -69,6 +43,10 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.3.custom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    
 </head> 
 <body>
 
@@ -123,6 +101,32 @@
         </div>
     </div>
 </div>
+
+
+{#<script type="text/javascript" src="{{ asset('js/docs.min.js') }}"></script>#}
+<script type="text/javascript" src="{{ asset('js/mozcu.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/typeahead.bundle.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.uploadifive.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/fileUploader/ajaxfileupload.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/fileUploader/mozcuFileUploader.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/tagit/tag-it.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/zeroclipboard/ZeroClipboard.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('js/jplayer/jquery.jplayer.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jplayer/jplayer.playlist.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/player.utils.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.jscroll.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('js/content.utils.js?v=4') }}"></script>
+<script type="text/javascript" src="{{ asset('js/layout.utils.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/search.utils.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/profile.utils.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/album.utils.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/uploadAlbum.utils.js') }}"></script>
+
+{{ include('MozcuMozcuBundle:Layout:actionLogJs.html.twig') }}
+
+{% block javascript %}{% endblock %}
 
 </body>
 </html>

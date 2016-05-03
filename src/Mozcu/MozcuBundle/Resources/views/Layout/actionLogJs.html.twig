@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    // Log de reproduccion
+    $(function() {
+        var currentAlbumId = null;
+        var currentSongId = null;
+        var paused = false;
+
+        var logAlbum = function (albumId, ownerId) {
+            var url = '{{ path('mozcu_logAlbum') }}';
+            var params = {
+                album_id: albumId,
+                album_owner_id: ownerId
+            };
+
+            $.post(url, params, function (response) {
+
+            }, 'json');
+        };
+        
+        var logSong = function (songId, albumId, ownerId) {
+            var url = '{{ path('mozcu_logSong') }}';
+            var params = {
+                song_id: songId,
+                song_owner_id: ownerId,
+                album_id: albumId
+            };
+
+            $.post(url, params, function (response) {
+
+            }, 'json');
+        };
+        
+        var logDownload = function (albumId, ownerId) {
+            var url = '{{ path('mozcu_logDownload') }}';
+            var params = {
+                album_owner_id: ownerId,
+                album_id: albumId
+            };
+
+            $.post(url, params, function (response) {
+
+            }, 'json');
+        };
+        
+        $("#jquery_jplayer_1").bind($.jPlayer.event.play, function(e) {
+            var song = e.jPlayer.status.media;
+
+            if (paused && currentSongId !== null && currentSongId === song.id) {
+                paused = false;
+                return;
+            }
+
+            paused = false;
+            currentSongId = song.id;
+            console.log('Log de cancion ' + song.title + ' - Owner Id: ' + song.owner_id);
+            logSong(song.id, song.album_id, song.owner_id);
+            if (currentAlbumId !== null && currentAlbumId === song.album_id) {
+                return;
+            }
+            currentAlbumId = song.album_id;
+            console.log('Log de Album ' + song.album_id + ' - Owner Id: ' + song.owner_id);
+            logAlbum(song.album_id, song.owner_id);
+        });
+
+        $("#jquery_jplayer_1").bind($.jPlayer.event.pause, function(e) {
+            paused = true;
+        });
+        
+        $('body').on('albumdownload', function(e) {
+            logDownload(e.album.album_id, e.album.album_owner_id)
+        });
+
+    });
+</script>

@@ -25,13 +25,43 @@ class ActionLogService
     
     /**
      * 
-     * @param string $data
+     * @param array $data
      * @return boolean
      * @throws ServiceException
      */
-    public function logAlbum($data)
+    public function logAlbum(array $data)
     {
         $response = $this->doPost('albums', ['album' => $data]);
+        if ($response['success']) {
+            return true;
+        }
+        throw new ServiceException();
+    }
+    
+    /**
+     * 
+     * @param array $data
+     * @return boolean
+     * @throws ServiceException
+     */
+    public function logSong(array $data)
+    {
+        $response = $this->doPost('songs', ['song' => $data]);
+        if ($response['success']) {
+            return true;
+        }
+        throw new ServiceException();
+    }
+    
+    /**
+     * 
+     * @param array $data
+     * @return boolean
+     * @throws ServiceException
+     */
+    public function logDownload(array $data)
+    {
+        $response = $this->doPost('downloads', ['download' => $data]);
         if ($response['success']) {
             return true;
         }
