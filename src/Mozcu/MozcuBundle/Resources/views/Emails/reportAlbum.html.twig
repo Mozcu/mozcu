@@ -1,0 +1,136 @@
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- So that mobile will display zoomed in -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- enable media queries for windows phone 8 -->
+  <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
+  <title>Mozcu</title>
+
+  <style type="text/css">
+body {
+  margin: 0;
+  padding: 0;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+table {
+  border-spacing: 0;
+}
+
+table td {
+  border-collapse: collapse;
+}
+
+.ExternalClass {
+  width: 100%;
+}
+
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+  line-height: 100%;
+}
+
+.ReadMsgBody {
+  width: 100%;
+  background-color: #ebebeb;
+}
+
+table {
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+}
+
+img {
+  -ms-interpolation-mode: bicubic;
+}
+
+.yshortcuts a {
+  border-bottom: none !important;
+}
+
+@media screen and (max-width: 599px) {
+  table[class="force-row"],
+  table[class="container"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+@media screen and (max-width: 400px) {
+  td[class*="container-padding"] {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+.ios-footer a {
+  color: #aaaaaa !important;
+  text-decoration: underline;
+}
+</style>
+
+</head>
+<body style="margin:0; padding:0;" bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<!-- 100% background wrapper (grey background) -->
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+  <tr>
+    <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
+
+      <br>
+
+      <!-- 600px container (white background) -->
+      <table border="0" width="600" cellpadding="0" cellspacing="0" class="container" style="width:600px;max-width:600px; ">
+        <tr>
+            
+          <td class="container-padding content" align="left" style="padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:50px;background-color:#ffffff; border-radius:4px; border:1px solid #EEEEEE;">
+            <br>
+            <div class="logo"><a href="http://www.mozcu.com" target="_blank"><img src="http://mozcu.com/images/logo-negro.png" alt="Mozcu logo" style="padding-bottom:40px;  display: block;margin-left: auto;margin-right: auto;"></a></div>
+            <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:20px;font-weight:lighter;color:#374550; padding-bottom:0px;">El album {{ album.getName }} ha sido denunciado</div>
+            <p style="font-family:Helvetica, Arial, sans-serif;font-size:12px;text-align:left;color:#374550;font-weight:bold;">
+                El album 
+                <a href="{{ url('MozcuMozcuBundle_albumAlbum', {username: album.getProfile.getUsername, slug: album.getSlug}) }}" style="color:#0277bd;">{{ album.getName }}</a> 
+                perteneciente al usuario 
+                <a href="{{ url('MozcuMozcuBundle_profile', {username: album.getProfile.getUsername}) }}" style="color:#0277bd;">{{ album.getProfile.getCurrentName }}</a>
+                ha recibido la siguiente denuncia
+                {% if emailFrom is not null %}
+                    por parte de <span style="color:#0277bd;">{{ emailFrom }}</span>
+                {% endif %}
+            </p>
+            <br>
+
+            <div class="body-text" >
+                {{ cause }}
+                <br><br>
+                {{ report }}
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <td class="container-padding footer-text" align="center" style="font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px">
+            <br><br>
+
+            Sigue a Mozcu en:<a href="http://www.facebook.com/mozcupuntocom" style="color:#aaaaaa"> Facebook</a> · <a href="http://www.twitter.com/mozcupuntocom" style="color:#aaaaaa" >Twitter</a> · <a href="http://www.instagram.com/mozcupuntocom" style="color:#aaaaaa">Instagram</a>
+              <br><br>
+           CC 2015, Algunos derechos reservados - Mozcu 
+            
+
+            
+
+          </td>
+        </tr>
+      </table>
+<!--/600px container -->
+
+
+    </td>
+  </tr>
+</table>
+<!--/100% background wrapper-->
+
+</body>
+</html>

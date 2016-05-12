@@ -27,15 +27,15 @@ class EmailService
     
     /**
      *
-     * @var string
+     * @var array 
      */
-    private $noReplyAddress;
+    private $addresses;
     
-    public function __construct($mailer, $templating, $noReplyAddress) 
+    public function __construct($mailer, $templating, array $mail) 
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
-        $this->noReplyAddress = $noReplyAddress;
+        $this->addresses = $mail;
     }
     
     /**
@@ -67,6 +67,14 @@ class EmailService
         $body = $this->templating->render('MozcuMozcuBundle:Emails:passwordRecovery.html.twig', 
                                           array('passwordRecovery' => $passwordRecovery));
         $subject = 'Mozcu - Recuperar password';
-        return $this->send($this->noReplyAddress, $user->getEmail(), $subject, $body, 'text/html');
+        return $this->send($this->addresses['noreply_address'], $user->getEmail(), $subject, $body, 'text/html');
+    }
+    
+    public function sendReportAlbumEmail($album, $cause, $report, $emailFrom = null)
+    {
+        $body = $this->templating->render('MozcuMozcuBundle:Emails:reportAlbum.html.twig', 
+                                          ['album' => $album, 'cause' => $cause, 'report' => $report, 'emailFrom' => $emailFrom]);
+        $subject = 'Mozcu - Album Denunciado';
+        return $this->send($this->addresses['noreply_address'], $this->addresses['report_album_addresses'], $subject, $body, 'text/html');
     }
 }

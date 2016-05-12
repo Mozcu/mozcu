@@ -145,12 +145,66 @@ $(function() {
     $('body').on('click', '.modal-report-album .btn-success', function(e) {
         e.preventDefault();
         var me = $(this);
+        var params = {};
+        
+        params.cause = $.trim($('#report-cause').val());
+        params.from = $.trim($('#report-from').val());
+        params.report = $.trim($('#report-report').val());
 
+        var errorMsg = $('.alert-danger');
+        errorMsg.hide();
+        errorMsg.find('.error').remove();
+        
+        var validation = validateReportForm(params);
+        if (!validation.success) {
+            $.each(validation.errors, function(key, value) {
+                errorMsg.append('<p class="error"> - ' + value.message + '</p>');
+            });
+            errorMsg.show();
+            //$('html,body').animate({scrollTop: 0}, 800);
+            return;
+        }
+
+        me.addClass('disabled');
         var url = me.data('url');
-        $.post(url, {}, function(data) {
-            // TODO
+        $.post(url, params, function(response) {
+            if (response.success) {
+                $('.modal-report-album .modal-body').html('La denuncia ha sido enviada y sera evaluada a la brevedad.');
+                setTimeout(function () {
+                    $('.modal-report-album').modal('hide');
+                }, 5000);
+            }
         });
     });
+    
+    var validateReportForm = function(params)
+    {
+        var response = {};
+        response.success = true;
+        response.errors = new Array();
+        
+        if (!validateEmail(params.from)) {
+            response.success = false;
+            response.errors.push({message: "El formato del email es invalido: " + params.from});
+        }
+        
+        if(params.cause.length === 0) {
+            response.success = false;
+            response.errors.push({message: "El campo Causa esta vacaio"});
+        }
+        
+        if(params.report.length === 0) {
+            response.success = false;
+            response.errors.push({message: "El campo Denuncia esta vacaio"});
+        }
+        
+        return response;
+    };
+    
+    var validateEmail = function(email) { 
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    };
     
     // Ir al disco
     $('.mainContent').on('click', '.album .albumLink', function(e) {

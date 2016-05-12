@@ -57,7 +57,7 @@ services:
       
   mozcu_mozcu.email_service:
     class: Mozcu\MozcuBundle\Service\EmailService
-    arguments: ["@mailer", "@templating", "%mail.noreply_address%"]
+    arguments: ["@mailer", "@templating", "%mail%"]
   
   mozcu_mozcu.mercado_pago_service:
     class: Mozcu\MozcuBundle\Service\PaymentMethod\MercadoPagoService

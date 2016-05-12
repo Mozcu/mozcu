@@ -19,7 +19,9 @@ parameters:
     storage_bucket:       %google_api_storage_bucket%
     
   # Mail
-  mail.noreply_address: 'no-reply@mozcu.com'
+  mail:
+      noreply_address: 'no-reply@mozcu.com'
+      report_album_addresses: [ mauro@mozcu.com, german@mozcu.com ] 
 
   # Mercado Pago
   mercadopago:

@@ -219,10 +219,15 @@ class AlbumController extends MozcuController
      * @return string
      * @throws BadRequestHttpException
      */
-    public function albumSubmitReportAction($id) {
+    public function albumSubmitReportAction($id, Request $request) {
         if($this->getRequest()->isXmlHttpRequest()) {
             $album = $this->getRepository('MozcuMozcuBundle:Album')->find($id);
             if(!is_null($album)) {
+                $data = $request->request->all();
+                if (empty($data['cause']) || empty($data['report'])) {
+                    throw new BadRequestHttpException();
+                }
+                $this->getEmailService()->sendReportAlbumEmail($album, $data['cause'], $data['report'], $data['from']);
                 return $this->getJSONResponse(array('success' => true));
             } else {
                 return $this->getJSONResponse(array('success' => false));
