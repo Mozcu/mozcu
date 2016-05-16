@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
-use Symfony\Component\Validator\Validator;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 // Entidades
 use Mozcu\MozcuBundle\Entity\User;
@@ -41,7 +41,7 @@ class UserService extends BaseService
     
     public function __construct(
             EntityManager $entityManager, EncoderFactory $encoderFactory, SecurityContext $securityContext,
-            Validator $validator, $recoveryPasswordTime, $invalidUsernames)
+            ValidatorInterface $validator, $recoveryPasswordTime, $invalidUsernames)
     {
         $this->encoder_factory = $encoderFactory;
         $this->securityContext = $securityContext;
