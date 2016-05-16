@@ -32,7 +32,7 @@ class UserService extends BaseService
     
     /**
      *
-     * @var Validator
+     * @var ValidatorInterface
      */
     protected $validator;
     

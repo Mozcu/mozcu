@@ -5,7 +5,7 @@ namespace Mozcu\MozcuBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Symfony\Component\Validator\Constraints\Url as UrlConstraint;
-use Symfony\Component\Validator\Validator;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Mozcu\MozcuBundle\Service\ImageService;
 use Mozcu\MozcuBundle\Service\UserService;
 use Mozcu\MozcuBundle\Exception\AppException;
@@ -30,11 +30,11 @@ class ProfileService extends BaseService
 
     /**
      *
-     * @var Validator
+     * @var ValidatorInterface
      */
     protected $validator;
 
-    public function __construct(EntityManager $entityManager, ImageService $imageService, UserService $userService, Validator $validator) 
+    public function __construct(EntityManager $entityManager, ImageService $imageService, UserService $userService, ValidatorInterface $validator) 
     {
         parent::__construct($entityManager);
         $this->imageService = $imageService;

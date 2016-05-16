@@ -52,13 +52,11 @@
 
             paused = false;
             currentSongId = song.id;
-            console.log('Log de cancion ' + song.title + ' - Owner Id: ' + song.owner_id);
             logSong(song.id, song.album_id, song.owner_id);
             if (currentAlbumId !== null && currentAlbumId === song.album_id) {
                 return;
             }
             currentAlbumId = song.album_id;
-            console.log('Log de Album ' + song.album_id + ' - Owner Id: ' + song.owner_id);
             logAlbum(song.album_id, song.owner_id);
         });
 
