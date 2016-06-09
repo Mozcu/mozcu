@@ -167,6 +167,8 @@
                     
 <script type="text/javascript">
     $(function() {
+        $('head meta[name=description]').attr('content', '{{ defaultMetaDesc }}');
+        
         var uploadifyTemplate;
     
         if($('#uploadify_template_url').length > 0) {

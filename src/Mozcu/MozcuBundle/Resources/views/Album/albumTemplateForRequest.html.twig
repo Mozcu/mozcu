@@ -9,9 +9,16 @@
     <meta property="og:description" content="Escucha los {{ album.getSongs.count }} temas de {{ album.getName }}">
     <meta property="og:image" content="{{ album.getListThumbnailUrl }}">
     <meta property="og:url" content="{{ url('MozcuMozcuBundle_albumAlbum', {'username': album.getProfile.getUsername, 'slug': album.getSlug}) }}">
+    <meta name="title" content="{{ album.getName }} - {{ album.getArtistName }}">
 {% endblock %}
 
-{% block title %} {% trans with {'%name%': album.getArtistName} %}%name% en Mozcu{% endtrans %} {% endblock %}
+{% block metaDesc %}
+    <meta name="description" content="{{ album.description }} mozcu, {{ album.getProfile.getCity }}, 
+          {{ album.getProfile.getCountry.getName }}, {% for tag in album.getTags%} {{ tag.getName() }}, {% endfor %}, 
+           musica, mp3, musica gratis, descargar música">
+{% endblock %}
+
+{% block title %} {{ album.getName }} - {{ album.getArtistName }} - Mozcu {% endblock %}
 
 {% block mainContent %}
     {{ include('MozcuMozcuBundle:Album:albumTemplateForAjax.html.twig', {'album': album,'selected': parameters.selected, 'parameters': parameters}) }}

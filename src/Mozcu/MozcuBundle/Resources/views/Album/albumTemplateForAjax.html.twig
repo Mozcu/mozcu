@@ -6,6 +6,15 @@
     <script type="text/javascript">
         $(function() {
             window.scrollTo(0,0);
+            
+            $('head meta[name=description]').attr('content', '{{ album.description | e('js') }} mozcu, {{ album.getProfile.getCity }}, {{ album.getProfile.getCountry.getName }}, {% for tag in album.getTags%} {{ tag.getName() }}, {% endfor %},musica, mp3, musica gratis, descargar música');
+            if ($('head meta[name=title]').length > 0) {
+                $('head meta[name=title]').attr('content', '{{ album.getName }} - {{ album.getArtistName }}');
+            } else {
+                var meta = $('<meta>', {name: 'title', content: '{{ album.getName }} - {{ album.getArtistName }}'});
+                $('head').append(meta);
+            }
+            $('head title').html('{{ album.getName }} - {{ album.getArtistName }} - Mozcu');
         });
     </script>
     

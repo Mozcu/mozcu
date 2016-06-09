@@ -26,14 +26,14 @@
     </div>
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 titlDisco">
-        <h3 class="nombreDisco">{{ album.getName }}</h3>
-        <h4 class="nombreBanda">{{ album.getArtistName }}</h4>   
-        <h5 class="nombreAlbumUser">
+        <h1 class="nombreDisco">{{ album.getName }}</h1>
+        <h2 class="nombreBanda">{{ album.getArtistName }}</h2>   
+        <h3 class="nombreAlbumUser">
             Subido por
             <a href="{{ path('MozcuMozcuBundle_profile', {'username': album.getProfile.getUser.username}) }}">
                 {{ album.getProfile.getCurrentName }}
             </a>
-        </h5>
+        </h3>
     </div>
 
     <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs hidden-sm">

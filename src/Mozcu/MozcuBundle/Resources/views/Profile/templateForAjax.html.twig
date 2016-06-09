@@ -2,6 +2,14 @@
     {{ render(controller('MozcuMozcuBundle:Profile:loadUserHeader', { 'user': user, 'selectedOption': selectedOption })) }}
     
     {{ include(template, parameters) }}
+    
+    <script type="text/javascript">
+        $(function() {
+            window.scrollTo(0,0);
+            
+            $('head meta[name=description]').attr('content', '{{ defaultMetaDesc }}');
+        });
+    </script>
 </div>
 
 {{ include('googleAnalytics.html.twig') }}

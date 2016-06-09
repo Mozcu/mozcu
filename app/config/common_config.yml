@@ -73,3 +73,5 @@ parameters:
   action_log:
       url: %action_log_url%
       token: %action_log_token%
+      
+  default_meta_desc: 'El acceso a la cultura es un derecho humano. Escucha y descarga musica libre y sin intermediarios. Distribuye tu musica y obten el 100% de los beneficios. musica, mp3, musica gratis, descargar música'

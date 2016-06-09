@@ -40,6 +40,9 @@
     
 <script type="text/javascript">
 $(function() {
+    window.scrollTo(0,0);
+    $('head meta[name=description]').attr('content', '{{ defaultMetaDesc }}');
+    
     $( "#city" ).autocomplete({
             source: $('#city').data('url'),
             minLength: 3

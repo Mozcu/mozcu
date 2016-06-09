@@ -107,4 +107,12 @@
     </div>
  </div>
 
+<script type="text/javascript">
+    $(function() {
+        window.scrollTo(0,0);
+
+        $('head meta[name=description]').attr('content', '{{ defaultMetaDesc }}');
+    });
+</script>
+            
 {{ include('googleAnalytics.html.twig') }}

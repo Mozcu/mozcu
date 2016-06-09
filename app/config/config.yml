@@ -35,6 +35,7 @@ twig:
         analyticsKey: %google.analytics.key%
         mp: %mercadopago%
         uploadImageDir: %tmp_images_url%
+        defaultMetaDesc: %default_meta_desc%
         
 # Assetic Configuration
 #assetic:

@@ -86,4 +86,12 @@ Creative Commons es una herramienta para que los artistas marquen sus obras con 
                
 </div>
       
+<script type="text/javascript">
+    $(function() {
+        window.scrollTo(0,0);
+
+        $('head meta[name=description]').attr('content', '{{ defaultMetaDesc }}');
+    });
+</script>
+      
 {{ include('googleAnalytics.html.twig') }}
